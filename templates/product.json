@@ -1,1 +1,2211 @@
-{"sections":{"main":{"type":"product-information","blocks":{"media-gallery":{"type":"_product-media-gallery","static":true,"settings":{"media_style":"carousel","grid_layout":"grid-with-thumbnail","grid_gap":10,"carousel_thumbnail":"inside","thumbnail_media_aspect_ratio":"1\/1","thumbnail_media_aspect_ratio_mobile":"1\/1","media_aspect_ratio":"1\/1","media_radius":14,"video_autoplay":false,"enable_zoom":true,"hide_variants":false,"extend_media":false},"blocks":{}},"product-details":{"type":"_product-details","static":true,"settings":{"row_gap":24,"row_gap_mobile":20,"padding-block-start":0,"padding-block-end":0},"blocks":{"breadcrumbs_4zRHqF":{"type":"_breadcrumbs","name":"t:names.breadcrumbs","settings":{"padding-block-start":0,"padding-block-end":0,"mobile-padding-scale":80},"blocks":{}},"product_information_group_zx4NRb":{"type":"_product-information-group","name":"t:names.group","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":12,"row_gap":20,"column_gap_mobile":12,"row_gap_mobile":16,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"product_title_fh9qwY":{"type":"_product-title","name":"t:names.product_title","settings":{"type_preset":"h2","html_tag":"h1","font":"var(--font-heading--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"product_inventory_CxbdNT":{"type":"_product-inventory","name":"t:names.product_inventory","settings":{"inventory_threshold":10,"show_inventory_quantity":true,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"product_information_group_VXMCmd":{"type":"_product-information-group","name":"t:names.group","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":12,"row_gap":12,"column_gap_mobile":12,"row_gap_mobile":12,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"product_description_zxj7Nk":{"type":"_product-description","name":"t:names.description","settings":{"text":"{{ closest.product.description }}","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","padding-block-start":7,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["product_description_zxj7Nk"]}},"block_order":["product_title_fh9qwY","product_inventory_CxbdNT","product_information_group_VXMCmd"]},"variant_picker_NYNfW9":{"type":"_variant-picker","name":"t:names.variant_picker","disabled":true,"settings":{"variant_style":"buttons","show_swatches":true,"show_variant_image":false,"swatch_shape":"square","swatch_width":52,"swatch_height":32,"buttons_radius":0,"size_chart_title":"Size","size_chart_page":"product-size-chart","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"product_price_kYhqcf":{"type":"_product-price","name":"t:names.product_price","settings":{"show_installments":false,"show_tax_info":false,"type_preset":"h3","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"buy_buttons_MWJW8a":{"type":"_buy-buttons","name":"t:names.buy_buttons","settings":{"gift_card_form":true,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"quantity-selector":{"type":"_quantity-selector","static":true,"settings":{},"blocks":{}},"add-to-cart":{"type":"_add-to-card-button","static":true,"settings":{"style":"primary"},"blocks":{}},"accelerated-checkout":{"type":"_accelerated-checkout","disabled":true,"static":true,"settings":{},"blocks":{}}},"block_order":[]},"button_HCkRMq":{"type":"button","name":"t:names.button","settings":{"label":"Shop onze voordeelbundels","link":"#shopify-section-template--29402397245773__product_recommendations_cGQqzw","style":"outline","size":"large","icon":"none","icon_only":false,"icon_style":"default","mobile_full_width":true,"custom_class":"btn-bundle-cta","animation_type":"none","animation_delay":250},"blocks":{}},"group_YDc8KE":{"type":"group","name":"Policies","settings":{"content_direction":"column","vertical_on_mobile":false,"horizontal_alignment":"center","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":27,"row_gap":6,"enable_sticky_desktop":false,"width":"fill","custom_width":73,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"scheme-1","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":24,"row_gap_mobile":12,"device":"desktop","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0},"blocks":{"group_kmCAJc":{"type":"group","name":"t:names.group","settings":{"content_direction":"row","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"center","column_gap":11,"row_gap":8,"enable_sticky_desktop":false,"width":"fit-content","custom_width":20,"width_mobile":"fit-content","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":12,"row_gap_mobile":8,"device":"desktop","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0},"blocks":{"icon_8nYx8X":{"type":"icon","name":"t:names.icon","settings":{"icon":"package","image_upload":"shopify:\/\/shop_images\/doos.svg","icon_size":"custom-size","width":16,"width_mobile":14,"link":"","round_shape":false},"blocks":{}},"text_3JgwqJ":{"type":"_shipping-cutoff-message","name":"Shipping cutoff message","settings":{"cutoff_hour":16,"cutoff_minute":0,"window_start_hour":3,"countdown_text":"binnen [countdown] besteld, morgen in huis.","static_text":"Voor 16:00 uur besteld, morgen in huis","animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["icon_8nYx8X","text_3JgwqJ"]},"group_tDdQwH":{"type":"group","name":"t:names.group","disabled":true,"settings":{"content_direction":"row","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"center","column_gap":12,"row_gap":8,"enable_sticky_desktop":false,"width":"fit-content","custom_width":20,"width_mobile":"fit-content","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":12,"row_gap_mobile":8,"device":"desktop","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0},"blocks":{"icon_UwbpmT":{"type":"icon","name":"t:names.icon","settings":{"icon":"chat-teardrop","icon_size":"custom-size","width":28,"width_mobile":28,"link":"","round_shape":false},"blocks":{}},"text_VrT8cz":{"type":"text","name":"t:names.text","settings":{"text":"<p>Persoonlijke klantenservice<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["icon_UwbpmT","text_VrT8cz"]},"group_wXJd6h":{"type":"group","name":"t:names.group","disabled":true,"settings":{"content_direction":"row","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"center","column_gap":12,"row_gap":8,"enable_sticky_desktop":false,"width":"fit-content","custom_width":20,"width_mobile":"fit-content","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":12,"row_gap_mobile":8,"device":"desktop","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0},"blocks":{"icon_7CdXmV":{"type":"icon","name":"t:names.icon","settings":{"icon":"cart","icon_size":"custom-size","width":28,"width_mobile":28,"link":"","round_shape":false},"blocks":{}},"text_YPaWtU":{"type":"text","name":"t:names.text","settings":{"text":"<p>Nu bestellen, later betalen met Klarna<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["icon_7CdXmV","text_YPaWtU"]}},"block_order":["group_kmCAJc","group_tDdQwH","group_wXJd6h"]},"pickup_availability_CgeNxU":{"type":"_pickup-availability","name":"t:names.pickup_availability","settings":{"border_radius":10,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"product_video_testimonials_a37eGn":{"type":"_product-video-testimonials","name":"t:names.video_testimonials","settings":{"heading":"Video Feedbacks","heading_preset":"h5","video_ratio":"9\/16","toggle_video_overlay":true,"video_overlay_color":"#0000001a","video_border_radius":20},"blocks":{}},"accordion_U9n4kg":{"type":"accordion","name":"t:names.accordion","settings":{"open_behavior":"single","type_preset":"h5","style":"standard","card_color_scheme":"","icon_arrow":"caret","icon_style":"default","width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"accordion_row_XENRWn":{"type":"_accordion-row","settings":{"text":"Productdetails","open_row_by_default":false,"icon":"none","icon_size":"extra-large","width":24,"width_mobile":24},"blocks":{"text_6KJERV":{"type":"text","name":"t:names.text","settings":{"text":"{{ closest.product.metafields.custom.lange_beschrijving | metafield_tag }}","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_6KJERV"]},"accordion_row_YYawgT":{"type":"_accordion-row","settings":{"text":"Wasvoorschriften","open_row_by_default":false,"icon":"none","icon_size":"extra-large","width":24,"width_mobile":24},"blocks":{"text_7UhNdx":{"type":"text","name":"t:names.text","settings":{"text":"{{ closest.product.metafields.custom.onderhoud | metafield_tag }}","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_7UhNdx"]},"accordion_row_eMehRb":{"type":"_accordion-row","settings":{"text":"Materiaal","open_row_by_default":false,"icon":"none","icon_size":"extra-large","width":24,"width_mobile":24},"blocks":{"text_JNT7ew":{"type":"text","settings":{"text":"<p>{{ closest.product.metafields.custom.materiaal.value }}<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_JNT7ew"]}},"block_order":["accordion_row_XENRWn","accordion_row_YYawgT","accordion_row_eMehRb"]}},"block_order":["breadcrumbs_4zRHqF","product_information_group_zx4NRb","variant_picker_NYNfW9","product_price_kYhqcf","buy_buttons_MWJW8a","button_HCkRMq","group_YDc8KE","pickup_availability_CgeNxU","product_video_testimonials_a37eGn","accordion_U9n4kg"]}},"settings":{"container":"page","media_position":"left","equal_columns":true,"gap":100,"enable_sticky_add_to_cart":true,"sticky_add_to_cart_inherit_color_scheme":true,"sticky_add_to_cart_color_scheme":"","color_scheme":"scheme-2","device":"desktop","padding-block-start":40,"padding-block-end":54,"padding-block-start-mobile":0,"padding-block-end-mobile":0}},"custom_section_iaMWyr":{"type":"custom-section","blocks":{"grid_MiCt8g":{"type":"grid","name":"t:names.grid","settings":{"vertical_alignment":"start","columns_xxl":4,"column_gap":20,"row_gap":23,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":true,"swipe_custom_width_column":true,"swipe_column_width":90,"columns_mobile":1,"column_gap_mobile":13,"row_gap_mobile":12,"device":"desktop","padding-block-start":0,"padding-block-end":36,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0,"custom_columns":""},"blocks":{"icon_box_kBqd7C":{"type":"icon-box","name":"t:names.icon_box_card","settings":{"direction":"horizontal","text_align":"left","icon":"package","icon_image_upload":"shopify:\/\/shop_images\/doos-paars.svg","icon_spacing":12,"icon_size":"custom-size","icon_width":26,"icon_width_mobile":22,"heading":"Gratis verzending vanaf €24,95","heading_preset":"h6","text":"<p>Snelle en betrouwbare bezorging<\/p>","text_color":"subtext","link":"","show_link_icon":true,"content_row_gap":2,"style":"standard","inherit_color_scheme":false,"color_scheme":"scheme-1","border":"none","border_width":1,"border_opacity":10,"border_radius":10},"blocks":{}},"icon_box_rUEKwq":{"type":"icon-box","name":"t:names.icon_box_card","settings":{"direction":"horizontal","text_align":"left","icon":"chat-teardrop","icon_image_upload":"shopify:\/\/shop_images\/chat-paars.svg","icon_spacing":12,"icon_size":"custom-size","icon_width":26,"icon_width_mobile":22,"heading":"Persoonlijke klantenservice","heading_preset":"h6","text":"<p>Binnen 48 uur reactie<\/p>","text_color":"subtext","link":"","show_link_icon":true,"content_row_gap":2,"style":"standard","inherit_color_scheme":false,"color_scheme":"scheme-1","border":"none","border_width":1,"border_opacity":10,"border_radius":10},"blocks":{}},"icon_box_DxkP6a":{"type":"icon-box","name":"t:names.icon_box_card","settings":{"direction":"horizontal","text_align":"left","icon":"cart","icon_image_upload":"shopify:\/\/shop_images\/winkelwagen-paars.svg","icon_spacing":12,"icon_size":"custom-size","icon_width":26,"icon_width_mobile":22,"heading":"Nu bestellen, later betalen","heading_preset":"h6","text":"<p>Betaal achteraf met Klarna<\/p>","text_color":"subtext","link":"","show_link_icon":true,"content_row_gap":2,"style":"standard","inherit_color_scheme":false,"color_scheme":"scheme-1","border":"none","border_width":1,"border_opacity":10,"border_radius":10},"blocks":{}},"icon_box_HTFCCb":{"type":"icon-box","name":"t:names.icon_box_card","settings":{"direction":"horizontal","text_align":"left","icon":"check","icon_image_upload":"shopify:\/\/shop_images\/kussen-paars.svg","icon_spacing":12,"icon_size":"custom-size","icon_width":26,"icon_width_mobile":22,"heading":"De nummer één in binnenkussens","heading_preset":"h6","text":"<p>Alleen de beste kwaliteit<\/p>","text_color":"subtext","link":"","show_link_icon":true,"content_row_gap":2,"style":"standard","inherit_color_scheme":false,"color_scheme":"scheme-1","border":"none","border_width":1,"border_opacity":10,"border_radius":10},"blocks":{}}},"block_order":["icon_box_kBqd7C","icon_box_rUEKwq","icon_box_DxkP6a","icon_box_HTFCCb"]}},"block_order":["grid_MiCt8g"],"name":"t:names.icon_with_text","settings":{"container":"page-width","content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":12,"row_gap":12,"column_gap_mobile":12,"row_gap_mobile":12,"use_color_scheme_in_container":false,"color_scheme":"scheme-1","border":"none","border_width":1,"border_opacity":14,"border_radius":0,"device":"desktop","padding-block-start":34,"padding-block-end":0,"padding-inline-start":15,"padding-inline-end":15,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":16,"padding-inline-end-mobile":16}},"product_recommendations_cGQqzw":{"type":"product-recommendations","blocks":{"text_XmPjGi":{"type":"text","name":"t:names.header","settings":{"text":"<p>Shop dit product als bundel<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"h3","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"100%","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":40,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":60,"animation_type":"none","animation_delay":250},"blocks":{}},"product-card":{"type":"_product-card","static":true,"settings":{},"blocks":{}}},"block_order":["text_XmPjGi"],"name":"t:names.product_recommendations","settings":{"recommendations_type":"related","container":"fixed","layout_type":"carousel","columns_xxl":4,"product_count":4,"column_gap":10,"row_gap":10,"enable_swipe_on_mobile":true,"swipe_custom_width_column":true,"swipe_column_width":68,"columns_mobile":"1","column_gap_mobile":8,"row_gap_mobile":8,"color_scheme":"scheme-2","border":"none","border_width":1,"border_opacity":11,"border_radius":0,"device":"desktop","padding-block-start":64,"padding-block-end":64,"padding-inline-start":15,"padding-inline-end":15,"padding-block-start-mobile":64,"padding-block-end-mobile":64,"padding-inline-start-mobile":16,"padding-inline-end-mobile":16,"custom_columns":"lg:4"}},"custom_section_k8zAF6":{"type":"custom-section","blocks":{"image_card_JcL8KX":{"type":"image-card","name":"t:names.image_card","settings":{"show_content_below":false,"gap":20,"gap_mobile":20,"image":"shopify:\/\/shop_images\/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png","toggle_overlay":false,"overlay_color":"#00000026","image_ratio":"4\/3","image_ratio_mobile":"4\/3","image_border":"none","image_border_width":1,"image_border_opacity":100,"image_border_radius":0,"card_link":"","edge_gap":"md","content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","horizontal_alignment_mobile":"","vertical_alignment_flex_direction_column":"flex-end","column_gap":12,"column_gap_mobile":12,"row_gap":32,"row_gap_mobile":24,"width":"custom","custom_width":50,"width_mobile":"fill","custom_width_mobile":100,"enable_full_height":true,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"card_label":"","card_label_text_color":"#ffffff","card_label_in_content":false,"enable_preload_image":false},"blocks":{"subheading":{"type":"_simple-text","name":"t:names.subheading","static":true,"settings":{"text":"","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"text-subheading","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","padding-block-start":0,"padding-block-end":20,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}},"heading":{"type":"_simple-text","name":"t:names.heading","static":true,"settings":{"text":"","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"custom","font":"var(--font-heading--family)","font_weight":"","font_size":48,"font_size_mobile":34,"line_height":"tight","text_color":"text","padding-block-start":0,"padding-block-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}},"text":{"type":"_simple-text","static":true,"settings":{"text":"","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"loose","text_color":"text","padding-block-start":12,"padding-block-end":24,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}},"button":{"type":"button","disabled":true,"static":true,"settings":{"label":"","link":"","style":"secondary","size":"medium","icon":"caret-right","icon_only":false,"icon_style":"solid","mobile_full_width":false,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":[]},"group_ri6qwJ":{"type":"group","name":"t:names.group","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"center","column_gap":0,"row_gap":0,"enable_sticky_desktop":false,"width":"custom","custom_width":50,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":false,"color_scheme":"scheme-inverse","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":0,"row_gap_mobile":0,"device":"desktop","padding-block-start":64,"padding-block-end":64,"padding-inline-start":80,"padding-inline-end":80,"padding-block-start-mobile":40,"padding-block-end-mobile":40,"padding-inline-start-mobile":16,"padding-inline-end-mobile":16},"blocks":{"group_F74RwN":{"type":"group","name":"t:names.section_header_vertical","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":0,"row_gap":0,"enable_sticky_desktop":false,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":0,"row_gap_mobile":0,"device":"desktop","padding-block-start":0,"padding-block-end":40,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":24,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0},"blocks":{"text_NGGfgr":{"type":"text","name":"t:names.subheading","settings":{"text":"<p>Kies het beste voor jou<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"h6","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}},"text_ppgKgi":{"type":"text","name":"t:names.heading","settings":{"text":"<p>De juiste vulling maakt het verschil<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"h2","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":true,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_NGGfgr","text_ppgKgi"]},"accordion_QjFmNG":{"type":"accordion","name":"t:names.accordion","settings":{"open_behavior":"single","type_preset":"h4","style":"card","card_color_scheme":"scheme-5","icon_arrow":"caret","icon_style":"solid","width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"accordion_row_xJi4Li":{"type":"_accordion-row","settings":{"text":"Polyester","open_row_by_default":true,"icon":"none","image_upload":"shopify:\/\/shop_images\/polyester-wit.svg","icon_size":"extra-large","width":24,"width_mobile":24},"blocks":{"text_iH6MV6":{"type":"text","settings":{"text":"<p>Een zachte en veelzijdige vulling die zorgt voor een comfortabel en luchtig binnenkussen. Polyester is een praktische keuze voor dagelijks gebruik en geeft je sierkussen een volle uitstraling.<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"100%","text_alignment":"left","width_mobile":"100%","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_iH6MV6"]},"accordion_row_GgxWiJ":{"type":"_accordion-row","settings":{"text":"Memory foam","open_row_by_default":false,"icon":"none","image_upload":"shopify:\/\/shop_images\/memory-foam-wit.svg","icon_size":"extra-large","width":24,"width_mobile":24},"blocks":{"text_Qy7emB":{"type":"text","settings":{"text":"<p>Memory foam geeft je binnenkussen een stevige, veerkrachtige basis. De vulling vormt zich prettig en zorgt ervoor dat je sierkussen mooi vol en in model blijft.<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"100%","text_alignment":"left","width_mobile":"100%","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_Qy7emB"]},"accordion_row_CtLVMb":{"type":"_accordion-row","settings":{"text":"Veren & dons","open_row_by_default":false,"icon":"none","image_upload":"shopify:\/\/shop_images\/veer-wit.svg","icon_size":"extra-large","width":24,"width_mobile":24},"blocks":{"text_7piCGN":{"type":"text","settings":{"text":"<p>Veren en dons geven een natuurlijk, zacht en soepel gevoel. De combinatie zorgt voor een heerlijk comfortabel kussen dat je eenvoudig kunt opschudden en in model kunt brengen.<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"100%","text_alignment":"left","width_mobile":"100%","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_7piCGN"]}},"block_order":["accordion_row_xJi4Li","accordion_row_GgxWiJ","accordion_row_CtLVMb"]}},"block_order":["group_F74RwN","accordion_QjFmNG"]}},"block_order":["image_card_JcL8KX","group_ri6qwJ"],"name":"t:names.faqs_preset_image","settings":{"container":"page-width--full","content_direction":"row","vertical_on_mobile":true,"horizontal_alignment":"center","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":0,"row_gap":0,"column_gap_mobile":0,"row_gap_mobile":0,"use_color_scheme_in_container":false,"color_scheme":"scheme-inverse","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"device":"mobile","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0}},"testimonials_myq9fq":{"type":"testimonials","blocks":{"testimonial_VieFqa":{"type":"testimonial","settings":{"design":"inline","show_image":false,"image_ratio":"adapt","image_ratio_mobile":"adapt","image_away_from_edge":false,"enable_image_stretch":true,"image_border_radius":0,"product":"","inherit_color_scheme":false,"color_scheme":"scheme-1","border_radius":20},"blocks":{"static-testimonial-text":{"type":"_simple-text","static":true,"settings":{"text":"<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"paragraph","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","padding-block-start":0,"padding-block-end":12,"mobile-padding-scale":100,"animation_type":"none","animation_delay":250},"blocks":{}},"static-testimonial-info":{"type":"_author-info","static":true,"settings":{"image_width":80,"image_width_mobile":60,"name":"Mooie kussens, top verzending","name_preset":"h6","icon":"check-circle","bio":"","bio_text_color":"subtext","padding-block-start":0,"padding-block-end":0,"mobile-padding-scale":80},"blocks":{}}},"block_order":[]},"testimonial_xUeXNa":{"type":"testimonial","settings":{"design":"inline","show_image":false,"image_ratio":"adapt","image_ratio_mobile":"adapt","image_away_from_edge":false,"enable_image_stretch":true,"image_border_radius":0,"product":"","inherit_color_scheme":false,"color_scheme":"scheme-1","border_radius":20},"blocks":{"static-testimonial-text":{"type":"_simple-text","static":true,"settings":{"text":"<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"paragraph","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","padding-block-start":0,"padding-block-end":12,"mobile-padding-scale":100,"animation_type":"none","animation_delay":250},"blocks":{}},"static-testimonial-info":{"type":"_author-info","static":true,"settings":{"image_width":80,"image_width_mobile":60,"name":"Mooie kussens, top verzending","name_preset":"h6","icon":"check-circle","bio":"","bio_text_color":"subtext","padding-block-start":0,"padding-block-end":0,"mobile-padding-scale":80},"blocks":{}}},"block_order":[]},"testimonial_3WJQ3A":{"type":"testimonial","settings":{"design":"inline","show_image":false,"image_ratio":"adapt","image_ratio_mobile":"adapt","image_away_from_edge":false,"enable_image_stretch":true,"image_border_radius":0,"product":"","inherit_color_scheme":false,"color_scheme":"scheme-1","border_radius":20},"blocks":{"static-testimonial-text":{"type":"_simple-text","static":true,"settings":{"text":"<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"paragraph","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","padding-block-start":0,"padding-block-end":12,"mobile-padding-scale":100,"animation_type":"none","animation_delay":250},"blocks":{}},"static-testimonial-info":{"type":"_author-info","static":true,"settings":{"image_width":80,"image_width_mobile":60,"name":"Mooie kussens, top verzending","name_preset":"h6","icon":"check-circle","bio":"","bio_text_color":"subtext","padding-block-start":0,"padding-block-end":0,"mobile-padding-scale":80},"blocks":{}}},"block_order":[]},"section-header-vertical":{"type":"_section-header-vertical","static":true,"settings":{"horizontal_alignment_flex_direction_column":"flex-start","device":"desktop","padding-block-end":20,"padding-block-end-mobile":24},"blocks":{"text_bg6FiU":{"type":"text","name":"t:names.heading","settings":{"text":"<p>Hoe klanten ons beoordelen<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"h3","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"100%","text_alignment":"left","width_mobile":"100%","text_alignment_mobile":"center","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"fade-up","animation_delay":50},"blocks":{}}},"block_order":["text_bg6FiU"]}},"block_order":["testimonial_VieFqa","testimonial_xUeXNa","testimonial_3WJQ3A"],"name":"t:names.testimonials_carousel","settings":{"container":"fixed","type":"carousel","slides_per_view":"columns","columns":2,"column_gap":8,"row_gap":30,"enable_swipe_on_mobile":true,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":"1","column_gap_mobile":8,"row_gap_mobile":24,"color_scheme":"scheme-2","device":"desktop","padding-block-start":64,"padding-block-end":0,"padding-block-start-mobile":48,"padding-block-end-mobile":48}},"product_recently_viewed_xB8aRi":{"type":"product-recently-viewed","blocks":{"text_7UBqzg":{"type":"text","name":"t:names.header","settings":{"text":"<p>Recent bekeken:<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"h3","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"100%","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":24,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":60,"animation_type":"none","animation_delay":250},"blocks":{}},"product-card":{"type":"_product-card","static":true,"settings":{},"blocks":{}}},"block_order":["text_7UBqzg"],"name":"t:names.product_recently_viewed","settings":{"container":"fixed","type":"grid","columns_xxl":4,"product_count":4,"column_gap":10,"row_gap":10,"enable_swipe_on_mobile":true,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":"2","column_gap_mobile":8,"row_gap_mobile":8,"color_scheme":"scheme-2","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"device":"desktop","padding-block-start":64,"padding-block-end":64,"padding-inline-start":15,"padding-inline-end":15,"padding-block-start-mobile":48,"padding-block-end-mobile":48,"padding-inline-start-mobile":16,"padding-inline-end-mobile":16,"custom_columns":""}},"custom_section_baj3qN":{"type":"custom-section","blocks":{"group_yChLXK":{"type":"group","name":"t:names.section_header_vertical","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"center","column_gap":0,"row_gap":24,"enable_sticky_desktop":false,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":0,"row_gap_mobile":20,"device":"mobile","padding-block-start":0,"padding-block-end":60,"padding-inline-start":50,"padding-inline-end":50,"padding-block-start-mobile":0,"padding-block-end-mobile":24,"padding-inline-start-mobile":16,"padding-inline-end-mobile":16},"blocks":{"text_Q9GwQc":{"type":"text","name":"t:names.heading","settings":{"text":"<p>Volg ons op instagram<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"h2","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":true,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}},"group_XUjhb3":{"type":"group","name":"t:names.group","settings":{"content_direction":"row","vertical_on_mobile":false,"horizontal_alignment":"center","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":8,"row_gap":8,"enable_sticky_desktop":false,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":8,"row_gap_mobile":8,"device":"desktop","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0},"blocks":{"text_PmjtRM":{"type":"text","name":"t:names.text","disabled":true,"settings":{"text":"<p>Blijf op de hoogte:<\/p>","highlight_style":"standard","highlight_font_style":"normal","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":84,"animation_type":"none","animation_delay":250},"blocks":{}},"button_hexF9T":{"type":"button","name":"t:names.button","settings":{"label":"BinnenkussenVoordeel","link":"https:\/\/www.instagram.com\/binnenkussenvoordeel\/","style":"outline","size":"medium","icon":"instagram","icon_only":false,"icon_style":"default","mobile_full_width":false,"animation_type":"none","animation_delay":250},"blocks":{}},"button_3TnLY7":{"type":"button","name":"t:names.button","settings":{"label":"GekopKussens","link":"https:\/\/www.instagram.com\/gekopkussens\/","style":"outline","size":"medium","icon":"instagram","icon_only":false,"icon_style":"default","mobile_full_width":false,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_PmjtRM","button_hexF9T","button_3TnLY7"]}},"block_order":["text_Q9GwQc","group_XUjhb3"]},"marquee_37ejDF":{"type":"_marquee","settings":{"direction":"forward","speed":0.2,"angle":0,"pause_on_hover":true,"show_edge_fade":true,"enable_parallax":false,"column_gap":10,"column_gap_mobile":8,"color_scheme":"","border_radius":0,"padding-block-start":0,"padding-block-end":0},"blocks":{"marquee_gallery_item_kcqkzg":{"type":"_marquee-gallery-item","name":"t:names.gallery_item","settings":{"type":"image","image":"shopify:\/\/shop_images\/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png","link":"","heading":"","type_preset":"paragraph","text_color":"text","width":260,"width_tablet":280,"width_mobile":150,"border_radius":20},"blocks":{}},"marquee_gallery_item_zXW4Yw":{"type":"_marquee-gallery-item","name":"t:names.gallery_item","settings":{"type":"image","image":"shopify:\/\/shop_images\/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp","link":"","heading":"","type_preset":"paragraph","text_color":"text","width":260,"width_tablet":280,"width_mobile":150,"border_radius":20},"blocks":{}},"marquee_gallery_item_rqrDYg":{"type":"_marquee-gallery-item","name":"t:names.gallery_item","settings":{"type":"image","image":"shopify:\/\/shop_images\/two-fluffy-white-pillows-stacked-on-a-bed-2026-03-25-04-33-41-utc.jpg","link":"","heading":"","type_preset":"paragraph","text_color":"text","width":260,"width_tablet":280,"width_mobile":150,"border_radius":20},"blocks":{}}},"block_order":["marquee_gallery_item_kcqkzg","marquee_gallery_item_zXW4Yw","marquee_gallery_item_rqrDYg"]}},"block_order":["group_yChLXK","marquee_37ejDF"],"custom_css":[".btn {text-transform: lowercase;}"],"name":"t:names.marquee","settings":{"container":"page-width--full","content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":0,"row_gap":0,"column_gap_mobile":0,"row_gap_mobile":0,"use_color_scheme_in_container":false,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"device":"desktop","padding-block-start":64,"padding-block-end":64,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":48,"padding-block-end-mobile":48,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0}}},"order":["main","custom_section_iaMWyr","product_recommendations_cGQqzw","custom_section_k8zAF6","testimonials_myq9fq","product_recently_viewed_xB8aRi","custom_section_baj3qN"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_style": "carousel",
+            "grid_layout": "grid-with-thumbnail",
+            "grid_gap": 10,
+            "carousel_thumbnail": "inside",
+            "thumbnail_media_aspect_ratio": "1/1",
+            "thumbnail_media_aspect_ratio_mobile": "1/1",
+            "media_aspect_ratio": "1/1",
+            "media_radius": 14,
+            "video_autoplay": false,
+            "enable_zoom": true,
+            "hide_variants": false,
+            "extend_media": false
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "row_gap": 24,
+            "row_gap_mobile": 20,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {
+            "breadcrumbs_4zRHqF": {
+              "type": "_breadcrumbs",
+              "name": "t:names.breadcrumbs",
+              "settings": {
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            },
+            "product_information_group_zx4NRb": {
+              "type": "_product-information-group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 12,
+                "row_gap": 20,
+                "column_gap_mobile": 12,
+                "row_gap_mobile": 16,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "product_title_fh9qwY": {
+                  "type": "_product-title",
+                  "name": "t:names.product_title",
+                  "settings": {
+                    "type_preset": "h2",
+                    "html_tag": "h1",
+                    "font": "var(--font-heading--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "product_inventory_CxbdNT": {
+                  "type": "_product-inventory",
+                  "name": "t:names.product_inventory",
+                  "settings": {
+                    "inventory_threshold": 10,
+                    "show_inventory_quantity": true,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "product_information_group_VXMCmd": {
+                  "type": "_product-information-group",
+                  "name": "t:names.group",
+                  "settings": {
+                    "content_direction": "column",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "column_gap": 12,
+                    "row_gap": 12,
+                    "column_gap_mobile": 12,
+                    "row_gap_mobile": 12,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "product_description_zxj7Nk": {
+                      "type": "_product-description",
+                      "name": "t:names.description",
+                      "settings": {
+                        "text": "{{ closest.product.description }}",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "padding-block-start": 7,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "product_description_zxj7Nk"
+                  ]
+                }
+              },
+              "block_order": [
+                "product_title_fh9qwY",
+                "product_inventory_CxbdNT",
+                "product_information_group_VXMCmd"
+              ]
+            },
+            "variant_picker_NYNfW9": {
+              "type": "_variant-picker",
+              "name": "t:names.variant_picker",
+              "disabled": true,
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "show_variant_image": false,
+                "swatch_shape": "square",
+                "swatch_width": 52,
+                "swatch_height": 32,
+                "buttons_radius": 0,
+                "size_chart_title": "Size",
+                "size_chart_page": "product-size-chart",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_price_kYhqcf": {
+              "type": "_product-price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h3",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_MWJW8a": {
+              "type": "_buy-buttons",
+              "name": "t:names.buy_buttons",
+              "settings": {
+                "gift_card_form": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity-selector": {
+                  "type": "_quantity-selector",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "_add-to-card-button",
+                  "static": true,
+                  "settings": {
+                    "style": "primary"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "_accelerated-checkout",
+                  "disabled": true,
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "button_HCkRMq": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Shop onze voordeelbundels",
+                "link": "#shopify-section-template--29402397245773__product_recommendations_cGQqzw",
+                "style": "outline",
+                "size": "large",
+                "icon": "none",
+                "icon_only": false,
+                "icon_style": "default",
+                "mobile_full_width": true,
+                "custom_class": "btn-bundle-cta",
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "group_YDc8KE": {
+              "type": "group",
+              "name": "Policies",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "center",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 27,
+                "row_gap": 6,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 73,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "scheme-1",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
+                "column_gap_mobile": 24,
+                "row_gap_mobile": 12,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 0,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "group_kmCAJc": {
+                  "type": "group",
+                  "name": "t:names.group",
+                  "settings": {
+                    "content_direction": "row",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "center",
+                    "column_gap": 11,
+                    "row_gap": 8,
+                    "enable_sticky_desktop": false,
+                    "width": "fit-content",
+                    "custom_width": 20,
+                    "width_mobile": "fit-content",
+                    "custom_width_mobile": 100,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "enable_swipe_on_mobile": false,
+                    "swipe_custom_width_column": false,
+                    "swipe_column_width": 76,
+                    "columns_mobile": 2,
+                    "column_gap_mobile": 12,
+                    "row_gap_mobile": 8,
+                    "device": "desktop",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "padding-block-start-mobile": 0,
+                    "padding-block-end-mobile": 0,
+                    "padding-inline-start-mobile": 0,
+                    "padding-inline-end-mobile": 0
+                  },
+                  "blocks": {
+                    "icon_8nYx8X": {
+                      "type": "icon",
+                      "name": "t:names.icon",
+                      "settings": {
+                        "icon": "package",
+                        "image_upload": "shopify://shop_images/doos.svg",
+                        "icon_size": "custom-size",
+                        "width": 16,
+                        "width_mobile": 14,
+                        "link": "",
+                        "round_shape": false
+                      },
+                      "blocks": {}
+                    },
+                    "text_3JgwqJ": {
+                      "type": "_shipping-cutoff-message",
+                      "name": "Shipping cutoff message",
+                      "settings": {
+                        "cutoff_hour": 16,
+                        "cutoff_minute": 0,
+                        "window_start_hour": 3,
+                        "countdown_text": "binnen [countdown] besteld, morgen in huis.",
+                        "static_text": "Voor 16:00 uur besteld, morgen in huis"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "icon_8nYx8X",
+                    "text_3JgwqJ"
+                  ]
+                },
+                "group_tDdQwH": {
+                  "type": "group",
+                  "name": "t:names.group",
+                  "disabled": true,
+                  "settings": {
+                    "content_direction": "row",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "center",
+                    "column_gap": 12,
+                    "row_gap": 8,
+                    "enable_sticky_desktop": false,
+                    "width": "fit-content",
+                    "custom_width": 20,
+                    "width_mobile": "fit-content",
+                    "custom_width_mobile": 100,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "enable_swipe_on_mobile": false,
+                    "swipe_custom_width_column": false,
+                    "swipe_column_width": 76,
+                    "columns_mobile": 2,
+                    "column_gap_mobile": 12,
+                    "row_gap_mobile": 8,
+                    "device": "desktop",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "padding-block-start-mobile": 0,
+                    "padding-block-end-mobile": 0,
+                    "padding-inline-start-mobile": 0,
+                    "padding-inline-end-mobile": 0
+                  },
+                  "blocks": {
+                    "icon_UwbpmT": {
+                      "type": "icon",
+                      "name": "t:names.icon",
+                      "settings": {
+                        "icon": "chat-teardrop",
+                        "icon_size": "custom-size",
+                        "width": 28,
+                        "width_mobile": 28,
+                        "link": "",
+                        "round_shape": false
+                      },
+                      "blocks": {}
+                    },
+                    "text_VrT8cz": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Persoonlijke klantenservice</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "text",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "icon_UwbpmT",
+                    "text_VrT8cz"
+                  ]
+                },
+                "group_wXJd6h": {
+                  "type": "group",
+                  "name": "t:names.group",
+                  "disabled": true,
+                  "settings": {
+                    "content_direction": "row",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "center",
+                    "column_gap": 12,
+                    "row_gap": 8,
+                    "enable_sticky_desktop": false,
+                    "width": "fit-content",
+                    "custom_width": 20,
+                    "width_mobile": "fit-content",
+                    "custom_width_mobile": 100,
+                    "inherit_color_scheme": true,
+                    "color_scheme": "",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "enable_swipe_on_mobile": false,
+                    "swipe_custom_width_column": false,
+                    "swipe_column_width": 76,
+                    "columns_mobile": 2,
+                    "column_gap_mobile": 12,
+                    "row_gap_mobile": 8,
+                    "device": "desktop",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "padding-block-start-mobile": 0,
+                    "padding-block-end-mobile": 0,
+                    "padding-inline-start-mobile": 0,
+                    "padding-inline-end-mobile": 0
+                  },
+                  "blocks": {
+                    "icon_7CdXmV": {
+                      "type": "icon",
+                      "name": "t:names.icon",
+                      "settings": {
+                        "icon": "cart",
+                        "icon_size": "custom-size",
+                        "width": 28,
+                        "width_mobile": 28,
+                        "link": "",
+                        "round_shape": false
+                      },
+                      "blocks": {}
+                    },
+                    "text_YPaWtU": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "<p>Nu bestellen, later betalen met Klarna</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "text",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "icon_7CdXmV",
+                    "text_YPaWtU"
+                  ]
+                }
+              },
+              "block_order": [
+                "group_kmCAJc",
+                "group_tDdQwH",
+                "group_wXJd6h"
+              ]
+            },
+            "pickup_availability_CgeNxU": {
+              "type": "_pickup-availability",
+              "name": "t:names.pickup_availability",
+              "settings": {
+                "border_radius": 10,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_video_testimonials_a37eGn": {
+              "type": "_product-video-testimonials",
+              "name": "t:names.video_testimonials",
+              "settings": {
+                "heading": "Video Feedbacks",
+                "heading_preset": "h5",
+                "video_ratio": "9/16",
+                "toggle_video_overlay": true,
+                "video_overlay_color": "#0000001a",
+                "video_border_radius": 20
+              },
+              "blocks": {}
+            },
+            "accordion_U9n4kg": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "open_behavior": "single",
+                "type_preset": "h5",
+                "style": "standard",
+                "card_color_scheme": "",
+                "icon_arrow": "caret",
+                "icon_style": "default",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_XENRWn": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Productdetails",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_6KJERV": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "{{ closest.product.metafields.custom.lange_beschrijving | metafield_tag }}",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "text",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_6KJERV"
+                  ]
+                },
+                "accordion_row_YYawgT": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wasvoorschriften",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_7UhNdx": {
+                      "type": "text",
+                      "name": "t:names.text",
+                      "settings": {
+                        "text": "{{ closest.product.metafields.custom.onderhoud | metafield_tag }}",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "text",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_7UhNdx"
+                  ]
+                },
+                "accordion_row_eMehRb": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Materiaal",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_JNT7ew": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>{{ closest.product.metafields.custom.materiaal.value }}</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_JNT7ew"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_XENRWn",
+                "accordion_row_YYawgT",
+                "accordion_row_eMehRb"
+              ]
+            }
+          },
+          "block_order": [
+            "breadcrumbs_4zRHqF",
+            "product_information_group_zx4NRb",
+            "variant_picker_NYNfW9",
+            "product_price_kYhqcf",
+            "buy_buttons_MWJW8a",
+            "button_HCkRMq",
+            "group_YDc8KE",
+            "pickup_availability_CgeNxU",
+            "product_video_testimonials_a37eGn",
+            "accordion_U9n4kg"
+          ]
+        }
+      },
+      "settings": {
+        "container": "page",
+        "media_position": "left",
+        "equal_columns": true,
+        "gap": 100,
+        "enable_sticky_add_to_cart": true,
+        "sticky_add_to_cart_inherit_color_scheme": true,
+        "sticky_add_to_cart_color_scheme": "",
+        "color_scheme": "scheme-2",
+        "device": "desktop",
+        "padding-block-start": 40,
+        "padding-block-end": 54,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 0
+      }
+    },
+    "custom_section_iaMWyr": {
+      "type": "custom-section",
+      "blocks": {
+        "grid_MiCt8g": {
+          "type": "grid",
+          "name": "t:names.grid",
+          "settings": {
+            "vertical_alignment": "start",
+            "columns_xxl": 4,
+            "column_gap": 20,
+            "row_gap": 23,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": true,
+            "swipe_custom_width_column": true,
+            "swipe_column_width": 90,
+            "columns_mobile": 1,
+            "column_gap_mobile": 13,
+            "row_gap_mobile": 12,
+            "device": "desktop",
+            "padding-block-start": 0,
+            "padding-block-end": 36,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 0,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0,
+            "custom_columns": ""
+          },
+          "blocks": {
+            "icon_box_kBqd7C": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_card",
+              "settings": {
+                "direction": "horizontal",
+                "text_align": "left",
+                "icon": "package",
+                "icon_image_upload": "shopify://shop_images/doos-paars.svg",
+                "icon_spacing": 12,
+                "icon_size": "custom-size",
+                "icon_width": 26,
+                "icon_width_mobile": 22,
+                "heading": "Gratis verzending vanaf €24,95",
+                "heading_preset": "h6",
+                "text": "<p>Snelle en betrouwbare bezorging</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 2,
+                "style": "standard",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_rUEKwq": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_card",
+              "settings": {
+                "direction": "horizontal",
+                "text_align": "left",
+                "icon": "chat-teardrop",
+                "icon_image_upload": "shopify://shop_images/chat-paars.svg",
+                "icon_spacing": 12,
+                "icon_size": "custom-size",
+                "icon_width": 26,
+                "icon_width_mobile": 22,
+                "heading": "Persoonlijke klantenservice",
+                "heading_preset": "h6",
+                "text": "<p>Binnen 48 uur reactie</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 2,
+                "style": "standard",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_DxkP6a": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_card",
+              "settings": {
+                "direction": "horizontal",
+                "text_align": "left",
+                "icon": "cart",
+                "icon_image_upload": "shopify://shop_images/winkelwagen-paars.svg",
+                "icon_spacing": 12,
+                "icon_size": "custom-size",
+                "icon_width": 26,
+                "icon_width_mobile": 22,
+                "heading": "Nu bestellen, later betalen",
+                "heading_preset": "h6",
+                "text": "<p>Betaal achteraf met Klarna</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 2,
+                "style": "standard",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_HTFCCb": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_card",
+              "settings": {
+                "direction": "horizontal",
+                "text_align": "left",
+                "icon": "check",
+                "icon_image_upload": "shopify://shop_images/kussen-paars.svg",
+                "icon_spacing": 12,
+                "icon_size": "custom-size",
+                "icon_width": 26,
+                "icon_width_mobile": 22,
+                "heading": "De nummer één in binnenkussens",
+                "heading_preset": "h6",
+                "text": "<p>Alleen de beste kwaliteit</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 2,
+                "style": "standard",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "icon_box_kBqd7C",
+            "icon_box_rUEKwq",
+            "icon_box_DxkP6a",
+            "icon_box_HTFCCb"
+          ]
+        }
+      },
+      "block_order": [
+        "grid_MiCt8g"
+      ],
+      "name": "t:names.icon_with_text",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 12,
+        "row_gap": 12,
+        "column_gap_mobile": 12,
+        "row_gap_mobile": 12,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-1",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 14,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 34,
+        "padding-block-end": 0,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 0,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16
+      }
+    },
+    "product_recommendations_cGQqzw": {
+      "type": "product-recommendations",
+      "blocks": {
+        "text_XmPjGi": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<p>Shop dit product als bundel</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 40,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 60,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_XmPjGi"
+      ],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "recommendations_type": "related",
+        "container": "fixed",
+        "layout_type": "carousel",
+        "columns_xxl": 4,
+        "product_count": 4,
+        "column_gap": 10,
+        "row_gap": 10,
+        "enable_swipe_on_mobile": true,
+        "swipe_custom_width_column": true,
+        "swipe_column_width": 68,
+        "columns_mobile": "1",
+        "column_gap_mobile": 8,
+        "row_gap_mobile": 8,
+        "color_scheme": "scheme-2",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 11,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 64,
+        "padding-block-end": 64,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
+        "padding-block-start-mobile": 64,
+        "padding-block-end-mobile": 64,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16,
+        "custom_columns": "lg:4"
+      }
+    },
+    "custom_section_k8zAF6": {
+      "type": "custom-section",
+      "blocks": {
+        "image_card_JcL8KX": {
+          "type": "image-card",
+          "name": "t:names.image_card",
+          "settings": {
+            "show_content_below": false,
+            "gap": 20,
+            "gap_mobile": 20,
+            "image": "shopify://shop_images/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "image_ratio": "4/3",
+            "image_ratio_mobile": "4/3",
+            "image_border": "none",
+            "image_border_width": 1,
+            "image_border_opacity": 100,
+            "image_border_radius": 0,
+            "card_link": "",
+            "edge_gap": "md",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "horizontal_alignment_mobile": "",
+            "vertical_alignment_flex_direction_column": "flex-end",
+            "column_gap": 12,
+            "column_gap_mobile": 12,
+            "row_gap": 32,
+            "row_gap_mobile": 24,
+            "width": "custom",
+            "custom_width": 50,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "enable_full_height": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "card_label": "",
+            "card_label_text_color": "#ffffff",
+            "card_label_in_content": false,
+            "enable_preload_image": false
+          },
+          "blocks": {
+            "subheading": {
+              "type": "_simple-text",
+              "name": "t:names.subheading",
+              "static": true,
+              "settings": {
+                "text": "",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "_simple-text",
+              "name": "t:names.heading",
+              "static": true,
+              "settings": {
+                "text": "",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_weight": "",
+                "font_size": 48,
+                "font_size_mobile": 34,
+                "line_height": "tight",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "loose",
+                "text_color": "text",
+                "padding-block-start": 12,
+                "padding-block-end": 24,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "button": {
+              "type": "button",
+              "disabled": true,
+              "static": true,
+              "settings": {
+                "label": "",
+                "link": "",
+                "style": "secondary",
+                "size": "medium",
+                "icon": "caret-right",
+                "icon_only": false,
+                "icon_style": "solid",
+                "mobile_full_width": false,
+                "custom_class": "",
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "group_ri6qwJ": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "center",
+            "column_gap": 0,
+            "row_gap": 0,
+            "enable_sticky_desktop": false,
+            "width": "custom",
+            "custom_width": 50,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-inverse",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": false,
+            "swipe_custom_width_column": false,
+            "swipe_column_width": 76,
+            "columns_mobile": 2,
+            "column_gap_mobile": 0,
+            "row_gap_mobile": 0,
+            "device": "desktop",
+            "padding-block-start": 64,
+            "padding-block-end": 64,
+            "padding-inline-start": 80,
+            "padding-inline-end": 80,
+            "padding-block-start-mobile": 40,
+            "padding-block-end-mobile": 40,
+            "padding-inline-start-mobile": 16,
+            "padding-inline-end-mobile": 16
+          },
+          "blocks": {
+            "group_F74RwN": {
+              "type": "group",
+              "name": "t:names.section_header_vertical",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 0,
+                "row_gap": 0,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
+                "column_gap_mobile": 0,
+                "row_gap_mobile": 0,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 40,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 24,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "text_NGGfgr": {
+                  "type": "text",
+                  "name": "t:names.subheading",
+                  "settings": {
+                    "text": "<p>Kies het beste voor jou</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h6",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                },
+                "text_ppgKgi": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>De juiste vulling maakt het verschil</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h2",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": true,
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_NGGfgr",
+                "text_ppgKgi"
+              ]
+            },
+            "accordion_QjFmNG": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "open_behavior": "single",
+                "type_preset": "h4",
+                "style": "card",
+                "card_color_scheme": "scheme-5",
+                "icon_arrow": "caret",
+                "icon_style": "solid",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_xJi4Li": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Polyester",
+                    "open_row_by_default": true,
+                    "sync_image": "shopify://shop_images/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png",
+                    "icon": "none",
+                    "image_upload": "shopify://shop_images/polyester-wit.svg",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_iH6MV6": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Een zachte en veelzijdige vulling die zorgt voor een comfortabel en luchtig binnenkussen. Polyester is een praktische keuze voor dagelijks gebruik en geeft je sierkussen een volle uitstraling.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "100%",
+                        "text_alignment": "left",
+                        "width_mobile": "100%",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_iH6MV6"
+                  ]
+                },
+                "accordion_row_GgxWiJ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Memory foam",
+                    "open_row_by_default": false,
+                    "sync_image": "shopify://shop_images/kussen-donker.png",
+                    "icon": "none",
+                    "image_upload": "shopify://shop_images/memory-foam-wit.svg",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_Qy7emB": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Memory foam geeft je binnenkussen een stevige, veerkrachtige basis. De vulling vormt zich prettig en zorgt ervoor dat je sierkussen mooi vol en in model blijft.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "100%",
+                        "text_alignment": "left",
+                        "width_mobile": "100%",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_Qy7emB"
+                  ]
+                },
+                "accordion_row_CtLVMb": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Veren & dons",
+                    "open_row_by_default": false,
+                    "sync_image": "shopify://shop_images/b27b3e7c-8c81-4fbd-9841-05d9f9778928-2026-08-21.png",
+                    "icon": "none",
+                    "image_upload": "shopify://shop_images/veer-wit.svg",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_7piCGN": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Veren en dons geven een natuurlijk, zacht en soepel gevoel. De combinatie zorgt voor een heerlijk comfortabel kussen dat je eenvoudig kunt opschudden en in model kunt brengen.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "100%",
+                        "text_alignment": "left",
+                        "width_mobile": "100%",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_7piCGN"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_xJi4Li",
+                "accordion_row_GgxWiJ",
+                "accordion_row_CtLVMb"
+              ]
+            }
+          },
+          "block_order": [
+            "group_F74RwN",
+            "accordion_QjFmNG"
+          ]
+        }
+      },
+      "block_order": [
+        "image_card_JcL8KX",
+        "group_ri6qwJ"
+      ],
+      "name": "t:names.faqs_preset_image",
+      "settings": {
+        "container": "page-width--full",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 0,
+        "row_gap": 0,
+        "column_gap_mobile": 0,
+        "row_gap_mobile": 0,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-inverse",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "mobile",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 0,
+        "padding-inline-start-mobile": 0,
+        "padding-inline-end-mobile": 0
+      }
+    },
+    "testimonials_myq9fq": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_VieFqa": {
+          "type": "testimonial",
+          "settings": {
+            "design": "inline",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "image_away_from_edge": false,
+            "enable_image_stretch": true,
+            "image_border_radius": 0,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "Mooie kussens, top verzending",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_xUeXNa": {
+          "type": "testimonial",
+          "settings": {
+            "design": "inline",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "image_away_from_edge": false,
+            "enable_image_stretch": true,
+            "image_border_radius": 0,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "Mooie kussens, top verzending",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_3WJQ3A": {
+          "type": "testimonial",
+          "settings": {
+            "design": "inline",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "image_away_from_edge": false,
+            "enable_image_stretch": true,
+            "image_border_radius": 0,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "Mooie kussens, top verzending",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "device": "desktop",
+            "padding-block-end": 20,
+            "padding-block-end-mobile": 24
+          },
+          "blocks": {
+            "text_bg6FiU": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Hoe klanten ons beoordelen</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "fade-up",
+                "animation_delay": 50
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_bg6FiU"
+          ]
+        }
+      },
+      "block_order": [
+        "testimonial_VieFqa",
+        "testimonial_xUeXNa",
+        "testimonial_3WJQ3A"
+      ],
+      "name": "t:names.testimonials_carousel",
+      "settings": {
+        "container": "fixed",
+        "type": "carousel",
+        "slides_per_view": "columns",
+        "columns": 2,
+        "column_gap": 8,
+        "row_gap": 30,
+        "enable_swipe_on_mobile": true,
+        "swipe_custom_width_column": false,
+        "swipe_column_width": 76,
+        "columns_mobile": "1",
+        "column_gap_mobile": 8,
+        "row_gap_mobile": 24,
+        "color_scheme": "scheme-2",
+        "device": "desktop",
+        "padding-block-start": 64,
+        "padding-block-end": 0,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48
+      }
+    },
+    "product_recently_viewed_xB8aRi": {
+      "type": "product-recently-viewed",
+      "blocks": {
+        "text_7UBqzg": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<p>Recent bekeken:</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 60,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_7UBqzg"
+      ],
+      "name": "t:names.product_recently_viewed",
+      "settings": {
+        "container": "fixed",
+        "type": "grid",
+        "columns_xxl": 4,
+        "product_count": 4,
+        "column_gap": 10,
+        "row_gap": 10,
+        "enable_swipe_on_mobile": true,
+        "swipe_custom_width_column": false,
+        "swipe_column_width": 76,
+        "columns_mobile": "2",
+        "column_gap_mobile": 8,
+        "row_gap_mobile": 8,
+        "color_scheme": "scheme-2",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 64,
+        "padding-block-end": 64,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16,
+        "custom_columns": ""
+      }
+    },
+    "custom_section_baj3qN": {
+      "type": "custom-section",
+      "blocks": {
+        "group_yChLXK": {
+          "type": "group",
+          "name": "t:names.section_header_vertical",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "center",
+            "column_gap": 0,
+            "row_gap": 24,
+            "enable_sticky_desktop": false,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": false,
+            "swipe_custom_width_column": false,
+            "swipe_column_width": 76,
+            "columns_mobile": 2,
+            "column_gap_mobile": 0,
+            "row_gap_mobile": 20,
+            "device": "mobile",
+            "padding-block-start": 0,
+            "padding-block-end": 60,
+            "padding-inline-start": 50,
+            "padding-inline-end": 50,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 24,
+            "padding-inline-start-mobile": 16,
+            "padding-inline-end-mobile": 16
+          },
+          "blocks": {
+            "text_Q9GwQc": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Volg ons op instagram</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": true,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "group_XUjhb3": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "center",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 8,
+                "row_gap": 8,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
+                "column_gap_mobile": 8,
+                "row_gap_mobile": 8,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 0,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "text_PmjtRM": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "disabled": true,
+                  "settings": {
+                    "text": "<p>Blijf op de hoogte:</p>",
+                    "highlight_style": "standard",
+                    "highlight_font_style": "normal",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 84,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                },
+                "button_hexF9T": {
+                  "type": "button",
+                  "name": "t:names.button",
+                  "settings": {
+                    "label": "BinnenkussenVoordeel",
+                    "link": "https://www.instagram.com/binnenkussenvoordeel/",
+                    "style": "outline",
+                    "size": "medium",
+                    "icon": "instagram",
+                    "icon_only": false,
+                    "icon_style": "default",
+                    "mobile_full_width": false,
+                    "custom_class": "",
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                },
+                "button_3TnLY7": {
+                  "type": "button",
+                  "name": "t:names.button",
+                  "settings": {
+                    "label": "GekopKussens",
+                    "link": "https://www.instagram.com/gekopkussens/",
+                    "style": "outline",
+                    "size": "medium",
+                    "icon": "instagram",
+                    "icon_only": false,
+                    "icon_style": "default",
+                    "mobile_full_width": false,
+                    "custom_class": "",
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_PmjtRM",
+                "button_hexF9T",
+                "button_3TnLY7"
+              ]
+            }
+          },
+          "block_order": [
+            "text_Q9GwQc",
+            "group_XUjhb3"
+          ]
+        },
+        "marquee_37ejDF": {
+          "type": "_marquee",
+          "settings": {
+            "direction": "forward",
+            "speed": 0.2,
+            "angle": 0,
+            "pause_on_hover": true,
+            "show_edge_fade": true,
+            "enable_parallax": false,
+            "column_gap": 10,
+            "column_gap_mobile": 8,
+            "color_scheme": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {
+            "marquee_gallery_item_kcqkzg": {
+              "type": "_marquee-gallery-item",
+              "name": "t:names.gallery_item",
+              "settings": {
+                "type": "image",
+                "image": "shopify://shop_images/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png",
+                "link": "",
+                "heading": "",
+                "type_preset": "paragraph",
+                "text_color": "text",
+                "width": 260,
+                "width_tablet": 280,
+                "width_mobile": 150,
+                "border_radius": 20
+              },
+              "blocks": {}
+            },
+            "marquee_gallery_item_zXW4Yw": {
+              "type": "_marquee-gallery-item",
+              "name": "t:names.gallery_item",
+              "settings": {
+                "type": "image",
+                "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
+                "link": "",
+                "heading": "",
+                "type_preset": "paragraph",
+                "text_color": "text",
+                "width": 260,
+                "width_tablet": 280,
+                "width_mobile": 150,
+                "border_radius": 20
+              },
+              "blocks": {}
+            },
+            "marquee_gallery_item_rqrDYg": {
+              "type": "_marquee-gallery-item",
+              "name": "t:names.gallery_item",
+              "settings": {
+                "type": "image",
+                "image": "shopify://shop_images/two-fluffy-white-pillows-stacked-on-a-bed-2026-03-25-04-33-41-utc.jpg",
+                "link": "",
+                "heading": "",
+                "type_preset": "paragraph",
+                "text_color": "text",
+                "width": 260,
+                "width_tablet": 280,
+                "width_mobile": 150,
+                "border_radius": 20
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "marquee_gallery_item_kcqkzg",
+            "marquee_gallery_item_zXW4Yw",
+            "marquee_gallery_item_rqrDYg"
+          ]
+        }
+      },
+      "block_order": [
+        "group_yChLXK",
+        "marquee_37ejDF"
+      ],
+      "custom_css": [
+        ".btn {text-transform: lowercase;}"
+      ],
+      "name": "t:names.marquee",
+      "settings": {
+        "container": "page-width--full",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 0,
+        "row_gap": 0,
+        "column_gap_mobile": 0,
+        "row_gap_mobile": 0,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 64,
+        "padding-block-end": 64,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 0,
+        "padding-inline-end-mobile": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_section_iaMWyr",
+    "product_recommendations_cGQqzw",
+    "custom_section_k8zAF6",
+    "testimonials_myq9fq",
+    "product_recently_viewed_xB8aRi",
+    "custom_section_baj3qN"
+  ]
+}
