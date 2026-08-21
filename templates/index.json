@@ -1137,8 +1137,8 @@
           "settings": {
             "collection": "binnenkussens-30x40-cm",
             "title": "30 x 50 cm",
-            "banner_image": "shopify://shop_images/img-7166.jpg",
-            "banner_title": "30 x 50cm"
+            "banner_image": "shopify://shop_images/kussen-donker.png",
+            "banner_title": ""
           }
         },
         "collection_pkpz4P": {
@@ -1147,7 +1147,7 @@
             "collection": "binnenkussens-40x40-cm",
             "title": "40 x 40 cm",
             "banner_image": "shopify://shop_images/kussen-donker.png",
-            "banner_title": "40 x 40 cm"
+            "banner_title": ""
           }
         },
         "collection_4e9MPL": {
@@ -1155,6 +1155,7 @@
           "settings": {
             "collection": "binnenkussens-45x45-cm",
             "title": "45x45 cm",
+            "banner_image": "shopify://shop_images/kussen-donker.png",
             "banner_title": ""
           }
         },
@@ -1163,6 +1164,7 @@
           "settings": {
             "collection": "binnenkussens-50x50-cm",
             "title": "60x60 cm",
+            "banner_image": "shopify://shop_images/kussen-donker.png",
             "banner_title": ""
           }
         }
