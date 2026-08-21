@@ -120,7 +120,7 @@
           <div class="swiper-wrapper{{ swipe_mobile_inner_classes }}">
             {%- if subcollections != blank -%}
               {%- for subcollection in subcollections -%}
-                {%- render 'collection-item-card', collection: subcollection -%}
+                {%- render 'collection-item-card', collection: subcollection, parent_title: collection.title -%}
               {%- endfor -%}
             {%- else -%}
               {%- for block in section.blocks -%}

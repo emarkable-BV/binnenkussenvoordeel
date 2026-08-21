@@ -1944,5 +1944,29 @@
         "label": "t:settings.show_currency_code"
       }
     ]
+  },
+  {
+    "name": "t:names.contact_block",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:content.contact_block_info"
+      },
+      {
+        "type": "text",
+        "id": "contact_heading",
+        "label": "t:settings.contact_heading"
+      },
+      {
+        "type": "text",
+        "id": "contact_phone",
+        "label": "t:settings.contact_phone"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "t:settings.contact_email"
+      }
+    ]
   }
 ]

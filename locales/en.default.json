@@ -9,6 +9,8 @@
  */
 {
   "accessibility": {
+    "call_phone_number": "Call {{ phone }}",
+    "email_address": "Email {{ email }}",
     "account": "Open account menu",
     "log_in": "Login",
     "cart": "Cart",

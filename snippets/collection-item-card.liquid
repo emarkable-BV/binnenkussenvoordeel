@@ -4,6 +4,7 @@
   dynamic source such as a list metafield instead of an editor block.
 
   @param {object} collection - The collection to display
+  @param {string} [parent_title] - Title of the parent collection; when the child collection's title starts with it, that part is trimmed from the displayed name
   @param {string} [image_ratio] - Aspect ratio for the image. Default 'auto'
   @param {string} [line_limit] - Text line limit modifier for the title. Default 'none'
   @param {number} [width] - Desktop width in px. Default 200
@@ -30,6 +31,23 @@
   unless collection_name != blank
     assign collection_name = 'placeholders.collection_title' | t
   endunless
+
+  assign display_name = collection_name
+  if parent_title != blank
+    assign name_parts = collection_name | split: ' - '
+    if name_parts.size == 2
+      assign part_a = name_parts[0] | strip
+      assign part_b = name_parts[1] | strip
+      if parent_title contains part_a or part_a contains parent_title
+        assign display_name = part_b
+      elsif parent_title contains part_b or part_b contains parent_title
+        assign display_name = part_a
+      endif
+    endif
+  endif
+  if display_name == blank
+    assign display_name = collection_name
+  endif
 
   assign collection_image = collection.image
   unless collection_image
@@ -67,7 +85,7 @@
       %}
     </div>
     <div class="collection-item__info flex-grow">
-      <div class="collection-item__name text-limit-{{ line_limit }}">{{ collection_name }}</div>
+      <div class="collection-item__name text-limit-{{ line_limit }}">{{ display_name }}</div>
     </div>
   </{{ tag }}>
 </div>

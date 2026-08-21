@@ -1,0 +1,153 @@
+{%- liquid
+  assign heading = settings.contact_heading
+  assign phone = settings.contact_phone
+  assign email = settings.contact_email
+  assign image = block.settings.image
+
+  assign phone_href = phone | remove: ' ' | remove: '-'
+-%}
+<div
+  class="contact-card border-style flex items-center{% unless block.settings.inherit_color_scheme %} color-{{ block.settings.color_scheme }}{% endunless %}"
+  style="{% render 'border-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if image != blank -%}
+    <div class="contact-card__image shrink-0 media-mask-clip">
+      {% render 'responsive-image',
+        mode: 'liquid',
+        image: image,
+        image_ratio: '1/1',
+        default_alt: heading,
+        media_width_desktop: '56px',
+        media_width_mobile: '56px'
+      %}
+    </div>
+  {%- endif -%}
+  <div class="contact-card__content flex flex-col">
+    {%- if heading != blank -%}
+      <div class="contact-card__heading h6">{{ heading }}</div>
+    {%- endif -%}
+    <div class="contact-card__details flex flex-col">
+      {%- if phone != blank -%}
+        <a
+          href="tel:{{ phone_href }}"
+          class="contact-card__row flex items-center gap-2 text-decoration-none color-current"
+          aria-label="{{ 'accessibility.call_phone_number' | t: phone: phone }}"
+        >
+          {% render 'icon', icon: 'phone', size: 'small' %}
+          <span>{{ phone }}</span>
+        </a>
+      {%- endif -%}
+      {%- if email != blank -%}
+        <a
+          href="mailto:{{ email }}"
+          class="contact-card__row flex items-center gap-2 text-decoration-none color-current"
+          aria-label="{{ 'accessibility.email_address' | t: email: email }}"
+        >
+          {% render 'icon', icon: 'email', size: 'small' %}
+          <span>{{ email }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% stylesheet %}
+.contact-card {
+  padding: 1.6rem 2.4rem;
+  gap: 1.6rem;
+  width: fit-content;
+  min-width: 32rem;
+}
+.contact-card__image {
+  width: 5.6rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.contact-card__heading {
+  font-weight: 600;
+}
+.contact-card__details {
+  gap: 0.8rem;
+}
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "t:names.contact_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.contact_block_info"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        { "value": "none", "label": "t:options.none" },
+        { "value": "solid", "label": "t:options.solid" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 10,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.contact_card"
+    }
+  ]
+}
+{% endschema %}

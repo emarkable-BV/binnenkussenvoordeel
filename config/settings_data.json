@@ -86,6 +86,9 @@
     "share_on_whatsapp": false,
     "share_on_email": false,
     "show_currency_code": false,
+    "contact_heading": "Vragen? Neem contact met ons op",
+    "contact_phone": "085 - 000 12 34",
+    "contact_email": "info@binnenkussenvoordeel.nl",
     "cart_item_image_ratio": "3/4",
     "content_for_index": [],
     "color_schemes": {
