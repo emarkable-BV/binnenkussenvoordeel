@@ -2926,6 +2926,10 @@ button:disabled,
 .contents {
   display: contents;
 }
+.announcement-bar__menu-link {
+  font-size: 0.85em;
+  opacity: 0.75;
+}
 .accordion-image__media {
   aspect-ratio: 4/3;
 }

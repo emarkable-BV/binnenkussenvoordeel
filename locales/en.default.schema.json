@@ -705,6 +705,7 @@
   },
   "content": {
     "link": "Link",
+    "menu": "Menu",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
     "size_chart_custom": "Use product metafield \"foxtheme.size_chart\" (type: page_reference) to show different size charts per product. [Add metafield](/admin/metafields/product)",
     "size_chart": "Size chart",
@@ -843,6 +844,7 @@
   },
   "info": {
     "custom_class": "Optional CSS class for custom styling of this specific button.",
+    "announcement_menu": "Shown subtly on the right, aligned with the announcement text. Hidden on mobile.",
     "sync_image": "When this row is placed inside an image-sync accordion section, opening it will display this image.",
     "sync_accordion_image": "When enabled, this image updates automatically when a row with a synced image is opened in an accordion elsewhere in this section.",
     "enable_gift_wrap_per_product": "When disabled, customers add one gift wrapping fee for the whole cart. When enabled, they can choose gift wrapping per product line in the cart (each line gets its own fee).",
