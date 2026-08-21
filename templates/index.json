@@ -22,6 +22,7 @@
             "image": "shopify://shop_images/Binnenkussens-2.jpg",
             "image_mobile": "shopify://shop_images/Binnenkussens-2_1.jpg",
             "toggle_overlay": true,
+            "sync_accordion_image": false,
             "overlay_color": "rgba(0,0,0,0)",
             "image_ratio": "21/9",
             "image_ratio_mobile": "21/9",
@@ -146,6 +147,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -164,6 +166,7 @@
             "image": "shopify://shop_images/Binnenkussens-1.png",
             "image_mobile": "shopify://shop_images/Binnenkussens-1_1.jpg",
             "toggle_overlay": false,
+            "sync_accordion_image": false,
             "overlay_color": "#ea6c001c",
             "image_ratio": "21/9",
             "image_ratio_mobile": "21/9",
@@ -288,6 +291,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -305,6 +309,7 @@
             "gap": 20,
             "gap_mobile": 20,
             "toggle_overlay": false,
+            "sync_accordion_image": false,
             "overlay_color": "#00000026",
             "image_ratio": "1/1",
             "image_ratio_mobile": "adapt",
@@ -429,6 +434,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -484,6 +490,7 @@
             "gap_mobile": 20,
             "image": "shopify://shop_images/Polyester.png",
             "toggle_overlay": true,
+            "sync_accordion_image": false,
             "overlay_color": "rgba(0,0,0,0)",
             "image_ratio": "21/9",
             "image_ratio_mobile": "21/9",
@@ -608,6 +615,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -625,6 +633,7 @@
             "gap_mobile": 20,
             "image": "shopify://shop_images/Memory_foam.png",
             "toggle_overlay": true,
+            "sync_accordion_image": false,
             "overlay_color": "rgba(0,0,0,0)",
             "image_ratio": "21/9",
             "image_ratio_mobile": "21/9",
@@ -749,6 +758,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -766,6 +776,7 @@
             "gap_mobile": 20,
             "image": "shopify://shop_images/Dons_en_veer.png",
             "toggle_overlay": true,
+            "sync_accordion_image": false,
             "overlay_color": "rgba(0,0,0,0)",
             "image_ratio": "21/9",
             "image_ratio_mobile": "21/9",
@@ -890,6 +901,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -1135,7 +1147,7 @@
         "collection_BaN8P9": {
           "type": "collection",
           "settings": {
-            "collection": "binnenkussens-30x40-cm",
+            "collection": "30x50-cm",
             "title": "30 x 50 cm",
             "banner_image": "shopify://shop_images/kussen-donker.png",
             "banner_title": ""
@@ -1144,7 +1156,7 @@
         "collection_pkpz4P": {
           "type": "collection",
           "settings": {
-            "collection": "binnenkussens-40x40-cm",
+            "collection": "40x40-cm",
             "title": "40 x 40 cm",
             "banner_image": "shopify://shop_images/kussen-donker.png",
             "banner_title": ""
@@ -1153,7 +1165,7 @@
         "collection_4e9MPL": {
           "type": "collection",
           "settings": {
-            "collection": "binnenkussens-45x45-cm",
+            "collection": "45x45-cm",
             "title": "45x45 cm",
             "banner_image": "shopify://shop_images/kussen-donker.png",
             "banner_title": ""
@@ -1162,8 +1174,8 @@
         "collection_HhQDtR": {
           "type": "collection",
           "settings": {
-            "collection": "binnenkussens-50x50-cm",
-            "title": "60x60 cm",
+            "collection": "50x50-cm",
+            "title": "50x50 cm",
             "banner_image": "shopify://shop_images/kussen-donker.png",
             "banner_title": ""
           }
@@ -1188,7 +1200,7 @@
         "heading_font_size_mobile": 15,
         "animation_type": "fade-up",
         "animation_delay": 250,
-        "product_count": 4,
+        "product_count": 3,
         "type": "carousel",
         "columns_xxl": 4,
         "column_gap": 20,
@@ -1577,6 +1589,7 @@
                     "icon_only": false,
                     "icon_style": "default",
                     "mobile_full_width": false,
+                    "custom_class": "",
                     "animation_type": "none",
                     "animation_delay": 250
                   },
@@ -1803,6 +1816,7 @@
                     "icon_only": false,
                     "icon_style": "default",
                     "mobile_full_width": false,
+                    "custom_class": "",
                     "animation_type": "none",
                     "animation_delay": 250
                   },
@@ -2029,6 +2043,7 @@
                     "icon_only": false,
                     "icon_style": "default",
                     "mobile_full_width": false,
+                    "custom_class": "",
                     "animation_type": "none",
                     "animation_delay": 250
                   },
@@ -2234,6 +2249,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -2493,6 +2509,7 @@
                         "icon_only": false,
                         "icon_style": "default",
                         "mobile_full_width": false,
+                        "custom_class": "",
                         "animation_type": "none",
                         "animation_delay": 250
                       },
@@ -2722,6 +2739,7 @@
                         "icon_only": false,
                         "icon_style": "default",
                         "mobile_full_width": false,
+                        "custom_class": "",
                         "animation_type": "none",
                         "animation_delay": 250
                       },
@@ -2951,6 +2969,7 @@
                         "icon_only": false,
                         "icon_style": "default",
                         "mobile_full_width": false,
+                        "custom_class": "",
                         "animation_type": "none",
                         "animation_delay": 250
                       },
@@ -3528,6 +3547,7 @@
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
+                "custom_class": "",
                 "animation_type": "none",
                 "animation_delay": 250
               },
@@ -3585,6 +3605,7 @@
                 "gap_mobile": 20,
                 "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
                 "toggle_overlay": true,
+                "sync_accordion_image": false,
                 "overlay_color": "#00000026",
                 "image_ratio": "4/5",
                 "image_ratio_mobile": "1/1",
@@ -3710,6 +3731,7 @@
                     "icon_only": true,
                     "icon_style": "solid",
                     "mobile_full_width": false,
+                    "custom_class": "",
                     "animation_type": "none",
                     "animation_delay": 250
                   },
@@ -3727,6 +3749,7 @@
                 "gap_mobile": 20,
                 "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
                 "toggle_overlay": true,
+                "sync_accordion_image": false,
                 "overlay_color": "#00000026",
                 "image_ratio": "4/5",
                 "image_ratio_mobile": "1/1",
@@ -3852,6 +3875,7 @@
                     "icon_only": true,
                     "icon_style": "solid",
                     "mobile_full_width": false,
+                    "custom_class": "",
                     "animation_type": "none",
                     "animation_delay": 250
                   },
@@ -3869,6 +3893,7 @@
                 "gap_mobile": 20,
                 "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
                 "toggle_overlay": true,
+                "sync_accordion_image": false,
                 "overlay_color": "#00000026",
                 "image_ratio": "4/5",
                 "image_ratio_mobile": "1/1",
@@ -3994,6 +4019,7 @@
                     "icon_only": true,
                     "icon_style": "solid",
                     "mobile_full_width": false,
+                    "custom_class": "",
                     "animation_type": "none",
                     "animation_delay": 250
                   },
@@ -4281,6 +4307,7 @@
               "settings": {
                 "text": "Hier een vraag",
                 "open_row_by_default": false,
+                "link": "",
                 "icon": "none",
                 "icon_size": "custom-size",
                 "width": 32,
@@ -4328,6 +4355,7 @@
               "settings": {
                 "text": "Hier een vraag",
                 "open_row_by_default": false,
+                "link": "",
                 "icon": "none",
                 "icon_size": "custom-size",
                 "width": 32,
@@ -4375,6 +4403,7 @@
               "settings": {
                 "text": "Hier een vraag",
                 "open_row_by_default": false,
+                "link": "",
                 "icon": "none",
                 "icon_size": "custom-size",
                 "width": 32,
@@ -4422,6 +4451,7 @@
               "settings": {
                 "text": "Hier een vraag",
                 "open_row_by_default": false,
+                "link": "",
                 "icon": "none",
                 "icon_size": "custom-size",
                 "width": 32,
