@@ -37,7 +37,27 @@
   capture section_header
     content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
   endcapture
+
+  assign subcollections = closest.collection.metafields.custom.subcollecties.value
+
+  assign is_collection_carousel = true
+  for block in section.blocks
+    unless block.type == '_collection-item'
+      assign is_collection_carousel = false
+    endunless
+  endfor
+
+  assign show_section = true
+  if is_collection_carousel and subcollections == blank
+    assign show_section = false
+  endif
+
+  assign items_count = section.blocks.size
+  if subcollections != blank
+    assign items_count = subcollections.size
+  endif
 -%}
+{%- if show_section -%}
 <div
   class="spacing-style border-style color-{{ section.settings.color_scheme }}"
   style="{% render 'spacing-style', settings: section.settings %}{% render 'border-style', settings: section.settings %}"
@@ -98,13 +118,19 @@
           class="swiper{% if section.settings.overflow_content == 'visible' %} overflow-visible{% endif %}{{ swipe_mobile_classes }}"
         >
           <div class="swiper-wrapper{{ swipe_mobile_inner_classes }}">
-            {%- for block in section.blocks -%}
-              {%- render block -%}
-            {%- endfor -%}
+            {%- if subcollections != blank -%}
+              {%- for subcollection in subcollections -%}
+                {%- render 'collection-item-card', collection: subcollection -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- for block in section.blocks -%}
+                {%- render block -%}
+              {%- endfor -%}
+            {%- endif -%}
           </div>
         </div>
       </div>
-      {%- if section.blocks.size > 1 and section.settings.control_type != 'none' -%}
+      {%- if items_count > 1 and section.settings.control_type != 'none' -%}
         {% render 'carousel-controls',
           ref: 'controls',
           type: navigation_type,
@@ -117,6 +143,7 @@
     </flex-carousel>
   </div>
 </div>
+{%- endif -%}
 {% schema %}
 {
   "name": "t:names.flex_carousel",

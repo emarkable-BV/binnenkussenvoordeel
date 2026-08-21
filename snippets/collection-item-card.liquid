@@ -1,0 +1,73 @@
+{% doc %}
+  Renders a single collection tile (image, title, link), matching the
+  appearance of the `_collection-item` block, for collections coming from a
+  dynamic source such as a list metafield instead of an editor block.
+
+  @param {object} collection - The collection to display
+  @param {string} [image_ratio] - Aspect ratio for the image. Default 'auto'
+  @param {string} [line_limit] - Text line limit modifier for the title. Default 'none'
+  @param {number} [width] - Desktop width in px. Default 200
+  @param {number} [width_mobile] - Mobile width in px. Default 150
+  @param {string} [border] - Border style, 'none' or 'solid'. Default 'solid'
+  @param {number} [border_width] - Border width in px. Default 1
+  @param {number} [border_opacity] - Border opacity percentage. Default 10
+  @param {number} [border_radius] - Border radius in px. Default 10
+
+  @example
+  {% render 'collection-item-card', collection: collection %}
+{% enddoc %}
+{%- liquid
+  assign image_ratio = image_ratio | default: 'auto'
+  assign line_limit = line_limit | default: 'none'
+  assign width = width | default: 200
+  assign width_mobile = width_mobile | default: 150
+  assign border = border | default: 'solid'
+  assign border_width = border_width | default: 1
+  assign border_opacity = border_opacity | default: 10
+  assign border_radius = border_radius | default: 10
+
+  assign collection_name = collection.title
+  unless collection_name != blank
+    assign collection_name = 'placeholders.collection_title' | t
+  endunless
+
+  assign collection_image = collection.image
+  unless collection_image
+    assign collection_image = collection.products.first.featured_media.preview_image
+  endunless
+
+  assign tag = 'div'
+  if collection != blank
+    assign tag = 'a'
+  endif
+-%}
+{%- capture inline_style -%}
+  --size-style-width: {{ width }};
+  {% render 'clamp-calculate-style', property_name: 'width', min_value: width_mobile, max_value: width %}
+{%- endcapture -%}
+<div
+  class="swiper-slide-custom size-style collection-item{% if border == 'solid' %} collection-item--shadow{% endif %}"
+  style="{{ inline_style }}"
+>
+  <{{ tag }}
+    {% if collection != blank %}
+      href="{{ collection.url }}"
+    {% endif %}
+    class="collection-item__link flex items-center gap-2 border-style focus-visible--absolute"
+    style="{% render 'border-style', border: border, border_width: border_width, border_opacity: border_opacity, border_radius: border_radius %}"
+  >
+    <div class="collection-item__image shrink-0 media-mask-clip">
+      {% render 'responsive-image',
+        mode: 'liquid',
+        image: collection_image,
+        image_ratio: image_ratio,
+        default_alt: collection_name,
+        media_width_desktop: '50px',
+        media_width_mobile: '40px'
+      %}
+    </div>
+    <div class="collection-item__info flex-grow">
+      <div class="collection-item__name text-limit-{{ line_limit }}">{{ collection_name }}</div>
+    </div>
+  </{{ tag }}>
+</div>
