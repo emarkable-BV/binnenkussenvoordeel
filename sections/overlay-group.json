@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:names.overlay_group",
   "type": "custom.overlay",
@@ -7,7 +16,8 @@
       "settings": {
         "summary_color_scheme": "scheme-inverse",
         "summary_show_seperator_line": false,
-        "enable_cart_recommendations": true,
+        "enable_cart_recommendations": false,
+        "cart_product_recommendations": [],
         "cart_recommendations_inherit_color_scheme": true,
         "cart_recommendations_color_scheme": "",
         "cart_recommendations_title": "Complete The Look",
