@@ -704,6 +704,7 @@
     "image_card_badge": "Image card with badge"
   },
   "content": {
+    "link": "Link",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
     "size_chart_custom": "Use product metafield \"foxtheme.size_chart\" (type: page_reference) to show different size charts per product. [Add metafield](/admin/metafields/product)",
     "size_chart": "Size chart",

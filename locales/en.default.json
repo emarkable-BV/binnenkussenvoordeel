@@ -314,6 +314,7 @@
     "view_all": "View all",
     "pcard_in_stock": "Direct beschikbaar",
     "pcard_out_of_stock": "Niet beschikbaar",
+    "accordion_row_link_label": "Bekijk meer",
     "timer": {
       "days": "days",
       "hours": "hours",
