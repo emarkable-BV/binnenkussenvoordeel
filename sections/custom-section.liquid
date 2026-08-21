@@ -38,9 +38,12 @@
     class="{{ content_wrapper_class | replace: '  ', ' ' | strip | strip_newlines }}"
     style="{{ content_wrapper_style | replace: '  ', ' ' | strip | strip_newlines }}"
   >
-    {% content_for 'blocks' %}
+    <accordion-image-sync class="contents">
+      {% content_for 'blocks' %}
+    </accordion-image-sync>
   </div>
 </div>
+<script src="{{ 'accordion-image-sync.js' | asset_url }}" type="module"></script>
 {% schema %}
 {
   "name": "t:names.custom_section",

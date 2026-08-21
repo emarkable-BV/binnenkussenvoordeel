@@ -1056,6 +1056,7 @@
             "gap_mobile": 20,
             "image": "shopify://shop_images/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png",
             "toggle_overlay": false,
+            "sync_accordion_image": true,
             "overlay_color": "#00000026",
             "image_ratio": "4/3",
             "image_ratio_mobile": "4/3",

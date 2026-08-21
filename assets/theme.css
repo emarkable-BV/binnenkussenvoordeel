@@ -2923,6 +2923,9 @@ button:disabled,
 #shopify-section-template--29402397245773__product_recommendations_cGQqzw {
   scroll-margin-top: 50px;
 }
+.contents {
+  display: contents;
+}
 .accordion-image__media {
   aspect-ratio: 4/3;
 }
