@@ -1,26 +1,25 @@
 class AccordionImageSync extends HTMLElement {
   connectedCallback() {
     this.imageEl = this.querySelector('[ref="displayImage"]');
-    this.handleClick = this.handleClick.bind(this);
-    this.addEventListener("click", this.handleClick);
+    this.detailsElements = Array.from(this.querySelectorAll("details"));
+    this.handleToggle = this.handleToggle.bind(this);
+
+    this.detailsElements.forEach((details) => {
+      details.addEventListener("toggle", this.handleToggle);
+    });
   }
 
   disconnectedCallback() {
-    this.removeEventListener("click", this.handleClick);
+    this.detailsElements?.forEach((details) => {
+      details.removeEventListener("toggle", this.handleToggle);
+    });
   }
 
-  handleClick(event) {
-    const summary = event.target.closest("summary");
-    if (!summary) return;
-
-    const details = summary.closest("details");
-    if (!details) return;
-
-    requestAnimationFrame(() => {
-      if (details.open && details.dataset.syncImage) {
-        this.updateImage(details.dataset.syncImage);
-      }
-    });
+  handleToggle(event) {
+    const details = event.target;
+    if (details.open && details.dataset.syncImage) {
+      this.updateImage(details.dataset.syncImage);
+    }
   }
 
   updateImage(url) {
