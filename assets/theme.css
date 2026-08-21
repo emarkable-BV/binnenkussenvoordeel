@@ -2242,6 +2242,19 @@ button:disabled,
   background: #adadad;
   color: #fff;
 }
+.badge--subtle {
+  background: rgb(var(--color-background)/85%);
+  color: rgb(var(--color-foreground)/70%);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.tab-banner__inner {
+  height: 100%;
+}
+.tab-banner__title {
+  inset-block-end: 1rem;
+  inset-inline-start: 1rem;
+}
 
 .product-badges {
   display: flex;

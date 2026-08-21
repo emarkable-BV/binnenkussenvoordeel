@@ -61,6 +61,18 @@
     assign onboarding = true
     assign product_title = 'placeholders.product_title' | t
   endif
+
+  assign materiaal = product.metafields.custom.materiaal.value
+  assign formaat = product.metafields.custom.formaat.value
+  assign has_custom_labels = false
+  if materiaal != blank or formaat != blank
+    assign has_custom_labels = true
+  endif
+
+  assign show_product_badges = false
+  if show_badges and product != blank
+    assign show_product_badges = true
+  endif
 %}
 {%- capture card_style -%}
   {%- if has_quick_add -%}
@@ -173,19 +185,33 @@
           <span class="badge badge--current">{{ 'content.current_item' | t }}</span>
         </div>
       {%- else -%}
-        {% if show_badges and product != blank %}
-          <product-badge data-product-id="{{ product.id }}" class="product-card__badges">
-            {% render 'product-badges',
-              product: product,
-              use_variant: false,
-              show_soldout_badge: settings.pcard_show_sold_out_badge,
-              sale_badge_type: settings.pcard_sale_badge_type,
-              show_sale_badge: settings.pcard_show_sale_badge,
-              show_custom_badges: settings.pcard_show_custom_badges,
-              badge_layout: settings.pcard_badge_layout
-            %}
-          </product-badge>
-        {% endif %}
+        {%- if show_product_badges or has_custom_labels -%}
+          <div class="product-card__badges flex flex-col items-start gap-1">
+            {% if show_product_badges %}
+              <product-badge data-product-id="{{ product.id }}">
+                {% render 'product-badges',
+                  product: product,
+                  use_variant: false,
+                  show_soldout_badge: settings.pcard_show_sold_out_badge,
+                  sale_badge_type: settings.pcard_sale_badge_type,
+                  show_sale_badge: settings.pcard_show_sale_badge,
+                  show_custom_badges: settings.pcard_show_custom_badges,
+                  badge_layout: settings.pcard_badge_layout
+                %}
+              </product-badge>
+            {% endif %}
+            {%- if has_custom_labels -%}
+              <div class="product-card__custom-labels flex flex-col items-start gap-1">
+                {%- if materiaal != blank -%}
+                  <span class="badge badge--subtle">{{ materiaal }}</span>
+                {%- endif -%}
+                {%- if formaat != blank -%}
+                  <span class="badge badge--subtle">{{ formaat }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       {%- endif -%}
       {%- if has_quick_view or has_quick_add -%}
         <div class="product-card__actions flex flex-col items-end justify-end gap-1 absolute pointer-events-none">
