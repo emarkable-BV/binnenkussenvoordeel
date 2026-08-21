@@ -211,6 +211,7 @@
     "desktop_content_width": "Desktop content width",
     "desktop_columns": "Columns",
     "mobile_full_width": "Enable full wide on mobile",
+    "custom_class": "CSS class",
     "button_mobile_full_width": "Enable button full wide on mobile",
     "mobile_columns": "Mobile columns",
     "enable_swipe_on_mobile": "Enable swipe on mobile",
@@ -829,6 +830,7 @@
     "progress_bar": "Progress bar"
   },
   "info": {
+    "custom_class": "Optional CSS class for custom styling of this specific button.",
     "enable_gift_wrap_per_product": "When disabled, customers add one gift wrapping fee for the whole cart. When enabled, they can choose gift wrapping per product line in the cart (each line gets its own fee).",
     "gift_wrap_sync_quantity": "When enabled, gift wrap quantity matches the product quantity. When disabled, gift wrap quantity is always 1.",
     "column_order": "Controls the display order of this column on mobile E.g: -9 to show first, 9 to show last.",

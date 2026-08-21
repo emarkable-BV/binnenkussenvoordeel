@@ -14,6 +14,7 @@
   @param {string} [attributes] - HTML attributes in string. Eg: type="submit" ref="toggle"
   @param {string} [content_after] - HTML string that insert before close tag button
   @param {block} [block] - Shopify block
+  @param {string} [extra_class] - Extra CSS class(es) to append to the button
 {% enddoc %}
 {%- unless label == blank and icon == 'none' -%}
   {%- liquid
@@ -50,9 +51,10 @@
         {%- endif -%}
       {%- endif -%}
     {%- endif -%}
+    {%- if extra_class != blank %} {{ extra_class }}{% endif -%}
   {%- endcapture -%}
   {%- capture wrap_attributes -%}
-    class="button-block block"
+    class="button-block block{% if extra_class != blank %} {{ extra_class }}-wrapper{% endif %}"
     {% if animation_type != 'none' %}
       data-motion="{{ animation_type }}"
       data-motion-delay="{{ animation_delay }}"

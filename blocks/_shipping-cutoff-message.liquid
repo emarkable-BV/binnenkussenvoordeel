@@ -1,0 +1,73 @@
+{% doc %}
+  Renders a live shipping-cutoff message: counts down to today's order cutoff
+  time, then switches to a static message outside the countdown window.
+  @example
+  {% content_for 'block', type: '_shipping-cutoff-message', id: 'shipping-cutoff' %}
+{% enddoc %}
+
+<shipping-cutoff-message
+  class="shipping-cutoff-message"
+  data-cutoff-hour="{{ block.settings.cutoff_hour }}"
+  data-cutoff-minute="{{ block.settings.cutoff_minute }}"
+  data-window-start-hour="{{ block.settings.window_start_hour }}"
+  data-countdown-template="{{ block.settings.countdown_text }}"
+  data-static-text="{{ block.settings.static_text }}"
+  {{ block.shopify_attributes }}
+>
+  <span ref="text">{{ block.settings.static_text }}</span>
+</shipping-cutoff-message>
+<script src="{{ 'shipping-cutoff-message.js' | asset_url }}" type="module"></script>
+
+{% schema %}
+{
+  "name": "Shipping cutoff message",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "cutoff_hour",
+      "label": "Cutoff hour",
+      "min": 0,
+      "max": 23,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "cutoff_minute",
+      "label": "Cutoff minute",
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "window_start_hour",
+      "label": "Countdown window start hour",
+      "min": 0,
+      "max": 23,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "countdown_text",
+      "label": "Countdown text",
+      "info": "Use [countdown] where the live timer should appear",
+      "default": "binnen [countdown] besteld, morgen in huis."
+    },
+    {
+      "type": "text",
+      "id": "static_text",
+      "label": "Static text (outside countdown window)",
+      "default": "Voor 16:00 uur besteld, morgen in huis"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shipping cutoff message"
+    }
+  ]
+}
+{% endschema %}

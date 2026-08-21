@@ -64,6 +64,7 @@
 
   assign materiaal = product.metafields.custom.materiaal.value
   assign formaat = product.metafields.custom.formaat.value
+  assign voordeelset = product.metafields.custom.voordeelset.value
   assign has_custom_labels = false
   if materiaal != blank or formaat != blank
     assign has_custom_labels = true
@@ -185,8 +186,11 @@
           <span class="badge badge--current">{{ 'content.current_item' | t }}</span>
         </div>
       {%- else -%}
-        {%- if show_product_badges or has_custom_labels -%}
+        {%- if show_product_badges or has_custom_labels or voordeelset != blank -%}
           <div class="product-card__badges flex flex-col items-start gap-1">
+            {%- if voordeelset != blank -%}
+              <span class="badge badge--popular">{{ voordeelset }} stuks</span>
+            {%- endif -%}
             {% if show_product_badges %}
               <product-badge data-product-id="{{ product.id }}">
                 {% render 'product-badges',
