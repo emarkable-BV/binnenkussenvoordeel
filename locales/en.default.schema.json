@@ -223,6 +223,7 @@
     "row_gap_mobile": "Row gap mobile",
     "custom_columns": "Custom columns",
     "open_row_by_default": "Open row by default",
+    "sync_image": "Synced image",
     "open_behavior": "Open behavior",
     "heading_preset": "Heading preset",
     "title_preset": "Title preset",
@@ -831,6 +832,7 @@
   },
   "info": {
     "custom_class": "Optional CSS class for custom styling of this specific button.",
+    "sync_image": "When this row is placed inside an image-sync accordion section, opening it will display this image.",
     "enable_gift_wrap_per_product": "When disabled, customers add one gift wrapping fee for the whole cart. When enabled, they can choose gift wrapping per product line in the cart (each line gets its own fee).",
     "gift_wrap_sync_quantity": "When enabled, gift wrap quantity matches the product quantity. When disabled, gift wrap quantity is always 1.",
     "column_order": "Controls the display order of this column on mobile E.g: -9 to show first, 9 to show last.",

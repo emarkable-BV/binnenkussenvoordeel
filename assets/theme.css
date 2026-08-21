@@ -2923,6 +2923,17 @@ button:disabled,
 #shopify-section-template--29402397245773__product_recommendations_cGQqzw {
   scroll-margin-top: 50px;
 }
+.accordion-image__media {
+  aspect-ratio: 4/3;
+}
+.accordion-image__img {
+  object-fit: cover;
+}
+@media (min-width: 768px) {
+  .accordion-image__media {
+    aspect-ratio: auto;
+  }
+}
 .btn-bundle-cta-wrapper {
   width: 100%;
   align-self: stretch;

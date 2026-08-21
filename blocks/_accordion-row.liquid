@@ -4,6 +4,9 @@
   {% if block.settings.open_row_by_default %}
     open
   {% endif %}
+  {%- if block.settings.sync_image != blank %}
+    data-sync-image="{{ block.settings.sync_image | image_url: width: 1200 }}"
+  {%- endif %}
   {{ block.shopify_attributes }}
 >
   <summary ref="summary[]" class="accordion__summary flex" on:click="/onSummaryClick">
@@ -45,6 +48,16 @@
       "id": "open_row_by_default",
       "label": "t:settings.open_row_by_default",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "sync_image",
+      "label": "t:settings.sync_image",
+      "info": "t:info.sync_image"
     },
     {
       "type": "header",
