@@ -8191,6 +8191,16 @@ body:not(.header-pinned) .header-scrolled .header[is=sticky-header] {
   .header__top {
     padding-block: 1rem;
   }
+  .header {
+    --header-grid-template: "icons-left logo icons" / auto auto 1fr;
+  }
+  .header__logo {
+    margin-inline-start: 0.8rem;
+  }
+  .header__icons--right .header__buttons > :is(.search-drawer-button, .header__icon, .cart-drawer-button) {
+    width: calc(var(--header-icon-size) + 0.2rem);
+    height: calc(var(--header-icon-size) + 0.2rem);
+  }
 }
 @media (min-width: 1024px) {
   .header {
