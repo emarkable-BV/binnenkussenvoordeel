@@ -1146,7 +1146,8 @@
           "settings": {
             "collection": "binnenkussens-40x40-cm",
             "title": "40 x 40 cm",
-            "banner_title": ""
+            "banner_image": "shopify://shop_images/kussen-donker.png",
+            "banner_title": "40 x 40 cm"
           }
         },
         "collection_4e9MPL": {
