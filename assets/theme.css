@@ -2248,6 +2248,33 @@ button:disabled,
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
+.badge--price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 7px 8px 5px;
+  border-radius: 0.6rem;
+  background: rgb(var(--color-sale-badge-background));
+}
+.badge--price-tag__now {
+  font-size: 2.3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+}
+.badge--price-tag__separator {
+  margin-inline-end: 0.1rem;
+}
+.badge--price-tag__minor {
+  font-size: 0.55em;
+  vertical-align: top;
+}
+.badge--price-tag__was {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: line-through;
+  color: rgb(255 255 255/70%);
+}
 .tab-banner {
   align-self: stretch;
 }
@@ -2277,6 +2304,11 @@ button:disabled,
 }
 .tab-banner__view-all.btn--plain .btn__text::after {
   background-color: #fff;
+}
+@media (max-width: 767.98px) {
+  .tab-banner {
+    display: none;
+  }
 }
 
 .product-badges {
@@ -2834,6 +2866,58 @@ button:disabled,
   inset-inline-start: 0;
   padding: var(--product-card-badges-padding, 1rem);
   z-index: 1;
+}
+.product-card__badges--sale {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+.product-card__price {
+  font-size: 1.15em;
+}
+.product-card__price .price--sale {
+  color: inherit;
+}
+.product-card__price .price--on-sale .price__sale {
+  display: flex;
+  gap: 4px;
+}
+.product-card__price .price__sale .price {
+  order: 2;
+}
+.product-card__price .price__sale .compare-at-price {
+  order: 1;
+  font-size: 0.75em;
+  opacity: 0.5;
+}
+.product-card__stock {
+  margin-block-start: 0.4rem;
+}
+.product-card__stock-dot {
+  flex-shrink: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  animation: product-card-stock-pulse 1.6s ease-in-out infinite;
+}
+.product-card__stock-dot--in-stock {
+  background-color: #2ecc71;
+}
+.product-card__stock-dot--out-of-stock {
+  background-color: #f5a623;
+}
+.product-card__stock-text {
+  font-size: 1.2rem;
+  color: rgb(var(--color-foreground)/70%);
+}
+@keyframes product-card-stock-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.75);
+  }
 }
 .product-card--horizontal {
   padding-inline-end: 0.1rem;

@@ -101,26 +101,38 @@
       assign popular_tags_list = settings.popular_badge_tags | newline_to_br | strip_newlines | split: '<br />'
     -%}
     {%- if on_sale and show_sale_badge -%}
-      {% liquid
-        assign sale_badge = ''
-        assign amount = 0
+      {%- if sale_badge_type == 'price_tag' -%}
+        {%- liquid
+          assign price_major = price | divided_by: 100
+          assign price_minor = price | modulo: 100
+          assign price_minor = price_minor | prepend: '00' | slice: -2, 2
+        -%}
+        <span class="badge badge--price-tag">
+          <span class="badge--price-tag__now">{{ price_major }}<span class="badge--price-tag__separator">,</span><span class="badge--price-tag__minor">{{ price_minor }}</span></span>
+          <span class="badge--price-tag__was">{{ compare_at_price | money_without_currency }}</span>
+        </span>
+      {%- else -%}
+        {% liquid
+          assign sale_badge = ''
+          assign amount = 0
 
-        case sale_badge_type
-          when 'percentage'
-            if compare_at_price > price
-              assign amount = compare_at_price | minus: price | times: 100 | divided_by: compare_at_price | append: '%'
-            endif
-            assign sale_badge = 'products.product.save_price_html' | t: amount: amount
-          when 'fixed_amount'
-            if compare_at_price > price
-              assign amount = compare_at_price | minus: price | money
-            endif
-            assign sale_badge = 'products.product.save_price_html' | t: amount: amount
-          else
-            assign sale_badge = 'products.product.on_sale' | t
-        endcase
-      %}
-      <span class="badge badge--sale">{{ sale_badge }}</span>
+          case sale_badge_type
+            when 'percentage'
+              if compare_at_price > price
+                assign amount = compare_at_price | minus: price | times: 100 | divided_by: compare_at_price | append: '%'
+              endif
+              assign sale_badge = 'products.product.save_price_html' | t: amount: amount
+            when 'fixed_amount'
+              if compare_at_price > price
+                assign amount = compare_at_price | minus: price | money
+              endif
+              assign sale_badge = 'products.product.save_price_html' | t: amount: amount
+            else
+              assign sale_badge = 'products.product.on_sale' | t
+          endcase
+        %}
+        <span class="badge badge--sale">{{ sale_badge }}</span>
+      {%- endif -%}
     {%- endif -%}
     {% if show_custom_badges %}
       {%- for tag in product.tags -%}

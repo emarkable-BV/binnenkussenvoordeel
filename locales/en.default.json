@@ -312,6 +312,8 @@
     "duplicate_message": "This product is already in the bundle.",
     "current_item": "Current item",
     "view_all": "View all",
+    "pcard_in_stock": "Direct beschikbaar",
+    "pcard_out_of_stock": "Niet beschikbaar",
     "timer": {
       "days": "days",
       "hours": "hours",

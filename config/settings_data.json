@@ -32,6 +32,7 @@
     "pcard_title_font_weight": "500",
     "pcard_price_font_weight": "700",
     "pcard_badge_text_transform": "none",
+    "pcard_sale_badge_type": "price_tag",
     "navigation_font": "body",
     "navigation_font_weight": "",
     "new_badge_background": "#AB85BC",
