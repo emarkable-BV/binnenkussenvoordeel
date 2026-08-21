@@ -38,7 +38,7 @@
     content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
   endcapture
 
-  assign subcollections = closest.collection.metafields.custom.subcollecties.value
+  assign subcollections = collection.metafields.custom.subcollecties.value
 
   assign is_collection_carousel = true
   for block in section.blocks
