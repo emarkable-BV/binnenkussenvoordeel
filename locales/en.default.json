@@ -302,6 +302,7 @@
     "limit_message": "You can only add a maximum of {{ maximum }} products in the bundle.",
     "duplicate_message": "This product is already in the bundle.",
     "current_item": "Current item",
+    "view_all": "View all",
     "timer": {
       "days": "days",
       "hours": "hours",

@@ -109,17 +109,29 @@
   {%- capture list_items -%}
     {%- if block.settings.banner_image != blank -%}
       <div class="f-column tab-banner{% if type == 'carousel' %} swiper-slide{% endif %}">
-        <div class="tab-banner__inner relative overflow-hidden rounded">
+        <div class="tab-banner__inner relative overflow-hidden">
           {% render 'responsive-image',
             mode: 'liquid',
             image: block.settings.banner_image,
             image_ratio: '1',
             sizes: media_sizes,
             default_alt: block.settings.banner_title,
-            class: 'tab-banner__media'
+            class: 'tab-banner__media',
+            img_class: 'w-full'
           %}
-          {%- if block.settings.banner_title != blank -%}
-            <span class="tab-banner__title badge badge--subtle absolute">{{ block.settings.banner_title }}</span>
+          <div class="tab-banner__top absolute flex flex-col items-start gap-2">
+            {%- if tab_title != blank -%}
+              <span class="badge badge--subtle">{{ tab_title }}</span>
+            {%- endif -%}
+            {%- if block.settings.banner_title != blank -%}
+              <h3 class="tab-banner__heading h3">{{ block.settings.banner_title }}</h3>
+            {%- endif -%}
+          </div>
+          {%- if collection != blank -%}
+            <a href="{{ collection.url }}" class="tab-banner__view-all btn btn--plain btn--medium btn--icon absolute">
+              <span class="btn__text">{{ 'content.view_all' | t }}</span>
+              {% render 'icon', icon: 'caret-right', size: 'small' %}
+            </a>
           {%- endif -%}
         </div>
       </div>

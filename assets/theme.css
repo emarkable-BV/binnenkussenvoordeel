@@ -2248,12 +2248,35 @@ button:disabled,
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
+.tab-banner {
+  align-self: stretch;
+}
+.tab-banner.swiper-slide {
+  height: auto;
+}
 .tab-banner__inner {
   height: 100%;
+  border-radius: var(--product-card-media-radius);
 }
-.tab-banner__title {
-  inset-block-end: 1rem;
+.tab-banner__media {
+  height: 100%;
+}
+.tab-banner__top {
+  inset-block-start: 1rem;
   inset-inline-start: 1rem;
+  inset-inline-end: 1rem;
+}
+.tab-banner__heading {
+  color: #fff;
+}
+.tab-banner__view-all.btn--plain {
+  --button-icon-gap: 0.3rem;
+  inset-block-end: 1.6rem;
+  inset-inline-start: 1.6rem;
+  color: #fff;
+}
+.tab-banner__view-all.btn--plain .btn__text::after {
+  background-color: #fff;
 }
 
 .product-badges {
