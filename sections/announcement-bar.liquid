@@ -60,9 +60,9 @@
       {%- endif -%}
     </carousel-slider>
     {%- if section.settings.menu != blank -%}
-      <nav class="announcement-bar__menu hidden md:flex items-center gap-4 shrink-0" aria-label="{{ section.settings.menu.title | escape }}">
+      <nav class="announcement-bar__menu hidden md:flex items-center gap-6 shrink-0" aria-label="{{ section.settings.menu.title | escape }}">
         {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}" class="announcement-bar__menu-link link link--underline">{{ link.title }}</a>
+          <a href="{{ link.url }}" class="announcement-bar__menu-link link">{{ link.title }}</a>
         {%- endfor -%}
       </nav>
     {%- endif -%}

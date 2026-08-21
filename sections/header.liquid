@@ -68,20 +68,9 @@
 
     <div class="header__icons header__icons--right flex justify-end">
       <div class="header__buttons flex items-center justify-center">
-        {%- if section.settings.enable_search_form -%}
-          {%- liquid
-            assign search_color_scheme = section.settings.color_scheme
-            unless settings.dialog_color_scheme_inherit
-              assign search_color_scheme = settings.dialog_color_scheme
-            endunless
-          -%}
-          <div class="header__search hidden xl:flex items-center">
-            {%- render 'predictive-search', context: 'header', color_scheme: search_color_scheme, form_style: section.settings.search_form_style -%}
-          </div>
-        {%- endif -%}
         <button
           on:click="#search-drawer/showDialog"
-          class="search-drawer-button flex xl:hidden items-center justify-center button-unstyled cursor-pointer"
+          class="search-drawer-button flex items-center justify-center button-unstyled cursor-pointer"
           aria-label="{{ 'actions.open_search_drawer' | t }}"
           aria-haspopup="dialog"
           aria-controls="search-drawer-dialog"

@@ -1174,7 +1174,7 @@ button[data-shopify-xr] {
 @media (min-width: 768px) {
   .cart-icon .cart-count--absolute {
     --cart-count-size: 2.2rem;
-    top: -0.2rem;
+    top: -0.6rem;
   }
   .cart-icon .cart-count--absolute.cart-count--small-medium {
     --cart-count-size: 2.4rem;
@@ -2929,6 +2929,13 @@ button:disabled,
 .announcement-bar__menu-link {
   font-size: 0.85em;
   opacity: 0.75;
+}
+@media (hover: hover) {
+  .announcement-bar__menu-link:hover {
+    text-decoration: underline;
+    text-decoration-color: inherit;
+    text-decoration-thickness: 0.1rem;
+  }
 }
 .accordion-image__media {
   aspect-ratio: 4/3;
@@ -8034,7 +8041,6 @@ more-payment-options-link a:hover {
 }
 
 .announcement__content {
-  padding-inline: 2rem;
   overflow-wrap: break-word;
 }
 
@@ -8146,6 +8152,21 @@ body:not(.header-pinned) .header-scrolled .header[is=sticky-header] {
 .header__buttons > :is(a, button, .header__icon) {
   width: var(--header-icon-size);
   height: var(--header-icon-size);
+}
+.header__icons--right .header__buttons {
+  gap: 0.6rem;
+}
+.header__icons--right .header__buttons > :is(.search-drawer-button, .header__icon, .cart-drawer-button) {
+  width: calc(var(--header-icon-size) + 0.8rem);
+  height: calc(var(--header-icon-size) + 0.8rem);
+  border: 0.1rem solid rgb(var(--color-border) / var(--color-border-alpha));
+  border-radius: 0.6rem;
+  transition: background-color 0.2s;
+}
+@media (hover: hover) {
+  .header__icons--right .header__buttons > :is(.search-drawer-button, .header__icon, .cart-drawer-button):hover {
+    background-color: #FEF8F5;
+  }
 }
 .header .toggle-navigation-button {
   opacity: 0;
