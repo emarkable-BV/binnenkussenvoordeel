@@ -407,7 +407,7 @@
         "device": "desktop",
         "padding-block-start": 0,
         "padding-block-end": 50,
-        "padding-block-start-mobile": 48,
+        "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 48
       }
     },
