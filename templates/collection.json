@@ -172,37 +172,7 @@
             "padding-inline-start-mobile": 16,
             "padding-inline-end-mobile": 16
           },
-          "blocks": {
-            "image_LNUnBc": {
-              "type": "image",
-              "name": "t:names.image",
-              "settings": {
-                "image": "{{ closest.collection.image }}",
-                "image_mobile": "{{ closest.collection.image }}",
-                "link": "",
-                "image_ratio": "16/9",
-                "image_ratio_mobile": "16/9",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "rounded": false,
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 9,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "mobile-padding-scale": 80
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "image_LNUnBc"
-          ]
+          "blocks": {}
         }
       },
       "block_order": [
