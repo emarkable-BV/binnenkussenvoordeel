@@ -53,6 +53,20 @@
           },
           "blocks": {}
         },
+        "quick_add_media_aaFDTj": {
+          "type": "_quick-add-media",
+          "name": "t:names.product_media",
+          "settings": {
+            "media_aspect_ratio": "auto",
+            "media_radius": 20,
+            "video_autoplay": false,
+            "hide_variants": false,
+            "padding-block-start": 0,
+            "padding-block-end": 16,
+            "mobile-padding-scale": 80
+          },
+          "blocks": {}
+        },
         "product_title_PQ88wz": {
           "type": "_product-title",
           "name": "t:names.product_title",
@@ -83,20 +97,6 @@
             "padding-block-end": 12,
             "padding-inline-start": 0,
             "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "quick_add_media_aaFDTj": {
-          "type": "_quick-add-media",
-          "name": "t:names.product_media",
-          "settings": {
-            "media_aspect_ratio": "auto",
-            "media_radius": 20,
-            "video_autoplay": false,
-            "hide_variants": false,
-            "padding-block-start": 0,
-            "padding-block-end": 16,
-            "mobile-padding-scale": 80
           },
           "blocks": {}
         },
@@ -139,25 +139,12 @@
           },
           "blocks": {}
         },
-        "product_inventory_kNhGiY": {
-          "type": "_product-inventory",
-          "name": "t:names.product_inventory",
-          "settings": {
-            "inventory_threshold": 10,
-            "show_inventory_quantity": true,
-            "padding-block-start": 0,
-            "padding-block-end": 16,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "buy_buttons_zVdFdm": {
           "type": "_buy-buttons",
           "name": "t:names.buy_buttons",
           "settings": {
-            "gift_card_form": true,
-            "padding-block-start": 0,
+            "gift_card_form": false,
+            "padding-block-start": 20,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
@@ -179,6 +166,7 @@
             },
             "accelerated-checkout": {
               "type": "_accelerated-checkout",
+              "disabled": true,
               "static": true,
               "settings": {},
               "blocks": {}
@@ -189,12 +177,11 @@
       },
       "block_order": [
         "product_badges_i9RtEF",
+        "quick_add_media_aaFDTj",
         "product_title_PQ88wz",
         "product_price_NG4dBt",
-        "quick_add_media_aaFDTj",
         "product_description_7UHDDt",
         "variant_picker_keyXB6",
-        "product_inventory_kNhGiY",
         "buy_buttons_zVdFdm"
       ],
       "settings": {
