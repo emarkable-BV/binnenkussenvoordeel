@@ -315,120 +315,6 @@
     "flex_carousel_zbemkx": {
       "type": "flex-carousel",
       "blocks": {
-        "collection_item_rhBiVJ": {
-          "type": "_collection-item",
-          "name": "t:names.collection_item",
-          "settings": {
-            "collection": "",
-            "image_ratio": "auto",
-            "title": "",
-            "line_limit": "none",
-            "width": 200,
-            "width_mobile": 150,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 10,
-            "border_radius": 10
-          },
-          "blocks": {}
-        },
-        "collection_item_zMaXBF": {
-          "type": "_collection-item",
-          "name": "t:names.collection_item",
-          "settings": {
-            "collection": "",
-            "image_ratio": "auto",
-            "title": "",
-            "line_limit": "none",
-            "width": 200,
-            "width_mobile": 150,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 10,
-            "border_radius": 10
-          },
-          "blocks": {}
-        },
-        "collection_item_dUeyyq": {
-          "type": "_collection-item",
-          "name": "t:names.collection_item",
-          "settings": {
-            "collection": "",
-            "image_ratio": "auto",
-            "title": "",
-            "line_limit": "none",
-            "width": 200,
-            "width_mobile": 150,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 10,
-            "border_radius": 10
-          },
-          "blocks": {}
-        },
-        "collection_item_Tb4tVk": {
-          "type": "_collection-item",
-          "name": "t:names.collection_item",
-          "settings": {
-            "collection": "",
-            "image_ratio": "auto",
-            "title": "",
-            "line_limit": "none",
-            "width": 200,
-            "width_mobile": 150,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 10,
-            "border_radius": 10
-          },
-          "blocks": {}
-        },
-        "collection_item_x8EXJE": {
-          "type": "_collection-item",
-          "name": "t:names.collection_item",
-          "settings": {
-            "collection": "",
-            "image_ratio": "auto",
-            "title": "",
-            "line_limit": "none",
-            "width": 200,
-            "width_mobile": 150,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 10,
-            "border_radius": 10
-          },
-          "blocks": {}
-        },
-        "collection_item_6nHQqx": {
-          "type": "_collection-item",
-          "name": "t:names.collection_item",
-          "settings": {
-            "collection": "",
-            "image_ratio": "auto",
-            "title": "",
-            "line_limit": "none",
-            "width": 200,
-            "width_mobile": 150,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 10,
-            "border_radius": 10
-          },
-          "blocks": {}
-        },
         "section-header-vertical": {
           "type": "_section-header-vertical",
           "disabled": true,
@@ -511,14 +397,6 @@
           ]
         }
       },
-      "block_order": [
-        "collection_item_rhBiVJ",
-        "collection_item_zMaXBF",
-        "collection_item_dUeyyq",
-        "collection_item_Tb4tVk",
-        "collection_item_x8EXJE",
-        "collection_item_6nHQqx"
-      ],
       "name": "t:names.flex_carousel_collections",
       "settings": {
         "container": "page-width",
