@@ -1,0 +1,214 @@
+{% comment %}
+  Note: Schema uses "marquee_postion" (typo) — keep for backward compatibility.
+  Changing to "marquee_position" would orphan existing stored settings when merchants update.
+{% endcomment %}
+
+{% liquid
+  assign order = section.blocks | find_index: 'id', block.id | plus: 1
+%}
+
+{% capture children %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+
+{% render 'marquee',
+  settings: block.settings,
+  children: children,
+  order: order,
+  marquee_position: block.settings.marquee_postion,
+  shopify_attributes: block.shopify_attributes
+%}
+
+{% schema %}
+{
+  "name": "t:names.marquee",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "_icon-with-text"
+    },
+    {
+      "type": "_lookbook-card"
+    },
+    {
+      "type": "_separator"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "marquee_postion",
+      "label": "t:settings.marquee_placement",
+      "options": [
+        { "value": "top", "label": "t:options.top" },
+        { "value": "bottom", "label": "t:options.bottom" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:settings.direction",
+      "options": [
+        {
+          "label": "t:options.forward",
+          "value": "forward"
+        },
+        {
+          "label": "t:options.reverse",
+          "value": "reverse"
+        }
+      ],
+      "default": "forward"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "t:settings.speed",
+      "min": 0.1,
+      "max": 3,
+      "unit": "x",
+      "step": 0.1,
+      "default": 0.3
+    },
+    {
+      "type": "range",
+      "id": "angle",
+      "label": "t:settings.rotate",
+      "min": -5,
+      "max": 5,
+      "step": 1,
+      "unit": "deg",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "t:settings.pause_on_hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_edge_fade",
+      "label": "t:settings.show_edge_fade",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "t:settings.enable_parallax",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.column_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.column_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.marquee",
+      "category": "t:categories.banners",
+      "settings": {
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      },
+      "blocks": {
+        "item_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>WELCOME TO OUR STORE</p>",
+            "type_preset": "h3"
+          }
+        },
+        "item_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>WELCOME TO OUR STORE</p>",
+            "type_preset": "h3"
+          }
+        }
+      },
+      "block_order": ["item_1", "item_2"]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,107 @@
+{% doc %}
+  @param {string} [label] - Button label
+  @param {string} [link] - Button url
+  @param {string} [icon] - Name of icon
+  @param {string} [icon_style] - Style for icon
+  @param {boolean} [icon_only] - Show only icon
+  @param {string} style - Style for button
+  @param {string} [size] - Button size
+  @param {boolean} [mobile_full_width] - Make button full wide on mobile
+  @param {string} [animation_type] - animation type
+  @param {number} [animation_delay] - animation delay
+  @param {boolean} [with_wrapper] - Wrap output in div.button-block when true
+  @param {string} [tag] - HTML tag
+  @param {string} [attributes] - HTML attributes in string. Eg: type="submit" ref="toggle"
+  @param {string} [content_after] - HTML string that insert before close tag button
+  @param {block} [block] - Shopify block
+{% enddoc %}
+{%- unless label == blank and icon == 'none' -%}
+  {%- liquid
+    assign animation_type = animation_type | default: 'none'
+    assign animation_delay = animation_delay | default: 250
+
+    assign size = size | default: 'medium'
+
+    assign icon = icon | default: 'none'
+    assign icon_only = icon_only | default: false, allow_false: true
+    assign icon_style = icon_style | default: 'default'
+    if style == 'plain' or icon_only
+      assign icon_style = 'default'
+    endif
+
+    assign element = 'div'
+    if animation_type != 'none' and settings.animations_enabled
+      assign element = 'motion-component'
+    endif
+
+    assign with_wrapper = with_wrapper | default: true, allow_false: true
+    assign tag = tag | default: 'a'
+  -%}
+  {%- capture class -%}
+    btn btn--{{ style }} btn--{{ size }}{% if mobile_full_width and icon_only == false %} btn--full-mobile{% endif %}
+    {%- if icon != 'none' -%}
+      {%- if icon_only %}
+        btn--icon-only
+      {%- else -%}
+        {%- if icon_style == 'solid' %}
+          btn--icon-solid
+        {%- elsif icon_style != 'solid' and label != blank %}
+          btn--icon
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- capture wrap_attributes -%}
+    class="button-block block"
+    {% if animation_type != 'none' %}
+      data-motion="{{ animation_type }}"
+      data-motion-delay="{{ animation_delay }}"
+    {% endif %}
+    {% if block != blank %}
+      {{ block.shopify_attributes }}
+    {% endif %}
+  {%- endcapture -%}
+  {%- capture button -%}
+    <{{ tag }}
+      {% if tag == 'a' %}
+        {% if link == blank %}
+          role="link"
+          aria-disabled="true"
+        {% else %}
+          href="{{ link }}"
+        {% endif %}
+      {% endif %}
+      {% if attributes %}
+        {{ attributes -}}
+      {% endif %}
+      {% if icon_only and label != blank %}
+        aria-label="{{ label | escape }}"
+      {% endif %}
+      class="{{ class | strip | strip_newlines }}"
+    >
+      {%- if label != blank -%}
+        {% if icon == 'none' or icon_only == false  %}
+          <span class="btn__text">{{ label }}</span>
+        {% endif %}
+      {%- endif -%}
+      {%- if icon != 'none' -%}
+        {%- if icon_style == 'default' -%}
+          {% render 'icon', icon: icon %}
+        {%- else -%}
+          <span class="btn__icon">
+            <span class="btn__icon-text">{{ label }}</span>
+            <span class="btn__icon-icon">
+              {% render 'icon', icon: icon %}
+            </span>
+          </span>
+        {%- endif -%}
+      {%- endif -%}
+      {{ content_after }}
+    </{{ tag }}>
+  {%- endcapture -%}
+  {%- if with_wrapper or block != blank -%}
+    <{{ element }} {{ wrap_attributes }}>{{ button }}</{{ element }}>
+  {%- else -%}
+    {{ button }}
+  {%- endif -%}
+{%- endunless -%}

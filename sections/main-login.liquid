@@ -1,0 +1,431 @@
+{% liquid
+  assign preset = section.settings.type_preset
+  capture heading_classes
+    if preset == 'custom'
+      echo ' custom-typography '
+      if section.settings.font_size != ''
+        echo ' custom-font-size '
+      endif
+    elsif preset == 'paragraph'
+      echo ' rte '
+    endif
+  endcapture
+
+  if section.settings.enable_shop_login_button == false
+    assign hide_shop_login_button = true
+  endif
+%}
+{%- capture heading_styles -%}
+  {% render 'typography-style', settings: section.settings %}
+{%- endcapture -%}
+
+<div
+  class="customer login-section section spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width">
+    <div id="recover">
+      <h1
+        tabindex="-1"
+        class="text-center {{ preset }} {{ heading_classes }}"
+        style="{{ heading_styles | strip | strip_newlines }}"
+      >
+        {{- 'customer.recover_password.title' | t -}}
+      </h1>
+
+      <div>
+        <p class="text-center color-subtext">
+          {{- 'customer.recover_password.subtext' | t -}}
+        </p>
+
+        {%- form 'recover_customer_password', class: 'flex flex-col' -%}
+          {% assign recover_success = form.posted_successfully? %}
+          <div class="form-field">
+            <label for="RecoverEmail" class="form-label">
+              {{ 'customer.login_page.email' | t }}
+            </label>
+            <input
+              required
+              type="email"
+              value=""
+              name="email"
+              id="RecoverEmail"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              {% if form.errors %}
+                aria-invalid="true"
+                aria-describedby="RecoverEmail-email-error"
+                autofocus
+              {% endif %}
+              placeholder="{{ 'customer.login_page.email' | t }}"
+              class="form-control w-full"
+            >
+            {%- if form.errors -%}
+              <span
+                id="RecoverEmail-email-error"
+                class="form-message form-message--small form-message--error gap-2"
+              >
+                {% render 'icon', icon: 'warning', class: 'shrink-0' %}
+                {{ form.errors.messages.form }}
+              </span>
+            {%- endif -%}
+          </div>
+
+          <button class="btn btn--primary w-full justify-center" type="submit">
+            <span class="btn__text">{{ 'customer.login_page.submit' | t }}</span>
+          </button>
+
+          <a href="#login" class="block button-unstyled link link--underline self-center">
+            {{ 'customer.login_page.cancel' | t }}
+          </a>
+        {%- endform -%}
+      </div>
+    </div>
+    <div id="login">
+      <h1
+        tabindex="-1"
+        class="text-center {{ preset }} {{ heading_classes }}"
+        style="{{ heading_styles | strip | strip_newlines }}"
+      >
+        {{- 'customer.login_page.title' | t -}}
+      </h1>
+
+      <div>
+        {%- if recover_success == true -%}
+          <p
+            class="form-message m-0 alert alert--success border-style gap-2"
+            tabindex="-1"
+            autofocus
+          >
+            {% render 'icon', icon: 'check', size: 'medium', class: 'shrink-0' %}
+            {{ 'customer.recover_password.success' | t }}
+          </p>
+        {%- endif -%}
+
+        {%- form 'customer_login', class: 'flex flex-col' -%}
+          {%- if form.errors -%}
+            <div class="form-error alert alert--error border-style">
+              <h2 class="form-message form-message--error h6 m-0 gap-2" tabindex="-1" autofocus>
+                <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                {% render 'icon', icon: 'warning', size: 'medium', class: 'shrink-0' %}
+                {{ 'customer.messages.error_heading' | t }}
+              </h2>
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          {%- if shop.features.login_with_shop_classic_customer_accounts? -%}
+            <section name="sign-in-with-shop-provider" class="form-field">
+              {{ shop | login_button: hide_button: hide_shop_login_button }}
+
+              {%- unless hide_shop_login_button -%}
+                <p class="text-center">
+                  {{ 'customer.login_page.alternate_provider_separator' | t }}
+                </p>
+              {%- endunless -%}
+            </section>
+          {%- endif -%}
+
+          <div class="form-field">
+            <label for="CustomerEmail" class="form-label">
+              {{ 'customer.login_page.email' | t }}
+            </label>
+            <input
+              required
+              type="email"
+              name="customer[email]"
+              id="CustomerEmail"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              {% if form.errors contains 'form' %}
+                aria-invalid="true"
+              {% endif %}
+              placeholder="{{ 'customer.login_page.email' | t }}"
+              class="form-control w-full"
+            >
+          </div>
+
+          {%- if form.password_needed -%}
+            <div class="form-field">
+              <label for="CustomerPassword" class="form-label">
+                {{ 'customer.login_page.password' | t }}
+              </label>
+              <input
+                required
+                type="password"
+                value=""
+                name="customer[password]"
+                id="CustomerPassword"
+                autocomplete="current-password"
+                {% if form.errors contains 'form' %}
+                  aria-invalid="true"
+                {% endif %}
+                placeholder="{{ 'customer.login_page.password' | t }}"
+                class="form-control w-full"
+              >
+            </div>
+
+            <a href="#recover" class="block button-unstyled link link--underline color-subtext">
+              {{ 'customer.login_page.forgot_password' | t }}
+            </a>
+          {%- endif -%}
+
+          <button class="btn btn--primary w-full justify-center" type="submit">
+            <span class="btn__text">{{ 'customer.login_page.sign_in' | t }}</span>
+          </button>
+
+          <a
+            href="{{ routes.account_register_url }}"
+            class="block button-unstyled link link--underline self-center"
+          >
+            {{ 'customer.login_page.create_account' | t }}
+          </a>
+        {%- endform -%}
+
+        {%- if shop.checkout.guest_login -%}
+          <div>
+            <hr>
+            <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
+
+            {%- form 'guest_login' -%}
+              <button class="btn btn--primary w-full">
+                <span class="btn__text">{{ 'customer.login_page.guest_continue' | t }}</span>
+              </button>
+            {%- endform -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.main_login",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_shop_login_button",
+      "label": "t:settings.enable_shop_login_button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.heading"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,308 @@
+{% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+  <link
+    rel="stylesheet"
+    href="{{ 'cart-drawer.css' | asset_url }}"
+    media="print"
+    onload="this.media='all'"
+  >
+  <link
+    rel="stylesheet"
+    href="{{ 'cart-modules.css' | asset_url }}"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}</noscript>
+  <noscript>{{ 'cart-modules.css' | asset_url | stylesheet_tag }}</noscript>
+  <script
+    src="{{ 'cart-drawer.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'cart-items.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  {% if settings.show_caculate_shipping_rate %}
+    <script
+      src="{{ 'cart-shipping.js' | asset_url }}"
+      type="module"
+      fetchpriority="low"
+    ></script>
+  {% endif %}
+  {% if section.settings.enable_cart_recommendations %}
+    <script
+      src="{{ 'product-recommendations.js' | asset_url }}"
+      type="module"
+      fetchpriority="low"
+    ></script>
+  {% endif %}
+  <cart-drawer-component
+    id="CartDrawer"
+    class="cart-drawer"
+    {% if settings.cart_type == 'drawer' %}
+      auto-open
+    {% endif %}
+    shopify-design-mode
+  >
+    <dialog
+      id="cart-drawer-dialog"
+      ref="dialog"
+      class="dialog dialog--drawer dialog--cart-drawer dialog--drawer-right overflow-hidden{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}"
+      scroll-lock
+    >
+      <div class="cart-drawer__inner">
+        {% liquid
+          assign gift_wrap_variant_id = ''
+          if settings.gift_wrap_product != blank
+            assign gift_wrap_product = all_products[settings.gift_wrap_product]
+            if gift_wrap_product != blank and gift_wrap_product.selected_or_first_available_variant != blank
+              assign gift_wrap_variant_id = gift_wrap_product.selected_or_first_available_variant.id
+            endif
+          endif
+        %}
+        <cart-items-component
+          class="cart-items-component"
+          data-section-id="{{ section.id }}"
+          data-gift-variant-id="{{ gift_wrap_variant_id }}"
+          data-gift-wrap-per-product="{{ settings.enable_gift_wrap_per_product }}"
+          data-gift-sync-quantity="{{ settings.gift_wrap_sync_quantity }}"
+        >
+          {%- if cart.empty? -%}
+            <div
+              class="cart-drawer__header relative flex items-center justify-between gap-2"
+              id="cart-drawer-header"
+            >
+              <span class="cart-drawer__heading cart__heading relative h3">
+                {{ 'content.cart_title' | t }}
+                {% render 'cart-count', class: 'cart-count--absolute cart-count--unstyled', in_drawer: true %}
+              </span>
+              <button
+                class="cart-drawer__close dialog__close shrink-0"
+                on:click="cart-drawer-component/close"
+              >
+                {% render 'icon', icon: 'close', size: 'large' %}
+              </button>
+            </div>
+            <div class="cart-drawer__content">
+              <div class="cart-drawer__empty flex flex-col justify-center items-center gap-6 xl:gap-8">
+                <div class="cart-drawer__empty-header flex items-center flex-col gap-3 xl:gap-4 justify-center">
+                  <span class="cart-drawer__empty-heading h3">
+                    {{ 'content.your_cart_is_empty' | t }}
+                  </span>
+                  {%- if settings.cart_empty_recommendation_collection != blank or shop.customer_accounts_enabled and customer == null -%}
+                    <div class="cart-drawer__empty-description color-subtext text-center">
+                      {%- if settings.cart_empty_recommendation_collection != blank -%}
+                        {{ 'content.cart_empty_recommendation_description' | t }}
+                      {%- elsif shop.customer_accounts_enabled and customer == null -%}
+                        {{ 'actions.log_in_html' | t: link: routes.account_login_url }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+                {% if settings.cart_empty_recommendation_collection != blank %}
+                  <div class="cart-drawer__empty-recommendation w-full">
+                    {% render 'cart-empty-recommendation', context: 'drawer', collections: settings.cart_empty_recommendation_collection %}
+                  </div>
+                {% endif %}
+                <a
+                  class="btn btn--primary btn--icon-solid cart-items__empty-button"
+                  href="{{ routes.all_products_collection_url }}"
+                >
+                  <span class="btn__text">{{ 'actions.continue_shopping' | t }}</span>
+                  <span class="btn__icon">
+                    <span class="btn__icon-text">{{ 'actions.continue_shopping' | t }}</span>
+                    <span class="btn__icon-icon">{% render 'icon', icon: 'caret-right' %}</span>
+                  </span>
+                </a>
+              </div>
+              <div class="cart-drawer__items">
+                {% render 'cart-products', context: 'drawer', section: section %}
+              </div>
+            </div>
+          {%- else -%}
+            <span
+              class="visually-hidden"
+              ref="cartItemCount"
+              aria-hidden="true"
+            >
+              {{- cart.item_count -}}
+            </span>
+            <div
+              class="cart-drawer__header relative flex items-center justify-between gap-2"
+              id="cart-drawer-header"
+            >
+              <span class="cart-drawer__heading cart__heading relative h3">
+                {{ 'content.cart_title' | t }}
+                {% render 'cart-count', class: 'cart-count--absolute cart-count--unstyled', in_drawer: true %}
+              </span>
+              <button
+                class="cart-drawer__close dialog__close flex shrink-0"
+                on:click="cart-drawer-component/close"
+              >
+                {% render 'icon', icon: 'close', size: 'large' %}
+              </button>
+            </div>
+            <div class="cart-drawer__content">
+              {% if settings.show_free_shipping_goal and settings.free_shipping_goal_amount != blank %}
+                <div class="cart-drawer__free-shipping-goal">
+                  {% render 'free-shipping-goal', section: section %}
+                </div>
+              {% endif %}
+              <div class="cart-drawer__items v-scrollable">
+                {% render 'cart-products', context: 'drawer', section: section %}
+              </div>
+              {%- capture wrapper_class -%}
+                {%- if section.settings.cart_recommendations_inherit_color_scheme -%}
+                  inherit-color-scheme
+                {%- else -%}
+                  color-{{ section.settings.cart_recommendations_color_scheme }}
+                {%- endif -%}
+              {%- endcapture -%}
+              <div class="cart-drawer__summary {{ wrapper_class }}">
+                {% render 'cart-drawer-summary', section: section %}
+              </div>
+            </div>
+          {%- endif -%}
+        </cart-items-component>
+      </div>
+    </dialog>
+  </cart-drawer-component>
+{% endif %}
+{% schema %}
+{
+  "name": "t:names.cart_drawer",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/TptoVOl)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.cart_summary"
+    },
+    {
+      "type": "color_scheme",
+      "id": "summary_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-inverse"
+    },
+    {
+      "type": "checkbox",
+      "id": "summary_show_seperator_line",
+      "label": "t:settings.show_seperator_line",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.cart_recommendations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cart_recommendations",
+      "label": "t:settings.enable_cart_recommendations",
+      "default": true
+    },
+    {
+      "type": "product_list",
+      "id": "cart_product_recommendations",
+      "label": "t:settings.product_recommendations",
+      "limit": 10,
+      "info": "t:info.cart_product_recommendations"
+    },
+    {
+      "type": "checkbox",
+      "id": "cart_recommendations_inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "cart_recommendations_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ section.settings.cart_recommendations_inherit_color_scheme == false }}"
+    },
+    {
+      "type": "text",
+      "id": "cart_recommendations_title",
+      "label": "t:settings.heading",
+      "default": "Complete The Look"
+    },
+    {
+      "type": "range",
+      "id": "cart_recommendations_limit",
+      "label": "t:settings.number_products_to_show",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "product_title_line_limit",
+      "label": "t:settings.product_title_line_limit",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.no_limit"
+        },
+        {
+          "value": "1-line",
+          "label": "t:options.1_line"
+        },
+        {
+          "value": "2-lines",
+          "label": "t:options.2_lines"
+        },
+        {
+          "value": "3-lines",
+          "label": "t:options.3_lines"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "t:settings.show_swatches",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:settings.show_product_vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_type",
+      "label": "t:settings.show_product_type",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "t:settings.show_quick_add",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.cart_addons"
+    },
+    {
+      "type": "checkbox",
+      "id": "cart_addons_inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "cart_addons_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ section.settings.cart_addons_inherit_color_scheme == false }}"
+    }
+  ]
+}
+{% endschema %}

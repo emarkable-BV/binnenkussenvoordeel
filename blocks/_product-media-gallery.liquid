@@ -1,0 +1,535 @@
+{% assign block_settings = block.settings %}
+{%- liquid
+  assign selected_product = closest.product
+  assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
+  assign first_3d_model = selected_product.media | where: 'media_type', 'model' | first
+
+  if block_settings.hide_variants
+    assign variant_images = selected_product.images | where: 'attached_to_variant?', true | map: 'src'
+  endif
+-%}
+
+{%- liquid
+  assign sorted_media = '' | split: ','
+  if selected_variant_media
+    assign sorted_media = sorted_media | concat: selected_product.media | where: 'id', selected_variant_media.id
+
+    for media in selected_product.media
+      if block_settings.hide_variants and variant_images contains media.src and sorted_media.size > 0
+        continue
+      endif
+
+      if media.id != selected_variant_media.id
+        assign found_media = selected_product.media | where: 'id', media.id
+        assign sorted_media = sorted_media | concat: found_media
+      endif
+    endfor
+  else
+    if block_settings.hide_variants and variant_images
+      for media in selected_product.media
+        unless variant_images contains media.src
+          assign found_media = selected_product.media | where: 'id', media.id
+          assign sorted_media = sorted_media | concat: found_media
+        endunless
+      endfor
+    else
+      assign sorted_media = selected_product.media
+    endif
+  endif
+
+  assign media_size = sorted_media.size
+
+  comment
+    Deferred rendering: only render first N slides in the live DOM.
+    Remaining slides go into <template> (inert — no custom element lifecycle,
+    no responsive-image connectedCallback, no Swiper overhead).
+    media-gallery.js progressively loads them after the page is interactive.
+
+    When hide_variants is on, sorted_media is already significantly reduced
+    (only selected variant featured + shared media). Skip deferred rendering
+    to avoid any edge cases with filtering + deferred timing.
+  endcomment
+  assign max_initial_slides = 8
+  if block_settings.hide_variants
+    assign max_initial_slides = 999
+  endif
+-%}
+
+{%- liquid
+  assign thumb_size_desktop = 55
+  assign thumb_size_mobile = 40
+  assign thumb_gap_desktop = 10
+  assign thumb_gap_mobile = 8
+  assign thumb_padding_desktop = 20
+  assign thumb_padding_mobile = 16
+  assign thumb_max_items = 4
+
+  assign effective_items = media_size
+  if effective_items > thumb_max_items
+    assign effective_items = thumb_max_items
+  endif
+
+  # Desktop calculation
+  assign items_w_desktop = effective_items | times: thumb_size_desktop
+  assign gaps_w_desktop = effective_items | minus: 1 | times: thumb_gap_desktop
+  assign base_w_desktop = items_w_desktop | plus: gaps_w_desktop | plus: thumb_padding_desktop
+
+  # Mobile calculation
+  assign items_w_mobile = effective_items | times: thumb_size_mobile
+  assign gaps_w_mobile = effective_items | minus: 1 | times: thumb_gap_mobile
+  assign base_w_mobile = items_w_mobile | plus: gaps_w_mobile | plus: thumb_padding_mobile
+
+  # Add extra width if needed
+  if media_size > thumb_max_items
+    assign extra_w_desktop = thumb_size_desktop | divided_by: 2
+    assign extra_w_mobile = thumb_size_mobile | divided_by: 2
+    assign thumb_wrapper_w_desktop = base_w_desktop | plus: extra_w_desktop
+    assign thumb_wrapper_w_mobile = base_w_mobile | plus: extra_w_mobile
+  else
+    assign thumb_wrapper_w_desktop = base_w_desktop
+    assign thumb_wrapper_w_mobile = base_w_mobile
+  endif
+-%}
+
+{%- liquid
+  assign mobile_control_class = ''
+  assign desktop_control_class = ''
+
+  assign has_grid_thumbs = false
+  if media_size > 1 and block_settings.grid_layout == 'grid-with-thumbnail' and block_settings.media_style == 'grid'
+    assign has_grid_thumbs = true
+  endif
+
+  assign has_carousel_thumbs = false
+  if media_size > 1 and block_settings.carousel_thumbnail != 'none'
+    assign has_carousel_thumbs = true
+    assign mobile_control_class = mobile_control_class | append: ' hidden'
+  endif
+
+  assign class = 'media-gallery media-gallery--main sticky-element' | append: ' media-gallery--' | append: block_settings.media_style | append: ' media-gallery--' | append: block_settings.grid_layout
+
+  assign container_class = 'media-gallery__carousel-container'
+  assign carousel_class = 'carousel media-gallery__carousel'
+  assign wrapper_class = 'media-gallery__carousel-wrapper' | append: ' media-gallery__carousel-wrapper--' | append: block_settings.carousel_thumbnail
+  assign carousel_thumbs_class = 'media-gallery__carousel-thumbnails' | append: ' media-gallery__carousel-thumbnails--' | append: block_settings.carousel_thumbnail
+
+  if block_settings.media_style == 'grid'
+    assign wrapper_class = wrapper_class | append: ' md:grid'
+    assign carousel_thumbs_class = carousel_thumbs_class | append: ' md:hidden'
+    assign desktop_control_class = desktop_control_class | append: ' md:hidden'
+  endif
+
+  if has_grid_thumbs
+    assign container_class = container_class | append: ' media-gallery--has-grid-thumbs'
+  endif
+
+  if block_settings.extend_media and section.settings.container == 'page'
+    assign class = class | append: ' media-gallery--extend'
+  endif
+
+  unless has_carousel_thumbs
+    assign carousel_class = carousel_class | append: ' carousel--mobile-visible'
+  endunless
+-%}
+
+<media-gallery
+  class="block {{ class }}"
+  style="--media-gap: {{ block_settings.grid_gap | divided_by: 10.0 }}rem; --media-radius: {{ block_settings.media_radius | divided_by: 10.0 }}rem;--media-carousel-thumbs-w-desktop: {{ thumb_wrapper_w_desktop }}px; --media-carousel-thumbs-w-mobile: {{ thumb_wrapper_w_mobile }}px;"
+  {% if block_settings.hide_variants %}
+    data-hide-variants="true"
+  {% endif %}
+>
+  <carousel-slider class="{{ carousel_class }}" ref="carousel">
+    <script type="application/json" ref="config">
+      {
+        "loop": false,
+        "pagination": false,
+        "counter": false,
+        "slidesPerView": "auto",
+        "autoHeight": {% if has_carousel_thumbs %}true{% else %}false{% endif %},
+        "spaceBetween": 8,
+        "counter": true,
+        "pagination": {
+          "type": "progressbar"
+        },
+        "breakpoints": {
+          "768": {
+            "autoHeight": true
+          }
+        },
+        "thumbnails": {
+          "enabled": true,
+          "slidesPerView": "auto",
+          {% if block_settings.carousel_thumbnail == 'inside' %}
+            "spaceBetween": 8
+          {% else %}
+            "spaceBetween": 5
+          {% endif %},
+          "breakpoints": {
+            "768": {
+              {% if block_settings.carousel_thumbnail == 'inside' %}
+                "spaceBetween": 10
+              {% else %}
+                "spaceBetween": 5
+              {% endif %}
+            }
+          }
+        }{% if block_settings.media_style == 'grid' %},
+        "destroyAbove": 768
+        {% endif %}
+      }
+    </script>
+    <div ref="container" class="swiper {{ container_class }}">
+      {% if has_grid_thumbs %}
+        {%- capture thumbnail_sizes -%}calc(120px){%- endcapture -%}
+        <div class="media-gallery__grid-thumbnails hidden md:block sticky-element">
+          {% for media in sorted_media %}
+            {%- liquid
+              assign thumb_class = 'media-gallery__item media-mask-clip relative button-unstyled'
+              if forloop.first
+                assign thumb_class = thumb_class | append: ' is-active'
+              endif
+            -%}
+            <button
+              type="button"
+              class="{{ thumb_class }}"
+              data-media-id="{{ media.id }}"
+              on:click="media-gallery/handleGridThumbClick"
+              {% if forloop.first %}
+                aria-current="true"
+              {% endif %}
+            >
+              {% render 'product-media',
+                media: media,
+                is_main_product_media: forloop.first,
+                preview_image_only: true,
+                image_ratio: block_settings.thumbnail_media_aspect_ratio,
+                image_ratio_mobile: block_settings.thumbnail_media_aspect_ratio_mobile,
+                sizes: thumbnail_sizes
+              %}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {%- assign media_col_ratio = 54.5 | divided_by: 100.0 -%}
+      {%- capture media_sizes -%}(min-width: 768px) calc(min(100vw, {{ settings.page_width }}px) * {{ media_col_ratio }} ), calc(100vw / 2){%- endcapture -%}
+      <div class="swiper-wrapper {{ wrapper_class }}">
+        {% for media in sorted_media %}
+          {% if forloop.index > max_initial_slides %}{% break %}{% endif %}
+          {% render 'product-media',
+            media: media,
+            image_ratio: block_settings.media_aspect_ratio,
+            is_main_product_media: forloop.first,
+            selected_product: selected_product,
+            first_3d_model: first_3d_model,
+            class: 'swiper-slide media-gallery__item media-mask-clip relative',
+            sizes: media_sizes,
+            enable_zoom_dialog: block_settings.enable_zoom
+          %}
+        {% endfor %}
+      </div>
+      {% if media_size > max_initial_slides %}
+        <template data-deferred-slides>
+          {% for media in sorted_media %}
+            {% if forloop.index > max_initial_slides %}
+              {% render 'product-media',
+                media: media,
+                image_ratio: block_settings.media_aspect_ratio,
+                selected_product: selected_product,
+                first_3d_model: first_3d_model,
+                class: 'swiper-slide media-gallery__item media-mask-clip relative',
+                sizes: media_sizes,
+                enable_zoom_dialog: block_settings.enable_zoom
+              %}
+            {% endif %}
+          {% endfor %}
+        </template>
+      {% endif %}
+
+      {% if media_size > 1 %}
+        {% render 'carousel-controls',
+          type_mobile: 'group',
+          type_desktop: 'absolute',
+          mobile_class: mobile_control_class,
+          desktop_class: desktop_control_class,
+          counter_mobile: true,
+          counter_desktop: false,
+          pagination_mobile: true,
+          pagination_desktop: false,
+          navigation_mobile: true,
+          navigation_desktop: true
+        %}
+      {% endif %}
+    </div>
+
+    {% if has_carousel_thumbs %}
+      <div
+        ref="thumbnails"
+        class="{{ carousel_thumbs_class }}"
+      >
+        <div class="swiper carousel__thumbnails-swiper">
+          <div class="swiper-wrapper">
+            {%- capture thumbnail_carousel_size -%}
+              (min-width: 768px) calc(100px), calc(80px)
+            {%- endcapture -%}
+            {% for media in sorted_media %}
+              {% if forloop.index > max_initial_slides %}{% break %}{% endif %}
+              {% render 'product-media',
+                media: media,
+                is_main_product_media: forloop.first,
+                image_ratio: block_settings.thumbnail_media_aspect_ratio,
+                image_ratio_mobile: block_settings.thumbnail_media_aspect_ratio_mobile,
+                preview_image_only: true,
+                class: 'swiper-slide media-gallery__item media-mask-clip relative carousel__thumbnail',
+                sizes: thumbnail_carousel_size
+              %}
+            {% endfor %}
+          </div>
+          {% if media_size > max_initial_slides %}
+            <template data-deferred-thumbnails>
+              {% for media in sorted_media %}
+                {% if forloop.index > max_initial_slides %}
+                  {% render 'product-media',
+                    media: media,
+                    image_ratio: block_settings.thumbnail_media_aspect_ratio,
+                    image_ratio_mobile: block_settings.thumbnail_media_aspect_ratio_mobile,
+                    preview_image_only: true,
+                    class: 'swiper-slide media-gallery__item media-mask-clip relative carousel__thumbnail',
+                    sizes: thumbnail_carousel_size
+                  %}
+                {% endif %}
+              {% endfor %}
+            </template>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </carousel-slider>
+  {%- if first_3d_model -%}
+    <button
+      class="btn btn--secondary btn--icon button-shopify-xr hidden"
+      type="button"
+      data-shopify-xr
+      data-shopify-model3d-id="{{ first_3d_model.id }}"
+      data-shopify-title="{{ selected_product.title | escape }}"
+      data-shopify-xr-hidden
+    >
+      {% render 'icon', icon: '3d-model' %}
+      <span class="btn__text">
+        {{ 'actions.view_in_your_space' | t }}
+      </span>
+    </button>
+    <link
+      id="ModelViewerStyle"
+      rel="stylesheet"
+      href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css"
+      media="print"
+      onload="this.media='all'"
+    >
+    <script>
+      window.ProductModel = {
+        loadShopifyXR() {
+          Shopify.loadFeatures([
+            {
+              name: 'shopify-xr',
+              version: '1.0',
+              onLoad: this.setupShopifyXR.bind(this),
+            },
+          ]);
+        },
+
+        setupShopifyXR(errors) {
+          if (errors) return;
+
+          if (!window.ShopifyXR) {
+            document.addEventListener('shopify_xr_initialized', () => this.setupShopifyXR());
+            return;
+          }
+
+          document.querySelectorAll('[id^="ProductModelJSON-"]').forEach((modelJSON) => {
+            window.ShopifyXR.addModels(JSON.parse(modelJSON.textContent));
+            modelJSON.remove();
+          });
+          window.ShopifyXR.setupXRElements();
+        },
+      };
+
+      window.ProductModel.loadShopifyXR();
+    </script>
+  {%- endif -%}
+</media-gallery>
+
+{% schema %}
+{
+  "name": "t:names.product_media",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:options.grid"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.carousel"
+        }
+      ],
+      "default": "grid",
+      "info": "t:info.media_style"
+    },
+    {
+      "type": "header",
+      "content": "t:content.grid",
+      "visible_if": "{{ block.settings.media_style == 'grid' }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_layout",
+      "label": "t:settings.layout",
+      "options": [
+        {
+          "value": "grid-1-column",
+          "label": "t:options.grid_1_column"
+        },
+        {
+          "value": "grid-2-column",
+          "label": "t:options.grid_2_column"
+        },
+        {
+          "value": "grid-with-thumbnail",
+          "label": "t:options.grid_with_thumbnail"
+        }
+      ],
+      "default": "grid-with-thumbnail",
+      "visible_if": "{{ block.settings.media_style == 'grid' }}"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ block.settings.media_style == 'grid' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.thumbnail"
+    },
+    {
+      "type": "select",
+      "id": "carousel_thumbnail",
+      "label": "t:settings.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.inside"
+        },
+        {
+          "value": "outside",
+          "label": "t:options.outside"
+        }
+      ],
+      "default": "inside"
+    },
+    {
+      "type": "select",
+      "id": "thumbnail_media_aspect_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "auto", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "thumbnail_media_aspect_ratio_mobile",
+      "label": "t:settings.aspect_ratio_mobile",
+      "options": [
+        { "value": "inherit", "label": "t:options.inherit" },
+        { "value": "auto", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "select",
+      "id": "media_aspect_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "auto", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "t:settings.video_autoplay",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_zoom",
+      "label": "t:settings.enable_zoom",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_variants",
+      "default": false,
+      "label": "t:settings.hide_unselected_variant_media"
+    },
+    {
+      "type": "checkbox",
+      "id": "extend_media",
+      "label": "t:settings.extend_media_to_screen_edge",
+      "default": false,
+      "visible_if": "{{ section.settings.container == 'page' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_media",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

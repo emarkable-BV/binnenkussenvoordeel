@@ -1,0 +1,477 @@
+{% liquid
+  assign index = section.blocks | find_index: 'id', block.id | plus: 1
+  assign total = section.blocks.size
+  assign mod = index | modulo: 4
+  assign classes = 'product-highlight-point flex flex-col gap-y-2 md:gap-y-3 border-style color-[colorScheme] col-span-5 lg:col-span-4' | replace: '[colorScheme]', block.settings.color_scheme
+
+  assign y_begin = 0
+  assign y_end = 0
+
+  case mod
+    when 1
+      assign classes = classes | append: ' col-start-1 xxl:col-start-2 xxl:justify-self-start'
+      assign y_begin = 35
+      assign y_end = -35
+    when 2
+      assign classes = classes | append: ' col-start-2 lg:col-start-3 justify-self-end xxl:justify-self-start'
+      assign y_begin = -20
+      assign y_end = 20
+    when 3
+      assign classes = classes | append: ' col-start-2 lg:col-start-2 xxl:col-start-3 justify-self-center xxl:justify-self-start'
+      assign y_begin = -20
+      assign y_end = 20
+    when 0
+      assign classes = classes | append: ' col-start-1 lg:col-start-2 justify-self-center xxl:justify-self-start'
+      assign y_begin = 35
+      assign y_end = -35
+  endcase
+%}
+<div
+  class="{{ classes | strip | strip_newlines }}"
+  ref="items[]"
+  data-total="{{ total }}"
+  data-index="{{ index }}"
+  data-begin="{{ y_begin }}%"
+  data-end="{{ y_end }}%"
+  data-section-id="{{ section.id }}"
+  style="{% render 'border-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  <div class="product-highlight-point__header flex items-center">
+    <div class="product-highlight-point__icon flex">
+      {% render 'icon-or-image',
+        icon: block.settings.icon,
+        image_upload: block.settings.icon_image_upload,
+        icon_size: block.settings.icon_size,
+        width: block.settings.icon_width,
+        width_mobile: block.settings.icon_width_mobile,
+        class_name: ''
+      %}
+    </div>
+    <h3 class="product-highlight-point__heading {{ block.settings.heading_preset }}">
+      <span class="reversed-link__text">{{ block.settings.heading }}</span>
+    </h3>
+  </div>
+  <div class="product-highlight-point__content">
+    {% render 'text', text: block.settings.text, text_color: block.settings.text_color, preset: 'rte', width: '100%' %}
+  </div>
+</div>
+<!-- @productHighlightPoint/split -->
+
+{% schema %}
+{
+  "name": "t:names.product_highlight_point",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.icon"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "caret-left",
+          "label": "t:options.caret_left"
+        },
+        {
+          "value": "caret-right",
+          "label": "t:options.caret_right"
+        },
+        {
+          "value": "caret-down",
+          "label": "t:options.caret_down"
+        },
+        {
+          "value": "arrow-up-left",
+          "label": "t:options.arrow_up_left"
+        },
+        {
+          "value": "arrow-up-left-down",
+          "label": "t:options.arrow_up_left_down"
+        },
+        {
+          "value": "close",
+          "label": "t:options.close"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        },
+        {
+          "value": "minus",
+          "label": "t:options.minus"
+        },
+        {
+          "value": "check",
+          "label": "t:options.check"
+        },
+        {
+          "value": "cart",
+          "label": "t:options.cart"
+        },
+        {
+          "value": "basket",
+          "label": "t:options.basket"
+        },
+        {
+          "value": "shopping-bag",
+          "label": "t:options.shopping_bag"
+        },
+        {
+          "value": "heart-beat",
+          "label": "t:options.heart_beat"
+        },
+        {
+          "value": "baby-carriage",
+          "label": "t:options.baby_carriage"
+        },
+        {
+          "value": "account",
+          "label": "t:options.account"
+        },
+        {
+          "value": "search",
+          "label": "t:options.search"
+        },
+        {
+          "value": "tag",
+          "label": "t:options.tag"
+        },
+        {
+          "value": "chat-teardrop",
+          "label": "t:options.chat_teardrop"
+        },
+        {
+          "value": "credit-card",
+          "label": "t:options.credit_card"
+        },
+        {
+          "value": "barcode",
+          "label": "t:options.barcode"
+        },
+        {
+          "value": "storefront",
+          "label": "t:options.storefront"
+        },
+        {
+          "value": "package",
+          "label": "t:options.package"
+        },
+        {
+          "value": "magic-wand",
+          "label": "t:options.magic_wand"
+        },
+        {
+          "value": "funnel",
+          "label": "t:options.funnel"
+        },
+        {
+          "value": "phone",
+          "label": "t:options.phone"
+        },
+        {
+          "value": "map-pin",
+          "label": "t:options.map_pin"
+        },
+        {
+          "value": "clock",
+          "label": "t:options.clock"
+        },
+        {
+          "value": "lightning",
+          "label": "t:options.lightning"
+        },
+        {
+          "value": "heart",
+          "label": "t:options.heart"
+        },
+        {
+          "value": "gift",
+          "label": "t:options.gift"
+        },
+        {
+          "value": "globe",
+          "label": "t:options.globe"
+        },
+        {
+          "value": "car-simple",
+          "label": "t:options.car_simple"
+        },
+        {
+          "value": "truck",
+          "label": "t:options.truck"
+        },
+        {
+          "value": "paper-plane",
+          "label": "t:options.paper_plane"
+        },
+        {
+          "value": "waves",
+          "label": "t:options.waves"
+        },
+        {
+          "value": "calendar-blank",
+          "label": "t:options.calendar_blank"
+        },
+        {
+          "value": "umbrella",
+          "label": "t:options.umbrella"
+        },
+        {
+          "value": "circle-half",
+          "label": "t:options.circle_half"
+        },
+        {
+          "value": "bell-ringing",
+          "label": "t:options.bell_ringing"
+        },
+        {
+          "value": "tiktok",
+          "label": "t:options.tiktok"
+        },
+        {
+          "value": "instagram",
+          "label": "t:options.instagram"
+        },
+        {
+          "value": "pinterest",
+          "label": "t:options.pinterest"
+        },
+        {
+          "value": "x",
+          "label": "t:options.x"
+        },
+        {
+          "value": "facebook",
+          "label": "t:options.facebook"
+        },
+        {
+          "value": "telegram",
+          "label": "t:options.telegram"
+        },
+        {
+          "value": "whatsapp",
+          "label": "t:options.whatsapp"
+        },
+        {
+          "value": "email",
+          "label": "t:options.email"
+        },
+        {
+          "value": "linkedin",
+          "label": "t:options.linkedin"
+        },
+        {
+          "value": "snapchat",
+          "label": "t:options.snapchat"
+        },
+        {
+          "value": "tumblr",
+          "label": "t:options.tumblr"
+        },
+        {
+          "value": "threads",
+          "label": "t:options.threads"
+        }
+      ],
+      "default": "tag"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_upload",
+      "label": "t:settings.image_icon"
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "t:settings.icon_size",
+      "options": [
+        {
+          "value": "extra-small",
+          "label": "t:options.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "extra-large",
+          "label": "t:options.extra_large"
+        },
+        {
+          "value": "custom-size",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "extra-large"
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "label": "t:settings.width",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 38,
+      "visible_if": "{{ block.settings.icon_size == 'custom-size' }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 38,
+      "visible_if": "{{ block.settings.icon_size == 'custom-size' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "t:settings.heading_preset",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h5"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        }
+      ],
+      "default": "subtext"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 0,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 10,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_highlight_point",
+      "settings": {
+        "icon": "tag",
+        "icon_size": "custom-size",
+        "icon_width": 38,
+        "icon_width_mobile": 38,
+        "heading": "Talk about your brand",
+        "heading_preset": "h5",
+        "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+        "text_color": "subtext",
+        "color_scheme": "",
+        "border": "none",
+        "border_width": 0,
+        "border_opacity": 10,
+        "border_radius": 20
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,228 @@
+{%- liquid
+  assign products = block.settings.product_list | reject: 'id', product.id
+-%}
+<div class="product-bought-together__current-item hidden">
+  {% render 'product-card-bought-together',
+    product: product,
+    image_ratio: block.settings.pcard_image_ratio,
+    show_vendor: false,
+    show_type: false,
+    show_badges: false
+  %}
+</div>
+{%- if products != blank or request.design_mode -%}
+  <div
+    class="product-bought-together-block"
+    {{ block.shopify_attributes }}
+  >
+    {%- content_for 'blocks' -%}
+
+    {%- liquid
+      assign product_count = products | size
+
+      if products == blank
+        assign product_count = 2
+      endif
+    -%}
+    <products-bought-together
+      class="products-bought-together flex flex-col gap-4"
+      id="products-bought-together-{{ section.id }}-{{ block.id }}"
+    >
+      <div class="product-bought-together__list-wrap v-scrollable" data-lenis-prevent>
+        <ul class="list-unstyled flex flex-col product-bought-together__list">
+          {%- if products != blank -%}
+            {%- for this_product in products -%}
+              <li class="product-bought-together__item">
+                {% render 'product-card-bought-together',
+                  product: this_product,
+                  image_ratio: block.settings.pcard_image_ratio,
+                  show_vendor: false,
+                  show_type: false,
+                  show_badges: false
+                %}
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..product_count) -%}
+              <li class="product-bought-together__item">
+                {% render 'product-card-bought-together',
+                  product: blank,
+                  image_ratio: block.settings.pcard_image_ratio,
+                  show_vendor: false,
+                  show_type: false,
+                  show_badges: false
+                %}
+              </li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </div>
+      <div class="product-bought-together__footer flex flex-col gap-4">
+        <div class="product-bought-together__subtotal flex items-center justify-between gap-2">
+          <p class="product-bought-together__subtotal-heading h6 m-0">{{ 'content.cart_subtotal' | t }}:</p>
+          <div class="product-bought-together__subtotal-amount inline-flex items-center gap-2">
+            <span
+              class="product-bought-together__subtotal-value h6"
+              ref="subTotal"
+            >
+              $0
+            </span>
+            <span
+              class="color-subtext"
+              ref="itemCount"
+              data-item-count-one="{{ 'content.item_count.one' | t }}"
+              data-item-count-other="{{ 'content.item_count.other' | t }}"
+            >
+              {{ 'content.item_count' | t: count: 0 }}
+            </span>
+          </div>
+        </div>
+        <div class="product-bought-together__atc w-full flex flex-col gap-3 items-center">
+          <button
+            ref="addAllToCart"
+            on:click="/onAddToCartClick"
+            class="btn btn--primary btn--large w-full"
+            disabled
+          >
+            <span class="btn__text">{{ 'products.product.add_selected_to_cart' | t }}</span>
+            {% render 'loading-spinner', class: 'hidden' %}
+          </button>
+          <span
+            class="product-form-text__error alert alert--error text-body-sm hidden w-full"
+            ref="addToCartTextError"
+          ></span>
+        </div>
+      </div>
+    </products-bought-together>
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:names.product_bought_together",
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "t:settings.products"
+    },
+    {
+      "type": "header",
+      "content": "t:content.product_cards"
+    },
+    {
+      "type": "select",
+      "id": "pcard_image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "", "label": "t:options.use_global_settings" },
+        { "value": "adapt", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-scale",
+      "label": "t:settings.mobile_scale",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.frequently_bought_together",
+      "category": "t:categories.products",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Frequently bought together</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h5",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "100%",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 100,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["heading"]
+    }
+  ]
+}
+{% endschema %}

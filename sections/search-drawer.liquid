@@ -1,0 +1,24 @@
+<dialog-component
+  id="search-drawer"
+  class="search-drawer"
+  shopify-design-mode
+>
+  <dialog
+    id="search-drawer-dialog"
+    ref="dialog"
+    class="dialog dialog--drawer dialog--drawer-right{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}"
+    scroll-lock
+  >
+    <div class="dialog__content">
+      {%- render 'predictive-search', context: 'drawer' -%}
+    </div>
+  </dialog>
+</dialog-component>
+{% schema %}
+{
+  "name": "t:names.search_drawer",
+  "enabled_on": {
+    "groups": ["custom.overlay"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,109 @@
+{%- liquid
+  assign block_index = section.blocks | find_index: 'id', block.id
+  assign block_number = block_index | plus: 1
+-%}
+{%- capture hotspot_style -%}
+  --offset-top: {{ block.settings.offset_top }}%;
+  --offset-left: {{ block.settings.offset_left }}%;
+  --offset-top-mobile: {{ block.settings.offset_top_mobile }}%;
+  --offset-left-mobile: {{ block.settings.offset_left_mobile }}%;
+{%- endcapture -%}
+{%- capture hotspot -%}
+  <div 
+    class="products-bundle__hotspot products-bundle__number absolute color-{{ block.settings.color_scheme }}"
+    style="{{ hotspot_style | strip | strip_newlines }}"
+    data-index="{{ block_index }}"
+    tabindex="0"
+    ref="hotspots[]"
+  >{{ block_number }}</div>
+{%- endcapture -%}
+{%- capture media_sizes -%}(min-width: 768px) calc((min(100vw, {{ settings.page_width | plus: 32 }}px) - 32px) / 4), 90px{%- endcapture -%}
+<!-- @productsBundle/split -->
+{{ hotspot }}
+<!-- @productsBundle/split -->
+<div
+  class="swiper-slide products-bundle__product-block"
+  data-index="{{ block_index }}"
+  ref="products[]"
+  {{ block.shopify_attributes }}
+>
+  <div class="products-bundle__product flex md:flex-col items-center gap-3">
+    <div class="products-bundle__product-number products-bundle__number shrink-0">
+      {{ block_number }}
+    </div>
+    {% render 'product-card-bundle',
+      product: block.settings.product,
+      media_sizes: media_sizes,
+      show_vendor: section.settings.pcard_show_vendor,
+      show_type: section.settings.pcard_show_type
+    %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.product",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "header",
+      "content": "t:content.hotspot"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "offset_top",
+      "label": "t:settings.offset_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_left",
+      "label": "t:settings.offset_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_top_mobile",
+      "label": "t:settings.offset_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_left_mobile",
+      "label": "t:settings.offset_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product"
+    }
+  ]
+}
+{% endschema %}

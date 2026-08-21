@@ -1,0 +1,70 @@
+{% doc %}
+  @param {string} children - Children content
+  @param {string} [dialog_id] - Dialog id
+  @param {string} id - Section/block id
+  @param {string} [label] - Button label
+  @param {string} [icon] - Name of icon
+  @param {string} [icon_style] - Style for icon
+  @param {boolean} [icon_only] - Show only icon
+  @param {string} style - Style for button
+  @param {string} [size] - Button size
+  @param {boolean} [mobile_full_width] - Make button full wide on mobile
+  @param {boolean} [with_wrapper] - Wrap output in div.button-block when true
+  @param {string} [animation_type] - Animation type
+  @param {number} [animation_delay] - Animation delay
+  @param {string} [class] - Extra class for dialog component
+
+  @example
+  {%- render 'popup-button', children: children, dialog_id: 'popup-dialog-1' -%}
+{% enddoc %}
+
+{% liquid
+  assign with_wrapper = with_wrapper | default: false
+  assign mobile_full_width = mobile_full_width | default: true, allow_false: true
+  assign label = label | default: ''
+  assign style = style | default: 'primary'
+  assign size = size | default: 'medium'
+  assign icon = icon | default: 'none'
+  assign icon_style = icon_style | default: 'default'
+  assign icon_only = icon_only | default: false
+  assign dialog_id_default = 'popup-dialog-' | append: id
+  assign dialog_id = dialog_id | default: dialog_id_default
+%}
+
+{% capture button_attributes %}
+  aria-haspopup="dialog" on:click="#popup-{{ dialog_id }}/showDialog" aria-label="{{ label }}" aria-controls="{{ dialog_id }}"
+{% endcapture %}
+
+<dialog-component class="popup-button{% if class %} {{ class }}{% endif %}" id="popup-{{ dialog_id }}">
+  {% render 'button',
+    with_wrapper: with_wrapper,
+    mobile_full_width: mobile_full_width,
+    tag: 'button',
+    label: label,
+    style: style,
+    size: size,
+    icon: icon,
+    icon_style: icon_style,
+    icon_only: icon_only,
+    attributes: button_attributes,
+    animation_type: animation_type,
+    animation_delay: animation_delay
+  %}
+  <dialog
+    id="{{ dialog_id }}"
+    ref="dialog"
+    class="dialog dialog--modal dialog--drawer-mobile-bottom text-left{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}"
+    scroll-lock
+  >
+    <button
+      class="dialog__close dialog__close--absolute shrink-0"
+      on:click="/closeDialog"
+      aria-label="{{ 'accessibility.close_dialog' | t }}"
+    >
+      {% render 'icon', icon: 'close', size: 'large' %}
+    </button>
+    <div class="dialog__inner v-scrollable">
+      <div class="dialog__content">{{ children }}</div>
+    </div>
+  </dialog>
+</dialog-component>

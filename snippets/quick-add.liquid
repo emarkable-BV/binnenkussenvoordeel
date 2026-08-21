@@ -1,0 +1,147 @@
+{%- doc -%}
+  Renders a quick add component.
+
+  @param {object} product - The product object
+  @param {string} section_id - The section ID
+  @param {object} [block] - The block object
+  @param {string} [mode] - The mode of the quick add component
+  @param {string} [button_icon] - The icon to display on the button
+  @param {string} [button_style] - The style of the button
+  @param {string} [button_size] - The size of the button
+  @param {string} [color_scheme] - The color scheme of the quick add component
+  @param {string} [class] - The class of the quick add component
+  @param {string} [button_icon_size] - The size of the button icon
+{%- enddoc -%}
+
+{% liquid
+  assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block.id
+  assign add_to_cart_text = 'actions.add_to_cart' | t
+  assign choose_options_text = 'actions.choose_options' | t
+  assign button_icon = button_icon | default: settings.pcard_quick_add_icon
+  assign button_style = button_style | default: settings.pcard_quick_add_button_style
+
+  # Logic to determine which variant to use (matching swatch selection logic from product-card)
+  assign variant = product.selected_or_first_available_variant
+
+  if variant.available
+    assign can_add_to_cart = true
+  else
+    assign can_add_to_cart = false
+  endif
+
+  assign quick_add_button = 'choose'
+  if product.variants_count == 1 or product.options.size == 1 and product.selected_variant
+    assign quick_add_button = 'add'
+  endif
+%}
+
+<quick-add-component
+  class="quick-add{% if mode %} quick-add--{{ mode }}{% endif %}{% if color_scheme %} color-{{ color_scheme }}{% endif %}{% if class %} {{ class }}{% endif %}"
+  ref="quickAdd"
+  data-product-title="{{ product.title }}"
+  data-product-url="{{ product.url }}"
+  {% if mode != 'view' %}
+    data-quick-add-button="{{ quick_add_button }}"
+    data-product-options-count="{{ product.options.size }}"
+  {% endif %}
+  data-quick-add-mode="{{ mode }}"
+>
+  <product-form-component
+    data-section-id="{{ section_id }}"
+    data-product-id="{{ product.id }}"
+    on:submit="/handleSubmit"
+    class="quick-add__product-form-component flex w-full"
+  >
+    <div
+      class="visually-hidden"
+      aria-live="assertive"
+      role="status"
+      aria-atomic="true"
+      ref="liveRegion"
+    ></div>
+    {%- form 'product', product, id: product_form_id, novalidate: 'novalidate', class: 'w-full', data-type: 'add-to-cart-form' -%}
+      <input
+        type="hidden"
+        name="id"
+        ref="variantId"
+        value="{{ variant.id }}"
+        {% if variant.available == false %}
+          disabled
+        {% endif %}
+      >
+      <input
+        type="hidden"
+        name="quantity"
+        value="{% if variant.quantity_rule.min %}{{ variant.quantity_rule.min }}{% else %}1{% endif %}"
+      >
+      {% comment %} If there is one variant option but it's swatches or if it's a single variant product, then use add to cart button {% endcomment %}
+      {%- unless mode == 'view' -%}
+        {%- if product.variants.size == 1 or product.options.size == 1 -%}
+          {% render 'add-to-cart-button',
+            add_to_cart_text: add_to_cart_text,
+            button_type: button_style,
+            button_icon: button_icon,
+            button_size: button_size,
+            can_add_to_cart: can_add_to_cart,
+            mode: 'quick-add'
+          %}
+        {%- endif -%}
+        {%- if product.variants.size > 1 -%}
+          {%- liquid
+            assign button_class = 'btn btn--primary quick-add__button quick-add__button--choose button-choose-options'
+            assign btn_text_class = 'btn__text'
+            assign icon_extra_class = ''
+
+            if button_style == 'with_icon'
+              assign button_class = button_class | append: ' btn--icon-solid-desktop md:justify-start md:w-full'
+              assign btn_text_class = btn_text_class | append: ' hidden md:flex'
+              assign icon_extra_class = icon_extra_class | append: ' md:hidden'
+            elsif button_style == 'icon_only'
+              assign button_class = button_class | append: ' btn--icon-only'
+              assign btn_text_class = btn_text_class | append: ' hidden'
+            elsif button_style == 'text_only'
+              assign button_class = button_class | append: ' md:w-full'
+              assign btn_text_class = btn_text_class | append: ' hidden md:flex'
+              assign icon_extra_class = icon_extra_class | append: ' md:hidden'
+            endif
+
+            if button_size
+              assign button_class = button_class | append: ' btn--' | append: button_size
+            endif
+          -%}
+          <button
+            class="{{ button_class }}"
+            type="button"
+            name="add"
+            on:click="quick-add-component/handleClick"
+            aria-label="{{ choose_options_text }}"
+          >
+            <span class="{{ btn_text_class }}">{{ choose_options_text }}</span>
+            {% render 'icon', icon: 'cart', class: icon_extra_class, size: button_icon_size %}
+            {%- if button_style == 'with_icon' -%}
+              <span class="btn__icon hidden md:flex">
+                <span class="btn__icon-text">{{ choose_options_text }}</span>
+                <span class="btn__icon-icon">
+                  {%- render 'icon', icon: button_icon, size: button_icon_size -%}
+                </span>
+              </span>
+            {%- endif -%}
+            {% render 'loading-spinner', class: 'quick-add__button-spinner hidden' %}
+          </button>
+        {%- endif -%}
+      {%- else -%}
+        {% comment %} For quickview button {% endcomment %}
+        <button
+          class="btn btn--icon-only btn--primary quick-add__button--view button-choose-options no-js-hidden"
+          type="button"
+          name="add"
+          on:click="quick-add-component/handleClick"
+          aria-label="{{ 'actions.quick_view' | t }}"
+        >
+          {% render 'icon', icon: 'search', size: 'medium' %}
+          {% render 'loading-spinner', class: 'quick-add__button-spinner hidden' %}
+        </button>
+      {%- endunless -%}
+    {%- endform -%}
+  </product-form-component>
+</quick-add-component>

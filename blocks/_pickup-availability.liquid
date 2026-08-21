@@ -1,0 +1,237 @@
+<link
+  rel="stylesheet"
+  href="{{ 'pickup-availability.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+{% liquid
+  assign variant = closest.product.selected_or_first_available_variant
+  assign inventory_quantity = variant.inventory_quantity
+  assign inventory_policy = variant.inventory_policy
+
+  if variant.inventory_management == 'shopify'
+    assign inventory_managed = true
+  endif
+
+  if variant.quantity_rule.min > variant.inventory_quantity and inventory_managed and inventory_policy == 'deny'
+    assign quantity_rule_soldout = true
+  endif
+
+  if inventory_managed
+    if inventory_quantity <= 0 and inventory_policy == 'deny' or quantity_rule_soldout
+      assign can_add_to_cart = false
+    else
+      assign can_add_to_cart = true
+    endif
+  else
+    if closest.product.selected_or_first_available_variant != null
+      assign can_add_to_cart = true
+    else
+      assign can_add_to_cart = false
+    endif
+  endif
+
+  unless settings.dialog_color_scheme_inherit
+    assign dialog_color_scheme = settings.dialog_color_scheme
+  else
+    assign first_color_scheme = settings.color_schemes | first
+    assign dialog_color_scheme = first_color_scheme
+  endunless
+%}
+
+{%- assign pick_up_availabilities = closest.product.selected_or_first_available_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+
+<local-pickup
+  class="spacing-style product__pickup-availabilities block{% if pick_up_availabilities.size == 0 %} hidden{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-product-url="{{ closest.product.url }}"
+  data-variant-id="{{ closest.product.selected_or_first_available_variant.id }}"
+  style="{% render 'spacing-style', settings: block.settings %}"
+  ref="localPickupButton"
+>
+  {% if can_add_to_cart %}
+    {%- assign dialog_id = 'local-pickup-dialog-' | append: section.id -%}
+    <div class="pickup-availabilities__info">
+      <div
+        class="pickup-availabilities__info-wrapper flex items-center justify-between gap-4 border-style"
+        style="{% render 'border-style', settings: block.settings %}"
+      >
+        <div class="pickup-availabilities__info-content flex items-start gap-3">
+          {% if pick_up_availabilities.first.available %}
+            {% render 'icon', icon: 'storefront', size: 'extra-extra-large', class: 'pickup-availabilities__info-icon shrink-0' %}
+          {% else %}
+            {% render 'icon', icon: 'close', size: 'extra-extra-large', class: 'pickup-availabilities__info-icon shrink-0 notification--error' %}
+          {% endif %}
+          <div class="pickup-availabilities__info-description flex flex-col items-start gap-1">
+            {%- if pick_up_availabilities.first.available -%}
+              <p class="pickup-location__text h6">
+                {{ 'content.pickup_available_at_html' | t: location: pick_up_availabilities.first.location.name }}
+              </p>
+              <a
+                class="pickup-location__text color-subtext text-body-sm reversed-link"
+                role="button"
+                on:click="#{{ dialog_id }}/showDialog"
+                aria-haspopup="dialog"
+                aria-controls="local-pickup-dialog"
+              >
+                {{ 'content.pickup_ready_in' | t: pickup_time: pick_up_availabilities.first.pick_up_time }}
+              </a>
+            {%- else -%}
+              <p class="pickup-location__text h6">
+                {{ 'content.pickup_not_available' | t }}
+              </p>
+              <a
+                class="reversed-link text-body-sm color-subtext"
+                role="button"
+                on:click="#{{ dialog_id }}/showDialog"
+                aria-haspopup="dialog"
+                aria-controls="local-pickup-dialog"
+              >
+                {{ 'actions.view_store_information' | t }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="pickup-availabilities__info-button">
+          <button
+            class="btn btn--secondary btn--icon-only btn--extra-small"
+            on:click="#{{ dialog_id }}/showDialog"
+            aria-label="{{ 'actions.view_store_information' | t }}"
+            aria-haspopup="dialog"
+            aria-controls="local-pickup-dialog"
+          >
+            {% render 'icon', icon: 'caret-right' %}
+          </button>
+        </div>
+      </div>
+    </div>
+    <dialog-component id="{{ dialog_id }}">
+      <dialog
+        id="local-pickup-dialog"
+        ref="dialog"
+        class="dialog dialog--drawer dialog--drawer-standard dialog--local-pickup dialog--drawer-right dialog--drawer-mobile-bottom overflow-hidden color-{{ dialog_color_scheme }}"
+        scroll-lock
+      >
+        <button
+          class="dialog__close dialog__close--absolute"
+          on:click="/closeDialog"
+          aria-label="{{ 'accessibility.close_dialog' | t }}"
+        >
+          {% render 'icon', icon: 'close', size: 'large' %}
+        </button>
+        <div class="dialog__inner v-scrollable">
+          <div class="dialog__content">
+            <div class="dialog__content-header">
+              <h4 class="dialog__title">{{ closest.product.title }}</h4>
+              {%- unless product.has_only_default_variant -%}
+                <p class="color-subtext text-body-sm">
+                  {{ closest.product.selected_or_first_available_variant.title }}
+                </p>
+              {%- endunless -%}
+            </div>
+            <div class="dialog__content-body">
+              {%- for pick_up_availability in pick_up_availabilities -%}
+                <div class="pickup-location__wrapper flex flex-col gap-2">
+                  <p class="h5">{{ pick_up_availability.location.name }}</p>
+                  <div class="pickup-location__address-wrapper flex flex-col gap-3">
+                    <span class="pickup-location__availability-wrapper flex items-center gap-2">
+                      {%- if pick_up_availability.available -%}
+                        {% render 'icon', icon: 'check', size: 'large', class: 'shrink-0 notification--success' %}
+                        {% assign pickup_time = pick_up_availability.pick_up_time | downcase %}
+                        {{ 'content.pickup_available_in' | t: pickup_time: pickup_time }}
+                      {%- else -%}
+                        {% render 'icon', icon: 'close', size: 'large', class: 'shrink-0 notification--error' %}
+                        {{ 'content.pickup_not_available' | t }}
+                      {%- endif -%}
+                    </span>
+                    <span class="pickup-location__address text-body-sm color-subtext">
+                      {{ pick_up_availability.location.address | format_address }}
+                      {{ pick_up_availability.location.address.phone }}
+                    </span>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </dialog-component>
+  {% endif %}
+</local-pickup>
+
+{% schema %}
+{
+  "name": "t:names.pickup_availability",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.resource_reference_pickup_availability"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.pickup_availability",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

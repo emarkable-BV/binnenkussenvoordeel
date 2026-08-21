@@ -1,0 +1,76 @@
+{%- doc -%}
+  @param {string} [image_sizes] - Sizes for image in Liquid mode
+  @param {string} [image_widths] - Widths for image in Liquid mode
+{%- enddoc -%}
+
+{%- liquid
+  assign collection = closest.collection
+-%}
+{% render 'collection-card',
+  collection: collection,
+  section: section,
+  text_alignment: block.settings.text_alignment,
+  show_product_count: block.settings.show_product_count,
+  attributes: block.shopify_attributes,
+  image_ratio: block.settings.image_ratio,
+  image_sizes: image_sizes,
+  image_widths: image_widths
+%}
+
+{% schema %}
+{
+  "name": "t:names.collection_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "inherit", "label": "t:options.use_global_settings" },
+        { "value": "adapt", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "t:settings.show_product_count",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

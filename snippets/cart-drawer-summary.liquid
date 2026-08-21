@@ -1,0 +1,109 @@
+{% liquid
+  assign first_product_id = cart.items.first.product_id
+  assign limit = section.settings.cart_recommendations_limit
+%}
+{% if section.settings.enable_cart_recommendations %}
+  {% liquid
+    # If manual products are selected, mark as using manual products to skip API fetch
+    assign manual_products = section.settings.cart_product_recommendations
+    if manual_products != blank
+      assign use_manual_products = 'true'
+      assign performed_state = 'true'
+    else
+      assign use_manual_products = 'false'
+      assign performed_state = recommendations.performed
+    endif
+  %}
+  <product-recommendations
+    class="cart-drawer__recommendation overflow-hidden block"
+    id="cart-recommendations-{{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ limit }}"
+    data-product-id="{{ first_product_id }}"
+    data-intent="related"
+    data-use-manual-products="{{ use_manual_products }}"
+    data-recommendations-performed="{{ performed_state }}"
+    style="--cart-thumbnail-border-radius: {{ settings.cart_thumbnail_border_radius | divided_by: 10 }}rem;"
+  >
+    {% liquid
+      assign has_recommendations = false
+      assign products = section.settings.cart_product_recommendations
+      assign is_manual_products = false
+
+      # If manual products are selected, use them directly
+      if products != blank
+        assign is_manual_products = true
+        assign product_count = products.count
+      elsif recommendations.performed and recommendations.products_count > 0
+        # Otherwise use API recommendations if available
+        assign products = recommendations.products
+        assign product_count = recommendations.products_count
+      endif
+
+      if product_count > 0
+        assign has_recommendations = true
+      endif
+    %}
+    {% if is_manual_products or recommendations.performed %}
+      {% capture list_items %}
+        {% for product in products, limit: limit %}
+          <div class="cart-drawer__recommendation-product swiper-slide">
+            {% render 'product-card-horizontal',
+              product: product,
+              show_quick_add: section.settings.show_quick_add,
+              show_quick_add_mobile: section.settings.show_quick_add,
+              show_type: section.settings.show_type,
+              show_vendor: section.settings.show_vendor,
+              show_swatch: section.settings.show_swatches,
+              product_title_line_limit: section.settings.product_title_line_limit
+            %}      
+          </div>
+        {% endfor %}
+      {% endcapture %}
+    {% else %}
+      {% capture list_items %}
+        {% for i in (1..limit) %}
+          <div class="cart-drawer__recommendation-product cart-drawer__recommendation-product--placeholder swiper-slide">
+            <div class="cart-drawer__recommendation-product product-recommendation-placeholder"></div>
+          </div>
+        {% endfor %}
+      {% endcapture %}
+    {% endif %}
+
+    <carousel-slider
+      class="cart-drawer__recommendation-wrapper carousel carousel--visible{% if product_count == 1 %} cart-drawer__recommendation--single{% endif %}"
+      data-has-recommendations="{{ has_recommendations }}"
+    >
+      <script type="application/json" ref="config">
+        {
+          "slidesPerView": "auto",
+          "spaceBetween": 5,
+          "loop": false,
+          "autoplay": false,
+          "counter": false,
+          "mousewheel": {
+            "enabled": true,
+            "forceToAxis": true,
+            "thresholdTime": 300,
+            "thresholdDelta": 10
+          },
+          "breakpoints": {
+            "1200": {
+              "spaceBetween": 10
+            }
+          }
+        }
+      </script>
+      <div class="cart-drawer__recommendation-heading flex items-center justify-between">
+        <span class="h5">{{ section.settings.cart_recommendations_title }}</span>
+        {% render 'carousel-controls', ref: 'controls', type: 'group', pagination: false, counter: false %}
+      </div>
+      <div class="cart-drawer__recommendation-products swiper" ref="container">
+        <div class="swiper-wrapper">
+          {{ list_items }}
+        </div>
+      </div>
+    </carousel-slider>
+  </product-recommendations>
+{% endif %}
+{% render 'cart-summary', section: section, context: 'drawer' %}

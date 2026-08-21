@@ -1,0 +1,1224 @@
+{% liquid
+  capture section_header
+    content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
+  endcapture
+
+  if section.settings.custom_columns != blank
+    assign custom_columns_array = section.settings.custom_columns | split: ','
+    for custom_column in custom_columns_array
+      assign pair = custom_column | strip
+      if pair == ''
+        continue
+      endif
+
+      assign custom_column_key = pair | split: ':' | first | strip
+      assign value_str = pair | split: ':' | last | strip
+      if value_str == ''
+        continue
+      endif
+      assign custom_column_value = value_str | plus: 0
+
+      case custom_column_key
+        when 'mb'
+          assign columns_mobile = custom_column_value
+        when 'md'
+          assign columns_md = custom_column_value
+        when 'lg'
+          assign columns_lg = custom_column_value
+        when 'xl'
+          assign columns_xl = custom_column_value
+        when 'xxl'
+          assign columns_xxl = custom_column_value
+      endcase
+    endfor
+  endif
+
+  # No need to use content_for 'blocks' here, just declare this to order block correctly
+  capture blocks
+    content_for 'blocks'
+  endcapture
+
+  assign use_padding_inline = true
+  if section.settings.container == 'page-width'
+    assign use_padding_inline = false
+  endif
+%}
+{% capture masonry_layout_style %}
+  {% render 'layout-panel-style', settings: section.settings, type: 'grid', columns_mobile: columns_mobile, columns_md: columns_md, columns_lg: columns_lg, columns_xl: columns_xl,columns_xxl: columns_xxl %}
+  {% render 'gap-style', settings: section.settings %}
+{% endcapture %}
+
+{% capture masonry_content %}
+  <masonry-component
+    class="masonry-component layout-panel-grid gap-style"
+    style="{{ masonry_layout_style | strip_newlines }}"
+    ref="showMoreContent"
+  >
+    {% for block in section.blocks %}
+      <div class="f-column" ref="items[]">
+        {% render block %}
+      </div>
+    {% endfor %}
+  </masonry-component>
+{% endcapture %}
+
+{% capture show_more %}
+  {%  content_for 'block', type: '_show-more', id: 'show-more', children: masonry_content %}
+{% endcapture %}
+<div
+  id="section-{{ section.id }}"
+  class="section masonry-section relative spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings, use_padding_inline: use_padding_inline %}"
+>
+  <div class="section__container {{ section.settings.container }}">
+    {{ section_header }}
+    {% if show_more == blank %}
+      {{ masonry_content }}
+    {% else %}
+      {{ show_more }}
+    {% endif %}
+  </div>
+</div>
+{% stylesheet %}
+  .masonry-section .f-column > *:first-child {
+    margin-block-start: var(--offset-top, 0);
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "t:names.masonry_section",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "blocks": [
+    {
+      "type": "testimonial"
+    },
+    {
+      "type": "image-card"
+    },
+    {
+      "type": "video"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/gErb8ff)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "page-width--full", "label": "t:options.full" },
+        { "value": "page-width", "label": "t:options.fixed" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "columns_xxl",
+      "label": "t:settings.columns",
+      "default": 4,
+      "min": 2,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.column_gap",
+      "default": 30,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.row_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:settings.mobile_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:options.grid_1_column"
+        },
+        {
+          "value": "2",
+          "label": "t:options.grid_2_column"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.column_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "t:settings.row_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "visible_if": "{{ section.settings.device == 'desktop' and section.settings.container == 'page-width--full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "visible_if": "{{ section.settings.device == 'desktop' and section.settings.container == 'page-width--full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start-mobile",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.device == 'mobile' and section.settings.container == 'page-width--full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end-mobile",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.device == 'mobile' and section.settings.container == 'page-width--full' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.advanced"
+    },
+    {
+      "type": "text",
+      "id": "custom_columns",
+      "label": "t:settings.custom_columns",
+      "info": "t:info.custom_columns"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.masonry_section",
+      "category": "t:categories.layout",
+      "settings": {
+        "color_scheme": "scheme-2"
+      },
+      "blocks": {
+        "testimonial_izrK68": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": true,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "video_mTy763": {
+          "type": "video",
+          "name": "t:names.video",
+          "settings": {
+            "source": "uploaded",
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_autoplay": false,
+            "video_loop": true,
+            "alt": "",
+            "video_ratio": "3/4",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "testimonial_AXhrga": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": true,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_ndVNhX": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_k8U9qW": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_3JJHma": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": true,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "video_qfQkJY": {
+          "type": "video",
+          "name": "t:names.video",
+          "settings": {
+            "source": "uploaded",
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_autoplay": false,
+            "video_loop": true,
+            "alt": "",
+            "video_ratio": "3/4",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "video_DkY7XL": {
+          "type": "video",
+          "name": "t:names.video",
+          "settings": {
+            "source": "uploaded",
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_autoplay": false,
+            "video_loop": true,
+            "alt": "",
+            "video_ratio": "3/4",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "testimonial_b79YBP": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_grfUFF": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": true,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_8p7jde": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": true,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_xLib39": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "video_Wj7kM3": {
+          "type": "video",
+          "name": "t:names.video",
+          "settings": {
+            "source": "uploaded",
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_autoplay": false,
+            "video_loop": true,
+            "alt": "",
+            "video_ratio": "3/4",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "testimonial_hpCpAz": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_EQcM76": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_b8jTpR": {
+          "type": "testimonial",
+          "name": "t:names.testimonial",
+          "settings": {
+            "design": "stacked",
+            "show_image": true,
+            "image_ratio": "adapt",
+            "image_away_from_edge": true,
+            "enable_image_stretch": true,
+            "image_border_radius": 10,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "settings": {
+            "device": "mobile",
+            "padding-block-end": 60,
+            "padding-block-end-mobile": 32
+          },
+          "blocks": {
+            "text_XTiXXL": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Add a tagline</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_JJPtxn": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Talking about your brand</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["text_XTiXXL", "text_JJPtxn"]
+        },
+        "show-more": {
+          "type": "_show-more",
+          "static": true,
+          "settings": {
+            "limit_height": 80,
+            "style": "primary",
+            "size": "large",
+            "icon": "none",
+            "icon_only": false,
+            "icon_style": "default",
+            "mobile_full_width": true,
+            "device": "desktop",
+            "padding-block-end": 100,
+            "padding-block-end-mobile": 48
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "testimonial_izrK68",
+        "video_mTy763",
+        "testimonial_AXhrga",
+        "testimonial_ndVNhX",
+        "testimonial_k8U9qW",
+        "testimonial_3JJHma",
+        "video_qfQkJY",
+        "video_DkY7XL",
+        "testimonial_b79YBP",
+        "testimonial_grfUFF",
+        "testimonial_8p7jde",
+        "testimonial_xLib39",
+        "video_Wj7kM3",
+        "testimonial_hpCpAz",
+        "testimonial_EQcM76",
+        "testimonial_b8jTpR"
+      ]
+    }
+  ]
+}
+{% endschema %}

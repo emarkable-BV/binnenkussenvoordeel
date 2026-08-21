@@ -1,0 +1,44 @@
+{%- doc -%}
+  This block is used to display the add to cart button.
+  Intended for product-form.liquid block.
+
+  @param {string} can_add_to_cart - Whether the product can be added to the cart
+  @param {string} add_to_cart_text - The text of the add to cart button
+{%- enddoc -%}
+
+{% liquid
+  assign id = 'BuyButtons-ProductSubmitButton-' | append: block.id
+%}
+
+{% render 'add-to-cart-button',
+  id: id,
+  can_add_to_cart: can_add_to_cart,
+  button_style: block.settings.style,
+  button_class: 'add-to-cart-button',
+  add_to_cart_text: add_to_cart_text
+%}
+
+{% schema %}
+{
+  "name": "t:names.add_to_cart",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.secondary"
+        }
+      ],
+      "default": "primary"
+    }
+  ]
+}
+{% endschema %}

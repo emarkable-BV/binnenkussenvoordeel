@@ -1,0 +1,101 @@
+{%- doc -%}
+  This snippet is used to render the quantity selector for a product.
+  It is used on the product page and the cart page.
+
+  @param {object} [section] - Section that render this selector
+  @param {object} product - the product to render the quantity selector for
+  @param {object} [variant] - the specific variant to use for availability/quantity rules; defaults to product.selected_or_first_available_variant
+  @param {number} [in_cart_quantity] - legacy: cart qty or initial qty depending on context
+  @param {number} [starting_quantity] - explicit initial value for the input (PDP volume rules min)
+  @param {number} [data_cart_quantity] - cart line qty for variant (volume pricing UX)
+  @param {number} [line_index] - the index of the line on cart or unique suffix for PDP input id
+  @param {string} [input_id_suffix] - suffix when line_index blank (default qty) for stable PDP ids
+  @param {number} [min] - the minimum quantity the input supports (cart may use 0)
+  @param {string} [class] - custom class for the quantity selector, optional
+  @param {boolean} [can_update_quantity] - whether the quantity can be updated; when false, minus/plus hidden
+  @param {object} [block] - optional block for shopify_attributes (theme editor)
+  @param {boolean} [show_block_attributes] - output block.shopify_attributes when line_index is blank (default true when block set)
+  @param {string} [context] - the context of the quantity selector
+{%- enddoc -%}
+{%- liquid
+  assign can_update_quantity = can_update_quantity | default: true, allow_false: true
+  assign variant = variant | default: product.selected_or_first_available_variant
+  assign quantity_button_icon_size = 'small'
+  if line_index and line_index != 'pdp'
+    assign quantity_button_icon_size = 'extra-small'
+  endif
+  assign id_suffix = line_index | default: input_id_suffix | default: 'qty'
+  capture input_id
+    echo 'Quantity-' | append: section.id | append: '-' | append: id_suffix
+  endcapture
+  assign input_min = min
+  if input_min == null and context != 'cart-items'
+    assign input_min = variant.quantity_rule.min | default: 1
+  endif
+  if input_min == null
+    assign input_min = 1
+  endif
+  assign input_value = starting_quantity | default: in_cart_quantity | default: input_min
+-%}
+<quantity-selector-component
+  class="quantity-selector relative inline-flex min-w-0{% if class %} {{ class }}{% endif %}"
+  {% if line_index == null or line_index == 'pdp' %}
+    {%- if block != blank and show_block_attributes != false -%}
+      {{- block.shopify_attributes -}}
+    {%- endif -%}
+  {% endif %}
+  ref="quantitySelectors[]"
+  data-context="{{ context | default: 'product' }}"
+>
+  <label for="{{ input_id }}" class="visually-hidden">{{ 'accessibility.quantity' | t }}</label>
+  <button
+    class="quantity-minus quantity-button button-unstyled absolute flex items-center justify-center text-center cursor-pointer no-js-hidden{% if can_update_quantity == false %} hidden{% endif %}"
+    type="button"
+    name="minus"
+    on:click="/decreaseQuantity"
+    ref="quantityButtons[]"
+    aria-label="{{ 'accessibility.decrease_quantity' | t }}"
+    {% if can_update_quantity == false %}
+      disabled
+    {% endif %}
+  >
+    {% render 'icon', icon: 'minus', size: quantity_button_icon_size %}
+  </button>
+  <input
+    id="{{ input_id }}"
+    class="quantity-input w-full text-center min-w-0"
+    type="number"
+    name="{% if line_index and line_index != 'pdp' %}updates[]{% else %}quantity{% endif %}"
+    value="{{ input_value }}"
+    min="{{ input_min }}"
+    on:blur="/setQuantity"
+    on:focus="/selectInputValue"
+    ref="quantityInput"
+    {% if line_index and line_index != 'pdp' %}
+      data-cart-line="{{ line_index | plus: 1 }}"
+    {% endif %}
+    {% unless data_cart_quantity == null %}
+      data-cart-quantity="{{ data_cart_quantity }}"
+    {% endunless %}
+    {% if variant.quantity_rule.max %}
+      max="{{ variant.quantity_rule.max }}"
+    {% endif %}
+    step="{{ variant.quantity_rule.increment | default: 1 }}"
+    {% if can_update_quantity == false or variant.available == false %}
+      disabled
+    {% endif %}
+  >
+  <button
+    class="quantity-plus quantity-button button-unstyled absolute flex items-center justify-center text-center cursor-pointer no-js-hidden{% if can_update_quantity == false %} hidden{% endif %}"
+    type="button"
+    name="plus"
+    on:click="/increaseQuantity"
+    ref="quantityButtons[]"
+    aria-label="{{ 'accessibility.increase_quantity' | t }}"
+    {% if can_update_quantity == false %}
+      disabled
+    {% endif %}
+  >
+    {% render 'icon', icon: 'plus', size: quantity_button_icon_size %}
+  </button>
+</quantity-selector-component>

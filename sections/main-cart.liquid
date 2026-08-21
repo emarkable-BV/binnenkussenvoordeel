@@ -1,0 +1,143 @@
+{{ 'template-cart.css' | asset_url | stylesheet_tag }}
+{{ 'cart-modules.css' | asset_url | stylesheet_tag }}
+<script
+  src="{{ 'cart-items.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+{% if settings.show_caculate_shipping_rate %}
+  <script
+    src="{{ 'cart-shipping.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
+{% liquid
+  assign gift_wrap_variant_id = ''
+  if settings.gift_wrap_product != blank
+    assign gift_wrap_product = all_products[settings.gift_wrap_product]
+    if gift_wrap_product != blank and gift_wrap_product.selected_or_first_available_variant != blank
+      assign gift_wrap_variant_id = gift_wrap_product.selected_or_first_available_variant.id
+    endif
+  endif
+%}
+<cart-items-component
+  class="cart-items-component"
+  data-section-id="{{ section.id }}"
+  data-gift-variant-id="{{ gift_wrap_variant_id }}"
+  data-gift-wrap-per-product="{{ settings.enable_gift_wrap_per_product }}"
+  data-gift-sync-quantity="{{ settings.gift_wrap_sync_quantity }}"
+>
+  {%- unless cart.empty? -%}
+    <span
+      class="visually-hidden"
+      ref="cartItemCount"
+      aria-hidden="true"
+    >
+      {{- cart.item_count -}}
+    </span>
+  {%- endunless -%}
+  <div class="section-grid section-grid--{{ section.settings.container }} color-{{ section.settings.color_scheme }}">
+    <div
+      class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
+      style="{% render 'spacing-style', settings: section.settings %}"
+    >
+      <div class="cart-page__title">
+        {% content_for 'block', type: '_cart-title', id: 'cart-page-title' %}
+      </div>
+
+      <div class="cart-page__inner{% if cart.empty? %} cart-page--empty flex flex-col justify-center items-center gap-6 xl:gap-8{% else %} grid{% endif %}">
+        {% if cart.empty? %}
+          {% if settings.cart_empty_recommendation_collection != blank %}
+            <div class="cart-page__empty-recommendation w-full">
+              {% render 'cart-empty-recommendation', context: 'cart-page', collections: settings.cart_empty_recommendation_collection %}
+            </div>
+          {% endif %}
+          <a
+            class="btn btn--primary btn--icon-solid cart-items__empty-button"
+            href="{{ routes.all_products_collection_url }}"
+          >
+            <span class="btn__text">{{ 'actions.continue_shopping' | t }}</span>
+            <span class="btn__icon">
+              <span class="btn__icon-text">{{ 'actions.continue_shopping' | t }}</span>
+              <span class="btn__icon-icon">{% render 'icon', icon: 'caret-right' %}</span>
+            </span>
+          </a>
+        {% endif %}
+        <div class="cart-page__items{% if cart.empty? %} hidden{% endif %}">
+          {% content_for 'block', type: '_cart-products', id: 'cart-page-products' %}
+        </div>
+        {%- unless cart.empty? -%}
+          <div class="cart-page__summary">
+            {% content_for 'block', type: '_cart-summary', id: 'cart-page-summary' %}
+          </div>
+        {%- endunless -%}
+      </div>
+    </div>
+  </div>
+</cart-items-component>
+
+{% schema %}
+{
+  "name": "t:names.cart",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "fixed", "label": "t:options.fixed" }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.cart_addons"
+    },
+    {
+      "type": "checkbox",
+      "id": "cart_addons_inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "cart_addons_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ section.settings.cart_addons_inherit_color_scheme == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    }
+  ]
+}
+{% endschema %}

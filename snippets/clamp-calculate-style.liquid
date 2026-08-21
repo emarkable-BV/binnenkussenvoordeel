@@ -1,0 +1,64 @@
+{%- doc -%}
+  Render the given property as css variable with clamp function with auto scale middle point.
+
+  @param {string} property_name - CSS property to apply scale value
+  @param {number} min_value - Min value in px
+  @param {number} max_value - Max value in px
+  @param {number} [min_breakpoint] - Min breakpoint to apply scale value
+  @param {number} [max_breakpoint] - Max breakpoint to apply scale value
+  @param {number} [scale_min] - Min value in px that to scale from desktop to when mobile equal 0
+
+  @example
+  {% render 'clamp-calculate-style', property_name: 'padding', min_value: 40, max_value: 100 %}
+
+  @description
+  Output css like this:
+  --padding: clamp(4rem, calc(12.476vw + -5.969rem), 10.0rem);
+  If the given min_value > max_value then:
+  --padding: calc(var(--padding-scale, 1) * 10.0rem);
+  --padding-mobile: 4rem;
+{%- enddoc -%}
+{%- liquid
+  assign root_font_size = 10.0
+
+  # Convert to decimals
+  assign min_value_in_px_to_scale = min_value | times: 1.0
+  assign max_value_in_px_to_scale = max_value | times: 1.0
+  if min_value == 0 and scale_min != blank
+    assign min_value_in_px_to_scale = max_value | at_most: scale_min | times: 1.0
+  endif
+
+  assign min_value_in_rem = min_value | divided_by: 10.0
+  assign max_value_in_rem = max_value | divided_by: 10.0
+  assign min_value_in_rem_to_scale = min_value_in_px_to_scale | divided_by: 10.0
+  assign max_value_in_rem_to_scale = max_value_in_px_to_scale | divided_by: 10.0
+-%}
+{%- if min_value_in_px_to_scale < max_value_in_px_to_scale -%}
+  {%- liquid
+    assign min_breakpoint = min_breakpoint | default: 767
+    assign max_breakpoint = max_breakpoint | default: 1280
+    assign breakpoint_diff = max_breakpoint | minus: min_breakpoint
+
+    # Calculate slope and coefficient
+    assign px_diff = max_value_in_px_to_scale | minus: min_value_in_px_to_scale
+    assign slope = px_diff | divided_by: breakpoint_diff
+    assign coefficient = slope | times: 100
+
+    # Calculate intercept
+    assign coefficient_times_min_breakpoint = coefficient | times: min_breakpoint
+    assign coefficient_divided = coefficient_times_min_breakpoint | divided_by: 100
+    assign intercept_px = min_value_in_px_to_scale | minus: coefficient_divided
+    assign base_rem = intercept_px | divided_by: root_font_size
+  -%}
+  {%- capture property_value -%}clamp({{ min_value_in_rem_to_scale }}rem, calc({{ coefficient | round: 3 }}vw + {{ base_rem | round: 3 }}rem), {{ max_value_in_rem_to_scale }}rem){%- endcapture -%}
+  {%- capture variable -%}
+    --{{ property_name }}: {{ property_value }};
+    --{{ property_name }}-mobile: {% if scale_min == min_value %}{{ property_value }}{% else %}{{ min_value_in_rem }}rem{% endif %};{% comment %}Force render mobile var same as desktop to avoid affect from parent element{% endcomment %}
+  {%- endcapture -%}
+{%- else -%}
+  {%- capture variable -%}
+    --{{ property_name }}: calc({{ max_value_in_rem }}rem * var(--{{ property_name }}-scale, 1));
+    --{{ property_name }}-mobile: {{ min_value_in_rem }}rem;
+  {%- endcapture -%}
+{%- endif -%}
+{{- variable | strip | strip_newlines -}}

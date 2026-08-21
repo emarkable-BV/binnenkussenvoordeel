@@ -1,0 +1,95 @@
+[dir=rtl] {
+  --transform-origin-start: right;
+  --transform-origin-end: left;
+  --flip-x-factor: -1;
+}
+[dir=rtl] input[type=tel] {
+  text-align: end;
+}
+[dir=rtl] .btn__icon {
+  clip-path: circle(var(--icon-solid-size) at calc(var(--icon-solid-size) + var(--button-padding-inline-end)) 50%);
+}
+[dir=rtl] .rtl-flip-x,
+[dir=rtl] .edge__shadows.is--active::before {
+  transform: scaleX(-1);
+}
+[dir=rtl] .edge__shadows::after {
+  transform: scaleX(1);
+}
+[dir=rtl] .dialog--drawer-left[open] {
+  animation-name: slideInLeft;
+}
+[dir=rtl] .dialog--drawer-left.dialog-closing {
+  animation-name: slideOutLeft;
+}
+[dir=rtl] .dialog--drawer-right[open] {
+  animation-name: slideInRight;
+}
+[dir=rtl] .dialog--drawer-right.dialog-closing {
+  animation-name: slideOutRight;
+}
+[dir=rtl] shopify-account::part(dialog) {
+  direction: rtl;
+}
+[dir=rtl] .timeline-media .spinning-icon-badge-block {
+  transform: translate(-50%, -50%);
+}
+[dir=rtl] .marquee__items.animate {
+  animation-name: scrolling-left-rtl;
+}
+[dir=rtl] .marquee[data-direction=reverse] .marquee__items.animate {
+  animation-name: scrolling-right-rtl;
+}
+[dir=rtl] .marquee--has-edge::before {
+  --rotate: 270deg;
+}
+[dir=rtl] .marquee--has-edge::after {
+  --rotate: 90deg;
+}
+[dir=rtl] .image-comparison[data-direction=horizontal] .image-comparison__image-after {
+  clip-path: inset(0 var(--percent, 50%) 0 0);
+}
+[dir=rtl] .carousel__controls--absolute .carousel__button--prev {
+  --navigation-offset-left: 100%;
+}
+[dir=rtl] .carousel__controls--absolute .carousel__button--next {
+  --navigation-offset-left: -100%;
+}
+[dir=rtl] testimonial-slider::after {
+  transform: scaleX(1);
+}
+@media (hover: hover) {
+  [dir=rtl] .carousel:hover .carousel__controls--absolute.carousel__controls--inside .carousel__button--prev {
+    --navigation-offset-left: -1rem;
+  }
+  [dir=rtl] .carousel:hover .carousel__controls--absolute.carousel__controls--inside .carousel__button--next {
+    --navigation-offset-left: 1rem;
+  }
+}
+@keyframes slideInOut {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-2rem);
+  }
+  50.001% {
+    transform: translateX(2rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@media (min-width: 768px) {
+  [dir=rtl] .countdown-timer-section .layered-image {
+    --translate-x: calc(var(--left) * 1);
+  }
+}
+
+.dir-ltr {
+  direction: rtl;
+}
+
+.dir-rtl {
+  direction: ltr;
+}

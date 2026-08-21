@@ -1,0 +1,64 @@
+{%- liquid
+  assign id_suffix = id_suffix | default: ''
+  assign compact = compact | default: false
+  assign message_only = message_only | default: false
+  assign whole_order_active = false
+  for ci in cart.items
+    if ci.variant_id == gift_wrap_variant_id and ci.parent_relationship.parent == null
+      assign whole_order_active = true
+    endif
+  endfor
+-%}
+<div class="cart-gift-wrapping grid gap-4">
+  {%- unless settings.enable_gift_wrap_per_product or message_only -%}
+    <label
+      class="cart-gift-wrapping__order flex items-start gap-2 text-body-sm"
+      for="gift-wrap-whole-order{{ id_suffix }}"
+      ref="wholeOrderLoadingWrap"
+      style="--loading-size: 1.6rem; --choice-input-size: 1.6rem;"
+    >
+      <div class="relative flex items-center">
+        <div style="width: 0;" aria-hidden="true" role="presentation">&nbsp;</div>
+        <input
+          type="checkbox"
+          class="checkbox"
+          id="gift-wrap-whole-order{{ id_suffix }}"
+          ref="wholeOrderCheckbox"
+          on:change="/onWholeOrderGiftToggle"
+          {% if whole_order_active %}
+            checked
+          {% endif %}
+        >
+        {% render 'loading-spinner', size: 'small' %}
+      </div>
+      <span>
+        {%- liquid
+          if settings.show_currency_code
+            assign gift_wrap_price_formatted = gift_wrap_variant.price | money_with_currency
+          else
+            assign gift_wrap_price_formatted = gift_wrap_variant.price | money
+          endif
+        -%}
+        {%- if settings.gift_wrap_sync_quantity -%}
+          {{ 'content.gift_wrapping.whole_order_label_sync' | t: price: gift_wrap_price_formatted }}
+        {%- else -%}
+          {{ 'content.gift_wrapping.whole_order_label' | t: price: gift_wrap_price_formatted }}
+        {%- endif -%}
+      </span>
+    </label>
+  {%- endunless -%}
+  <div class="cart-gift-wrapping__message">
+    <label class="visually-hidden" for="gift-message-input{{ id_suffix }}">
+      {{- 'content.gift_wrapping.message_placeholder' | t -}}
+    </label>
+    <textarea
+      id="gift-message-input{{ id_suffix }}"
+      class="form-control w-full text-body-sm"
+      rows="5"
+      name="attributes[Gift note]"
+      ref="giftMessageInput"
+      placeholder="{{ 'content.gift_wrapping.message_placeholder' | t }}"
+      on:input="/onGiftMessageInput"
+    >{{- cart.attributes["Gift note"] -}}</textarea>
+  </div>
+</div>

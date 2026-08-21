@@ -1,0 +1,48 @@
+<div
+  class="testimonial-parallax-header section__header"
+  ref="header"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+{% schema %}
+{
+  "name": "t:names.section_header",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_simple-text"
+    }
+  ],
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:names.section_header",
+      "blocks": [
+        {
+          "type": "_simple-text",
+          "name": "t:names.subheading",
+          "settings": {
+            "text": "<p>SUBHEADING</p>",
+            "type_preset": "text-subheading",
+            "padding-block-end": 16,
+            "mobile-padding-scale": 100
+          }
+        },
+        {
+          "type": "_simple-text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Over 500 <br>Happy Reviews</p>",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": 68,
+            "font_size_mobile": 38,
+            "line_height": "tight"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

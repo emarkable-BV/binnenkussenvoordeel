@@ -1,0 +1,74 @@
+{%- doc -%}
+  Renders an "Add to cart" button with dynamic text and state. It shows different text based on whether the product can be added to the cart and provides visual feedback when an item is added.
+
+  @param {boolean} can_add_to_cart - Whether the product can be added to the cart.
+  @param {string} add_to_cart_text - The text to display on the button.
+  @param {string} [id] - The ID attribute for the button.
+  @param {string} [button_style] - The style of the button.
+  @param {string} [button_type] - The type of the button.
+  @param {string} [button_size] - The size of the button.
+  @param {string} [button_icon] - The icon to display on the button.
+  @param {string} [mode] - The mode of the button.
+  @param {string} [button_class] - The class of the button.
+{%- enddoc -%}
+
+{%- liquid
+  assign default_add_to_cart_text = 'actions.add_to_cart' | t
+  assign button_text = add_to_cart_text | default: default_add_to_cart_text
+  assign button_style = button_style | default: 'primary'
+  assign button_type = button_type | default: 'text_only'
+
+  assign button_text_class = 'add-to-cart-text btn__text'
+  assign icon_extra_class = ''
+  assign button_class = button_class | append: ' btn btn--' | append: button_style
+
+  if mode == 'quick-add'
+    assign button_class = button_class | append: ' quick-add__button quick-add__button--add'
+    if button_type == 'with_icon'
+      assign button_text_class = button_text_class | append: ' hidden md:flex'
+      assign button_class = button_class | append: ' btn--icon-solid-desktop md:justify-start md:w-full'
+      assign icon_extra_class = icon_extra_class | append: ' md:hidden'
+    elsif button_type == 'icon_only'
+      assign button_class = button_class | append: ' btn--icon-only'
+      assign button_text_class = button_text_class | append: ' hidden'
+    elsif button_type == 'text_only'
+      assign button_class = button_class | append: ' md:w-full'
+      assign button_text_class = button_text_class | append: ' hidden md:flex'
+      assign icon_extra_class = icon_extra_class | append: ' md:hidden'
+    endif
+  endif
+
+  if button_size
+    assign button_class = button_class | append: ' btn--' | append: button_size
+  endif
+-%}
+<add-to-cart-component class="block" ref="addToCartButtonContainer">
+  <button
+    id="{{ id }}"
+    type="submit"
+    name="add"
+    ref="addToCartButton"
+    class="{{ button_class }}"
+    data-add-to-cart-text="{{ 'products.product.add_to_cart' | t }}"
+    data-sold-out-text="{{ 'products.product.sold_out' | t }}"
+    data-unavailable-text="{{ 'products.product.unavailable' | t }}"
+    aria-label="{{ button_text | escape }}"
+    {% unless can_add_to_cart %}
+      disabled
+    {% endunless %}
+  >
+    <span class="{{ button_text_class }}">
+      <span class="add-to-cart-text__content">{{- button_text -}}</span>
+    </span>
+    {% if mode == 'quick-add' %}
+      {% render 'icon', icon: 'cart', class: icon_extra_class %}
+    {% endif %}
+    {% if button_type == 'with_icon' %}
+      <span class="add-to-cart-icon btn__icon{% if mode == 'quick-add' %} hidden md:flex{% endif %}">
+        <span class="btn__icon-text">{{- button_text -}}</span>
+        <span class="btn__icon-icon">{% render 'icon', icon: button_icon %}</span>
+      </span>
+    {% endif %}
+    {% render 'loading-spinner', class: 'add-to-cart-spinner hidden', attributes: 'ref="addToCartSpinner"' %}
+  </button>
+</add-to-cart-component>

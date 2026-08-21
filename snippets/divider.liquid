@@ -1,0 +1,41 @@
+{%- doc -%}
+  Renders a divider line, used to visually separate content.
+
+  @param {string} id - A unique ID for the divider, linking it to a block or section.
+  @param {object} settings - An object containing style settings for the divider.
+
+  @param {string} [settings.alignment_horizontal] - The horizontal alignment of the divider ('left',
+  'center', or 'right'). Defaults to 'center'.
+  @param {number} [settings.thickness] - The thickness of the divider line in pixels.
+  @param {string} [settings.corner_radius] - The corner radius of the divider, e.g., 'rounded'.
+  @param {number} [settings.width_percent] - The width of the divider as a percentage of its
+  container.
+
+  @param {boolean} [attributes] - When `true`, render block.shopify_attributes on the divider container.
+  @param {object} block - The block object.
+  @param {boolean} [disable_on_desktop] - When `true`, hide the divider on desktop.
+  @param {boolean} [disable_on_mobile] - When `true`, hide the divider on mobile.
+{%- enddoc -%}
+{%- capture class -%}
+  items-center self-stretch
+  {%- if disable_on_mobile %} hidden{%- else %} flex{%- endif -%}
+  {%- if disable_on_desktop %} md:hidden{%- else %} md:flex{%- endif -%}
+{%- endcapture -%}
+<div
+  class="divider divider-{{ id }} spacing-style {{ class }}"
+  style="
+    --divider-justify-content: {{ settings.alignment_horizontal | default: 'center' }};
+    {% render 'spacing-style', settings: settings %}
+  "
+  {% if attributes %}
+    {{ block.shopify_attributes }}
+  {% endif %}
+>
+  <span
+    class="divider__line"
+    style="
+      --divider-border-thickness: {{ settings.thickness }}px;
+      --divider-flex-basis: {{ settings.width_percent }}%;
+    "
+  ></span>
+</div>

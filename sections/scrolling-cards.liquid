@@ -1,0 +1,301 @@
+{%- liquid
+  capture cards
+    content_for 'block', type: '_scrolling-cards', id: 'scrolling-cards'
+  endcapture
+  capture headings
+    content_for 'block', type: '_scrolling-headings', id: 'scrolling-headings'
+  endcapture
+  capture subheading
+    content_for 'block', type: 'text', id: 'subheading'
+  endcapture
+  capture text
+    content_for 'block', type: 'text', id: 'text'
+  endcapture
+  capture button
+    content_for 'block', type: 'button', id: 'button'
+  endcapture
+-%}
+<div
+  class="scrolling-cards{% if cards != blank %} scrolling-cards--has-cards{% endif %} color-{{ section.settings.color_scheme }} border-style spacing-style"
+  style="{% render 'border-style', settings: section.settings %}{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width">
+    <scrolling-cards
+      class="scrolling-cards__wrapper relative flex flex-col gap-6"
+      data-section-id="{{ section.id }}"
+    >
+      <div class="scrolling-cards__content-wrapper w-full flex z-1 pointer-pass-through">
+        <div class="scrolling-cards__content w-full">
+          <div class="scrolling-cards__content-inner flex flex-col items-center justify-center text-center">
+            {{ subheading }}
+            {%- if headings != blank -%}
+              <div
+                class="scrolling-cards__headings relative overflow-y-clip w-full"
+                ref="headingWrap"
+              >
+                {{ headings }}
+              </div>
+            {%- endif -%}
+            {{ text }}
+            <div class="scrolling-cards__button hidden md:block">
+              {{ button }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {%- if cards != blank -%}
+        <div class="scrolling-cards__cards">
+          {{ cards }}
+        </div>
+      {%- endif -%}
+    </scrolling-cards>
+    <div class="scrolling-cards__button block md:hidden">
+      {{ button }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.scrolling_cards",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/lXIrMWD)"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:options.top",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:options.bottom",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.scrolling_cards",
+      "category": "t:categories.basic",
+      "blocks": {
+        "scrolling-cards": {
+          "type": "_scrolling-cards",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "product_overlay_card_1": {
+              "type": "product-overlay-card",
+              "name": "t:names.product_overlay_card",
+              "settings": {
+                "color_scheme": "scheme-inverse",
+                "border_radius": 20
+              }
+            },
+            "product_overlay_card_2": {
+              "type": "product-overlay-card",
+              "name": "t:names.product_overlay_card",
+              "settings": {
+                "color_scheme": "scheme-inverse",
+                "border_radius": 20
+              }
+            },
+            "product_overlay_card_3": {
+              "type": "product-overlay-card",
+              "name": "t:names.product_overlay_card",
+              "settings": {
+                "color_scheme": "scheme-inverse",
+                "border_radius": 20
+              }
+            },
+            "product_overlay_card_4": {
+              "type": "product-overlay-card",
+              "name": "t:names.product_overlay_card",
+              "settings": {
+                "color_scheme": "scheme-inverse",
+                "border_radius": 20
+              }
+            },
+            "product_overlay_card_5": {
+              "type": "product-overlay-card",
+              "name": "t:names.product_overlay_card",
+              "settings": {
+                "color_scheme": "scheme-inverse",
+                "border_radius": 20
+              }
+            },
+            "product_overlay_card_6": {
+              "type": "product-overlay-card",
+              "name": "t:names.product_overlay_card",
+              "settings": {
+                "color_scheme": "scheme-inverse",
+                "border_radius": 20
+              }
+            }
+          },
+          "block_order": [
+            "product_overlay_card_1",
+            "product_overlay_card_2",
+            "product_overlay_card_3",
+            "product_overlay_card_4",
+            "product_overlay_card_5",
+            "product_overlay_card_6"
+          ]
+        },
+        "subheading": {
+          "type": "text",
+          "name": "t:names.subheading",
+          "static": true,
+          "settings": {
+            "text": "<p>Subheading</p>",
+            "type_preset": "text-subheading",
+            "font": "var(--font-body--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "loose",
+            "padding-block-start": 0,
+            "padding-block-end": 20,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80
+          }
+        },
+        "scrolling-headings": {
+          "type": "_scrolling-headings",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "heading_1": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Bright and airy, this light blue</p>",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": 48,
+                "font_size_mobile": 34,
+                "line_height": "tight"
+              }
+            },
+            "heading_2": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Bright and airy, this light blue</p>",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": 48,
+                "font_size_mobile": 34,
+                "line_height": "tight"
+              }
+            }
+          },
+          "block_order": ["heading_1", "heading_2"]
+        },
+        "text": {
+          "type": "text",
+          "static": true,
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "type_preset": "rte",
+            "text_color": "subtext",
+            "font": "var(--font-body--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "loose",
+            "padding-block-start": 24,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 83
+          }
+        },
+        "button": {
+          "type": "button",
+          "static": true,
+          "settings": {
+            "label": "Button label",
+            "link": "",
+            "size": "large",
+            "style": "primary",
+            "icon": "caret-right",
+            "icon_style": "solid",
+            "mobile_full_width": true
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

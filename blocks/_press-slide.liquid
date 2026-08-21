@@ -1,0 +1,121 @@
+{%- liquid
+  assign block_index = section.blocks | find_index: 'id', block.id
+  assign image_width = block.settings.image_width
+  assign image_width_mobile = block.settings.image_width_mobile
+
+  assign content_alignment = section.settings.content_alignment | default: 'left'
+  assign content_alignment_flex_value = content_alignment | replace: 'left', 'start'
+  assign content_alignment_mobile = section.settings.content_alignment_mobile | default: 'center'
+  assign content_alignment_mobile_flex_value = content_alignment_mobile | replace: 'left', 'start'
+-%}
+{%- capture image_style -%}
+  --image-width: {{ image_width }}px;
+  --image-width-mobile: {{ image_width_mobile }}px;
+{%- endcapture -%}
+{%- capture image_sizes -%}(min-width: 768px) {{ image_width }}px, {{ image_width_mobile }}px{%- endcapture -%}
+{%- capture image_widths -%}{{ image_width_mobile | times: 2 }}, {{ image_width | times: 2 }}{%- endcapture -%}
+{%- capture press_image -%}
+  <div
+    class="press-slide__thumbnail swiper-slide carousel__thumbnail cursor-pointer{% if block_index == 0 %} is-active{% endif %}"
+    style="{{ image_style | strip | strip_newlines }}"
+  >
+    <div class="press-slide__thumbnail-wrap overflow-hidden">
+      {% render 'responsive-image', 
+        mode: 'liquid',
+        image: block.settings.image,
+        default_alt: shop.name,
+        sizes: image_sizes,
+        widths: image_widths
+      %}
+    </div>
+  </div>
+{%- endcapture -%}
+<!-- @press/split -->
+{{ press_image }}
+<!-- @press/split -->
+<div
+  class="swiper-slide flex flex-col gap-4 items-{{ content_alignment_mobile_flex_value }} text-{{ content_alignment_mobile }} md:items-{{ content_alignment_flex_value }} md:text-{{ content_alignment }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="press-slide__text">
+    {% content_for 'block', type: '_simple-text', id: 'static-text', classes: 'press__text' %}
+    {% content_for 'block', type: '_author-info', id: 'static-info', classes: 'press__info flex gap-x-3 items-center' %}
+  </div>
+  <div
+    class="press-slide__image block md:hidden media-mask-clip"
+    style="{{ image_style | strip | strip_newlines }}"
+  >
+    {% render 'responsive-image', mode: 'liquid', image: block.settings.image, default_alt: shop.name, sizes: image_sizes, widths: image_widths %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.press",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "t:settings.width",
+      "min": 50,
+      "max": 250,
+      "step": 2,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 50,
+      "max": 250,
+      "step": 2,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.press",
+      "category": "t:categories.basic",
+      "settings": {
+        "image_width": 140,
+        "image_width_mobile": 150
+      },
+      "blocks": {
+        "static-text": {
+          "type": "_simple-text",
+          "static": true,
+          "settings": {
+            "text": "<p>You can add detailed text content from various press comments, comprehensive reviews, or extensive customer testimonials here.</p>",
+            "type_preset": "h1",
+            "padding-block-end": 24,
+            "mobile-padding-scale": 100
+          }
+        },
+        "static-info": {
+          "type": "_author-info",
+          "static": true,
+          "settings": {
+            "name": "<p>Author's name</p>",
+            "name_preset": "h5",
+            "icon": "none",
+            "bio": "Customer",
+            "padding-block-start": 12,
+            "mobile-padding-scale": 100
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

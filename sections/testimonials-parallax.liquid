@@ -1,0 +1,428 @@
+{% liquid
+  assign columns_mobile = '1'
+%}
+<div
+  class="section testimonials-parallax spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <testimonial-parallax class="testimonials-parallax__container page-width block relative">
+    <div class="testimonials-parallax__header absolute inset-0">
+      {% content_for 'block', type: '_testimonials-parallax-header', id: 'static-section-header' %}
+    </div>
+
+    <div class="testimonials-parallax__wrapper swipe-mobile swipe-mobile--{{ columns_mobile }}-cols">
+      <div
+        class="testimonials-parallax__inner grid swipe__inner"
+        style="{% render 'gap-style', column_gap_mobile: 8 %}"
+      >
+        {% liquid
+          capture children
+            content_for 'blocks'
+          endcapture
+
+          assign items = children | strip | split: '<!-- @testimonialParallax/split -->'
+          assign step = 1
+        %}
+        {% for item in items %}
+          {% liquid
+            assign index = forloop.index0
+            assign mod = index | modulo: 3
+
+            if index > 0 and mod == 0
+              assign step = step | plus: 2
+            endif
+
+            assign row_start = index | times: 2 | plus: step
+          %}
+          <div
+            class="testimonials-parallax__column layout-panel-grid gap-style"
+            style="
+              {% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile, columns_md: '8', columns_lg: '8', columns_xl: '8', columns_xxl: '8' %}
+              {% render 'gap-style', column_gap: 20 %}--row-start: {{ row_start }};
+            "
+          >
+            {{ item }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </testimonial-parallax>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.testimonials_parallax",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "_testimonial-parallax"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/eN8y0UE)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.testimonials_parallax",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      },
+      "blocks": [
+        {
+          "type": "_testimonials-parallax-header",
+          "id": "static-section-header",
+          "static": true,
+          "name": "t:names.section_header",
+          "settings": {},
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>SUBHEADING</p>",
+                "type_preset": "text-subheading",
+                "padding-block-end": 16,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_simple-text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Over 500 <br>Happy Reviews</p>",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": 68,
+                "font_size_mobile": 38,
+                "line_height": "tight"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_testimonial-parallax",
+          "settings": {
+            "image_away_from_edge": true,
+            "image_border_radius": 10,
+            "border_radius": 20
+          },
+          "blocks": [
+            {
+              "type": "_simple-text",
+              "id": "static-testimonial-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+                "type_preset": "paragraph",
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100
+              }
+            },
+            {
+              "type": "_author-info",
+              "id": "static-testimonial-info",
+              "static": true,
+              "settings": {
+                "name": "<p>Author's name</p>",
+                "name_preset": "h6"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,7 @@
+<ul class="list-unstyled flex items-center gap-2" aria-label="{{ 'content.payment_methods' | t }}">
+  {%- for type in shop.enabled_payment_types -%}
+    <li>
+      {{ type | payment_type_svg_tag }}
+    </li>
+  {%- endfor -%}
+</ul>

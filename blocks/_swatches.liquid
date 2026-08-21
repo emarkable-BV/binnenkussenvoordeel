@@ -1,0 +1,29 @@
+{% liquid
+  for product_option in closest.product.options_with_values
+    assign swatch_count = product_option.values | map: 'swatch' | compact | size
+
+    if swatch_count > 0
+      assign product_has_swatches = true
+    endif
+  endfor
+%}
+{% if product_has_swatches %}
+  <product-swatches
+    data-product-id="{{ closest.product.id }}"
+    data-product-url="{{ closest.product.url }}"
+    {{ block.shopify_attributes }}
+  >
+    {% render 'variant-swatches', product_resource: closest.product %}
+  </product-swatches>
+{% endif %}
+{% schema %}
+{
+  "name": "t:names.swatches",
+  "presets": [
+    {
+      "name": "t:names.swatches",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

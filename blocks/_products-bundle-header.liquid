@@ -1,0 +1,75 @@
+{% content_for 'blocks' %}
+{% schema %}
+{
+  "name": "t:names.header",
+  "blocks": [
+    {
+      "type": "text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.header",
+      "blocks": {
+        "subheading": {
+          "type": "text",
+          "name": "t:names.subheading",
+          "settings": {
+            "text": "<p>Product Bundle</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "text-subheading",
+            "font": "var(--font-body--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "100%",
+            "text_alignment_mobile": "center",
+            "padding-block-start": 0,
+            "padding-block-end": 20,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          }
+        },
+        "heading": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Create Your Perfect Set</p>",
+            "highlight_style": "wavy-underline",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": 68,
+            "font_size_mobile": 38,
+            "line_height": "loose",
+            "text_color": "text",
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "100%",
+            "text_alignment_mobile": "center",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          }
+        }
+      },
+      "block_order": ["subheading", "heading"]
+    }
+  ]
+}
+{% endschema %}

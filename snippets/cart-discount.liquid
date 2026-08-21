@@ -1,0 +1,99 @@
+{% liquid
+  assign discount_codes = cart.cart_level_discount_applications | where: 'type', 'discount_code' | map: 'title'
+  for item in cart.items
+    for allocation in item.line_level_discount_allocations
+      if allocation.discount_application.type == 'discount_code'
+        assign discount_codes = item.line_level_discount_allocations | slice: forloop.index0 | map: 'discount_application' | map: 'title' | concat: discount_codes
+      endif
+    endfor
+  endfor
+
+  assign discount_codes = discount_codes | uniq
+%}
+<cart-discount
+  class="flex flex-col gap-4 xl:gap-5"
+  data-section-id="{{ section_id }}"
+>
+  <div>
+    <form
+      method="post"
+      action="{{ routes.cart_update_url }}"
+      on:submit="/applyDiscount"
+      onsubmit="return false;"
+      class="cart-discount__form flex flex-col gap-4 xl:gap-5"
+    >
+      <label
+        for="cart-discount"
+        class="visually-hidden"
+      >
+        {{- 'accessibility.discount' | t -}}
+      </label>
+      <input
+        id="cart-discount"
+        class="cart-discount__input form-control"
+        type="text"
+        name="discount"
+        placeholder="{{ 'content.discount_code' | t }}"
+        required
+      >
+      <button
+        type="submit"
+        class="cart-discount__button btn btn--primary"
+        ref="cartDiscountButton"
+      >
+        <span class="btn__text">{{ 'actions.apply' | t }}</span>
+        {% render 'loading-spinner' %}
+      </button>
+    </form>
+  </div>
+  <div
+    class="cart-discount__error alert alert--error text-left hidden"
+    role="alert"
+    ref="cartDiscountError"
+  >
+    <span class="alert__content">
+      {% render 'icon', icon: 'warning', size: 'large' %}
+      <span
+        class="cart-discount__error-text text-body-sm hidden"
+        ref="cartDiscountErrorDiscountCode"
+      >
+        {{ 'content.discount_code_error' | t: code: 'test' }}
+      </span>
+      <span
+        class="cart-discount__error-text hidden"
+        ref="cartDiscountErrorShipping"
+      >
+        {{ 'content.shipping_discount_error' | t }}
+      </span>
+      <span
+        class="cart-discount__error-text hidden"
+        ref="cartDiscountErrorExists"
+      >
+        {{ 'content.discount_code_exists' | t }}
+      </span>
+    </span>
+  </div>
+  <ul class="cart-discount__codes list-unstyled flex flex-wrap gap-2 no-js-hidden">
+    {%- for discount_code in discount_codes -%}
+      <li
+        class="cart-discount__pill inline-flex flex-nowrap items-center gap-1 relative"
+        data-discount-code="{{ discount_code }}"
+        aria-label="{{ 'accessibility.discount_applied' | t: code: discount_code }}"
+      >
+        <p class="cart-discount__pill-code">
+          {{ discount_code }}
+        </p>
+        <button
+          type="button"
+          on:click="/removeDiscount"
+          class="cart-discount__pill-remove button-unstyled cursor-pointer"
+          aria-label="{{ 'actions.remove_discount' | t: code: discount_code }}"
+        >
+          <span class="icon icon--medium flex">
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </li>
+    {%- endfor -%}
+  </ul>
+</cart-discount>

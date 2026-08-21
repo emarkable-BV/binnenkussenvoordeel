@@ -1,0 +1,216 @@
+{%- liquid
+  assign collection = block.settings.collection
+  assign title_line_limit = block.settings.line_limit
+
+  assign collection_name = block.settings.title
+  unless collection_name != blank
+    if collection != blank
+      assign collection_name = collection.title
+    else
+      assign collection_name = 'placeholders.collection_title' | t
+    endif
+  endunless
+
+  assign collection_image = block.settings.image
+  unless collection_image
+    if collection.image
+      assign collection_image = collection.image
+    else
+      assign collection_image = collection.products.first.featured_media.preview_image
+    endif
+  endunless
+
+  assign tag = 'div'
+  if collection != blank
+    assign tag = 'a'
+  endif
+-%}
+{%- capture inline_style -%}
+  {% render 'size-style', settings: block.settings %}
+  {% render 'clamp-calculate-style', property_name: 'width', min_value: block.settings.width_mobile, max_value: block.settings.width %}
+{%- endcapture -%}
+<div
+  class="swiper-slide-custom size-style collection-item{% if block.settings.border == 'solid' %} collection-item--shadow{% endif %}"
+  style="{{ inline_style }}"
+  {{ block.shopify_attributes }}
+>
+  <{{ tag }}
+    {% if collection != blank %}
+      href="{{ collection.url }}"
+    {% endif %}
+    class="collection-item__link flex items-center gap-2 border-style focus-visible--absolute {% unless block.settings.inherit_color_scheme %} color-{{ block.settings.color_scheme }}{% endunless %}"
+    style="{% render 'border-style', settings: block.settings %}"
+  >
+    <div class="collection-item__image shrink-0 media-mask-clip">
+      {% render 'responsive-image',
+        mode: 'liquid',
+        image: collection_image,
+        image_ratio: block.settings.image_ratio,
+        default_alt: collection_name,
+        media_width_desktop: '50px',
+        media_width_mobile: '40px'
+      %}
+    </div>
+    <div class="collection-item__info flex-grow">
+      <div class="collection-item__name text-limit-{{ title_line_limit }}">{{ collection_name }}</div>
+    </div>
+  </{{ tag }}>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.collection_item",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:settings.collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "info": "t:info.collection_image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "auto", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.collection_title",
+      "info": "t:info.collection_title"
+    },
+    {
+      "type": "select",
+      "id": "line_limit",
+      "label": "t:settings.text_line_limit",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.no_limit"
+        },
+        {
+          "value": "1-line",
+          "label": "t:options.1_line"
+        },
+        {
+          "value": "2-lines",
+          "label": "t:options.2_lines"
+        },
+        {
+          "value": "3-lines",
+          "label": "t:options.3_lines"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "t:settings.width",
+      "min": 150,
+      "max": 500,
+      "step": 5,
+      "default": 200,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 150,
+      "max": 500,
+      "step": 5,
+      "default": 150,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 10,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.collection_item"
+    }
+  ]
+}
+{% endschema %}

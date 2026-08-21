@@ -1,0 +1,165 @@
+{%- doc -%}
+  Renders a product media component.
+
+  @param {object} media - The product media object.
+  @param {string} [widths] - Image widths for responsive images.
+  @param {string} [sizes] - Image sizes for responsive images.
+  @param {string} [loading] - The loading attribute for the image.
+  @param {object} [block] - The block object.
+  @param {object} [section] - The section object.
+  @param {object} [selected_product] - The currently selected product.
+  @param {boolean} [first_3d_model] - Indicates if this is the first 3D model.
+  @param {boolean} [is_main_product_media] - Indicates if this is the main product image.
+  @param {string} [class] - Optional class for the product media.
+  @param {boolean} [preview_image_only] - Indicates if only the preview image should be rendered.
+  @param {string} [image_ratio] - The aspect ratio for the image.
+  @param {string} [image_ratio_mobile] - The aspect ratio on mobile for the image.
+  @param {string} [additional_attributes] - Additional attributes for the product media.
+  @param {boolean} [enable_zoom_dialog] - Indicates if the zoom dialog should be enabled.
+
+  @example
+  {% render 'product-media', media: media, loading: 'lazy' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign widths = widths | default: '120, 240, 352, 480, 640, 832, 1200, 1600, 1920, 2560, 3840'
+
+  assign image_ratio = image_ratio
+  if image_ratio == 'auto'
+    assign image_ratio = media.preview_image.aspect_ratio
+  endif
+
+  assign image_ratio_mobile = image_ratio_mobile | default: image_ratio
+  if image_ratio_mobile == 'inherit'
+    assign image_ratio_mobile = image_ratio
+  elsif image_ratio_mobile == 'auto'
+    assign image_ratio_mobile = media.preview_image.aspect_ratio
+  endif
+
+  assign fetch_priority = 'auto'
+  assign loading = 'lazy'
+  if is_main_product_media
+    assign fetch_priority = 'high'
+    assign loading = 'eager'
+  endif
+
+  comment
+    CSS-only zoom-out reveal (replaces <motion-component> wrapper).
+    Only for main media, not thumbnails (preview_image_only).
+  endcomment
+  assign zoom_class = ''
+  if settings.animations_enabled
+    assign zoom_class = ' media-zoom-reveal'
+  endif
+-%}
+<div
+  class="product-media media{{ zoom_class }}{% if class %} {{ class }}{% endif %}"
+  data-media-id="{{ media.id }}"
+  data-media-type="{{ media.media_type }}"
+  data-media-src="{{ media.preview_image | image_url }}"
+  data-media-width="{{ media.preview_image.width }}"
+  data-media-height="{{ media.preview_image.height }}"
+  style="--ratio: {{ image_ratio }}; --ratio-mobile: {{ image_ratio_mobile }};"
+  {{ additional_attributes }}
+>
+  {%- if preview_image_only -%}
+    {% render 'responsive-image',
+      mode: 'liquid',
+      image: media.preview_image,
+      widths: widths,
+      sizes: sizes,
+      image_ratio: image_ratio,
+      image_ratio_mobile: image_ratio_mobile,
+      default_alt: media.alt,
+      loading: loading,
+      fetchpriority: fetch_priority,
+      with_wrapper: false,
+      img_class: 'w-full'
+    %}
+  {%- else -%}
+    {%- case media.media_type -%}
+      {%- when 'model' -%}
+        <product-model
+          class="product-model-wrapper block"
+          data-media-id="{{ media.id }}"
+          data-media-type="{{ media.media_type }}"
+        >
+          <button
+            class="button media deferred-media__poster-button button-unstyled"
+            ref="deferredMediaPlayButton"
+            on:click="/showDeferredMedia"
+            aria-label="{{ 'accessibility.play_model' | t }}"
+          >
+            {% render 'responsive-image',
+              mode: 'liquid',
+              image: media.preview_image,
+              default_alt: media.alt,
+              widths: widths,
+              sizes: sizes,
+              loading: loading,
+              image_ratio: image_ratio,
+              image_ratio_mobile: image_ratio_mobile,
+              fetchpriority: fetch_priority,
+              with_wrapper: false,
+              img_class: 'w-full',
+              class: 'deferred-media__poster-image'
+            %}
+            <span class="deferred-media__poster-icon">
+              {% render 'icon', icon: '3d-model', size: 'medium' %}
+            </span>
+          </button>
+
+          <template>
+            {{ media | model_viewer_tag }}
+          </template>
+        </product-model>
+        {%- if first_3d_model -%}
+          <script
+            type="application/json"
+            id="ProductModelJSON-{{ selected_product.id }}"
+          >
+            {{ selected_product.media | where: 'media_type', 'model' | json }}
+          </script>
+        {%- endif -%}
+      {%- when 'video', 'external_video' -%}
+        {% render 'video',
+          video: media,
+          section_id: section.id,
+          disable_controls: true,
+          video_autoplay: block.settings.video_autoplay,
+          enable_toggle_button: true,
+          enable_toggle_volume_button: true,
+          toggle_button_position: 'top'
+        %}
+      {%- else -%}
+        {% render 'responsive-image',
+          mode: 'liquid',
+          image: media.preview_image,
+          widths: widths,
+          sizes: sizes,
+          image_ratio: image_ratio,
+          image_ratio_mobile: image_ratio_mobile,
+          default_alt: media.alt,
+          loading: loading,
+          fetchpriority: fetch_priority,
+          with_wrapper: false,
+          img_class: 'w-full'
+        %}
+    {%- endcase -%}
+  {%- endif -%}
+
+  {%- if enable_zoom_dialog and media.media_type == 'image' -%}
+    <div class="media-gallery__zoom-dialog-button">
+      <button
+        class="btn btn--white btn--icon-only btn--medium zoom-dialog-button"
+        data-media-id="{{ media.id }}"
+        on:click="media-gallery/openZoomDialog"
+        on:mouseenter="media-gallery/preloadZoomDialog"
+        aria-label="{{ 'actions.open_lightbox' | t }}"
+      >
+        {% render 'icon', icon: 'search', size: 'medium', class: 'zoom-dialog-button__icon' %}
+        {% render 'loading-spinner', class: 'zoom-dialog-button__spinner hidden', attributes: 'ref="zoomDialogSpinner"' %}
+      </button>
+    </div>
+  {%- endif -%}
+</div>

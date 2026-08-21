@@ -1,0 +1,610 @@
+{%- liquid
+  assign columns_xxl = section.settings.columns
+  assign columns_lg = columns_xxl | at_most: 3
+  assign columns_md = columns_xxl | at_most: 2
+  assign columns_mobile = section.settings.columns_mobile | plus: 0
+  assign enable_swipe_on_mobile = section.settings.enable_swipe_on_mobile
+  assign swipe_custom_width_column = section.settings.swipe_custom_width_column
+  assign prevent_duplicate_products = section.settings.prevent_duplicate_products
+  assign products = section.settings.product_list
+  assign discount_min_items = section.settings.discount_min_items
+  assign discount_max_items = discount_min_items
+
+  capture section_header
+    content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
+  endcapture
+
+  assign pcard_media_radius = settings.pcard_media_radius | at_most: 10
+-%}
+{%- capture section_style -%}
+  {% render 'spacing-style', settings: section.settings %}
+  {% render 'border-style', settings: section.settings %}
+  {% if swipe_custom_width_column %}
+    --swipe-column-width: {{ section.settings.swipe_column_width | divided_by: 100.0 }};
+  {% endif %}
+{%- endcapture -%}
+<div
+  class="products-bundle-selection-section spacing-style border-style color-{{ section.settings.color_scheme }}"
+  style="{{ section_style }}"
+>
+  <div class="page-width">
+    <products-bundle-selection
+      class="products-bundle-selection flex flex-col md:flex-row gap-style"
+      style="{% render 'gap-style', column_gap: 60, column_gap_mobile: 30 %}"
+      data-prevent-duplicate-items="{{ prevent_duplicate_products }}"
+      data-min-items="{{ discount_min_items }}"
+      data-max-items="{{ discount_max_items }}"
+      data-limit-message="{{ 'content.limit_message' | t: maximum: discount_max_items }}"
+      data-duplicate-message="{{ 'content.duplicate_message' | t }}"
+      id="products-bundle-selection-{{ section.id }}"
+    >
+      <div class="products-bundle-selection__bar-column">
+        <div
+          class="products-bundle-selection__bar sticky-element sticky-element--adapt"
+          style="--sticky-element-top: 3rem;"
+        >
+          {{ section_header }}
+          <div class="products-bundle-selection__bar-items">
+            <accordion-component
+              class="accordion accordion--standard"
+              ref="bundleBar"
+            >
+              <details
+                ref="item[]"
+                class="accordion__details is-open"
+                open
+              >
+                <summary
+                  ref="summary[]"
+                  class="accordion__summary flex md:hidden"
+                  on:click="/onSummaryClick"
+                  aria-expanded="true"
+                >
+                  <div class="accordion__summary-text">
+                    <span class="h2">{{- 'content.your_bundle' | t -}}</span>
+                    <span ref="bundleBarCount" class="products-bundle-selection__bar-count badge--sale">0</span>
+                  </div>
+                  {% render 'icon', icon: 'caret-down', class: 'flex accordion__summary-arrow icon--caret' %}
+                </summary>
+                <div ref="content[]" class="accordion__content">
+                  <div class="accordion__inner flex flex-col gap-4 md:gap-7">
+                    <div is="swipe-component" class="edge__shadows products-bundle-selection__bar-list-wrap">
+                      <div
+                        class="swipe__element swipe-mobile swipe-mobile--auto-cols"
+                        style="{% render 'gap-style', column_gap: 12, column_gap_mobile: 12 %}"
+                      >
+                        <div
+                          class="products-bundle-selection__bar-list swipe__inner"
+                          ref="bundleBarList"
+                          on:click="/onBundleBarItemRemoveClick"
+                        >
+                          {%- for i in (1..discount_min_items) -%}
+                            <div class="products-bundle-selection__bar-item relative is-placeholder">
+                              <div class="products-bundle-selection__bar-item-content media-mask-clip">
+                                <svg class="products-bundle-selection__bar-item-border" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                  <rect
+                                    x="1"
+                                    y="1"
+                                    width="98"
+                                    height="98"
+                                    fill="none"
+                                    rx="{{ pcard_media_radius }}"
+                                    ry="{{ pcard_media_radius }}"
+                                    vector-effect="non-scaling-stroke"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-dasharray="3,3"
+                                    stroke-dashoffset="0"
+                                    stroke-linecap="butt"
+                                    class="products-bundle-selection__bar-item-border"
+                                  />
+                                </svg>
+                              </div>
+                              <button
+                                class="products-bundle-selection__bar-item-remove btn btn--white absolute z-2"
+                                aria-label="{{ 'actions.remove_from_bundle' | t }}"
+                              >
+                                <span class="btn__text flex items-center">
+                                  {%- render 'icon', icon: 'close', size: 'extra-small' -%}
+                                </span>
+                              </button>
+                            </div>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="products-bundle-selection__bar-action flex flex-col items-start gap-3">
+                      {%- capture button_label -%}{{ 'actions.add_bundle_to_cart' | t }}{%- endcapture -%}
+                      {%- capture button_spinner -%}
+                        {% render 'loading-spinner', class: 'hidden' %}
+                      {%- endcapture -%}
+                      {% render 'button',
+                        with_wrapper: false,
+                        mobile_full_width: true,
+                        tag: 'button',
+                        label: button_label,
+                        style: 'primary',
+                        size: 'large',
+                        icon: 'caret-right',
+                        icon_style: 'solid',
+                        attributes: 'ref="bundleBarSubmit" on:click="/onSubmitClick"',
+                        content_after: button_spinner
+                      %}
+                      <span
+                        class="product-form-text__error alert alert--error text-body-sm hidden w-full"
+                        ref="addToCartTextError"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </accordion-component>
+          </div>
+        </div>
+      </div>
+      <div class="products-bundle-selection__list flex-grow{% if enable_swipe_on_mobile %} swipe-mobile swipe-mobile--{{ columns_mobile }}-cols{% if swipe_custom_width_column %} swipe-mobile--custom-width{% endif %}{% endif %}">
+        <div
+          class="layout-panel-grid gap-style{% if enable_swipe_on_mobile %} swipe__inner{% endif %}"
+          style="{% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile, columns_md: columns_md, columns_lg: columns_lg, columns_xxl: columns_xxl %}{% render 'gap-style', column_gap: section.settings.column_gap, column_gap_mobile: section.settings.column_gap_mobile, row_gap: section.settings.row_gap, row_gap_mobile: section.settings.row_gap_mobile %}"
+        >
+          {%- if products != blank -%}
+            {%- for bundle_product in products -%}
+              {% render 'product-card-with-selection',
+                product: bundle_product,
+                image_ratio: section.settings.pcard_image_ratio,
+                title_line_limit: section.settings.pcard_title_line_limit
+              %}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              {% render 'product-card-with-selection', product: blank, image_ratio: section.settings.pcard_image_ratio %}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </products-bundle-selection>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.products_bundle_selection",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/bo75aPI)"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "t:settings.products",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "discount_min_items",
+      "label": "t:settings.discount_min_items",
+      "info": "t:info.discount_min_items",
+      "min": 2,
+      "max": 12,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "prevent_duplicate_products",
+      "label": "t:settings.prevent_duplicate_products",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "t:content.product_cards"
+    },
+    {
+      "type": "select",
+      "id": "pcard_image_ratio",
+      "label": "t:settings.image_ratio",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "pcard_title_line_limit",
+      "label": "t:settings.text_line_limit",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "1-line",
+          "label": "t:options.1_line"
+        },
+        {
+          "value": "2-lines",
+          "label": "t:options.2_lines"
+        },
+        {
+          "value": "3-lines",
+          "label": "t:options.3_lines"
+        }
+      ],
+      "default": "1-line"
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_swipe_on_mobile",
+      "label": "t:settings.enable_swipe_on_mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_custom_width_column",
+      "label": "t:settings.swipe_custom_width_column",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_swipe_on_mobile == true }}"
+    },
+    {
+      "type": "range",
+      "id": "swipe_column_width",
+      "label": "t:settings.custom_width",
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 76,
+      "visible_if": "{{ section.settings.swipe_custom_width_column == true and section.settings.enable_swipe_on_mobile == true }}"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:settings.mobile_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:options.grid_1_column"
+        },
+        {
+          "value": "2",
+          "label": "t:options.grid_2_column"
+        }
+      ],
+      "default": "2",
+      "visible_if": "{{ section.settings.swipe_custom_width_column == false or section.settings.enable_swipe_on_mobile == false }}"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ section.settings.enable_swipe_on_mobile == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.products_bundle_selection",
+      "category": "t:categories.products",
+      "blocks": {
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "settings": {
+            "device": "desktop",
+            "padding-block-end": 20,
+            "padding-block-end-mobile": 24
+          },
+          "blocks": {
+            "subheading": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Build your bundle</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Product bundle selection</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Choose any 3 products and get 15% OFF your total. Build your bundle today.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 24,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 83,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["subheading", "heading", "text"]
+        }
+      },
+      "settings": {
+        "discount_min_items": 3,
+        "prevent_duplicate_products": true,
+        "columns": 3,
+        "column_gap": 30,
+        "row_gap": 30,
+        "pcard_image_ratio": "",
+        "pcard_title_line_limit": "1-line",
+        "enable_swipe_on_mobile": false,
+        "columns_mobile": "2",
+        "column_gap_mobile": 8,
+        "row_gap_mobile": 24,
+        "color_scheme": "scheme-1",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48
+      }
+    }
+  ]
+}
+{% endschema %}

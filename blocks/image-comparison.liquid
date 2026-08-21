@@ -1,0 +1,179 @@
+{%- doc -%}
+  Comparison image block
+
+  @param {string} [svg_placeholder] - Svg for placeholder
+
+  @example
+  {% content_for 'block', type: 'image-comparison', id: 'image-comparison' %}
+{%- enddoc -%}
+{%- liquid
+  capture before
+    content_for 'block', type: '_image-comparison-image', id: 'image-comparison-before', is_before: true, svg_placeholder: svg_placeholder, image_ratio: block.settings.image_ratio, image_ratio_mobile: block.settings.image_ratio_mobile
+  endcapture
+
+  capture after
+    content_for 'block', type: '_image-comparison-image', id: 'image-comparison-after', is_before: false, svg_placeholder: svg_placeholder, image_ratio: block.settings.image_ratio, image_ratio_mobile: block.settings.image_ratio_mobile
+  endcapture
+
+  assign image_heading_style = 'badge'
+  assign direction = block.settings.direction
+-%}
+<image-comparison
+  class="block w-full relative z-0 overflow-hidden image-comparison image-comparison-block image-comparison--heading-style-{{ image_heading_style }} border-style color-{{ block.settings.color_scheme }}"
+  style="{% render 'border-style', settings: block.settings %}"
+  data-direction="{{ direction }}"
+  {{ block.shopify_attributes }}
+>
+  <span
+    ref="trigger"
+    class="image-comparison__animation-trigger"
+  ></span>
+  {{ before }}
+  {{ after }}
+  <button
+    ref="rangeButton"
+    class="image-comparison__button absolute"
+    aria-label="Image comparison"
+  >
+    <span ref="rangeButtonIcon" class="image-comparison__button-range">
+      {% render 'icon', icon: 'caret-left' %}
+      {% render 'icon', icon: 'caret-right' %}
+    </span>
+  </button>
+</image-comparison>
+{% schema %}
+{
+  "name": "t:names.image_comparison",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:settings.direction",
+      "default": "horizontal",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:options.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "t:settings.aspect_ratio_mobile",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.image_comparison",
+      "category": "t:categories.basic",
+      "blocks": [
+        {
+          "type": "_image-comparison-image",
+          "id": "image-comparison-before",
+          "static": true,
+          "settings": {
+            "heading": "Before"
+          }
+        },
+        {
+          "type": "_image-comparison-image",
+          "id": "image-comparison-after",
+          "static": true,
+          "settings": {
+            "heading": "After"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

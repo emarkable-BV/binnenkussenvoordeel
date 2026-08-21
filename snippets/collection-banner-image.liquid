@@ -1,0 +1,100 @@
+{% doc %}
+  @param {object} section - Section settings
+{% enddoc %}
+{% liquid
+  assign banner = section.settings.image
+  assign banner_mobile = section.settings.image_mobile
+  assign toggle_overlay = section.settings.toggle_overlay
+  assign overlay_color = section.settings.overlay_color
+
+  assign section_index = section.index | default: 1
+
+  assign fetchpriority = 'low'
+  assign loading = 'lazy'
+  if section_index < 2
+    assign fetchpriority = 'high'
+    assign loading = 'eager'
+  endif
+
+  if collection.featured_image != blank
+    assign banner = collection.featured_image
+    assign banner_mobile = collection.featured_image
+  endif
+
+  # Override if it set in metafield.
+  if collection.metafields.foxtheme.collection_banner.value != blank
+    assign banner = collection.metafields.foxtheme.collection_banner.value
+    # Inherit from desktop in case has only desktop metafield.
+    assign banner_mobile = banner
+  endif
+
+  if collection.metafields.foxtheme.collection_banner_mobile.value != blank
+    assign banner_mobile = collection.metafields.foxtheme.collection_banner_mobile.value
+  endif
+
+  assign aspect_ratio = banner.aspect_ratio | default: '16/9'
+  assign aspect_ratio_mobile = banner_mobile.aspect_ratio | default: aspect_ratio
+
+  assign show_collection_image = section.settings.show_image
+  if banner == blank and banner_mobile == blank
+    assign show_collection_image = false
+  endif
+
+  assign height_desktop = section.settings.height
+  assign height_mobile = section.settings.height_mobile
+  if height_mobile == 'auto'
+    assign height_mobile = height_desktop
+  endif
+%}
+{%- capture sizes -%}{% if section.settings.container == 'full' %}100vw{% else %}min({{ settings.page_width }}px, 100vw){% endif %}{%- endcapture -%}
+{% if show_collection_image %}
+  <parallax-component
+    class="block w-full h-full overflow-hidden col-span-full row-span-full relative z-0{% if banner == blank %} md:hidden{% endif %}"
+    {% if section.settings.enable_parallax %}
+      data-parallax="{{ section.settings.parallax_intensity }}" data-parallax-direction="{{ section.settings.parallax_direction }}"
+    {% endif %}
+  >
+    <div
+      class="collection-banner__media media relative overflow-hidden"
+      data-section-index="{{ section.index }}"
+      style="{% if height_desktop == 'adapt' %}--ratio: {{ aspect_ratio }};{% endif %}{% if height_mobile == 'adapt' %}--ratio-mobile: {{ aspect_ratio_mobile }};{% endif %}"
+    >
+      <picture
+        class="media block w-full h-full relative overflow-hidden{% if settings.animations_enabled %} image-zoom-reveal{% endif %}"
+      >
+        {%- if banner != blank and banner_mobile != blank -%}
+          <source
+            media="(max-width: 767px)"
+            srcset="{{ banner_mobile | image_url: width: '400x' }} 400w, {{ banner_mobile | image_url: width: '600x' }} 600w, {{ banner_mobile | image_url: width: '800x' }} 800w, {{ banner_mobile | image_url: width: '1000x' }} 1000w"
+            width="{{ banner_mobile.width }}"
+            height="{{ banner_mobile.height }}"
+          >
+        {%- endif -%}
+        {%- liquid
+          if banner == blank
+            assign banner = banner_mobile
+          endif
+
+          assign alt_image = banner.alt | default: collection.title | escape
+        -%}
+        {{-
+          banner
+          | image_url: width: banner.width
+          | image_tag:
+            loading: loading,
+            fetchpriority: fetchpriority,
+            sizes: sizes,
+            width: banner.width,
+            height: banner.height,
+            widths: '240, 352, 832, 1200, 1600, 1920, 2560, 3200, 3840',
+            alt: alt_image,
+            class: 'collection-banner__image media__image',
+            is: 'responsive-image'
+        -}}
+      </picture>
+      {%- if toggle_overlay -%}
+        {% render 'overlay', overlay_color: overlay_color %}
+      {%- endif -%}
+    </div>
+  </parallax-component>
+{% endif %}

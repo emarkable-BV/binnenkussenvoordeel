@@ -1,0 +1,177 @@
+{% assign block_settings = block.settings %}
+
+{%- liquid
+  assign selected_product = closest.product
+  assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
+  assign first_3d_model = selected_product.media | where: 'media_type', 'model' | first
+
+  if block_settings.hide_variants
+    assign variant_images = selected_product.images | where: 'attached_to_variant?', true | map: 'src'
+  endif
+-%}
+
+{%- liquid
+  assign sorted_media = '' | split: ','
+  if selected_variant_media
+    assign sorted_media = sorted_media | concat: selected_product.media | where: 'id', selected_variant_media.id
+
+    for media in selected_product.media
+      if block_settings.hide_variants and variant_images contains media.src and sorted_media.size > 0
+        continue
+      endif
+
+      if media.id != selected_variant_media.id
+        assign found_media = selected_product.media | where: 'id', media.id
+        assign sorted_media = sorted_media | concat: found_media
+      endif
+    endfor
+  else
+    assign sorted_media = selected_product.media
+  endif
+
+  assign media_size = sorted_media.size
+-%}
+
+{% liquid
+  assign carousel_class = 'carousel media-gallery__carousel carousel--visible'
+  assign has_carousel_controls = false
+  if media_size > 1
+    assign has_carousel_controls = true
+  endif
+  if media_size == 1
+    assign carousel_class = carousel_class | append: ' media-gallery__carousel--single'
+  endif
+%}
+
+<media-gallery
+  class="block media-gallery media-gallery--quick-add spacing-style{% if media_size == 0 %} hidden{% endif %}"
+  style="--media-radius: {{ block_settings.media_radius | divided_by: 10.0 }}rem; {% render 'spacing-style', settings: block.settings %}"
+>
+  <carousel-slider class="{{ carousel_class }}" ref="carousel">
+    <script type="application/json" ref="config">
+      {
+        "loop": false,
+        "pagination": false,
+        "counter": false,
+        "slidesPerView": "auto",
+        "spaceBetween": 8,
+        "counter": true,
+        "pagination": {
+          "type": "progressbar"
+        }
+      }
+    </script>
+    <div ref="container" class="swiper media-gallery__carousel-container">
+      <div class="swiper-wrapper media-gallery__carousel-wrapper">
+        {% for media in sorted_media %}
+          {% if media.media_type == 'image'
+            or media.media_type == 'video'
+            or media.media_type == 'external_video'
+          %}
+            {% render 'product-media',
+              media: media,
+              image_ratio: block_settings.media_aspect_ratio,
+              is_main_product_media: forloop.first,
+              selected_product: selected_product,
+              first_3d_model: first_3d_model,
+              class: 'swiper-slide media-gallery__item',
+              enable_zoom_dialog: false
+            %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if has_carousel_controls %}
+        {% render 'carousel-controls' %}
+      {% endif %}
+    </div>
+  </carousel-slider>
+</media-gallery>
+
+{% schema %}
+{
+  "name": "t:names.product_media",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "select",
+      "id": "media_aspect_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "auto", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "t:settings.video_autoplay",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_variants",
+      "default": false,
+      "label": "t:settings.hide_unselected_variant_media"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-scale",
+      "label": "t:settings.mobile_scale",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_media",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

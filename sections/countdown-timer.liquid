@@ -1,0 +1,306 @@
+{%- liquid
+  capture subheading
+    content_for 'block', type: 'text', id: 'subheading'
+  endcapture
+  capture heading
+    content_for 'block', type: 'text', id: 'heading'
+  endcapture
+  capture text
+    content_for 'block', type: 'text', id: 'text'
+  endcapture
+  capture countdown_timer
+    content_for 'block', type: 'countdown-timer', id: 'countdown-timer'
+  endcapture
+  capture button
+    content_for 'block', type: 'button', id: 'button'
+  endcapture
+-%}
+<div
+  class="countdown-timer-section overflow-hidden border-style page-width color-{{ section.settings.color_scheme }}"
+  style="{% render 'border-style', settings: section.settings %}"
+>
+  <div
+    class="countdown-timer__wrapper relative flex flex-col gap-7 spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <div class="countdown-timer__content z-1">
+      <div class="countdown-timer__content-inner flex flex-col items-center justify-center text-center">
+        {{ subheading }}
+        {{ heading }}
+        {{ countdown_timer }}
+        {{ text }}
+        <div class="countdown-timer__button hidden md:block">
+          {{ button }}
+        </div>
+      </div>
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      {%- capture inline_style -%}
+        {% render 'layout-panel-style', type: 'grid', columns_mobile: "3", columns_xxl: "3" %}
+        {% render 'gap-style', column_gap: 8, column_gap_mobile: 8, row_gap: 8, row_gap_mobile: 8 %}
+      {%- endcapture -%}
+      <div class="countdown-timer__images{% if section.blocks.size > 3 %} swipe-mobile swipe-mobile--1-cols{% endif %}">
+        <div
+          class="layout-panel-grid gap-style{% if section.blocks.size > 3 %} swipe__inner{% endif %}"
+          style="{{ inline_style | strip | strip_newlines }}"
+        >
+          {%- for block in section.blocks -%}
+            {% render block %}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+    <div class="countdown-timer__button block md:hidden text-center">
+      {{ button }}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.countdown_timer",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "_layered-image"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/RLcGaBs)"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 164,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 164,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.countdown_timer",
+      "category": "t:categories.basic",
+      "blocks": {
+        "subheading": {
+          "type": "text",
+          "name": "t:names.subheading",
+          "static": true,
+          "settings": {
+            "text": "<p>Add a tagline</p>",
+            "type_preset": "text-subheading",
+            "font": "var(--font-heading--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "loose",
+            "padding-block-start": 0,
+            "padding-block-end": 20,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80
+          }
+        },
+        "heading": {
+          "type": "text",
+          "name": "t:names.heading",
+          "static": true,
+          "settings": {
+            "text": "<h2>Countdown timer</h2>",
+            "type_preset": "h1",
+            "padding-block-end": 32,
+            "mobile-padding-scale": 60
+          }
+        },
+        "countdown-timer": {
+          "type": "countdown-timer",
+          "static": true,
+          "settings": {
+            "type": "evergreen",
+            "duration": "every_day",
+            "show_text": false,
+            "style": "card",
+            "number_preset": "h2",
+            "inherit_color_scheme": true
+          }
+        },
+        "text": {
+          "type": "text",
+          "static": true,
+          "settings": {
+            "text": "<p>Save extra on our sale collection <br>*Runs until 14:00pm PST</p>",
+            "type_preset": "rte",
+            "text_color": "subtext",
+            "font": "var(--font-body--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "loose",
+            "padding-block-start": 32,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 75
+          }
+        },
+        "button": {
+          "type": "button",
+          "static": true,
+          "settings": {
+            "label": "Button label",
+            "link": "",
+            "size": "large",
+            "style": "primary",
+            "icon": "caret-right",
+            "icon_style": "solid",
+            "mobile_full_width": true
+          }
+        },
+        "image_1": {
+          "type": "_layered-image",
+          "settings": {
+            "width": 300,
+            "offset_y": 50,
+            "offset_x": 0,
+            "border_radius": 20,
+            "loop_animation": "move-y"
+          }
+        },
+        "image_2": {
+          "type": "_layered-image",
+          "settings": {
+            "width": 150,
+            "offset_y": 14,
+            "offset_x": 82,
+            "border_radius": 20,
+            "loop_animation": "move-y-reverse"
+          }
+        },
+        "image_3": {
+          "type": "_layered-image",
+          "settings": {
+            "width": 300,
+            "offset_y": 80,
+            "offset_x": 90,
+            "border_radius": 20,
+            "loop_animation": "move-y"
+          }
+        }
+      },
+      "block_order": ["image_1", "image_2", "image_3"]
+    }
+  ]
+}
+{% endschema %}

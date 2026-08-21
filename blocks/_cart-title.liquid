@@ -1,0 +1,92 @@
+{% assign block_settings = block.settings %}
+<div
+  class="cart-title spacing-style"
+  style="{% render 'spacing-style', settings: block_settings %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if cart.empty? -%}
+    <div class="flex items-center justify-center flex-col gap-3 xl:gap-4">
+      <h1 class="cart__empty-heading {{ block_settings.type_preset | default: 'h2' }}">
+        {{ 'content.your_cart_is_empty' | t }}
+      </h1>
+      {%- if settings.cart_empty_recommendation_collection != blank or shop.customer_accounts_enabled and customer == null -%}
+        <span class="cart__empty-description color-subtext">
+          {%- if settings.cart_empty_recommendation_collection != blank -%}
+            {{ 'content.cart_empty_recommendation_description' | t }}
+          {% elsif shop.customer_accounts_enabled and customer == null %}
+            {{ 'actions.log_in_html' | t: link: routes.account_login_url }}
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    </div>
+    {% render 'cart-count', class: 'cart-count--absolute cart-count--unstyled hidden' %}
+  {%- else -%}
+    <h1 class="{{ block_settings.type_preset | default: 'h2' }} relative inline-flex">
+      <p class="rte m-0">{{ block_settings.title }}</p>
+      {% render 'cart-count', class: 'cart-count--absolute cart-count--unstyled' %}
+    </h1>
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "t:names.title",
+  "tag": null,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "t:settings.cart_title",
+      "default": "Your cart"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "rte",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "text-subheading",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.title"
+    }
+  ]
+}
+{% endschema %}

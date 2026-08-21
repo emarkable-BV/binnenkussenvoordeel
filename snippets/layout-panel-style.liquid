@@ -1,0 +1,78 @@
+{%- doc -%}
+  Intended for blocks and sections that provide values for all the referenced settings.
+
+  @param {string} [type] - Mode of image card. Accepted value: 'flex', 'grid'
+  @param {object} [settings] - Settings for flex type: {block.settings || section.settings}
+  @param {string} [content_direction] - Content direction
+  @param {string} [h_alignment] - Override setting horizontal alignment
+  @param {string} [h_alignment_mobile] - Override setting horizontal alignment on mobile
+  @param {string} [v_alignment] - Override setting vertical alignment
+  @param {string} [v_alignment_mobile] - Override setting vertical alignment on mobile
+  @param {string} [columns_xxl] - Number of columns on desktop for grid type
+  @param {string} [columns_xl] - Number of columns on small desktop for grid type
+  @param {string} [columns_lg] - Number of columns on laptop for grid type
+  @param {string} [columns_md] - Number of columns on tablet for grid type
+  @param {string} [columns_mobile] - Number of columns on mobile for grid type
+{%- enddoc -%}
+{%- if type == 'flex' -%}
+  {%- liquid
+    assign horizontal_alignment = settings.horizontal_alignment
+    assign vertical_alignment = settings.vertical_alignment
+
+    if settings.align_baseline and vertical_alignment == 'flex-end'
+      assign vertical_alignment = 'last baseline'
+    endif
+
+    unless settings.content_direction == 'row'
+      assign horizontal_alignment = settings.horizontal_alignment_flex_direction_column | default: horizontal_alignment
+      assign vertical_alignment = settings.vertical_alignment_flex_direction_column | default: vertical_alignment
+    endunless
+
+    assign vertical_alignment_mobile = vertical_alignment
+
+    if settings.vertical_on_mobile and vertical_alignment == 'last baseline'
+      assign vertical_alignment_mobile = 'flex-end'
+    endif
+    assign flex_direction = content_direction | default: settings.content_direction | default: 'column'
+
+    assign h_align = h_alignment | default: horizontal_alignment
+    assign v_align = v_alignment | default: vertical_alignment
+    assign h_align_mobile = h_alignment_mobile | default: settings.horizontal_alignment_mobile | default: h_align
+    assign v_align_mobile = v_alignment_mobile | default: settings.vertical_alignment_mobile | default: v_align
+  -%}
+  {%- capture panel_style -%}
+    {%- if flex_direction != blank -%}--flex-direction: {{ flex_direction }}; {%- endif -%}
+    {%- if h_align != blank -%}--horizontal-alignment: {{ h_align }}; {%- endif -%}
+    {%- if h_align_mobile != blank -%}--horizontal-alignment-mobile: {{ h_align_mobile }}; {%- endif -%}
+    {%- if v_align != blank -%}--vertical-alignment: {{ v_align }}; {%- endif -%}
+    {%- if v_align_mobile != blank -%}--vertical-alignment-mobile: {{ v_align_mobile }}; {%- endif -%}
+  {%- endcapture -%}
+{%- else -%}
+  {%- liquid
+    assign columns_xxl = columns_xxl | default: settings.columns_xxl
+    assign vertical_alignment = v_alignment | default: settings.vertical_alignment
+
+    if columns_xl == blank
+      assign columns_xl = columns_xxl | at_most: 7
+    endif
+
+    if columns_lg == blank
+      assign columns_lg = columns_xxl | at_most: 4
+    endif
+
+    if columns_md == blank
+      assign columns_md = columns_xxl | at_most: 3
+    endif
+
+    assign columns_mobile = columns_mobile | default: settings.columns_mobile
+  -%}
+  {%- capture panel_style -%}
+    {%- if columns_xxl != blank -%}--f-columns-xxl: {{ columns_xxl }}; {%- endif -%}
+    {%- if columns_xl != blank -%}--f-columns-xl: {{ columns_xl }}; {%- endif -%}
+    {%- if columns_lg != blank -%}--f-columns-lg: {{ columns_lg }}; {%- endif -%}
+    {%- if columns_md != blank -%}--f-columns-md: {{ columns_md }}; {%- endif -%}
+    {%- if columns_mobile != blank -%}--f-columns-mobile: {{ columns_mobile }}; {%- endif -%}
+    {%- if vertical_alignment != blank -%}--f-align-items: {{ vertical_alignment }};{%- endif -%}
+  {%- endcapture -%}
+{%- endif -%}
+{{- panel_style | strip | strip_newlines -}}

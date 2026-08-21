@@ -1,0 +1,226 @@
+{%- liquid
+  assign article = block.settings.article
+  assign layout = block.settings.layout_type
+  assign show_tags = block.settings.show_tags
+  assign show_author = block.settings.show_author
+  assign show_button = block.settings.show_button
+  assign show_date = block.settings.show_date
+  assign show_excerpt = block.settings.show_excerpt
+  assign inherit_color_scheme = block.settings.inherit_color_scheme
+  assign color_scheme = block.settings.color_scheme
+  assign alignment = block.settings.text_alignment
+  assign image_ratio = block.settings.image_ratio
+  assign image_ratio_mobile = block.settings.image_ratio_mobile
+  if article == blank
+    assign article = null
+  endif
+
+  assign toggle_overlay = false
+  if layout == 'overlay'
+    assign toggle_overlay = block.settings.toggle_overlay
+    assign overlay_color = block.settings.overlay_color
+  endif
+-%}
+{%- render 'article-card',
+  article: article,
+  block: block,
+  layout: layout,
+  show_tags: show_tags,
+  show_date: show_date,
+  show_author: show_author,
+  show_excerpt: show_excerpt,
+  show_button: show_button,
+  inherit_color_scheme: inherit_color_scheme,
+  color_scheme: color_scheme,
+  alignment: alignment,
+  toggle_overlay: toggle_overlay,
+  overlay_color: overlay_color,
+  image_ratio: image_ratio,
+  image_ratio_mobile: image_ratio_mobile
+-%}
+{% schema %}
+{
+  "name": "t:names.article_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "article",
+      "id": "article",
+      "label": "t:names.article"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "t:settings.type",
+      "options": [
+        { "value": "overlay", "label": "t:options.overlay" },
+        { "value": "column", "label": "t:options.vertical" },
+        { "value": "row", "label": "t:options.horizontal" }
+      ],
+      "default": "column"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "t:settings.aspect_ratio_mobile",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "header",
+      "content": "t:content.card_settings"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:settings.show_tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "t:settings.show_date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:settings.show_author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "t:settings.show_excerpt",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "t:settings.show_button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance",
+      "visible_if": "{{ block.settings.layout_type == 'overlay' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'overlay' }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false and block.settings.layout_type == 'overlay' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle_overlay",
+      "label": "t:settings.media_overlay",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'overlay' }}"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:settings.overlay_color",
+      "alpha": true,
+      "default": "#00000026",
+      "visible_if": "{{ block.settings.layout_type == 'overlay' and block.settings.toggle_overlay }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.article_card",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

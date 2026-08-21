@@ -1,0 +1,501 @@
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "name": "t:names.breadcrumbs",
+      "settings": {
+        "text_align": "left",
+        "text_align_mobile": "inherit",
+        "device": "desktop",
+        "padding-block-start": 16,
+        "padding-block-end": 24,
+        "padding-block-start-mobile": 12,
+        "padding-block-end-mobile": 12
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "page_title": {
+          "type": "_page-title",
+          "name": "t:names.page_title",
+          "settings": {
+            "type_preset": "h1",
+            "html_tag": "h1",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "fade-up",
+            "animation_delay": 50
+          },
+          "blocks": {}
+        },
+        "page_content": {
+          "type": "_page-content",
+          "name": "t:names.page_content",
+          "settings": {
+            "type_preset": "rte",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "subtext",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 16,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 75,
+            "animation_type": "fade-up",
+            "animation_delay": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "page_title",
+        "page_content"
+      ],
+      "settings": {
+        "container": "fixed",
+        "container_custom_width": 880,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 36,
+        "padding-block-end": 40,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
+        "padding-block-start-mobile": 20,
+        "padding-block-end-mobile": 24,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16
+      }
+    },
+    "store_locator_PXynpd": {
+      "type": "store-locator",
+      "blocks": {
+        "store_locator_HGcrzY": {
+          "type": "store-locator",
+          "settings": {
+            "style": "card",
+            "color_scheme": "scheme-13",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20
+          },
+          "blocks": {
+            "image": {
+              "type": "_image-card-media",
+              "static": true,
+              "settings": {
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "image_ratio": "adapt",
+                "image_ratio_mobile": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "_simple-text",
+              "name": "t:names.heading",
+              "static": true,
+              "settings": {
+                "text": "<p>New York</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "mobile-padding-scale": 75,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>123 Orchard Ave, Manhattan, NY 10002 </p><p>+1 (212) 555-0148 </p><p>Mon–Sat: 10am–8pm</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "loose",
+                "text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "button": {
+              "type": "button",
+              "static": true,
+              "settings": {
+                "label": "Get Directions",
+                "style": "plain",
+                "size": "medium",
+                "icon": "caret-right",
+                "icon_only": false,
+                "icon_style": "default",
+                "mobile_full_width": false,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "store_locator_NpMUBt": {
+          "type": "store-locator",
+          "settings": {
+            "style": "card",
+            "color_scheme": "scheme-13",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20
+          },
+          "blocks": {
+            "image": {
+              "type": "_image-card-media",
+              "static": true,
+              "settings": {
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "image_ratio": "adapt",
+                "image_ratio_mobile": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "_simple-text",
+              "name": "t:names.heading",
+              "static": true,
+              "settings": {
+                "text": "<p>Los Angeles</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "mobile-padding-scale": 75,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>742 Sunset Blvd, Los Angeles, CA 90028 </p><p>+1 (310) 555-0193</p><p>Mon–Sat: 10am–8pm</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "loose",
+                "text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "button": {
+              "type": "button",
+              "static": true,
+              "settings": {
+                "label": "Get Directions",
+                "style": "plain",
+                "size": "medium",
+                "icon": "caret-right",
+                "icon_only": false,
+                "icon_style": "default",
+                "mobile_full_width": false,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "store_locator_x6KkVD": {
+          "type": "store-locator",
+          "settings": {
+            "style": "card",
+            "color_scheme": "scheme-13",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20
+          },
+          "blocks": {
+            "image": {
+              "type": "_image-card-media",
+              "static": true,
+              "settings": {
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "image_ratio": "adapt",
+                "image_ratio_mobile": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "_simple-text",
+              "name": "t:names.heading",
+              "static": true,
+              "settings": {
+                "text": "<p>Chicago</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "mobile-padding-scale": 75,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>211 W Monroe St, Chicago, IL 60606 </p><p>+1 (312) 555-0177 </p><p>Mon–Sat: 10am–8pm</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "loose",
+                "text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "button": {
+              "type": "button",
+              "static": true,
+              "settings": {
+                "label": "Get Directions",
+                "style": "plain",
+                "size": "medium",
+                "icon": "caret-right",
+                "icon_only": false,
+                "icon_style": "default",
+                "mobile_full_width": false,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "store_locator_p4n7HU": {
+          "type": "store-locator",
+          "settings": {
+            "style": "card",
+            "color_scheme": "scheme-13",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20
+          },
+          "blocks": {
+            "image": {
+              "type": "_image-card-media",
+              "static": true,
+              "settings": {
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "image_ratio": "adapt",
+                "image_ratio_mobile": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "_simple-text",
+              "name": "t:names.heading",
+              "static": true,
+              "settings": {
+                "text": "<p>Palo Alto</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "mobile-padding-scale": 75,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>385 University Ave, Palo Alto, CA 94301 </p><p>+1 (650) 555-0124 </p><p>Mon–Sat: 10am–8pm</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "loose",
+                "text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "button": {
+              "type": "button",
+              "static": true,
+              "settings": {
+                "label": "Get Directions",
+                "style": "plain",
+                "size": "medium",
+                "icon": "caret-right",
+                "icon_only": false,
+                "icon_style": "default",
+                "mobile_full_width": false,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [
+        "store_locator_HGcrzY",
+        "store_locator_NpMUBt",
+        "store_locator_x6KkVD",
+        "store_locator_p4n7HU"
+      ],
+      "name": "t:names.store_locator",
+      "settings": {
+        "container": "fixed",
+        "type": "grid",
+        "columns": 2,
+        "column_gap": 30,
+        "row_gap": 30,
+        "enable_swipe_on_mobile": false,
+        "swipe_custom_width_column": false,
+        "swipe_column_width": 76,
+        "columns_mobile": "1",
+        "column_gap_mobile": 8,
+        "row_gap_mobile": 24,
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 100
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main",
+    "store_locator_PXynpd"
+  ]
+}

@@ -1,0 +1,330 @@
+{%- liquid
+  assign field_name_default = 'Custom field ' | append: block.index
+  assign field_name = block.settings.heading | default: field_name_default
+  assign phone_field_index = 1
+-%}
+{%- if block.settings.field_type == 'phone' -%}
+  {% if phone_field_index > 1 %}
+    {% continue %}
+  {% endif %}
+  <div
+    class="form-field form-field--{{ block.settings.field_type }}{% if block.settings.full_width %} form-field--full{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.heading != blank -%}
+      <label
+        class="form-label"
+        for="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      >
+        {{- block.settings.heading -}}
+        {% if block.settings.required %}
+          <span aria-hidden="true">*</span>
+        {% endif %}
+      </label>
+    {%- endif -%}
+    <input
+      type="tel"
+      id="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      class="form-control w-full"
+      autocomplete="tel"
+      name="contact[{{ 'blocks.contact_form.phone' | t }}]"
+      pattern="[0-9\-]*"
+      {% # theme-check-disable %}
+      value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+      {% # theme-check-enable %}
+      {% if block.settings.placeholder != blank %}
+        placeholder="{{ block.settings.placeholder }}"
+      {% endif %}
+      {% if block.settings.required %}
+        aria-invalid="true"
+        required
+      {% endif %}
+    >
+  </div>
+  {% assign phone_field_index = phone_field_index | plus: 1 %}
+{%- elsif block.settings.field_type == 'text' -%}
+  <div
+    class="form-field form-field--{{ block.settings.field_type }}{% if block.settings.full_width %} form-field--full{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.heading != blank -%}
+      <label
+        class="form-label"
+        for="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      >
+        {{- block.settings.heading -}}
+        {% if block.settings.required %}
+          <span aria-hidden="true">*</span>
+        {% endif %}
+      </label>
+    {%- endif -%}
+    <input
+      type="text"
+      id="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      class="form-control w-full"
+      name="contact[{{- field_name -}}]"
+      value=""
+      {% if block.settings.placeholder != blank %}
+        placeholder="{{ block.settings.placeholder }}"
+      {% endif %}
+      {% if block.settings.required %}
+        aria-invalid="true"
+        required
+      {% endif %}
+    >
+  </div>
+{%- elsif block.settings.field_type == 'textarea' -%}
+  <div
+    class="form-field form-field--{{ block.settings.field_type }}{% if block.settings.full_width %} form-field--full{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.heading != blank -%}
+      <label
+        class="form-label"
+        for="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      >
+        {{- block.settings.heading -}}
+        {% if block.settings.required %}
+          <span aria-hidden="true">*</span>
+        {% endif %}
+      </label>
+    {%- endif -%}
+    <textarea
+      rows="5"
+      id="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      class="form-control w-full form-control--textarea"
+      name="contact[{{- field_name -}}]"
+      {% if block.settings.placeholder != blank %}
+        placeholder="{{ block.settings.placeholder }}"
+      {% endif %}
+      {% if block.settings.required %}
+        aria-invalid="true"
+        required
+      {% endif %}
+    >
+        {% # theme-check-disable %}
+          {{- form[field_name] -}}
+        {% # theme-check-enable %}
+      </textarea>
+  </div>
+{%- elsif block.settings.field_type == 'select' -%}
+  {% assign options = block.settings.select_options | split: ',' %}
+  <div
+    class="form-field form-field--{{ block.settings.field_type }}{% if block.settings.full_width %} form-field--full{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.heading != blank -%}
+      <label
+        class="form-label"
+        for="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      >
+        {{- block.settings.heading -}}
+        {% if block.settings.required %}
+          <span aria-hidden="true">*</span>
+        {% endif %}
+      </label>
+    {%- endif -%}
+    <div class="select w-full">
+      <select
+        id="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+        name="contact[{{- field_name -}}]"
+        class="form-control w-full form-control--select"
+        {% if block.settings.required %}
+          aria-invalid="true"
+          required
+        {% endif %}
+      >
+        {%- if block.settings.placeholder != blank -%}
+          <option value="">{{ block.settings.placeholder }}</option>
+        {%- endif -%}
+        {%- for option in options -%}
+          <option value="{{ option }}" label="{{ option }}">{{ option }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  </div>
+{%- elsif block.settings.field_type == 'checkbox' -%}
+  <div
+    class="form-field form-field--{{ block.type }}{% if block.settings.full_width %} form-field--full{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="flex items-center gap-x-3">
+      <input
+        type="hidden"
+        name="contact[{{- field_name -}}]"
+        value="{{ block.settings.checkbox_uncheck_value }}"
+      >
+      <input
+        type="checkbox"
+        name="contact[{{- field_name -}}]"
+        id="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+        value="{{ block.settings.checkbox_checked_value }}"
+        {% if block.settings.required %}
+          aria-invalid="true"
+          required
+        {% endif %}
+      >
+      {%- if block.settings.heading != blank -%}
+        <label
+          class="flex-1"
+          for="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+        >
+          {{- block.settings.heading -}}
+          {% if block.settings.required %}
+            <span aria-hidden="true">*</span>
+          {% endif %}
+        </label>
+      {%- endif -%}
+    </div>
+  </div>
+{%- elsif block.settings.field_type == 'radio' -%}
+  {% assign options = block.settings.select_options | split: ',' %}
+  <div
+    class="form-field form-field--{{ block.settings.field_type }}{% if block.settings.full_width %} form-field--full{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.heading != blank -%}
+      <label
+        class="form-label"
+        for="ContactForm-{{ block.settings.field_type }}-{{ block.id }}"
+      >
+        {{- block.settings.heading -}}
+        {% if block.settings.required %}
+          <span aria-hidden="true">*</span>
+        {% endif %}
+      </label>
+    {%- endif -%}
+    <ul class="list-unstyled">
+      {%- for option in options -%}
+        <li class="flex items-center gap-x-3">
+          <input
+            type="radio"
+            name="contact[{{- field_name -}}]"
+            id="ContactForm-{{ block.settings.field_type }}-{{ block.id }}-{{ forloop.index }}"
+            value="{{ option }}"
+            {% if block.settings.required %}
+              aria-invalid="true"
+              required
+            {% endif %}
+          >
+          <label
+            class="flex-1"
+            for="ContactForm-{{ block.settings.field_type }}-{{ block.id }}-{{ forloop.index }}"
+          >
+            {{- option -}}
+          </label>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:names.custom_field",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.custom_field_content"
+    },
+    {
+      "type": "select",
+      "id": "field_type",
+      "label": "t:settings.field_type",
+      "default": "text",
+      "info": "t:info.field_type",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "textarea",
+          "label": "t:options.textarea"
+        },
+        {
+          "value": "phone",
+          "label": "t:options.phone"
+        },
+        {
+          "value": "select",
+          "label": "t:options.select"
+        },
+        {
+          "value": "checkbox",
+          "label": "t:options.checkbox"
+        },
+        {
+          "value": "radio",
+          "label": "t:options.radio"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.label"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "t:settings.placeholder",
+      "visible_if": "{{ block.settings.field_type == 'text' or block.settings.field_type == 'textarea' or block.settings.field_type == 'phone' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "required",
+      "label": "t:settings.required",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:settings.full_width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:options.select",
+      "visible_if": "{{ block.settings.field_type == 'select' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:options.checkbox",
+      "visible_if": "{{ block.settings.field_type == 'checkbox' }}"
+    },
+    {
+      "type": "text",
+      "id": "checkbox_checked_value",
+      "label": "t:settings.checkbox_checked_value",
+      "default": "Yes",
+      "visible_if": "{{ block.settings.field_type == 'checkbox' }}"
+    },
+    {
+      "type": "text",
+      "id": "checkbox_uncheck_value",
+      "label": "t:settings.checkbox_uncheck_value",
+      "default": "No",
+      "visible_if": "{{ block.settings.field_type == 'checkbox' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:options.radio",
+      "visible_if": "{{ block.settings.field_type == 'radio' }}"
+    },
+    {
+      "type": "text",
+      "id": "select_options",
+      "label": "t:options.options",
+      "info": "t:info.radio_options",
+      "visible_if": "{{ block.settings.field_type == 'select' or block.settings.field_type == 'radio' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_field"
+    }
+  ]
+}
+{% endschema %}

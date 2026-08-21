@@ -1,0 +1,82 @@
+{% doc %}
+  @param {string} icon - Icon
+  @param {object} image_upload - Custom icon
+  @param {number} [icon_width] - Width of the icon
+  @param {number} [icon_width_mobile] - Width of the icon on mobile
+  @param {string} [icon_size] - Size of the icon
+  @param {string} [style] - Style of the icon box
+  @param {string} [direction] - Direction of the icon box
+  @param {string} [text_align] - Text alignment of the icon box
+  @param {boolean} [inherit_color_scheme] - Inherit color scheme from parent
+  @param {object} [color_scheme] - Color scheme of the icon box
+  @param {number} [border_radius] - Border radius of the icon box
+  @param {number} [content_row_gap] - Content row gap of the icon box
+  @param {number} [icon_spacing] - Icon spacing of the icon box
+  @param {string} [heading] - Heading of the icon box
+  @param {string} [heading_preset] - Heading preset of the icon box
+  @param {string} text - Text of the icon box
+  @param {string} [text_color] - Text color of the icon box
+  @param {object} [link] - Link of the icon box,
+  @param {object} [block_attributes] - Block attributes
+{% enddoc %}
+
+{%- liquid
+  # Card settings
+  assign style = style | default: 'default'
+  assign direction = direction | default: 'vertical'
+  assign text_align = text_align | default: 'center'
+  assign border_radius = border_radius | default: 0
+
+  # Content
+  assign heading_preset = heading_preset | default: 'h6'
+  assign text_color = text_color | default: 'subtext'
+  assign content_row_gap = content_row_gap | default: 12
+  assign icon_spacing = icon_spacing | default: 16
+  assign inherit_color_scheme = inherit_color_scheme | default: true, allow_false: true
+-%}
+{%- capture wrapper_class -%}
+  border-style text-{{ text_align }} color-{% unless inherit_color_scheme and color_scheme == blank %}{{ color_scheme }}{%- else -%}inherit{%- endunless -%}
+  {%- if direction == 'vertical' %}
+    {%- assign content_alignment_class = ' items-' | append: text_align | replace: 'left', 'start' | replace: 'right', 'end' -%}
+    flex-col {{ content_alignment_class }}
+  {%- endif -%}
+  {%- if link != blank %} reversed-link{%- endif -%}
+{%- endcapture -%}
+{%- capture wrapper_style -%}
+  --content-gap: {{ content_row_gap | divided_by: 10.0 }}rem;
+  --icon-spacing: {{ icon_spacing | divided_by: 10.0 }}rem;
+  {% render 'border-style', border_radius: border_radius %}
+{%- endcapture -%}
+<div
+  class="icon-box icon-box--{{ direction }} icon-box--{{ style }} relative flex {{ wrapper_class }}"
+  style="{{ wrapper_style | strip | strip_newlines }}"
+  {% if block_attributes %}
+    {{ block_attributes }}
+  {% endif %}
+>
+  {%- if link != blank -%}
+    <a
+      href="{{ link }}"
+      class="absolute inset-0"
+      aria-label="{{ heading | escape }}"
+    ></a>
+  {%- endif -%}
+  <div class="icon-box__icon flex flex-col shrink-0">
+    {% render 'icon-or-image',
+      icon: icon,
+      image_upload: image_upload,
+      icon_size: icon_size,
+      width: icon_width,
+      width_mobile: icon_width_mobile,
+      class_name: ''
+    %}
+  </div>
+  <div class="icon-box__content flex flex-col relative">
+    {%- if heading != blank -%}
+      <h3 class="{{ heading_preset }}">
+        <span class="reversed-link__text">{{ heading }}</span>
+      </h3>
+    {%- endif -%}
+    {% render 'text', fallback_text: text, text_color: text_color, preset: 'rte', width: '100%' %}
+  </div>
+</div>

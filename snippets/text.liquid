@@ -1,0 +1,152 @@
+{%- doc -%}
+  @param {object} [block] - The block object
+  @param {string} [text] - main text content. Overrides settings.text if provided.
+  @param {string} [fallback_text] - fallback text if settings.text or main text does not exist
+  @param {string} [width] - width of the text block
+  @param {string} [width_mobile] - width of the text block on mobile
+  @param {string} [text_color] - text color
+  @param {string} [text_alignment] - text alignment
+  @param {string} [text_alignment_mobile] - text alignment on mobile
+  @param {string} [animation_type] - animation type
+  @param {string} [animation_delay] - animation delay
+  @param {string} [class] - custom class to define in addition to text-block classes
+  @param {string} [preset] - fallback for settings.type_preset
+  @param {number} [font_size] - fallback for settings.font_size. Only works when the preset is set to "custom"
+  @param {number} [font_size_mobile] - fallback for settings.font_size_mobile. Only works when the preset is set to "custom"
+  @param {string} [font_family] - fallback for settings.font. Only works when the preset is set to "custom"
+  @param {string} [font_weight] - fallback for settings.font_weight. Only works when the preset is set to "custom"
+  @param {string} [line_height] - fallback for settings.line_height. Only works when the preset is set to "custom"
+  @param {string} [font_type] - font type. Only works when the preset is set to "custom"
+  @param {string} [highlight_style] - Highlight text style. Accepted value: 'none', 'wavy-underline', 'solid-background'
+  @param {string} [highlight_font_style] - Highlight highlight_font_style. Accepted value: 'normal', 'italic'
+  @param {object} [highlight_shape_color] - Color for shape
+  @param {object} [highlight_text_color] - Color for text
+  @param {string} [text_color_gradient] - Text color gradient
+
+  @example
+  {% render 'text', block: block %}
+  {% render 'text', fallback_text: 'Featured collection', preset: 'h2' %}
+  {% render 'text', fallback_text: 'Featured product', preset: 'custom', font_size: 48, font_size_mobile: 28 %}
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  if text == blank
+    assign text = block_settings.text
+  endif
+  assign plain_text = text | strip_newlines | strip
+  assign visible_text = plain_text | strip_html
+  assign text_width = width | default: block_settings.width
+  assign text_width_mobile = width_mobile | default: block_settings.width_mobile
+  assign text_alignment = text_alignment | default: block_settings.text_alignment
+  assign text_alignment_mobile = text_alignment_mobile | default: block_settings.text_alignment_mobile
+  assign text_color = text_color | default: block_settings.text_color | default: 'text'
+  assign animation_type = animation_type | default: block_settings.animation_type | default: 'none'
+  assign animation_delay = animation_delay | default: block_settings.animation_delay
+
+  assign preset = preset | default: block_settings.type_preset
+  assign font_size = font_size | default: block_settings.font_size
+  assign font_size_mobile = font_size_mobile | default: block_settings.font_size_mobile
+  assign font_family = font_family | default: block_settings.font
+  assign font_weight = font_weight | default: block_settings.font_weight
+  assign line_height = line_height | default: block_settings.line_height
+
+  assign highlight_style = highlight_style | default: block_settings.highlight_style
+  assign highlight_font_style = highlight_font_style | default: block_settings.highlight_font_style
+  assign highlight_shape_color = highlight_shape_color | default: block_settings.highlight_shape_color
+  assign highlight_text_color = highlight_text_color | default: block_settings.highlight_text_color
+
+  capture text_block_classes
+    if preset == 'custom'
+      echo ' custom-typography '
+      if font_size != ''
+        echo ' custom-font-size '
+      endif
+    endif
+    unless preset == 'rte'
+      # Always use "rte" to make richtext tags display properly.
+      echo ' rte '
+    endunless
+  endcapture
+-%}
+
+{%- capture styles -%}
+  {% if text_width %}--width: {{ text_width }};{% endif %}
+  {% if text_width_mobile %}--width-mobile: {{ text_width_mobile }};{% endif %}
+  {% if text_alignment and text_width == '100%' %}--text-align: {{ text_alignment | replace: 'left', 'start' | replace: 'right', 'end' }};{% endif %}
+  {% if text_alignment_mobile and text_width_mobile == '100%' %}--text-align-mobile: {{ text_alignment_mobile | replace: 'left', 'start' | replace: 'right', 'end' }};{% endif %}
+  {% render 'typography-style', 
+    settings: block_settings,
+    preset: preset,
+    font_size: font_size,
+    font_size_mobile: font_size_mobile,
+    font_family: font_family,
+    font_weight: font_weight,
+    line_height: line_height,
+    font_type: font_type,
+  %}
+  {% render 'spacing-style', settings: block_settings %}
+  {% if text_color == 'gradient' %}
+    {%- assign text_color_gradient = text_color_gradient | default: block_settings.text_color_gradient | default: '#000000' -%}
+    --color-gradient: {{ text_color_gradient }};
+  {% endif %}
+{%- endcapture -%}
+{%- capture classes -%}
+  spacing-style text-block color-{{ text_color }}{% if block %} text-block--{{ block.id }}{% endif %} {{ preset }}{{ text_block_classes }}{% if class != blank %} {{ class }}{% endif %}
+  {%- if block_settings.disable_line_break_mobile %} mobile-no-br{%- endif -%}
+{%- endcapture -%}
+
+{% capture attributes %}
+  class="{{ classes | strip | strip_newlines }}"
+  style="{{ styles | strip | strip_newlines }}"
+  {% if animation_type != 'none' %}
+    data-motion="{{ animation_type }}"
+    data-motion-delay="{{ animation_delay }}"
+  {% endif %}
+  {{ block.shopify_attributes }}
+{% endcapture %}
+
+{%- liquid
+  # {{ attributes }} must be on the immediate HTML parent of the text to preserve
+  # the click-to-edit connection in the theme editor. Any break between the text,
+  # including if-statements, will break the connection.
+
+  assign element = 'div'
+  if animation_type != 'none' and settings.animations_enabled
+    assign element = 'motion-component'
+  endif
+  assign fallback_text_tag = 'div'
+  if block_settings.html_tag
+    assign fallback_text_tag = block_settings.html_tag
+  endif
+
+  assign use_fallback_text = false
+  assign render_text = text
+
+  if fallback_text != blank and visible_text == blank
+    assign use_fallback_text = true
+    assign render_text = fallback_text
+  endif
+-%}
+{%- capture text_with_highlight -%}
+  {%- if highlight_style != 'none' -%}
+    {% render 'highlight-text',
+      text: render_text,
+      style: highlight_style,
+      font_style: highlight_font_style,
+      shape_color: highlight_shape_color,
+      text_color: highlight_text_color
+    %}
+  {%- else -%}
+    {{ render_text }}
+  {%- endif -%}
+{%- endcapture -%}
+{%- if use_fallback_text -%}
+  <{{ element }} {{ attributes }}>
+    <{{ fallback_text_tag }}>{{ text_with_highlight }}</{{ fallback_text_tag }}>
+  </{{ element }}>
+{%- elsif plain_text != blank -%}
+  <{{ element }} {{ attributes }}>
+    {{ text_with_highlight }}
+  </{{ element }}>
+{%- endif -%}

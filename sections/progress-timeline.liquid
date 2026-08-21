@@ -1,0 +1,547 @@
+{% liquid
+  capture section_header
+    content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
+  endcapture
+  capture media
+    content_for 'block', type: '_timeline-media', id: 'timeline-media'
+  endcapture
+  capture children
+    content_for 'blocks'
+  endcapture
+  capture button
+    content_for 'block', type: '_button', id: 'button'
+  endcapture
+
+  assign columns = 1
+
+  if media != blank
+    assign columns = 2
+  endif
+
+  assign padding_inline_min = 0
+  if section.settings.container == 'page-width--full'
+    assign padding_inline_min = 15
+  endif
+%}
+
+{% capture inner_style %}
+  {% render 'layout-panel-style', type: 'grid', columns_mobile: '1', columns_xxl: columns %}
+  {% render 'gap-style', column_gap: 0, column_gap_mobile: 0, row_gap: 0, row_gap_mobile: 32 %}
+  --progress-bar-color: {{ section.settings.progress_bar_color.rgb }};
+{% endcapture %}
+
+{% capture items_wrapper_style %}
+  {% render 'clamp-calculate-style', property_name: 'padding-inline-start', min_value: padding_inline_min, max_value: 100 %}
+  {% render 'clamp-calculate-style', property_name: 'padding-inline-end', min_value: padding_inline_min, max_value: 150 %}
+{% endcapture %}
+<div
+  id="section-{{ section.id }}"
+  class="section section--progress-timeline spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="section__container {{ section.settings.container }}">
+    {{ section_header }}
+    <progress-timeline
+      class="progress-timeline layout-panel-grid gap-style"
+      style="{{ inner_style | strip | strip_newlines }}"
+    >
+      <div
+        class="progress-timeline_items spacing-style"
+        style="{{ items_wrapper_style | strip | strip_newlines }}"
+      >
+        {{ children }}
+      </div>
+      {% if media != blank %}
+        <div
+          class="progress-timeline__media spacing-style sticky-element"
+          style="
+            {% render 'clamp-calculate-style', property_name: 'padding-inline-start', min_value: padding_inline_min, max_value: 0 %}
+            {% render 'clamp-calculate-style', property_name: 'padding-inline-end', min_value: padding_inline_min, max_value: 135 %}
+          "
+        >
+          {{ media }}
+        </div>
+      {% endif %}
+    </progress-timeline>
+    {% if button != blank %}
+      <div
+        class="section__footer spacing-style text-center"
+        style="{% render 'clamp-calculate-style', property_name: 'margin-block-start', min_value: 32, max_value: 80 %}"
+      >
+        {{ button }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.progress_timeline",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "blocks": [
+    {
+      "type": "_timeline"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/tO4Cmfh)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "page-width--full", "label": "t:options.full" },
+        { "value": "page-width", "label": "t:options.fixed" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.progress_bar"
+    },
+    {
+      "type": "color",
+      "id": "progress_bar_color",
+      "label": "t:settings.color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.progress_timeline",
+      "category": "t:categories.basic",
+      "settings": {},
+      "blocks": {
+        "timeline_NNbBbp": {
+          "type": "_timeline",
+          "name": "Timeline",
+          "settings": {
+            "content_row_gap": 12,
+            "badge_text": "Week 1",
+            "badge_color": "#000000",
+            "badge_background_color": "#d9ede4"
+          },
+          "blocks": {
+            "text_kBcjJy": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Talk about your brand</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_iMWtDJ": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["text_kBcjJy", "text_iMWtDJ"]
+        },
+        "timeline_yHNPne": {
+          "type": "_timeline",
+          "name": "Timeline",
+          "settings": {
+            "content_row_gap": 12,
+            "badge_text": "Week 2",
+            "badge_color": "#000000",
+            "badge_background_color": "#d9ede4"
+          },
+          "blocks": {
+            "text_U3yd6e": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Talk about your brand</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_EN3Lca": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["text_U3yd6e", "text_EN3Lca"]
+        },
+        "timeline_U33acc": {
+          "type": "_timeline",
+          "name": "Timeline",
+          "settings": {
+            "content_row_gap": 12,
+            "badge_text": "Week 3",
+            "badge_color": "#000000",
+            "badge_background_color": "#d9ede4"
+          },
+          "blocks": {
+            "text_qfzPUp": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Talk about your brand</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_bhxdDj": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["text_qfzPUp", "text_bhxdDj"]
+        },
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "center",
+            "device": "desktop",
+            "padding-block-end": 60,
+            "padding-block-end-mobile": 24
+          },
+          "blocks": {
+            "text_Q7VgTq": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Add a tagline</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_XAACXk": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Talking about your brand</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["text_Q7VgTq", "text_XAACXk"]
+        },
+        "timeline-media": {
+          "type": "_timeline-media",
+          "static": true,
+          "settings": {
+            "image_ratio_1": "adapt",
+            "image_width_1": 84,
+            "image_ratio_2": "adapt",
+            "image_width_2": 48
+          },
+          "blocks": {
+            "spinning-icon-badge": {
+              "type": "spinning-icon-badge",
+              "static": true,
+              "settings": {
+                "icon": "heart",
+                "text": "Talk about your brand",
+                "font_size": 12,
+                "font_size_mobile": 8,
+                "text_color": "text",
+                "text_color_gradient": "",
+                "color_scheme": "scheme-2",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "button": {
+          "type": "_button",
+          "static": true,
+          "settings": {
+            "label": "Button label",
+            "link": "",
+            "style": "primary",
+            "size": "large",
+            "icon": "caret-right",
+            "icon_only": false,
+            "icon_style": "solid",
+            "mobile_full_width": false
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["timeline_NNbBbp", "timeline_yHNPne", "timeline_U33acc"]
+    }
+  ]
+}
+{% endschema %}

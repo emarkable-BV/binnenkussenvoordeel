@@ -1,0 +1,128 @@
+{%- liquid
+  assign dialog_component_id = 'dialog-component--' | append: block.id
+  assign dialog_id = 'dialog--' | append: block.id
+  assign product_count = block.settings.product_list.count
+
+  unless settings.dialog_color_scheme_inherit
+    assign dialog_color_scheme = settings.dialog_color_scheme
+  else
+    assign first_color_scheme = settings.color_schemes | first
+    assign dialog_color_scheme = first_color_scheme
+  endunless
+-%}
+{%- capture inline_style -%}
+  {% if block.settings.width != blank and block.settings.width_mobile != blank %}
+    {%- render 'clamp-calculate-style',
+      property_name: 'card-width',
+      min_value: block.settings.width_mobile,
+      max_value: block.settings.width
+    -%}
+  {%- endif -%}
+{%- endcapture -%}
+<div
+  class="lookbook-card border-style relative w-full color-{{ block.settings.color_scheme }}"
+  style="{% render 'border-style', settings: block.settings %}{{ inline_style | strip | strip_newlines }}"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.width != blank and block.settings.width_mobile != blank -%}
+    {%- capture image_sizes -%}(min-width: 768px) {{ block.settings.width }}px, {{ block.settings.width_mobile }}px{%- endcapture -%}
+    {% render 'responsive-image',
+      mode: 'liquid',
+      sizes: image_sizes,
+      image: block.settings.image,
+      image_mobile: block.settings.image_mobile,
+      image_ratio: block.settings.image_ratio,
+      default_alt: shop.name,
+      svg_placeholder: 'collection-1',
+      img_class: 'w-full'
+    %}
+  {%- else -%}
+    {% render 'responsive-image',
+      mode: 'js',
+      image: block.settings.image,
+      image_mobile: block.settings.image_mobile,
+      image_ratio: block.settings.image_ratio,
+      default_alt: shop.name,
+      svg_placeholder: 'collection-1',
+      img_class: 'w-full'
+    %}
+  {%- endif -%}
+  <div class="lookbook-card__overlay absolute inset-0 flex items-end justify-end">
+    <button
+      class="btn btn--secondary btn--medium"
+      {% if product_count > 0 %}
+        on:click="#{{ dialog_component_id }}/showDialog"
+        aria-haspopup="dialog"
+        aria-controls="{{ dialog_id }}"
+      {% else %}
+        disabled
+      {% endif %}
+      aria-label="{{ 'content.item_count' | t: count: product_count }}"
+    >
+      {% render 'icon', icon: 'tag' %}
+      <span class="btn__text hidden md:block">
+        {{ 'content.item_count' | t: count: product_count }}
+      </span>
+      <span class="btn__text block md:hidden">
+        {{ product_count }}
+      </span>
+    </button>
+  </div>
+  {%- if product_count > 0 -%}
+    <dialog-component id="{{ dialog_component_id }}">
+      <dialog
+        id="{{ dialog_id }}"
+        ref="dialog"
+        class="lookbook-card__dialog dialog dialog--modal dialog--drawer-mobile-bottom overflow-hidden color-{{ dialog_color_scheme }}"
+        scroll-lock
+      >
+        <div class="dialog__inner flex flex-col h-full v-scrollable">
+          <div class="dialog__header sticky top-0 z-1 flex items-center justify-end gap-3">
+            {%- if block.settings.heading != blank -%}
+              {%- liquid
+                assign heading = block.settings.heading
+                assign heading_preset = block.settings.heading_preset
+              -%}
+              <h2 class="dialog__title flex-grow {{ heading_preset }} rte">{{ heading }}</h2>
+            {%- endif -%}
+            <button
+              class="dialog__close flex items-center justify-center relative"
+              on:click="/closeDialog"
+              aria-label="{{ 'accessibility.close_dialog' | t }}"
+            >
+              {% render 'icon', icon: 'close', size: 'large' %}
+            </button>
+          </div>
+          <div class="dialog__content">
+            <div
+              class="layout-panel-grid gap-style"
+              style="{% render 'layout-panel-style', type: 'grid', columns_mobile: '2', columns_xxl: '2' %}{% render 'gap-style', column_gap: 30, column_gap_mobile: 30 %}"
+            >
+              <div
+                class="lookbook-card__dialog-image hidden md:block border-style"
+                style="{% render 'border-style', settings: block.settings %}"
+              >
+                {% render 'responsive-image',
+                  mode: 'liquid',
+                  image: block.settings.image,
+                  image_mobile: block.settings.image_mobile,
+                  image_ratio: block.settings.image_ratio,
+                  default_alt: shop.name,
+                  svg_placeholder: 'collection-1',
+                  sizes: '330px'
+                %}
+              </div>
+              <ul class="lookbook-card__dialog-products list-unstyled w-full flex flex-col">
+                {%- for product in block.settings.product_list -%}
+                  <li class="lookbook-card__dialog-product">
+                    {% render 'product-card-horizontal', product: product, media_width_desktop: 90 %}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </dialog-component>
+  {%- endif -%}
+</div>

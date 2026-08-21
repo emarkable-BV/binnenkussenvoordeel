@@ -1,0 +1,191 @@
+{{ 'template-blog.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign container = section.settings.container
+  assign color_scheme = section.settings.color_scheme
+  assign limit = section.settings.post_limit
+  assign columns = section.settings.columns_desktop
+  assign columns_xl = columns | at_most: 4
+  assign columns_lg = columns | at_most: 3
+  assign columns_md = columns | at_most: 3
+  assign columns_mobile = section.settings.columns_mobile | plus: 0
+-%}
+{%- capture image_sizes -%}
+  (min-width: 1440px) calc( min(100vw, {{ settings.page_width }}px) / {{ columns }} ),
+  (min-width: 1200px) calc( min(100vw, {{ settings.page_width }}px) / {{ columns_xl }} ),
+  (min-width: 1024px) calc( {{ settings.page_width }}px / {{ columns_lg }} ),
+  (min-width: 768px) calc( {{ settings.page_width }}px / {{ columns_md }} ),
+  calc({{ settings.page_width }}px / {{ columns_mobile }} )
+{%- endcapture -%}
+{%- paginate blog.articles by limit -%}
+  <div
+    id="section-{{ section.id }}"
+    class="section blog-post spacing-style color-{{ color_scheme }}"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <div class="section_container section-grid section-grid--{{ container }}">
+      <div class="section__header flex flex-col items-start md:items-center gap-5 md:gap-6">
+        {% content_for 'block', type: '_blog-post-title', id: 'blog-post-title' %}
+        {% content_for 'block', type: '_article-tags', id: 'article-tags' %}
+      </div>
+      {% if blog.articles_count > 0 %}
+        <div
+          class="main-blog__block main-blog__items layout-panel-grid gap-style"
+          style="{% render 'layout-panel-style', settings: settings, type: 'grid', columns_mobile: columns_mobile, columns_md: columns_md, columns_lg: columns_lg, columns_xl: columns_xl, columns_xxl: columns %}{% render 'gap-style', settings: section.settings %}"
+        >
+          {%- for article in blog.articles -%}
+            <div class="f-column">
+              {%- content_for 'block',
+                type: '_article-card',
+                id: 'article-card',
+                article: article,
+                image_sizes: image_sizes,
+                layout: 'column'
+              -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          {%- render 'pagination', paginate: paginate -%}
+        {%- endif -%}
+      {% endif %}
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "t:names.main_blog",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "fixed", "label": "t:options.fixed" }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": "t:settings.post_limit",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:settings.columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.column_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.row_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:settings.mobile_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:options.grid_1_column"
+        },
+        {
+          "value": "2",
+          "label": "t:options.grid_2_column"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.column_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "t:settings.row_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

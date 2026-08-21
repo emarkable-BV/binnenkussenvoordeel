@@ -1,0 +1,346 @@
+{%- doc -%}
+  Renders the facet filtering component
+
+  @param {object} results - The search results object
+  @param {number} results_size - The number of products in the search results
+  @param {number} [total_products_count] - The total number of products in the collection
+  @param {object} [filters] - The filters object
+  @param {object} [section_settings] - The section settings object
+  @param {object} [section] - The section object
+{%- enddoc -%}
+
+<script
+  src="{{ 'facets.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{%- liquid
+  assign products_count = results_size
+  assign total_products_count = total_products_count | default: results.all_products_count | default: products_count
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  assign filters = filters | default: results.filters
+  assign total_active_values = 0
+  assign filter_type = section_settings.filter_type | default: 'vertical'
+
+  for filter in filters
+    case filter.type
+      when 'price_range'
+        if filter.min_value.value != null or filter.max_value.value != null
+          assign total_active_values = total_active_values | plus: 1
+        endif
+      when 'boolean'
+        if filter.active_values[0].value
+          assign total_active_values = total_active_values | plus: 1
+        endif
+      else
+        assign active_value_count = filter.active_values | size
+        assign total_active_values = total_active_values | plus: active_value_count
+    endcase
+  endfor
+
+  if results.url
+    assign results_url = results.url
+  else
+    assign terms = results.terms | escape
+    assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+  endif
+
+  assign toolbar_right_class = 'facet-toolbar__right flex items-center gap-7'
+  if section_settings.enable_sorting and section_settings.enable_filtering == true
+    assign toolbar_right_class = toolbar_right_class | append: ' hidden lg:flex'
+  endif
+-%}
+
+<div class="facet-toolbar flex justify-between items-center{% if total_products_count == 0 %} hidden{% endif %}">
+  <div class="facet-toolbar__left flex-1 lg:flex-auto">
+    <div class="flex gap-6 items-center justify-between lg:justify-start">
+      {% if section_settings.enable_filtering %}
+        <div class="toggle-filter-mobile lg:hidden no-js-hidden">
+          <button
+            class="btn btn--outline toggle-filter-btn paragraph"
+            on:click="#filters-drawer/showDialog"
+            aria-haspopup="dialog"
+            aria-controls="filters-drawer-dialog"
+          >
+            {% render 'icon', icon: 'funnel', size: 'large' %}
+            <span class="btn__text">
+              {% if section_settings.enable_sorting %}
+                {{ 'content.filters_sorting' | t }}
+              {% else %}
+                {{ 'content.filters' | t }}
+              {% endif %}
+              {% if total_active_values > 0 %}
+                <span class="filters-drawer__active-values-count">({{ total_active_values }})</span>
+              {% endif %}
+            </span>
+          </button>
+        </div>
+        <div class="toggle-filter-desktop hidden lg:block no-js-hidden">
+          {% if filter_type == 'drawer' %}
+            <button
+              class="btn btn--outline toggle-filter-btn paragraph"
+              on:click="#filters-drawer/showDialog"
+              aria-haspopup="dialog"
+              aria-controls="filters-drawer-dialog"
+            >
+              {% render 'icon', icon: 'funnel', size: 'large' %}
+              <span class="btn__text">
+                {{ 'content.filters' | t }}
+              </span>
+            </button>
+          {% else %}
+            <button
+              class="btn btn--outline toggle-filter-btn"
+              on:click="results-list/toggleFiltering"
+            >
+              {% render 'icon', icon: 'funnel', size: 'large' %}
+              <span class="btn__text">{{ 'content.filters' | t }}</span>
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="products-count-wrapper text-right color-subtext">
+        <span title="{{ 'content.product_count' | t }}">
+          {% if total_products_count > products_count %}
+            {{- 'content.filtered_products_count' | t: count: products_count, total: total_products_count -}}
+          {% else %}
+            {% if template.name == 'search' %}
+              {{- 'content.item_count' | t: count: products_count -}}
+            {% else %}
+              {{- 'content.products_count' | t: count: products_count -}}
+            {% endif %}
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="{{ toolbar_right_class }}">
+    {% if section_settings.enable_sorting %}
+      {% assign form_id = 'FacetFiltersForm--' | append: section.id | append: '-desktop' %}
+      {% render 'sorting', section_id: section.id, results: results, sort_by: sort_by, form_id: form_id, mode: 'select' %}
+    {% endif %}
+    {% if section_settings.enable_grid_density %}
+      {% render 'grid-density-control' %}
+    {% endif %}
+  </div>
+</div>
+{% if section_settings.enable_filtering %}
+  <div class="facet-remove-buttons hidden lg:block{% if total_products_count == 0 or filter_type == 'drawer' %} lg:hidden{% endif %}">
+    {% render 'filter-remove-buttons', filters: filters, results_url: results_url %}
+  </div>
+{% endif %}
+<div class="facet-filtering hidden lg:block{% if total_products_count == 0 or filter_type == 'drawer' %} lg:hidden{% endif %} no-js-hidden">
+  <div
+    class="facets sticky-element sticky-element--adapt"
+    style="--sticky-element-top: 3rem;"
+  >
+    <facets-form-component
+      class="facets__form-wrapper"
+      section-id="{{ section.id }}"
+    >
+      <form
+        action="{{ results_url }}"
+        id="FacetFiltersForm--{{ section.id }}-desktop"
+        class="facets__form"
+        ref="facetsForm"
+      >
+        {% if section_settings.enable_filtering %}
+          {% assign total_active_values = 0 %}
+          {% capture rendered_filters %}
+            {%- for filter in filters -%}
+              {%- liquid
+                assign expand = false
+                assign downcase_label = filter.label | downcase
+                if section_settings.expand_filter_groups != blank
+                  assign expand_filter_groups = section.settings.expand_filter_groups | downcase
+                  if expand_filter_groups contains downcase_label
+                    assign expand = true
+                  endif
+                endif
+              %}
+              {% case filter.type %}
+              {% when 'price_range' %}
+                {%- liquid
+                  if filter.min_value.value != null or filter.max_value.value != null
+                    assign total_active_values = total_active_values | plus: 1
+                  endif
+
+                  render 'price-filter', filter: filter, autofocus: false, expand: expand
+                -%}
+              {% else %}
+                {% liquid 
+                  assign active_value_count = filter.active_values | size
+                  assign total_active_values = total_active_values | plus: active_value_count
+                  render 'list-filter', filter: filter, autofocus: false, sectionId: section.id, expand: expand
+                %}
+              {% endcase %}
+            {%- endfor -%}
+          {% endcapture %}
+          {{ rendered_filters }}
+        {% endif %}
+      </form>
+    </facets-form-component>
+  </div>
+</div>
+
+{%- if section_settings.enable_filtering -%}
+  {%- liquid
+    unless settings.dialog_color_scheme_inherit
+      assign dialog_color_scheme = settings.dialog_color_scheme
+    else
+      assign first_color_scheme = settings.color_schemes | first
+      assign dialog_color_scheme = first_color_scheme
+    endunless
+  -%}
+  <dialog-component id="filters-drawer">
+    <dialog
+      id="filters-drawer-dialog"
+      ref="dialog"
+      class="dialog h-full dialog--drawer dialog--filters-drawer dialog--drawer-left overflow-hidden color-{{ dialog_color_scheme }}"
+      scroll-lock
+    >
+      {% assign form_component = 'FacetFiltersFormComponent--' | append: section.id | append: '-overflow' %}
+      <facets-form-component
+        class="facets__form-wrapper flex flex-col h-full"
+        section-id="{{ section.id }}"
+        id="{{ form_component }}"
+      >
+        <div class="filters-drawer__header flex flex-row items-center justify-between">
+          <span class="h3">
+            {% if section_settings.enable_sorting %}
+              {{ 'content.filters_sorting' | t }}
+            {% else %}
+              {{ 'content.filters' | t }}
+            {% endif %}
+            {% if total_active_values > 0 %}
+              <span class="filters-drawer__active-values-count">({{ total_active_values }})</span>
+            {% endif %}
+          </span>
+          <button
+            type="button"
+            class="dialog__close shrink-0"
+            on:click="dialog-component/closeDialog"
+            aria-label="{{ 'accessibility.close_dialog' | t }}"
+          >
+            {% render 'icon', icon: 'close', size: 'large' %}
+          </button>
+        </div>
+
+        <div class="filters-drawer__content flex flex-col flex-grow v-scrollable">
+          <form
+            action="{{ results_url }}"
+            id="FacetFiltersForm--{{ section.id }}-overflow"
+            class="facets__form relative flex flex-col h-full"
+            ref="facetsForm"
+          >
+            <div class="filters-drawer__content-inner flex flex-col">
+              <div class="">
+                {% assign total_active_values = 0 %}
+                {% if section_settings.enable_sorting %}
+                  {% assign form_component_drawer = 'FacetFiltersForm--' | append: section.id | append: '-overflow' %}
+                  {% liquid
+                    assign expand_sort_by = false
+                    assign sort_by_label = 'actions.sort' | t | downcase
+                    if section_settings.expand_filter_groups != blank
+                      assign expand_filter_groups = section.settings.expand_filter_groups | downcase
+                      if expand_filter_groups contains sort_by_label
+                        assign expand_sort_by = true
+                      endif
+                    endif
+                  %}
+                  <accordion-component class="accordion accordion--standard accordion--arrow-plus{% if filter_type == 'drawer' %} lg:hidden{% endif %}">
+                    <details
+                      ref="item[]"
+                      class="accordion__details{% if expand_sort_by %} is-open{% endif %}"
+                      {% if expand_sort_by %}
+                        open
+                      {% endif %}
+                    >
+                      <summary
+                        ref="summary[]"
+                        class="accordion__summary flex facet__summary h6"
+                        on:click="/onSummaryClick"
+                        {% if expand_sort_by %}
+                          aria-expanded="true"
+                        {% endif %}
+                      >
+                        <span class="accordion__summary-text facet__label">
+                          {{- 'actions.sort' | t -}}
+                        </span>
+                        {% render 'icon', icon: 'plus', class: 'flex accordion__summary-arrow' %}
+                      </summary>
+                      <div ref="content[]" class="accordion__content">
+                        <div class="accordion__inner">
+                          {% render 'sorting',
+                            section_id: section.id,
+                            results: results,
+                            sort_by: sort_by,
+                            form_id: form_component_drawer,
+                            mode: 'drawer'
+                          %}
+                        </div>
+                      </div>
+                    </details>
+                  </accordion-component>
+                {% endif %}
+                {%- for filter in filters -%}
+                  {%- liquid
+                    assign should_autofocus = false
+                    if forloop.first and total_active_values == 0
+                      assign should_autofocus = true
+                    endif
+
+                    assign expand = false
+                    assign downcase_label = filter.label | downcase
+                    if section_settings.expand_filter_groups != blank
+                      assign expand_filter_groups = section.settings.expand_filter_groups | downcase
+                      if expand_filter_groups contains downcase_label
+                        assign expand = true
+                      endif
+                    endif
+                  %}
+                  {% case filter.type %}
+                    {% when 'price_range' %}
+                      {%- liquid
+                        if filter.min_value.value != null or filter.max_value.value != null
+                          assign total_active_values = total_active_values | plus: 1
+                        endif
+
+                        render 'price-filter', filter: filter, autofocus: should_autofocus, in_drawer: true, expand: expand
+                      -%}
+                    {% else %}
+                      {% liquid
+                        assign active_value_count = filter.active_values | size
+                        assign total_active_values = total_active_values | plus: active_value_count
+                        render 'list-filter', filter: filter, autofocus: should_autofocus, in_drawer: true, sectionId: section.id, expand: expand
+                      %}
+                  {% endcase %}
+                {%- endfor -%}
+              </div>
+            </div>
+            <div class="filters-drawer__content-footer grid gap-4">
+              {% render 'filter-remove-buttons', filters: filters, results_url: results_url %}
+              {% if products_count > 0 %}
+                <button
+                  class="btn btn--primary justify-center w-full facets__see-results"
+                  type="button"
+                  on:click="dialog-component/closeDialog"
+                >
+                  <span class="btn__text">
+                    {% if total_products_count > products_count %}
+                      {{- 'actions.see_filtered_products' | t: count: products_count, total: total_products_count -}}
+                    {% else %}
+                      {{- 'actions.see_products' | t: count: products_count -}}
+                    {% endif %}
+                  </span>
+                </button>
+              {% endif %}
+            </div>
+          </form>
+        </div>
+      </facets-form-component>
+    </dialog>
+  </dialog-component>
+{% endif %}

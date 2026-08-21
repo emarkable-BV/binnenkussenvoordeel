@@ -1,0 +1,35 @@
+<dialog-component>
+  <button
+    class="cart-drawer__addon-button btn btn--small btn--secondary btn--icon-only"
+    on:click="/showDialog"
+    aria-haspopup="dialog"
+    aria-controls="cart-shipping-dialog"
+    aria-label="{{ 'actions.shipping' | t }}"
+    data-tooltip="{{ 'actions.shipping' | t | escape }}"
+    data-tooltip-position="top"
+  >
+    {%- render 'icon', icon: 'package', size: 'large' -%}
+  </button>
+  <dialog
+    id="cart-shipping-dialog"
+    ref="dialog"
+    class="cart-drawer__addon dialog dialog--drawer dialog--drawer-bottom dialog--drawer-bottom--right color-{{ color_scheme }}"
+    scroll-lock
+  >
+    <div class="cart-drawer__addon-inner flex flex-col gap-4 xl:gap-5">
+      <div class="cart-drawer__addon-header flex flex-row items-center justify-between">
+        <p class="cart-drawer__addon-title h5">{{ 'actions.estimate_shipping' | t }}</p>
+        <button
+          class="cart-drawer__close cart-drawer__close--addon dialog__close shrink-0"
+          on:click="/closeDialog"
+          aria-label="{{ 'accessibility.close_dialog' | t }}"
+        >
+          {% render 'icon', icon: 'close', size: 'large' %}
+        </button>
+      </div>
+      <div class="cart-drawer__addon-content">
+        {% render 'cart-shipping' %}
+      </div>
+    </div>
+  </dialog>
+</dialog-component>

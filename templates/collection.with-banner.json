@@ -1,0 +1,500 @@
+{
+  "sections": {
+    "breadcrumbs_ELqc3L": {
+      "type": "breadcrumbs",
+      "name": "t:names.breadcrumbs",
+      "settings": {
+        "text_align": "left",
+        "text_align_mobile": "inherit",
+        "device": "desktop",
+        "padding-block-start": 16,
+        "padding-block-end": 24,
+        "padding-block-start-mobile": 12,
+        "padding-block-end-mobile": 12
+      }
+    },
+    "main-collection-banner": {
+      "type": "main-collection-banner",
+      "blocks": {
+        "collection-banner-content": {
+          "type": "_collection-banner-content",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "center",
+            "position": "middle-center",
+            "width": "fit-content",
+            "custom_width": 100,
+            "show_content_below_mobile": false,
+            "h_alignment_mobile": "center",
+            "position_mobile": "middle",
+            "device": "mobile",
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 50,
+            "padding-inline-end": 50,
+            "padding-block-start-mobile": 32,
+            "padding-block-end-mobile": 32,
+            "padding-inline-start-mobile": 16,
+            "padding-inline-end-mobile": 16
+          },
+          "blocks": {
+            "collection_title_Dg9jka": {
+              "type": "_collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "fade-up",
+                "animation_delay": 50
+              },
+              "blocks": {}
+            },
+            "collection_description_e8gWiq": {
+              "type": "_collection-description",
+              "name": "t:names.collection_description",
+              "settings": {
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "disable_line_break_mobile": false,
+                "padding-block-start": 16,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100,
+                "animation_type": "fade-up",
+                "animation_delay": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_Dg9jka",
+            "collection_description_e8gWiq"
+          ]
+        }
+      },
+      "custom_css": [],
+      "name": "t:names.collection_banner",
+      "settings": {
+        "container": "fixed",
+        "enable_header_overlay": true,
+        "show_image": true,
+        "toggle_overlay": true,
+        "overlay_color": "#00000033",
+        "height": "small",
+        "height_mobile": "auto",
+        "color_scheme": "scheme-inverse",
+        "border_radius": 20,
+        "device": "mobile",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 0
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "settings": {
+        "container": "fixed",
+        "products_per_page": 12,
+        "pagination": "number",
+        "column_gap": 30,
+        "row_gap": 30,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "enable_grid_density": true,
+        "expand_filter_groups": "Availability, Price, Color, Size, Brand, Toys by Age",
+        "column_gap_mobile": 8,
+        "row_gap_mobile": 24,
+        "color_scheme": "",
+        "device": "desktop",
+        "padding-block-start": 60,
+        "padding-block-end": 100,
+        "padding-block-start-mobile": 24,
+        "padding-block-end-mobile": 48
+      }
+    },
+    "custom_section_hapzhQ": {
+      "type": "custom-section",
+      "blocks": {
+        "text_gqPXA7": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h2><strong>About Pebble</strong></h2>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "fade-up",
+            "animation_delay": 50
+          },
+          "blocks": {}
+        },
+        "collapsible_text_ryCAyV": {
+          "type": "collapsible-text",
+          "name": "t:names.collapsible_text",
+          "settings": {
+            "text": "<p>Our store is built on a simple belief: great style should feel effortless. We design each piece with a balance of comfort, quality, and modern appeal, creating clothing that fits easily into everyday life. From soft fabrics to thoughtful fits, every detail is considered with care. We aim to offer pieces that make getting dressed feel enjoyable and inspiring.</p><p>Quality is at the heart of everything we create. We choose durable, comfortable materials and focus on precise construction to ensure each item feels as good as it looks. Our collections are made to stand the test of time—supporting busy routines, relaxed weekends, and everything in between. We want every customer to feel confident in pieces that truly last.</p><p>Our designs celebrate versatility and personal expression. Whether you’re searching for everyday essentials or standout favorites, our store offers a curated mix of styles suited to different moods, moments, and lifestyles. We believe fashion should empower, not overwhelm. That’s why we create clothing that feels natural, expressive, and easy to wear—helping you look and feel your best every day.</p><p></p>",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "subtext",
+            "line_limit": "4-lines",
+            "button_style": "secondary",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_gqPXA7",
+        "collapsible_text_ryCAyV"
+      ],
+      "name": "t:names.rich_text",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 30,
+        "row_gap": 24,
+        "column_gap_mobile": 12,
+        "row_gap_mobile": 12,
+        "use_color_scheme_in_container": true,
+        "color_scheme": "scheme-11",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 20,
+        "device": "desktop",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "padding-inline-start": 50,
+        "padding-inline-end": 50,
+        "padding-block-start-mobile": 32,
+        "padding-block-end-mobile": 32,
+        "padding-inline-start-mobile": 20,
+        "padding-inline-end-mobile": 20
+      }
+    },
+    "custom_section_AzGU4V": {
+      "type": "custom-section",
+      "blocks": {
+        "group_3RG6D7": {
+          "type": "group",
+          "name": "t:names.section_header_vertical",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "center",
+            "column_gap": 0,
+            "row_gap": 0,
+            "enable_sticky_desktop": false,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "column_gap_mobile": 0,
+            "row_gap_mobile": 0,
+            "device": "desktop",
+            "padding-block-start": 0,
+            "padding-block-end": 60,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 24,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0
+          },
+          "blocks": {
+            "text_dF6UBH": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Why Choose Us ?</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_dF6UBH"
+          ]
+        },
+        "grid_CyNe7i": {
+          "type": "grid",
+          "name": "t:names.grid",
+          "settings": {
+            "vertical_alignment": "start",
+            "columns_xxl": 4,
+            "column_gap": 50,
+            "row_gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": true,
+            "swipe_custom_width_column": true,
+            "swipe_column_width": 70,
+            "columns_mobile": 1,
+            "column_gap_mobile": 12,
+            "row_gap_mobile": 12,
+            "device": "desktop",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 0,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0,
+            "custom_columns": "md:2,lg:4"
+          },
+          "blocks": {
+            "icon_box_ERG8HJ": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_standard",
+              "settings": {
+                "direction": "vertical",
+                "text_align": "center",
+                "icon": "magic-wand",
+                "icon_spacing": 16,
+                "icon_size": "custom-size",
+                "icon_width": 90,
+                "icon_width_mobile": 90,
+                "heading": "Curated With Care",
+                "heading_preset": "h5",
+                "text": "<p>Every toy is handpicked for quality, safety & endless hours.</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 8,
+                "style": "standard",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_y9DXpp": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_standard",
+              "settings": {
+                "direction": "vertical",
+                "text_align": "center",
+                "icon": "magic-wand",
+                "icon_spacing": 16,
+                "icon_size": "custom-size",
+                "icon_width": 90,
+                "icon_width_mobile": 90,
+                "heading": "Fast & Friendly Delivery",
+                "heading_preset": "h5",
+                "text": "<p>We pack with love & ship lightning-fast to bring smiles.</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 8,
+                "style": "standard",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_YximJt": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_standard",
+              "settings": {
+                "direction": "vertical",
+                "text_align": "center",
+                "icon": "magic-wand",
+                "icon_spacing": 16,
+                "icon_size": "custom-size",
+                "icon_width": 90,
+                "icon_width_mobile": 90,
+                "heading": "Playful Picks",
+                "heading_preset": "h5",
+                "text": "<p>From curious thinkers to wild explorers We've got something</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 8,
+                "style": "standard",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_emahdP": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_standard",
+              "settings": {
+                "direction": "vertical",
+                "text_align": "center",
+                "icon": "magic-wand",
+                "icon_spacing": 16,
+                "icon_size": "custom-size",
+                "icon_width": 90,
+                "icon_width_mobile": 90,
+                "heading": "Real Reviews",
+                "heading_preset": "h5",
+                "text": "<p>Loved by kids. Trusted by parents. Shop with total peace of mind.</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 8,
+                "style": "standard",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "icon_box_ERG8HJ",
+            "icon_box_y9DXpp",
+            "icon_box_YximJt",
+            "icon_box_emahdP"
+          ]
+        }
+      },
+      "block_order": [
+        "group_3RG6D7",
+        "grid_CyNe7i"
+      ],
+      "name": "t:names.custom_section",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 12,
+        "row_gap": 0,
+        "column_gap_mobile": 12,
+        "row_gap_mobile": 0,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 100,
+        "padding-block-end": 100,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs_ELqc3L",
+    "main-collection-banner",
+    "main",
+    "custom_section_hapzhQ",
+    "custom_section_AzGU4V"
+  ]
+}

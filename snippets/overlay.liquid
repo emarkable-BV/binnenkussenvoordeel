@@ -1,0 +1,14 @@
+{%- doc -%}
+  Renders a full-bleed overlay.
+
+  @param {string} overlay_color - Overlay color.
+  @param {string} [layer] - The z-index layer for the overlay, defaults to `var(--layer-flat)`.
+
+  @example
+  {% render 'overlay', settings: section.settings, layer: 'var(--layer-raised)' %}
+{%- enddoc -%}
+
+<div
+  class="overlay overlay--solid absolute inset-0 pointer-events-none"
+  style="--overlay-layer: {{ layer | default: 'var(--layer-flat)' }};--overlay-color: {{ overlay_color | default: 'rgb(0 0 0 / var(--opacity-25))' }};"
+></div>

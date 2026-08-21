@@ -1,0 +1,76 @@
+{%- liquid
+  assign language_support_rtl = settings.language_support_rtl
+  if settings.enable_rtl and language_support_rtl != blank
+    assign language_support_rtl_list = language_support_rtl | split: ','
+    if language_support_rtl_list contains localization.language.iso_code
+      assign enable_rtl = true
+    endif
+  endif
+-%}
+<!doctype html>
+<html
+  lang="{{ request.locale.iso_code }}"
+  {% if enable_rtl %}
+    dir="rtl"
+  {% endif %}
+>
+  <head>
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/{% if settings.favicon contains '.svg' %}svg+xml{% else %}png{% endif %}"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
+    {% render 'color-schemes' %}
+
+    {% # Inline critical CSS for above-the-fold content %}
+    {% render 'critical-css' %}
+
+    {% # Load css for template %}
+    {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {% render 'styles' %}
+    {% render 'meta-tags' %}
+    {% render 'fonts' %}
+    {% render 'scripts' %}
+    {% render 'css-nojs' %}
+    {%- if enable_rtl -%}
+      {{ 'rtl.css' | asset_url | stylesheet_tag: preload: true }}
+    {%- endif -%}
+
+    {{ content_for_header }}
+  </head>
+  <body
+    {% unless settings.animations_enabled %}
+      data-motion-disabled="true"
+    {% endunless %}
+    class="{{ template.name }} {% if settings.animations_enabled %}animations-enabled {% endif %}{% if settings.page_transitions_enabled %}page-transitions-enabled {% endif %}{% unless cart.empty? %}cart-has-items{% endunless %}"
+  >
+    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+
+    {% if settings.page_transitions_enabled %}
+      <page-transition class="page-transition no-js-hidden">
+        <span class="visually-hidden">{{ 'accessibility.loading' | t }}</span>
+      </page-transition>
+    {% endif %}
+
+    {% sections 'header-group' %}
+    <script src="{{ 'critical.js' | asset_url }}" type="module" fetchpriority="low"></script>
+    <main
+      id="MainContent"
+      class="main-content overflow-x-clip overflow-y-clip flex-grow relative z-1"
+      role="main"
+    >
+      {{ content_for_layout }}
+    </main>
+    {% sections 'footer-group' %}
+    {% sections 'overlay-group' %}
+    {%- if settings.enable_back_to_top_button -%}
+      {% render 'back-to-top-button' %}
+    {%- endif -%}
+  </body>
+</html>

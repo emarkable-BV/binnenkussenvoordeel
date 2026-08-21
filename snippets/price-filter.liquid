@@ -1,0 +1,163 @@
+{%- doc -%}
+  Renders a price filter.
+
+  @param {object} filter - The filter object to render.
+  @param {boolean} [autofocus] - Whether to autofocus the filter.
+  @param {boolean} [expand] - Whether to expand the filter.
+  @param {boolean} [in_drawer] - Whether this filter is rendered inside a drawer
+
+  @example
+  {% render 'price-filter', filter: filter, autofocus: true, expand: true %}
+{%- enddoc -%}
+
+<accordion-component class="accordion accordion--standard accordion--arrow-plus">
+  <details
+    ref="item[]"
+    class="accordion__details{% if expand %} is-open{% endif %}"
+    {% if expand %}
+      open
+    {% endif %}
+  >
+    <summary
+      ref="summary[]"
+      class="accordion__summary flex facet__summary h6"
+      on:click="/onSummaryClick"
+      {% if expand %}
+        aria-expanded="true"
+      {% endif %}
+    >
+      <span class="accordion__summary-text facet__label">{{ filter.label }}</span>
+      {% render 'icon', icon: 'plus', class: 'flex accordion__summary-arrow' %}
+    </summary>
+    <div ref="content[]" class="accordion__content">
+      <div class="accordion__inner">
+        {%- liquid
+          assign min_input_max_value = filter.max_value.value | default: filter.range_max
+          assign max_input_min_value = filter.min_value.value | default: 0
+
+          # Calculate percentages for CSS custom properties
+          assign current_min = filter.min_value.value | default: 0
+          assign current_max = filter.max_value.value | default: filter.range_max
+          assign range_max = filter.range_max
+
+          if range_max > 0
+            assign min_percent = current_min | times: 100.0 | divided_by: range_max
+            assign max_percent = current_max | times: 100.0 | divided_by: range_max
+          else
+            assign min_percent = 0
+            assign max_percent = 100
+          endif
+
+          assign input_gte_id = filter.label | escape | append: '-GTE'
+          assign input_lte_id = filter.label | escape | append: '-LTE'
+          if in_drawer
+            assign input_gte_id = input_gte_id | append: '-in-drawer'
+            assign input_lte_id = input_lte_id | append: '-in-drawer'
+          endif
+
+          assign intersect_threshold_percent = 2
+          assign threshold_value = range_max | times: intersect_threshold_percent | divided_by: 100.00
+          assign min_with_threshold_value = current_min | plus: threshold_value
+        -%}
+        <price-facet-component
+          class="price-facet flex flex-col gap-5"
+          id="facet-inputs-{{ filter.param_name | escape | replace: '.', '-' }}"
+          on:change="/updatePriceFilterAndResults"
+          data-intersect-threshold-percent="{{ intersect_threshold_percent }}"
+          {% if min_with_threshold_value > range_max %}
+            style="--range-min-z-index: 2"
+          {% endif %}
+        >
+          <div class="price-facet__highest-price color-subtext">
+            {%- assign formatted_highest_price = filter.range_max | money -%}
+            {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
+          </div>
+          <div class="price-facet__range-wrapper">
+            <div
+              class="price-facet__range-inputs relative"
+              style="--range-min: {{ min_percent }}%; --range-max: {{ max_percent }}%;"
+            >
+              <input
+                type="range"
+                class="price-facet__range-input price-facet__range-input--min pointer-events-none"
+                min="{{ filter.range_min | default: 0 }}"
+                max="{{ filter.range_max }}"
+                value="{{ filter.min_value.value | default: filter.range_min | default: 0 }}"
+                step="1"
+                ref="rangeMin"
+                aria-label="Minimum price"
+              >
+              <input
+                type="range"
+                class="price-facet__range-input price-facet__range-input--max pointer-events-none absolute inset-0"
+                min="{{ filter.range_min | default: 0 }}"
+                max="{{ filter.range_max }}"
+                value="{{ filter.max_value.value | default: filter.range_max }}"
+                step="1"
+                ref="rangeMax"
+                aria-label="Maximum price"
+              >
+            </div>
+          </div>
+          <div class="price-facet__inputs-wrapper facets__inputs-wrapper facets__inputs-wrapper--row flex items-center gap-4">
+            <div class="field price-facet__field flex items-center gap-2">
+              <label
+                class="field__label price-facet__label"
+                for="{{ input_gte_id }}"
+              >
+                {{ cart.currency.symbol }}
+              </label>
+              <input
+                class="field__input price-facet__input form-control w-full"
+                name="{{ filter.min_value.param_name }}"
+                id="{{ input_gte_id }}"
+                {%- if filter.min_value.value -%}
+                  value="{{ filter.min_value.value | money_without_currency }}"
+                {%- endif -%}
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                data-min="0"
+                data-max="{{ min_input_max_value | money_without_currency }}"
+                ref="minInput"
+                autocomplete="off"
+                {% if autofocus %}
+                  autofocus
+                {% endif %}
+              >
+            </div>
+
+            {% comment %} <div class="price-facet__separator">{{ 'fields.separator' | t }}</div> {% endcomment %}
+
+            <div class="field price-facet__field flex items-center gap-2">
+              <label
+                class="field__label price-facet__label"
+                for="{{ input_lte_id }}"
+              >
+                {{ cart.currency.symbol }}
+              </label>
+              <input
+                class="field__input price-facet__input form-control w-full"
+                name="{{ filter.max_value.param_name }}"
+                id="{{ input_lte_id }}"
+                {%- if filter.max_value.value -%}
+                  value="{{ filter.max_value.value | money_without_currency }}"
+                {%- endif -%}
+                type="text"
+                inputmode="decimal"
+                placeholder="{{ filter.range_max | money_without_currency }}"
+                data-min="{{ max_input_min_value | money_without_currency }}"
+                data-max="{{ filter.range_max | money_without_currency }}"
+                ref="maxInput"
+                autocomplete="off"
+                {% if autofocus %}
+                  autofocus
+                {% endif %}
+              >
+            </div>
+          </div>
+        </price-facet-component>
+      </div>
+    </div>
+  </details>
+</accordion-component>

@@ -1,0 +1,219 @@
+{%- liquid
+  assign collection_list = block.settings.collection_list
+  assign limit = 8
+  assign control_type = 'relative'
+  assign pagination = true
+  assign counter = true
+  if section.settings.control_type == 'float'
+    assign control_type = 'absolute'
+    assign pagination = false
+    assign counter = false
+  endif
+
+  assign enable_swipe_on_mobile = section.settings.enable_swipe_on_mobile
+  assign swipe_custom_width_column = section.settings.swipe_custom_width_column
+  assign column_gap = section.settings.column_gap
+  assign columns_xxl = section.settings.columns
+  assign columns_xl = columns_xxl | at_most: 4
+  assign columns_lg = columns_xxl | at_most: 3
+  assign columns_md = columns_xxl | at_most: 3
+  assign columns_mobile = section.settings.columns_mobile | plus: 0
+
+  if section.settings.custom_columns != blank
+    assign custom_columns_array = section.settings.custom_columns | split: ','
+    for custom_column in custom_columns_array
+      assign pair = custom_column | strip
+      if pair == ''
+        continue
+      endif
+
+      assign custom_column_key = pair | split: ':' | first | strip
+      assign value_str = pair | split: ':' | last | strip
+      if value_str == ''
+        continue
+      endif
+      assign custom_column_value = value_str | plus: 0
+
+      case custom_column_key
+        when 'mb'
+          assign columns_mobile = custom_column_value
+        when 'md'
+          assign columns_md = custom_column_value
+        when 'lg'
+          assign columns_lg = custom_column_value
+        when 'xl'
+          assign columns_xl = custom_column_value
+        when 'xxl'
+          assign columns_xxl = custom_column_value
+      endcase
+    endfor
+  endif
+
+  assign swipe_mobile_classes = ''
+  assign swipe_mobile_inner_classes = ''
+
+  if enable_swipe_on_mobile
+    assign swipe_mobile_classes = 'swipe-mobile swipe-mobile--[columns]-cols' | replace: '[columns]', columns_mobile
+    assign swipe_mobile_inner_classes = 'swipe__inner'
+
+    if swipe_custom_width_column
+      assign swipe_mobile_classes = swipe_mobile_classes | append: ' swipe-mobile--custom-width'
+    endif
+  endif
+
+  assign block_index = section.blocks | find_index: 'id', block.id
+
+  assign tab_title = block.settings.tab_name | default: 'Tab'
+-%}
+{%- capture panel_id -%}{{ section.id }}-panel-{{ block_index }}{%- endcapture -%}
+
+{%- capture image_sizes -%}
+  {%- capture container_width -%}
+    {%- if section.settings.container == 'full' -%}100vw{%- else -%}(min(100vw, {{ settings.page_width | plus: 32 }}px) - 32px){%- endif -%}
+  {%- endcapture -%}
+  (min-width: 1440px) calc({{ container_width }} / {{ columns_xxl }}), (min-width: 1200px) calc({{ container_width }} / {{ columns_xl }}), (min-width: 1024px) calc({{ container_width }} / {{ columns_lg }}), (min-width: 768px) calc({{ container_width }} / {{ columns_md }}), calc((100vw - 32px) / {{ columns_mobile }})
+{%- endcapture -%}
+
+{% capture list_items %}
+  {% if collection_list != blank %}
+    {% for collection in collection_list %}
+      <div class="f-column{% if section.settings.type == 'carousel' %} swiper-slide{% endif %}">
+        {% # theme-check-disable %}
+          {% render 'collection-card', collection: collection, image_sizes: image_sizes, text_alignment: section.settings.text_alignment, show_product_count: section.settings.show_product_count, attributes: block.shopify_attributes %}
+        {% # theme-check-enable %}
+      </div>
+    {% endfor %}
+  {% else %}
+    {% for i in (1..limit) %}
+      <div class="f-column{% if section.settings.type == 'carousel' %} swiper-slide{% endif %}">
+        {% # theme-check-disable %}
+          {% render 'collection-card', collection: null, text_alignment: section.settings.text_alignment, show_product_count: section.settings.show_product_count, attributes: block.shopify_attributes %}
+        {% # theme-check-enable %}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endcapture %}
+
+<!-- @collectionTabs/split -->
+<a
+  href="#{{ panel_id }}"
+  aria-controls="{{ panel_id }}"
+  ref="tab[]"
+  on:click="/onTabClick"
+  on:keydown="/onKeydown"
+  role="tab"
+  class="tabs__button inline-flex items-center justify-center relative rounded"
+  data-index="{{ block_index }}"
+>
+  <span class="tabs__button-text relative text-ellipsis">{{ tab_title }}</span>
+</a>
+<!-- @collectionTabs/split -->
+<div
+  id="{{ panel_id }}"
+  ref="panel[]"
+  class="tabs__panel"
+  {% if block_index != 0 %}
+    hidden
+    data-lazy-loading="true"
+  {% endif %}
+  data-index="{{ block_index }}"
+  {{ block.shopify_attributes }}
+>
+  <noscript>
+    <h3 class="tabs__panel-heading h3">{{ tab_title }}</h3>
+  </noscript>
+
+  {%- capture tab_panel_content -%}
+    {% if section.settings.type == 'carousel' %}
+      <carousel-slider class="collection-list__wrapper block collection-list--carousel carousel carousel--visible carousel--grid">
+        <script type="application/json" ref="config">
+          {
+            "loop": false,
+            "slidesPerView": {{ columns_md }},
+            "spaceBetween": {{ column_gap }},
+            "mousewheel": {
+              "enabled": true,
+              "forceToAxis": true,
+              "thresholdTime": 300,
+              "thresholdDelta": 10
+            },
+            "navigationPosition": {
+              "enabled": true,
+              "selector": ".media .media__image"
+            },
+            "pagination": { "type": "progressbar" },
+            "destroyBelow": 768,
+            "counter": false,
+            "breakpoints": {
+              "768": {
+                "slidesPerView": {{ columns_md }}
+              },
+              "1024": {
+                "slidesPerView": {{ columns_lg }}
+              },
+              "1200": {
+                "slidesPerView": {{ columns_xl }}
+              },
+              "1440": {
+                "slidesPerView": {{ columns_xxl }}
+              }
+            }
+          }
+        </script>
+        <div
+          class="swiper {{ swipe_mobile_classes }}"
+          ref="container"
+          style="--f-columns-xxl: {{ columns_xxl }};--f-columns-mobile: {{ columns_mobile }}; --f-columns-lg: {{ columns_lg }}; --f-columns-xl: {{ columns_xl }}; --f-columns-md: {{ columns_md }};"
+        >
+          <div class="swiper-wrapper layout-panel-grid-mobile gap-style {{ swipe_mobile_inner_classes }}">
+            {{- list_items -}}
+          </div>
+        </div>
+        {% render 'carousel-controls',
+          ref: 'controls',
+          type: control_type,
+          pagination: pagination,
+          counter: counter,
+          class: 'hidden md:flex'
+        %}
+      </carousel-slider>
+    {% else %}
+      <div class="collection-list__wrapper collection-list--grid {{ swipe_mobile_classes }}">
+        <div class="collection-list__inner layout-panel-grid gap-style {{ swipe_mobile_inner_classes }}">
+          {{- list_items -}}
+        </div>
+      </div>
+    {% endif %}
+  {%- endcapture -%}
+
+  {%- unless block_index == 0 -%}
+    <template>{{ tab_panel_content }}</template>
+    <noscript>{{ tab_panel_content }}</noscript>
+  {%- else -%}
+    {{ tab_panel_content }}
+  {%- endunless -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:categories.collections",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "t:settings.collections"
+    },
+    {
+      "type": "text",
+      "id": "tab_name",
+      "label": "t:settings.tab_name"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:categories.collections"
+    }
+  ]
+}
+{% endschema %}

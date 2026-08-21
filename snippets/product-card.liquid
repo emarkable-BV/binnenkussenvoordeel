@@ -1,0 +1,284 @@
+{% liquid
+  assign has_quick_add = false
+  assign show_quick_add = show_quick_add | default: settings.pcard_show_quick_add, allow_false: true
+  assign show_quick_add_mobile = show_quick_add_mobile | default: settings.pcard_show_quick_add_mobile, allow_false: true
+  if product != blank
+    if show_quick_add or show_quick_add_mobile
+      assign has_quick_add = true
+    endif
+  endif
+
+  assign has_quick_view = false
+  assign show_quick_view = show_quick_view | default: settings.pcard_show_quick_view, allow_false: true
+  assign show_quick_view_mobile = show_quick_view_mobile | default: settings.pcard_show_quick_view_mobile, allow_false: true
+  if product != blank
+    if show_quick_view or show_quick_view_mobile
+      assign has_quick_view = true
+    endif
+  endif
+
+  # Logic to determine which variant URL to use (matching swatch selection logic)
+  assign variant_to_link = product.selected_or_first_available_variant
+
+  assign featured_image = product.featured_media
+  assign featured_image_alt = product.featured_media.alt | default: product.title
+  assign first_media_type = product.featured_media.media_type
+
+  if first_media_type == 'model' or first_media_type == 'video'
+    assign featured_image = product.featured_media.preview_image
+  endif
+
+  assign show_second_image_on_hover = show_second_image_on_hover | default: settings.show_second_image_on_hover, allow_false: true
+  assign second_image = ''
+  if show_second_image_on_hover and product.images.size > 1 and product.images[1] != blank
+    assign second_image = product.images[1]
+  endif
+
+  if image_ratio == blank
+    assign image_ratio = settings.pcard_aspect_ratio | default: '1'
+  endif
+  if image_ratio == 'auto'
+    if featured_image != blank
+      assign image_ratio = featured_image.aspect_ratio
+    else
+      assign image_ratio = '1'
+    endif
+  endif
+
+  assign pcard_style = settings.pcard_style
+  assign pcard_color_scheme = settings.pcard_color_scheme
+  assign show_swatch = show_swatch | default: settings.pcard_show_swatches, allow_false: true
+  assign show_badges = show_badges | default: true, allow_false: true
+
+  assign loading = loading | default: 'lazy'
+  assign fetchpriority = fetchpriority | default: 'auto'
+  assign media_sizes = media_sizes | default: ''
+  assign media_widths = media_widths | default: ''
+
+  assign onboarding = false
+  assign product_title = product.title
+  if product.id == empty or product == blank
+    assign onboarding = true
+    assign product_title = 'placeholders.product_title' | t
+  endif
+%}
+{%- capture card_style -%}
+  {%- if has_quick_add -%}
+    --quick-add-display: {% if show_quick_add %}flex{% else %}none{% endif %};
+    --quick-add-display-mobile: {% if show_quick_add_mobile %}flex{% else %}none{% endif %};
+  {%- endif -%}
+  {%- if has_quick_view -%}
+    --quick-view-display: {% if show_quick_view %}flex{% else %}none{% endif %};
+    --quick-view-display-mobile: {% if show_quick_view_mobile %}flex{% else %}none{% endif %};
+  {%- endif -%}
+{%- endcapture -%}
+<product-card
+  class="block product-card product-card--standard product-card--style-{{ pcard_style }}{% if pcard_style == 'card' %} color-{{ pcard_color_scheme }} overflow-hidden{% endif %}"
+  {{ block.shopify_attributes }}
+  style="{{ card_style | strip | strip_newlines }}"
+>
+  <a
+    {% unless onboarding %}
+      href="{{ variant_to_link.url }}"
+    {% else %}
+      role="link"
+    {% endunless %}
+    class="product-card__link focus-visible--inset absolute inset-0"
+    ref="productCardLink"
+    aria-label="{{ product_title | escape }}"
+  ></a>
+  <div class="product-card__wrapper flex flex-col{% if has_quick_add %} product-card--has-quick-add{% endif %}">
+    <div
+      class="product-card__media media-hover--scale{% if second_image != blank %} product-card__media--has-second-image{% endif %} relative media-mask-clip"
+      style="--ratio: {{ image_ratio }};"
+    >
+      <a
+        {% unless onboarding %}
+          href="{{ variant_to_link.url }}"
+        {% else %}
+          role="link"
+        {% endunless %}
+        ref="cardGalleryLink"
+        aria-label="{{ product_title | escape }}"
+        tabindex="-1"
+      >
+        {%- if featured_image -%}
+          {%- if media_sizes != blank -%}
+            {% render 'responsive-image',
+              mode: 'liquid',
+              sizes: media_sizes,
+              widths: media_widths,
+              image: featured_image,
+              default_alt: featured_image_alt,
+              image_ratio: image_ratio,
+              class: 'product-card__image product-card__image--first',
+              img_class: 'w-full product-card-main-image'
+            %}
+          {%- else -%}
+            {% render 'responsive-image',
+              mode: 'js',
+              image: featured_image,
+              default_alt: featured_image_alt,
+              image_ratio: image_ratio,
+              class: 'product-card__image product-card__image--first',
+              img_class: 'w-full product-card-main-image'
+            %}
+          {%- endif -%}
+          {% comment %}
+            // Backup when need use video media instead of image
+            {%- unless first_media_type == 'video' or first_media_type == 'external_video' -%}
+            {%- else -%}
+              <div class="media">
+                {% render 'video',
+                  video: featured_media,
+                  video_autoplay: true,
+                  video_loop: true,
+                  section_id: section.id,
+                  disable_controls: true,
+                  enable_toggle_button: false
+                %}
+              </div>
+            {%- endunless -%}
+          {% endcomment %}
+
+          {%- if second_image != blank -%}
+            {%- if media_sizes != blank -%}
+              {% render 'responsive-image',
+                mode: 'liquid',
+                sizes: media_sizes,
+                widths: media_widths,
+                image: second_image,
+                image_ratio: image_ratio,
+                class: 'product-card__image product-card__image--second',
+                img_class: 'w-full'
+              %}
+            {%- else -%}
+              {% render 'responsive-image',
+                mode: 'js',
+                image: second_image,
+                image_ratio: image_ratio,
+                class: 'product-card__image product-card__image--second',
+                img_class: 'w-full'
+              %}
+            {%- endif -%}
+          {%- endif -%}
+        {%- else -%}
+          <div class="media media--placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          </div>
+        {%- endif -%}
+      </a>
+      {%- if is_current_product -%}
+        <div class="product-card__badges product-card__badges--current">
+          <span class="badge badge--current">{{ 'content.current_item' | t }}</span>
+        </div>
+      {%- else -%}
+        {% if show_badges and product != blank %}
+          <product-badge data-product-id="{{ product.id }}" class="product-card__badges">
+            {% render 'product-badges',
+              product: product,
+              use_variant: false,
+              show_soldout_badge: settings.pcard_show_sold_out_badge,
+              sale_badge_type: settings.pcard_sale_badge_type,
+              show_sale_badge: settings.pcard_show_sale_badge,
+              show_custom_badges: settings.pcard_show_custom_badges,
+              badge_layout: settings.pcard_badge_layout
+            %}
+          </product-badge>
+        {% endif %}
+      {%- endif -%}
+      {%- if has_quick_view or has_quick_add -%}
+        <div class="product-card__actions flex flex-col items-end justify-end gap-1 absolute pointer-events-none">
+          {%- if has_quick_view -%}
+            {% render 'quick-add',
+              product: product,
+              section_id: section.id,
+              block: block,
+              mode: 'view',
+              color_scheme: settings.pcard_quick_add_color_scheme
+            %}
+          {%- endif -%}
+          {%- if has_quick_add -%}
+            {% render 'quick-add',
+              product: product,
+              section_id: section.id,
+              block: block,
+              mode: 'combine',
+              color_scheme: settings.pcard_quick_add_color_scheme
+            %}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+    {% liquid
+
+    %}
+    <div
+      class="product-card__content{% if pcard_style == 'card' %} flex items-end justify-between{% endif %}"
+      style="--content-alignment: {{ settings.pcard_content_alignment }};"
+    >
+      <div class="product-card__content--wrapper flex flex-col text-{{ settings.pcard_content_alignment | replace: 'flex-start', "left" | replace: 'flex-end', 'right' }}">
+        {% render 'product-card-metas', product: product, show_vendor: show_vendor, show_type: show_type %}
+        {%- if product != blank -%}
+          <a
+            class="product-card__title text-wrap reversed-link"
+            href="{% render 'product-card-variant-url', product: product %}"
+            ref="productTitleLink"
+            aria-label="{{ product_title | escape }}"
+          >
+            <span class="reversed-link__text">{{ product_title }}</span>
+          </a>
+        {%- else -%}
+          <p class="product-card__title text-wrap">
+            <span>{{ product_title }}</span>
+          </p>
+        {%- endif -%}
+
+        <product-price class="product-card__price">
+          {% render 'price', show_unit_price: true, product_resource: product, use_variant: false %}
+        </product-price>
+
+        {%- if show_swatch -%}
+          {% liquid
+            for product_option in product.options_with_values
+              assign swatch_count = product_option.values | map: 'swatch' | compact | size
+
+              if swatch_count > 0 and settings.pcard_show_swatches
+                assign product_has_swatches = true
+              endif
+            endfor
+          %}
+          {% if product_has_swatches %}
+            <product-swatches
+              data-product-id="{{ product.id }}"
+              data-product-url="{{ product.url }}"
+              style="--swatch-width: {{ settings.pcard_swatch_width }}px;"
+            >
+              {% render 'variant-swatches',
+                product_resource: product,
+                show_variant_image: settings.pcard_show_variant_image,
+                swatch_shape: settings.pcard_swatch_shape,
+                swatch_width: settings.pcard_swatch_width,
+                context: 'card'
+              %}
+            </product-swatches>
+          {% endif %}
+        {%- endif -%}
+        {{ children }}
+      </div>
+      {% if pcard_style == 'card' and product != blank %}
+        <div class="product-card__quick-add !bg-none color-{{ settings.pcard_quick_add_color_scheme }}">
+          {% render 'quick-add',
+            product: product,
+            section_id: section.id,
+            block: block,
+            mode: 'combine',
+            button_style: 'icon_only',
+            button_size: 'small',
+            button_icon_size: 'semi-small'
+          %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</product-card>

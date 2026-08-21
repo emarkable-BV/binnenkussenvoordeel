@@ -1,0 +1,353 @@
+<style>
+  :root {
+    --swiper-theme-color: #007aff;
+  }
+  :host {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+  }
+  .swiper {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+    display: block;
+  }
+  .swiper-vertical > .swiper-wrapper {
+    flex-direction: column;
+  }
+  .swiper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    transition-property: transform;
+    transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
+    box-sizing: content-box;
+  }
+  .swiper-android .swiper-slide,
+  .swiper-ios .swiper-slide,
+  .swiper-wrapper {
+    transform: translateZ(0);
+  }
+  .swiper-horizontal {
+    touch-action: pan-y;
+  }
+  .swiper-vertical {
+    touch-action: pan-x;
+  }
+  .swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+    display: block;
+  }
+  .swiper-slide-invisible-blank {
+    visibility: hidden;
+  }
+  .swiper-initialized.swiper-equal-height .swiper-slide,
+  .swiper-autoheight,
+  .swiper-autoheight .swiper-slide {
+    height: auto;
+  }
+  .swiper-autoheight .swiper-wrapper {
+    align-items: flex-start;
+    transition-property: transform, height;
+  }
+  .swiper-backface-hidden .swiper-slide {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .swiper-3d.swiper-css-mode .swiper-wrapper {
+    perspective: 1200px;
+  }
+  .swiper-3d .swiper-wrapper {
+    transform-style: preserve-3d;
+  }
+  .swiper-3d {
+    perspective: 1200px;
+  }
+  .swiper-3d .swiper-slide,
+  .swiper-3d .swiper-cube-shadow {
+    transform-style: preserve-3d;
+  }
+  .swiper-css-mode > .swiper-wrapper {
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .swiper-css-mode > .swiper-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  .swiper-css-mode > .swiper-wrapper > .swiper-slide {
+    scroll-snap-align: start start;
+  }
+  .swiper-css-mode.swiper-horizontal > .swiper-wrapper {
+    scroll-snap-type: x mandatory;
+  }
+  .swiper-css-mode.swiper-vertical > .swiper-wrapper {
+    scroll-snap-type: y mandatory;
+  }
+  .swiper-css-mode.swiper-free-mode > .swiper-wrapper {
+    scroll-snap-type: none;
+  }
+  .swiper-css-mode.swiper-free-mode > .swiper-wrapper > .swiper-slide {
+    scroll-snap-align: none;
+  }
+  .swiper-css-mode.swiper-centered > .swiper-wrapper::before {
+    content: '';
+    flex-shrink: 0;
+    order: 9999;
+  }
+  .swiper-css-mode.swiper-centered > .swiper-wrapper > .swiper-slide {
+    scroll-snap-align: center center;
+    scroll-snap-stop: always;
+  }
+  .swiper-css-mode.swiper-centered.swiper-horizontal > .swiper-wrapper > .swiper-slide:first-child {
+    margin-inline-start: var(--swiper-centered-offset-before);
+  }
+  .swiper-css-mode.swiper-centered.swiper-horizontal > .swiper-wrapper::before {
+    height: 100%;
+    min-height: 1px;
+    width: var(--swiper-centered-offset-after);
+  }
+  .swiper-css-mode.swiper-centered.swiper-vertical > .swiper-wrapper > .swiper-slide:first-child {
+    margin-block-start: var(--swiper-centered-offset-before);
+  }
+  .swiper-css-mode.swiper-centered.swiper-vertical > .swiper-wrapper::before {
+    width: 100%;
+    min-width: 1px;
+    height: var(--swiper-centered-offset-after);
+  }
+  .swiper-3d .swiper-slide-shadow,
+  .swiper-3d .swiper-slide-shadow-left,
+  .swiper-3d .swiper-slide-shadow-right,
+  .swiper-3d .swiper-slide-shadow-top,
+  .swiper-3d .swiper-slide-shadow-bottom {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .swiper-3d .swiper-slide-shadow {
+    background: rgba(0, 0, 0, 0.1490196078);
+  }
+  .swiper-3d .swiper-slide-shadow-left {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5019607843), rgba(0, 0, 0, 0));
+  }
+  .swiper-3d .swiper-slide-shadow-right {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5019607843), rgba(0, 0, 0, 0));
+  }
+  .swiper-3d .swiper-slide-shadow-top {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5019607843), rgba(0, 0, 0, 0));
+  }
+  .swiper-3d .swiper-slide-shadow-bottom {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5019607843), rgba(0, 0, 0, 0));
+  }
+  .swiper-lazy-preloader {
+    width: 42px;
+    height: 42px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -21px;
+    margin-top: -21px;
+    z-index: 10;
+    transform-origin: 50%;
+    box-sizing: border-box;
+    border: 4px solid var(--swiper-preloader-color, var(--swiper-theme-color));
+    border-radius: 50%;
+    border-top-color: transparent;
+  }
+  .swiper:not(.swiper-watch-progress) .swiper-lazy-preloader,
+  .swiper-watch-progress .swiper-slide-visible .swiper-lazy-preloader {
+    animation: swiper-preloader-spin 1s infinite linear;
+  }
+  .swiper-lazy-preloader-white {
+    --swiper-preloader-color: #fff;
+  }
+  .swiper-lazy-preloader-black {
+    --swiper-preloader-color: #000;
+  }
+  @keyframes swiper-preloader-spin {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .swiper-fade.swiper-free-mode .swiper-slide {
+    transition-timing-function: ease-out;
+  }
+  .swiper-fade .swiper-slide {
+    pointer-events: none;
+    transition-property: opacity;
+  }
+  .swiper-fade .swiper-slide .swiper-slide {
+    pointer-events: none;
+  }
+  .swiper-fade .swiper-slide-active,
+  .swiper-fade .swiper-slide-active .swiper-slide-active {
+    pointer-events: auto;
+  }
+  @media (min-width: 768px) {
+    .carousel--grid .swiper:not(.swiper-initialized) {
+      --f-slide-width: var(
+        --f-columns-md,
+        var(--f-columns-lg, var(--f-columns-xl, var(--f-columns-xxl)))
+      );
+    }
+    .carousel--grid .swiper:not(.swiper-initialized) .swiper-wrapper {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      column-gap: var(--f-column-gap-max, var(--f-column-gap));
+    }
+    .carousel--grid .swiper:not(.swiper-initialized) .swiper-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel--grid .swiper:not(.swiper-initialized) :is(.swiper-slide, .swiper-slide-custom) {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+    .carousel--grid .swiper.swiper-initialized .swiper-wrapper {
+      --f-column-gap: 0px !important;
+    }
+    .carousel--grid:not(.carousel--view-auto)
+      .swiper:not(.swiper-initialized)
+      :is(.swiper-slide, .swiper-slide-custom) {
+      width: calc(
+        (100% - (var(--f-slide-width) - 1) * var(--f-column-gap-max, var(--f-column-gap))) /
+          var(--f-slide-width)
+      );
+    }
+  }
+  @media (min-width: 1024px) {
+    .carousel--grid .swiper:not(.swiper-initialized) {
+      --f-slide-width: var(--f-columns-lg, var(--f-columns-xl, var(--f-columns-xxl)));
+    }
+  }
+  @media (min-width: 1200px) {
+    .carousel--grid .swiper:not(.swiper-initialized) {
+      --f-slide-width: var(--f-columns-xl, var(--f-columns-xxl));
+    }
+  }
+  @media (min-width: 1440px) {
+    .carousel--grid .swiper:not(.swiper-initialized) {
+      --f-slide-width: var(--f-columns-xxl);
+    }
+  }
+  @media (max-width: 767.98px) {
+    .carousel--grid .swiper.mobile-slider:not(.swiper-initialized) .swiper-wrapper {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      column-gap: var(--f-column-gap);
+    }
+    .carousel--grid
+      .swiper.mobile-slider:not(.swiper-initialized)
+      .swiper-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel--grid .swiper.mobile-slider .swiper-slide {
+      width: calc(
+        (100% - (var(--f-columns-mobile) - 1) * var(--f-column-gap)) / var(--f-columns-mobile)
+      );
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+    .carousel--grid .swiper.mobile-slider.swiper-initialized .swiper-wrapper {
+      --f-column-gap: 0px !important;
+    }
+  }
+
+  /* Motion component prestage - prevents flash before JS applies initial animation states */
+  motion-component {
+    display: block;
+  }
+  motion-component:not([data-initialized]):not([data-motion-hold]) {
+    will-change: transform, opacity;
+  }
+  motion-component[data-initialized] {
+    will-change: auto; /* Clean up sau animation */
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    /* If disabled at any scope, neutralize prestage */
+    [data-motion-disabled] motion-component:not([data-initialized]),
+    motion-component[data-motion-off]:not([data-initialized]) {
+      visibility: visible !important;
+      opacity: 1 !important;
+      transform: none !important;
+      will-change: auto;
+    }
+    motion-component:not([data-initialized]):not([data-motion-hold])[data-motion='fade-in'] {
+      opacity: 0;
+    }
+    motion-component:not([data-initialized]):not([data-motion-hold])[data-motion='fade-up'] {
+      opacity: 0;
+      transform: translateY(2.5rem);
+    }
+    motion-component:not([data-initialized]):not([data-motion-hold])[data-motion='slide-in-left'] {
+      opacity: 0;
+      transform: translateX(-2.5rem);
+    }
+    motion-component:not([data-initialized]):not([data-motion-hold])[data-motion='slide-in-right'] {
+      opacity: 0;
+      transform: translateX(2.5rem);
+    }
+    motion-component:not([data-initialized])[data-motion='zoom-in'] {
+      {% comment %} transform-origin: 50% 50%; {% endcomment %}
+      transform: scale(0.8);
+    }
+    motion-component:not([data-initialized])[data-motion='zoom-out'] {
+      {% comment %} transform-origin: 50% 50%; {% endcomment %}
+      transform: scale(1.15);
+    }
+    {% comment %} motion-component[data-initialized] {
+      will-change: auto;
+    } {% endcomment %}
+    {% comment %} // Prevent flicker: ensure images inside motion-component are visible when parent animates
+    // This prevents opacity inheritance conflict between motion-component and responsive-image {% endcomment %}
+    {% comment %} motion-component:not([data-initialized]) .media__image {
+      opacity: 1 !important;
+    } {% endcomment %}
+  }
+
+  {% comment %} Lenis {% endcomment %}
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis:not(.lenis-autoToggle).lenis-stopped {
+    overflow: clip;
+  }
+
+  .lenis [data-lenis-prevent],
+  .lenis [data-lenis-prevent-wheel],
+  .lenis [data-lenis-prevent-touch] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
+  .lenis.lenis-autoToggle {
+    transition-property: overflow;
+    transition-duration: 1ms;
+    transition-behavior: allow-discrete;
+  }
+</style>

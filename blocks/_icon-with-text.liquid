@@ -1,0 +1,69 @@
+{% capture icon %}
+  {% content_for 'block', type: '_icon', id: 'static-icon-block' %}
+{% endcapture %}
+
+{% capture text %}
+  {% content_for 'block', type: '_simple-text', id: 'static-text-block' %}
+{% endcapture %}
+
+{% render 'icon-with-text',
+  icon: icon,
+  text: text,
+  settings: block.settings,
+  attributes: block.shopify_attributes
+%}
+
+{% schema %}
+{
+  "name": "t:names.icon_with_text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.column_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.column_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.icon_with_text",
+      "category": "t:categories.basic",
+      "blocks": {
+        "static-icon-block": {
+          "type": "_icon",
+          "static": true,
+          "settings": {
+            "icon": "tag",
+            "icon_size": "custom-size",
+            "width": 32,
+            "width_mobile": 32
+          }
+        },
+        "static-text-block": {
+          "type": "_simple-text",
+          "static": true,
+          "settings": {
+            "text": "<p>Exclusive discount</p>",
+            "type_preset": "h3"
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

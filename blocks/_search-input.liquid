@@ -1,0 +1,133 @@
+{{ 'template-search.css' | asset_url | stylesheet_tag }}
+
+{%- assign block_settings = block.settings -%}
+
+<script
+  src="{{ 'search-input.js' | asset_url }}"
+  defer
+  type="module"
+></script>
+
+<form
+  action="{{ routes.search_url }}"
+  method="get"
+  role="search"
+  class="search-page-input__parent flex flex-col gap-4"
+>
+  <search-page-input-component
+    class="flex items-center w-full relative top-0"
+    style="{% render 'size-style', settings: block_settings %}{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <label
+      for="SearchPageInput--{{ block.id }}"
+      class="visually-hidden"
+    >
+      {{ 'content.search_input_label' | t }}
+    </label>
+    {% render 'icon', icon: 'search', size: 'medium', class: 'search__icon' %}
+    <input
+      name="type"
+      value="product,page,article"
+      type="hidden"
+    >
+    <input
+      class="search-page-input form-control"
+      id="SearchPageInput--{{ block.id }}"
+      type="search"
+      name="q"
+      ref="searchPageInput"
+      on:keydown="/handleKeyDown"
+      value="{{ search.terms | escape }}"
+      placeholder="{{ 'content.search_input_placeholder' | t }}"
+    >
+    <button
+      type="button"
+      name="reset"
+      class="button-unstyled search__reset-button"
+      aria-label="{{ 'accessibility.reset_search' | t }}"
+      on:click="/handleClearClick"
+    >
+      <span class="search__reset-button-text link link--underline">
+        {{ 'actions.clear' | t }}
+      </span>
+    </button>
+  </search-page-input-component>
+
+  {%- if search.results.size == 0 and search.terms != blank -%}
+    <div class="search-results__no-results flex flex-col gap-2 color-subtext">
+      <h4 class="h6">
+        {{ 'content.search_results_no_results' | t: terms: search.terms }}
+      </h4>
+      <p class="color-subtext">
+        {{ 'content.search_results_no_results_check_spelling' | t }}
+      </p>
+    </div>
+  {%- endif -%}
+</form>
+
+{% schema %}
+{
+  "name": "t:names.search_input",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 40,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    }
+  ]
+}
+{% endschema %}

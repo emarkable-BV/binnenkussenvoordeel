@@ -1,0 +1,146 @@
+{%- unless template == 'index' -%}
+  <div
+    class="section-breadcrumbs spacing-style color-{{ section.settings.color_scheme }}"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <div class="page-width">
+      {% render 'breadcrumbs',
+        text_align: section.settings.text_align,
+        text_align_mobile: section.settings.text_align_mobile
+      %}
+    </div>
+  </div>
+{%- endunless -%}
+{% schema %}
+{
+  "name": "t:names.breadcrumbs",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"],
+    "templates": ["index"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "t:settings.text_align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "select",
+      "id": "text_align_mobile",
+      "label": "t:settings.text_align",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.breadcrumbs",
+      "category": "t:categories.layout"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+<div
+  class="product-suggestion__card-badge"
+  {{ block.shopify_attributes }}
+>
+  <div class="btn btn--small btn--outline pointer-events-none paragraph">
+    {% render 'icon', icon: 'check', size: 'semi-small' %}
+    <span class="btn__text">{{ block.settings.label }}</span>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.badge",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "Eco-Friendly"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.badge"
+    }
+  ]
+}
+{% endschema %}

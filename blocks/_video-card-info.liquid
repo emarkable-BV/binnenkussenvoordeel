@@ -1,0 +1,143 @@
+{% doc %}
+  @param {string} [classes] - Additional classesr
+{% enddoc %}
+{% liquid
+  assign name = block.settings.title
+  assign bio = block.settings.bio
+  assign avatar = block.settings.avatar
+%}
+{% if name != blank or bio != blank or avatar != blank %}
+  <div class="video-card__content-wrapper flex flex-col justify-end col-span-full row-span-full">
+    <div class="video-card__content flex flex-col gap-3 {{ classes }}">
+      {% if avatar != blank %}
+        <div
+          class="author-info__avatar rounded absolute top-0{% if block.settings.avatar_hidden_mobile %} hidden md:block{% endif %}"
+        >
+          {% render 'responsive-image',
+            mode: 'liquid',
+            sizes: '66px',
+            image: avatar,
+            image_ratio: '1/1',
+            loading: 'lazy',
+            fetchpriority: 'low',
+            use_hover: false
+          %}
+        </div>
+      {% endif %}
+      {% if name != blank or bio != blank %}
+        <div
+          class="author-info spacing-style flex flex-col gap-y-1"
+          style="{% render 'spacing-style', settings: block.settings %}"
+          {{ block.shopify_attributes }}
+        >
+          {% if name != blank %}
+            <div class="author-info__name {{ block.settings.name_preset }}">
+              {{ name }}
+            </div>
+          {% endif %}
+          {% if bio != blank %}
+            <div class="author-info__bio paragraph flex items-center gap-1 color-{{ block.settings.bio_text_color }}">
+              {{ bio }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "t:names.information",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.avatar"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "checkbox",
+      "id": "avatar_hidden_mobile",
+      "label": "t:settings.hidden_mobile",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.name"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.title",
+      "default": "Video card"
+    },
+    {
+      "type": "select",
+      "id": "name_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h4"
+    },
+    {
+      "type": "header",
+      "content": "t:content.bio"
+    },
+    {
+      "type": "richtext",
+      "id": "bio",
+      "label": "t:settings.text",
+      "default": "<p>Talk about your brand</p>"
+    },
+    {
+      "type": "select",
+      "id": "bio_text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        }
+      ],
+      "default": "subtext"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.information"
+    }
+  ]
+}
+{% endschema %}

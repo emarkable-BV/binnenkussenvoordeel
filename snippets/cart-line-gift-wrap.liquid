@@ -1,0 +1,30 @@
+{% liquid
+  assign line_gift_wrapped = false
+  for ci in cart.items
+    if ci.variant_id == gift_wrap_variant_id and ci.parent_relationship.parent.key == item.key
+      assign line_gift_wrapped = true
+    endif
+  endfor
+%}
+<div
+  class="cart-items__gift-wrap-line relative flex items-center"
+  style="--loading-size: 1.6rem;"
+>
+  {%- capture input_id -%}gift-wrap-line-{{ item.key | replace: ':', '-' }}{%- endcapture -%}
+  <input
+    type="checkbox"
+    class="checkbox"
+    id="{{ input_id }}"
+    on:change="cart-items-component/onPerLineGiftToggle"
+    {% if line_gift_wrapped %}
+      checked
+    {% endif %}
+  >
+  <label
+    class="text-body-sm cursor-pointer"
+    for="{{ input_id }}"
+  >
+    {{- 'content.gift_wrapping.per_line_label' | t -}}
+  </label>
+  {% render 'loading-spinner', size: 'small' %}
+</div>

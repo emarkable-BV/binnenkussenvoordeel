@@ -1,0 +1,128 @@
+<link
+  rel="stylesheet"
+  href="{{ 'quick-view.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+
+{% liquid
+  assign product = closest.product
+  if product == blank and request.design_mode
+    assign collection_all = collections.all
+    assign product = collection_all.products | first
+  endif
+%}
+
+{% capture content %}
+  <div
+    class="quick-add__content v-scrollable flex flex-col flex-1 gap-style"
+    style="{% render 'gap-style', settings: section.settings %}"
+    data-product-url="{{ product.url }}"
+  >
+    {% content_for 'blocks', closest.product: product %}
+  </div>
+  <div class="quick-add__footer">
+    <a href="{{ product.url }}" class="quick-add__footer-link flex items-center justify-center gap-2 reversed-link">
+      <span class="reversed-link__text">{{ 'actions.view_more_details' | t }}</span>
+      {% render 'icon', icon: 'caret-right', size: 'extra-small' %}
+    </a>
+  </div>
+{% endcapture %}
+
+<div class="quick-add" id="quick-add-drawer" data-section-id="{{ section.id }}" hidden>
+  <div class="quick-add__inner" data-quick-add-content>
+    {{ content }}
+  </div>
+</div>
+{% if settings.pcard_show_quick_add %}
+  {% comment %} {% render 'quick-add-dialog', design_mode_content: content %} {% endcomment %}
+  <quick-add-dialog id="quick-add-dialog" shopify-design-mode>
+    <dialog
+      ref="dialog"
+      class="dialog dialog--drawer dialog--quick-add-drawer dialog--drawer-right dialog--drawer-mobile-bottom overflow-hidden{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}"
+      scroll-lock
+    >
+      <button
+        class="dialog__close dialog__close--absolute"
+        on:click="/closeDialog"
+        aria-label="{{ 'accessibility.close_dialog' | t }}"
+      >
+        {% render 'icon', icon: 'close', size: 'large' %}
+      </button>
+      <div class="quick-add-dialog__inner flex flex-col h-full" id="quick-add-drawer-content">
+        {% if request.design_mode %}
+          {{ content }}
+        {% endif %}
+      </div>
+    </dialog>
+  </quick-add-dialog>
+{% endif %}
+{% schema %}
+{
+  "name": "t:names.quick_add_drawer",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/OImDhk2)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "_product-review-stars"
+    },
+    {
+      "type": "_product-badges"
+    },
+    {
+      "type": "_quick-add-media"
+    },
+    {
+      "type": "_product-title"
+    },
+    {
+      "type": "_product-price"
+    },
+    {
+      "type": "_promotion-alert"
+    },
+    {
+      "type": "_product-description"
+    },
+    {
+      "type": "_product-share"
+    },
+    {
+      "type": "_variant-picker"
+    },
+    {
+      "type": "_product-inventory"
+    },
+    {
+      "type": "_buy-buttons"
+    },
+    {
+      "type": "_product-information-group"
+    }
+  ]
+}
+{% endschema %}

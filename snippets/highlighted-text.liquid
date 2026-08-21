@@ -1,0 +1,85 @@
+{%- doc -%}
+  Do not render this snippet directly, render snippet highlight-text instead of.
+
+  @param {string} text - Text to render
+  @param {string} style - Highlight text style. Accepted value: 'wavy-underline', 'solid-background'
+  @param {string} [font_style] - Highlight font style. Accepted value: 'normal', 'italic'
+  @param {object} [shape_color] - Color for shape
+  @param {object} [text_color] - Color for text
+  @param {boolean} [use_animate] - If provided (not blank), enables auto-animation on viewport entry via the highlight-text custom element. If blank, auto-animation is disabled and you must manually add the 'animate' class to trigger the animation
+  @param {string} [wrap_class] - Custom css class add to <em> tag
+{%- enddoc -%}
+{%- liquid
+  assign font_style = font_style | default: 'italic'
+
+  assign shape_color_inherit = true
+  if shape_color != blank
+    assign shape_color_inherit = false
+    assign shape_color_alpha_first = shape_color.alpha | split: '.' | first | plus: 0
+    assign shape_color_alpha_last = shape_color.alpha | split: '.' | last | plus: 0
+    if shape_color_alpha_first == 0 and shape_color_alpha_last == 0
+      assign shape_color_inherit = true
+    endif
+  endif
+
+  assign text_color_inherit = true
+  if text_color != blank
+    assign text_color_inherit = false
+    assign text_color_alpha_first = text_color.alpha | split: '.' | first | plus: 0
+    assign text_color_alpha_last = text_color.alpha | split: '.' | last | plus: 0
+    if text_color_alpha_first == 0 and text_color_alpha_last == 0
+      assign text_color_inherit = true
+    endif
+  endif
+
+  assign style_class = style | replace: '_', '-'
+  assign css_classes = 'highlight-text relative z--1 highlight-text--' | append: style_class
+
+  if text_color_inherit
+    assign css_classes = css_classes | append: ' highlight-text--color-inherit'
+  endif
+
+  if wrap_class != blank
+    assign css_classes = css_classes | append: ' ' | append: wrap_class
+  endif
+
+  assign svg = ''
+
+  case style
+    when 'wavy-underline'
+      assign svg = '<svg class="absolute z--1 highlight-text__svg pointer-events-none overflow-visible" viewBox="0 0 100 21" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.519C5.07188 13.0987 16.2011 9.16763 22.1106 8.07054C23.6564 7.78355 31.016 6.46249 41.2573 4.49409C44.9396 3.78633 45.5649 3.82484 45.4495 4.70093C44.5999 11.1537 41.0277 13.6024 40.6072 15.1669C40.4155 15.88 40.419 16.4872 40.9889 16.8137C41.5589 17.1402 42.7339 17.1826 50.1677 15.7122C57.6015 14.2419 71.2584 11.2576 80.5495 9.65675C89.8405 8.05588 94.3519 7.92886 99 7.66754" stroke="currentColor" stroke-width="8" stroke-linecap="round"></path></svg>'
+  endcase
+-%}
+{%- capture hl_css_vars -%}
+  --hl-font-style: {{ font_style }};
+  {%- unless shape_color_inherit -%}
+    --hl-shape-color: {{ shape_color }};
+  {%- else -%}
+    {%- if text_color_inherit == false and style =='solid-background' -%}
+      --hl-shape-color: rgb({{ text_color.rgb }} / 20%);
+    {%- endif -%} 
+  {%- endunless -%}
+  {%- unless text_color_inherit -%}
+    --hl-text-color: {{ text_color }};
+  {%- endunless -%}
+{%- endcapture -%}
+{%- capture hl_style -%}style="{{ hl_css_vars | strip | strip_newlines }}"{%- endcapture -%}
+{%- liquid
+  assign em_attr_is = ' is="highlight-text"'
+  assign use_animate = use_animate | default: true, allow_false: true
+  unless use_animate
+    assign em_attr_is = ''
+  endunless
+  assign em_open_tag = '<em class="' | append: css_classes | append: '"' | append: em_attr_is | append: hl_style | append: '>'
+  assign em_close_tag = svg | append: '</em>'
+
+  if style == 'solid-background'
+    assign em_open_tag = em_open_tag | append: '<span>'
+    assign em_close_tag = em_close_tag | prepend: '</span>'
+  endif
+
+  assign text = text | replace: '<em>', em_open_tag
+  assign text = text | replace: '</em>', em_close_tag
+
+  echo text
+-%}

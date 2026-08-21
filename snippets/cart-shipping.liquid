@@ -1,0 +1,95 @@
+<cart-shipping class="flex flex-col gap-4 xl:gap-5">
+  <div>
+    <form
+      class="cart-shipping-form grid gap-4 xl:gap-5"
+      action="{{ routes.cart_url }}"
+      method="POST"
+      novalidate
+      ref="form"
+    >
+      <country-province
+        class="grid gap-4 xl:gap-5"
+        ref="countryProvince"
+        {% comment %} Priority 1: Customer data (if logged in) {% endcomment %}
+        {% if shop.customer_accounts_enabled and customer %}
+          data-country="{{ customer.default_address.country }}"
+          {%- if customer.default_address.province != '' %}
+            data-province="{{ customer.default_address.province }}"
+          {%- endif -%}
+          {% comment %} Priority 2: Shop default country {% endcomment %}
+        {% elsif shop.address.country != blank %}
+          data-country="{{ shop.address.country }}"
+          {%- if shop.address.province != blank %}
+            data-province="{{ shop.address.province }}"
+          {%- endif -%}
+        {% endif %}
+      >
+        <div class="form-field">
+          <label class="form-label" for="ShippingCountry-{{ section.id }}">
+            {{- 'accessibility.country_region' | t -}}
+          </label>
+          <div class="select w-full">
+            <select
+              name="address[country]"
+              class="form-control w-full"
+              autocomplete="country"
+              id="ShippingCountry-{{ section.id }}"
+              ref="countryInput"
+              required
+            >
+              <template>{{- all_country_option_tags -}}</template>
+              <noscript>{{- all_country_option_tags -}}</noscript>
+            </select>
+          </div>
+        </div>
+        <div class="form-field" hidden>
+          <label class="form-label" for="ShippingProvince-{{ section.id }}">
+            {{- 'accessibility.province' | t -}}
+          </label>
+          <div class="select w-full">
+            <select
+              name="address[province]"
+              class="form-control w-full"
+              autocomplete="address-level1"
+              id="ShippingProvince-{{ section.id }}"
+              ref="provinceInput"
+              required
+            ></select>
+          </div>
+        </div>
+      </country-province>
+      <div class="form-field">
+        <label class="form-label" for="ShippingZip-{{ section.id }}">
+          {{- 'accessibility.postal_code' | t -}}
+        </label>
+        <input
+          name="address[zip]"
+          class="form-control w-full"
+          type="text"
+          autocapitalize="characters"
+          autocomplete="postal-code"
+          placeholder=" "
+          id="ShippingZip-{{ section.id }}"
+          ref="zipInput"
+          {% comment %} Priority 1: Customer data (if logged in) {% endcomment %}
+          {% if shop.customer_accounts_enabled and customer %}
+            value="{{ customer.default_address.zip }}"
+            {% comment %} Priority 2: Shop default zip (if available) {% endcomment %}
+          {% elsif shop.address.zip != blank %}
+            value="{{ shop.address.zip }}"
+          {% endif %}
+          required
+        >
+      </div>
+      <div class="form-submit">
+        <button class="btn btn--primary w-full" type="submit" ref="submitButton">
+          <span class="btn__text">{{ 'actions.calculate' | t }}</span>
+          {%- render 'loading-spinner' -%}
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="cart-shipping-results" ref="resultsElement" hidden>
+    <!-- Shipping rates results will be displayed here -->
+  </div>
+</cart-shipping>

@@ -1,0 +1,39 @@
+<div
+  class="spacer w-full"
+  {{ block.shopify_attributes }}
+  style="{% render 'clamp-calculate-style', property_name: 'f-spacing', min_value: block.settings.gap_mobile, max_value: block.settings.gap %}"
+></div>
+{% schema %}
+{
+  "name": "t:names.spacer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.height",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:settings.height_mobile",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.spacer",
+      "category": "t:categories.layout"
+    }
+  ]
+}
+{% endschema %}

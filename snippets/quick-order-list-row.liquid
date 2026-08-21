@@ -1,0 +1,122 @@
+{%- doc -%}
+  Render a single row in the Quick Order List for a given variant.
+
+  @param {object} section - Parent section (used for unique input IDs).
+  @param {object} product - The product the row belongs to.
+  @param {object} variant - The variant rendered on this row.
+  @param {object} [image] - Image to display (variant.image or product.featured_image).
+  @param {boolean} [show_image]
+  @param {boolean} [show_sku]
+{%- enddoc -%}
+{%- liquid
+  assign cart_qty = cart | item_count_for_variant: variant.id
+  assign line_items = cart | line_items_for: variant
+  assign line_total = line_items | sum: 'original_line_price'
+  assign sku = variant.sku
+  assign is_default_variant = false
+  if product.has_only_default_variant or product.variants.size == 1
+    assign is_default_variant = true
+  endif
+
+  assign label = variant.title
+  if is_default_variant
+    assign label = product.title
+  endif
+
+  assign display_unit_price = variant.price
+  if variant.quantity_price_breaks.size > 0 and cart_qty > 0
+    assign volume_prices_sorted = variant.quantity_price_breaks | sort: 'quantity'
+    for price_break in volume_prices_sorted
+      if cart_qty >= price_break.minimum_quantity
+        assign display_unit_price = price_break.price
+      endif
+    endfor
+  endif
+-%}
+<tr
+  id="QuickOrderListRow-{{ section.id }}-{{ variant.id }}"
+  class="quick-order-list__row variant-item{% unless show_image %} variant-item--no-media{% endunless %}"
+  ref="variantRows[]"
+  data-variant-id="{{ variant.id }}"
+  data-cart-quantity="{{ cart_qty }}"
+>
+  <td class="variant-item__details mobile-contents">
+    <div class="variant-item__details-info mobile-contents flex items-stretch gap-3">
+      {%- if show_image -%}
+        <div class="variant-item__media shrink-0">
+          {%- render 'responsive-image',
+            mode: 'liquid',
+            image: image,
+            sizes: '(min-width: 768px) 70px, 50px',
+            widths: '50, 100, 120, 240, 360',
+            class: 'border-style'
+          -%}
+        </div>
+      {%- endif -%}
+      <div class="variant-item__info flex flex-col justify-center gap-1 w-full min-w-0">
+        <span class="variant-item__title">{{ label | escape }}</span>
+        {%- if show_sku and sku != blank -%}
+          <span class="variant-item__sku color-subtext text-body-sm">{{ sku | escape }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </td>
+  <td class="variant-item__quantity">
+    <div class="variant-item__quantity-inner flex items-center gap-1">
+      {%- if variant.available -%}
+        {%- render 'quantity-selector',
+          section: section,
+          product: product,
+          variant: variant,
+          in_cart_quantity: cart_qty,
+          line_index: variant.id,
+          min: 0,
+          class: 'quick-order-list__quantity',
+          context: 'quick-order-list'
+        -%}
+      {%- else -%}
+        <span class="badge badge--sold-out shrink-0">{{ 'products.product.sold_out' | t }}</span>
+      {%- endif -%}
+      {% render 'product-card-volume-popover', section: section, product: product, variant: variant, show_toggle_text: false %}
+      <button
+        type="button"
+        class="quick-order-list__remove button-unstyled btn inline-flex items-center justify-center color-subtext cursor-pointer{% if cart_qty == 0 %} is-hidden{% endif %}"
+        aria-label="{{ 'accessibility.remove_item' | t: title: label | escape }}"
+        on:click="/onRemoveVariant/{{ variant.id }}"
+        style="--loading-size: 1.6rem;"
+      >
+        <span class="visually-hidden">{{ 'actions.remove' | t }}</span>
+        {%- render 'icon', icon: 'close', size: 'small' -%}
+        {%- render 'loading-spinner', class: 'hidden' -%}
+      </button>
+    </div>
+  </td>
+  <td class="variant-item__price text-left md:text-right">
+    <div class="variant-item__price-inner">
+      {%- liquid
+        if settings.show_currency_code
+          assign variant_price = display_unit_price | money_with_currency
+          assign variant_compare_at_price = variant.compare_at_price | money_with_currency
+        else
+          assign variant_price = display_unit_price | money
+          assign variant_compare_at_price = variant.compare_at_price | money
+        endif
+      -%}
+      {%- if variant.compare_at_price > display_unit_price -%}
+        <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
+        <span class="price price--sale">
+          {{- 'content.price_each' | t: price: variant_price -}}
+        </span>
+        <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
+        <s class="compare-at-price">{{- variant_compare_at_price -}}</s>
+      {%- else -%}
+        <span class="price">
+          {{- 'content.price_each' | t: price: variant_price -}}
+        </span>
+      {%- endif -%}
+    </div>
+  </td>
+  <td class="variant-item__line-total text-right">
+    <span class="variant-item__line-price">{{ line_total | money }}</span>
+  </td>
+</tr>

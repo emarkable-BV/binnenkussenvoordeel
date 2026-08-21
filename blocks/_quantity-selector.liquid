@@ -1,0 +1,71 @@
+{% liquid
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+  assign cq = cart | item_count_for_variant: variant.id
+%}
+<div
+  id="QuantitySelectorWrapper-{{ section.id }}"
+  {% unless product.quantity_price_breaks_configured? %}class="quantity-selector"{% endunless %}
+>
+{%- if product.quantity_price_breaks_configured? -%}
+  <div class="product-buy-volume-stack flex flex-col gap-4" {{ block.shopify_attributes }}>
+    <div class="product-buy-volume-stack__row flex flex-col gap-3">
+      <div
+        class="quantity-rules-heading-row flex flex-wrap items-center gap-1"
+        style="--loading-size: 1.6rem;"
+      >
+        <span class="h6 m-0">{{ 'content.quantity' | t }}</span>
+        {%- render 'loading-spinner', size: 'small', class: 'relative' -%}
+        <variant-cart-qty
+          id="QuantityRulesCart-{{ section.id }}"
+          class="quantity__rules-cart relative inline-flex items-center{% if cq == 0 %} hidden{% endif %}"
+          data-section-id="{{ section.id }}"
+          data-variant-id="{{ variant.id }}"
+        >
+          <span ref="cartLabel" class="quantity-cart">({{ 'content.quantity_in_cart_html' | t: quantity: cq }})</span>
+        </variant-cart-qty>
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-wrap items-center gap-2">
+          {% render 'quantity-selector',
+            section: section,
+            product: product,
+            variant: variant,
+            line_index: 'pdp',
+            starting_quantity: variant.quantity_rule.min,
+            data_cart_quantity: cq,
+            context: 'product'
+          %}
+          <price-per-item
+            class="price-per-item flex flex-wrap items-center gap-2 text-body-sm"
+            id="PricePerItem-{{ section.id }}"
+            data-section-id="{{ section.id }}"
+            data-variant-id="{{ variant.id }}"
+            data-variant-price-cents="{{ variant.price }}"
+            data-price-each-template="{{ 'content.price_each' | t: price: '@@PRICE@@' }}"
+          >
+            <span class="price-per-item__current"></span>
+          </price-per-item>
+        </div>
+        {% render 'product-quantity-rules', product: product, variant: variant, section: section %}
+      </div>
+    </div>
+    {% render 'product-volume-pricing', product: product, variant: variant, section: section, is_collapsible: true %}
+  </div>
+{%- else -%}
+  {% render 'quantity-selector',
+    section: section,
+    product: product,
+    variant: variant,
+    block: block,
+    starting_quantity: variant.quantity_rule.min,
+    data_cart_quantity: cq
+  %}
+{%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "t:names.quantity",
+  "tag": null
+}
+{% endschema %}

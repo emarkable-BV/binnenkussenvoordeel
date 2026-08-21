@@ -1,0 +1,43 @@
+{%- comment -%}
+  Intended for blocks and sections that provide values for all the referenced settings.
+  Accepts:
+     settings: {block.settings || section.settings}
+{%- endcomment -%}
+
+{%- capture size_style -%}
+  {%- if settings.width != blank -%}
+    {%- if settings.width == 'custom' and settings.custom_width != blank -%}
+      --size-style-width: {{ settings.custom_width }}%;
+    {%- elsif settings.width == 'fill' -%}
+      --size-style-width: 100%;
+    {%- elsif settings.width != 'custom' -%}
+      --size-style-width: {{ settings.width }};
+    {%- endif -%}
+  {%- endif -%}
+  
+  {%- if settings.width_mobile != blank -%}
+    {%- if settings.width_mobile == 'custom' and settings.custom_width_mobile != blank -%}
+      {%- if swipe_on_mobile == true and type == 'grid' -%}
+        --size-style-width-mobile: calc({{ settings.custom_width_mobile }}% + var(--page-padding) * 2);
+      {%- else -%}
+        --size-style-width-mobile: {{ settings.custom_width_mobile }}%;
+        --size-style-width-mobile-min: {{ settings.custom_width_mobile }}%;
+      {%- endif -%}
+    {%- elsif settings.width_mobile == 'fill' -%}
+      {%- if swipe_on_mobile == true and type == 'grid' -%}
+        --size-style-width-mobile: calc(100% + var(--page-padding) * 2);
+      {%- else -%}
+        --size-style-width-mobile: 100%;
+        --size-style-width-mobile-min: 5rem;
+      {%- endif -%}
+    {%- elsif settings.width_mobile == 'fit-content' -%}
+      --size-style-width-mobile: {{ settings.width_mobile }};
+      --size-style-width-mobile-min: {{ settings.width_mobile }};
+    {%- endif -%}
+  {%- endif -%}
+  
+  {%- if settings.height == 'fill' -%}
+    --size-style-height: 100%;
+  {%- endif -%}
+{%- endcapture -%}
+{{- size_style | strip | strip_newlines -}}

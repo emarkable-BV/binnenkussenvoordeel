@@ -1,0 +1,242 @@
+{% doc %}
+  Renders a responsive image with two modes:
+  - mode="js": sizes/srcset are hydrated by the responsive-image web component.
+  - mode="liquid": sizes/srcset are generated server-side via image_tag.
+
+  Supports optional wrapper div.media and optional mobile source.
+
+  @param {image} image - Desktop image object
+  @param {image} [image_mobile] - Optional mobile image object
+  @param {string} [image_ratio] - Aspect ratio for desktop (or 'adapt')
+  @param {string} [image_ratio_mobile] - Aspect ratio for mobile (or 'adapt'). Default inherit from image_ratio
+  @param {string} [class] - Extra classes applied to wrapper (with_wrapper) or to img when with_wrapper=false
+  @param {string} [img_class] - Extra classes applied to img
+  @param {string} [media_width_desktop] - Max width at >=768px used in default sizes
+  @param {string} [media_width_mobile] - Max width below 768px used in default sizes
+  @param {string} [loading] - Loading attribute
+  @param {string} [mode] - Rendering mode (js | liquid)
+  @param {string} [widths] - Comma-separated widths for srcset (desktop / default img)
+  @param {string} [widths_mobile] - Comma-separated widths for mobile source (max ~1280w recommended)
+  @param {string} [sizes] - sizes attribute when mode='liquid'
+  @param {number} [sizes_multiplier] - Multiplier for computed sizes when mode='js'
+  @param {number} [sizes_target_dpr] - Target DPR for sizes computation (mode='js')
+  @param {number} [sizes_safety] - Safety factor for sizes computation (mode='js')
+  @param {string} [sizes_unit] - 'vw' to emit sizes in vw (mode='js'), otherwise px
+  @param {string} [default_sizes] - Fallback sizes string for JS mode (e.g. "(min-width: 768px) 50vw, 100vw")
+  @param {string} [default_alt] - Fallback alt if the given image has no alt
+  @param {boolean} [with_wrapper] - Wrap output in div.media when true
+  @param {string} [ref] - Ref attribute for querying element
+  @param {string} [fetchpriority] - fetchpriority attribute passed to image_tag (liquid mode)
+  @param {string} [svg_placeholder] - Default: 'image'
+  @param {boolean} [use_zoom] - Whether to allow zoom when image in view. Default: true
+  @param {boolean} [use_hover] - Whether to allow hover to zoom image. Default: true
+
+  @example
+  {% render 'responsive-image', mode: 'js', image: product.featured_media, sizes_unit: 'vw' %}
+  @example
+  {% render 'responsive-image', mode: 'liquid', image: product.featured_media, sizes: '(min-width: 768px) 50vw, 100vw' %}
+  @example
+  {% render 'responsive-image', mode: 'js', image: product.featured_media, image_mobile: product.featured_media, with_wrapper: false, sizes_target_dpr: 2, sizes_safety: 1.1 %}
+{% enddoc %}
+
+{% liquid
+  assign mode = mode | default: 'js'
+  if with_wrapper == null
+    assign with_wrapper = true
+  endif
+  assign image_ratio = image_ratio | default: 'adapt'
+  assign image_ratio_mobile = image_ratio_mobile | default: image_ratio
+  assign desktop_image = image
+
+  if image != blank
+    if image_ratio == 'adapt'
+      assign image_ratio = image.aspect_ratio
+    endif
+
+    if image_mobile != blank
+      if image_ratio_mobile == 'adapt'
+        assign image_ratio_mobile = image_mobile.aspect_ratio
+      endif
+    else
+      if image_ratio_mobile == 'adapt'
+        assign image_ratio_mobile = image_ratio
+      endif
+    endif
+  elsif image_mobile != blank
+    assign desktop_image = image_mobile
+    if image_ratio == 'adapt'
+      assign image_ratio = image_mobile.aspect_ratio
+    endif
+    if image_ratio_mobile == 'adapt'
+      assign image_ratio_mobile = image_mobile.aspect_ratio
+    endif
+  else
+    if image_ratio == 'adapt'
+      assign image_ratio = 1
+    endif
+    if image_ratio_mobile == 'adapt'
+      assign image_ratio_mobile = 1
+    endif
+  endif
+
+  assign desktop_image_alt = desktop_image.alt | default: default_alt | escape
+  assign svg_placeholder = svg_placeholder | default: 'image'
+
+  assign use_hover = use_hover | default: true, allow_false: true
+  assign use_zoom = use_zoom | default: true, allow_false: true
+
+  assign zoom_class = ''
+  if use_zoom and settings.animations_enabled
+    assign zoom_class = ' image-zoom-reveal'
+  endif
+%}
+
+{% capture style %}
+  --ratio: {{ image_ratio }};
+  --ratio-mobile: {{ image_ratio_mobile }};
+{% endcapture %}
+
+{% liquid
+  assign media_width_desktop = media_width_desktop | default: '100vw'
+  assign media_width_mobile = media_width_mobile | default: '100vw'
+
+  assign default_sizes = '(min-width: 768px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
+  assign sizes = sizes | default: default_sizes
+
+  assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  assign widths_mobile = widths_mobile | default: '360, 480, 640, 768, 1024'
+  if desktop_image != blank
+    assign widths = widths | append: ',' | append: desktop_image.width
+  endif
+  if image_mobile != blank
+    assign widths_mobile = widths_mobile | append: ',' | append: image_mobile.width
+  endif
+
+  assign loading = loading | default: 'lazy'
+
+  assign img_class = img_class | default: ''
+  assign img_class = img_class | append: ' media__image'
+  if class != blank and with_wrapper == false
+    assign img_class = img_class | append: ' ' | append: class
+  endif
+  if use_hover
+    assign img_class = img_class | append: ' media-hover__element'
+  endif
+%}
+
+{% assign width_values = widths | split: ',' %}
+{% assign width_values_mobile = widths_mobile | split: ',' %}
+
+{% capture desktop_srcset %}
+  {%- for w in width_values -%}
+    {%- assign w_int = w | strip -%}
+    {{ desktop_image | image_url: width: w_int }} {{ w_int }}w{%- unless forloop.last -%}, {%- endunless -%}
+  {%- endfor -%}
+{% endcapture %}
+
+{% capture mobile_srcset %}
+  {%- if image_mobile != blank -%}
+    {%- for w in width_values_mobile -%}
+      {%- assign w_int = w | strip -%}
+      {{ image_mobile | image_url: width: w_int }} {{ w_int }}w{%- unless forloop.last -%}, {%- endunless -%}
+    {%- endfor -%}
+  {%- endif -%}
+{% endcapture %}
+
+{%- capture markup -%}
+  {%- if desktop_image != blank or image_mobile != blank -%}
+    {%- if mode == 'js' -%}
+      {%- capture img_for_js_mode -%}
+        <img
+          class="{{ img_class }} no-js-hidden"
+          alt="{{ desktop_image_alt }}"
+          width="{{ desktop_image.width }}"
+          height="{{ desktop_image.height }}"
+          loading="{{ loading }}"
+          fetchpriority="{{ fetchpriority }}"
+          is="responsive-image"
+          data-mode="js"
+          {% if default_sizes %}data-default-sizes="{{ default_sizes }}"{% endif %}
+          data-srcset="{{ desktop_srcset | strip | strip_newlines }}"
+          {% if sizes_multiplier %}data-sizes-mult="{{ sizes_multiplier }}"{% endif %}
+          {% if sizes_unit %}data-sizes-unit="{{ sizes_unit }}"{% endif %}
+          {% if sizes_target_dpr %}data-target-dpr="{{ sizes_target_dpr }}"{% endif %}
+          {% if sizes_safety %}data-sizes-safety="{{ sizes_safety }}"{% endif %}
+          sizes=""
+          {% if ref != blank %}
+            ref="{{ ref }}"
+          {% endif %}
+        >
+        {% comment %} <noscript>
+          {{ desktop_image | image_url: width: 1920 | image_tag:
+            sizes: sizes,
+            widths: widths,
+            alt: desktop_image_alt,
+            class: img_class,
+            is: 'responsive-image',
+            data-mode: 'liquid',
+            loading: loading,
+            fetchpriority: fetchpriority,
+            ref: ref
+          }}
+        </noscript> {% endcomment %}
+      {%- endcapture -%}
+      {%- if image_mobile != blank -%}
+        <picture class="media{{ zoom_class }}{% if image == blank %} md:hidden{% endif %}{% if class != blank %} {{ class }}{% endif %}" style="{{ style | strip | strip_newlines }}">
+          <source
+            media="(max-width: 767px)"
+            data-srcset="{{ mobile_srcset | strip | strip_newlines }}"
+            sizes=""
+          >
+          {{ img_for_js_mode }}
+        </picture>
+      {%- else -%}
+        {%- if with_wrapper -%}
+          <div class="media{{ zoom_class }}{% if image == blank %} md:hidden{% endif %}{% if class != blank %} {{ class }}{% endif %}" style="{{ style | strip | strip_newlines }}">
+            {{ img_for_js_mode }}
+          </div>
+        {%- else -%}
+          {{ img_for_js_mode }}
+        {%- endif -%}
+      {%- endif -%}
+    {%- elsif mode == 'liquid' -%}
+      {%- capture img_for_liquid_mode -%}
+        {{ desktop_image | image_url: width: desktop_image.width | image_tag:
+          width: desktop_image.width,
+          height: desktop_image.height,
+          sizes: sizes,
+          widths: widths,
+          alt: desktop_image_alt,
+          class: img_class,
+          is: 'responsive-image',
+          data-mode: 'liquid',
+          loading: loading,
+          fetchpriority: fetchpriority,
+          ref: ref
+        }}
+      {%- endcapture -%}
+      {%- if image_mobile != blank -%}
+        <picture class="media{{ zoom_class }}{% if image == blank %} md:hidden{% endif %}{% if class != blank %} {{ class }}{% endif %}" style="{{ style | strip | strip_newlines }}">
+          <source
+            media="(max-width: 767px)"
+            srcset="{{ mobile_srcset | strip | strip_newlines }}"
+            sizes="{{ sizes }}"
+          >
+          {{ img_for_liquid_mode }}
+        </picture>
+      {%- else -%}
+        {%- if with_wrapper -%}
+          <div class="media{{ zoom_class }}{% if image == blank %} md:hidden{% endif %}{% if class != blank %} {{ class }}{% endif %}" style="{{ style | strip | strip_newlines }}">
+            {{ img_for_liquid_mode }}
+          </div>
+        {%- else -%}
+          {{ img_for_liquid_mode }}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if image == blank -%}
+    <div class="media relative{% if image_mobile != blank %} hidden md:block{% endif %}{% if class != blank %} {{ class }}{% endif %}" style="{{ style | strip | strip_newlines }}">{{ svg_placeholder | placeholder_svg_tag: 'placeholder media__image' }}</div>
+  {%- endif -%}
+{%- endcapture -%}
+{{ markup | strip | strip_newlines }}

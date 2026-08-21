@@ -1,0 +1,179 @@
+{% liquid
+  assign image = block.settings.image
+  assign image_mobile = block.settings.image_mobile
+  assign toggle_overlay = block.settings.toggle_overlay
+  assign overlay_color = block.settings.overlay_color
+  assign aspect_ratio = image.aspect_ratio | default: '16/9'
+  assign aspect_ratio_mobile = image_mobile.aspect_ratio | default: aspect_ratio
+
+  assign loading = 'lazy'
+  if section.index <= 3
+    assign loading = 'eager'
+  endif
+
+  assign fetchpriority = 'low'
+  if section.index == 1
+    assign fetchpriority = 'high'
+  endif
+%}
+
+{%- capture sizes -%}{% if section.settings.container == 'full' %}100vw{% else %}min({{ settings.page_width }}px, 100vw){% endif %}{%- endcapture -%}
+
+<parallax-component
+  class="hero-banner-media block w-full h-full overflow-hidden"
+  {% if block.settings.enable_parallax %}
+    data-parallax="{{ block.settings.parallax_intensity }}" data-parallax-direction="{{ block.settings.parallax_direction }}"
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.type == 'image' %}
+    {%- if settings.animations_enabled -%}
+      <motion-component
+        data-motion="zoom-out"
+        class="media block w-full h-full"
+        style="--ratio: {{ aspect_ratio }};--ratio-mobile: {{ aspect_ratio_mobile }};"
+      >
+    {%- else -%}
+      <div
+        class="media block w-full h-full"
+        style="--ratio: {{ aspect_ratio }};--ratio-mobile: {{ aspect_ratio_mobile }};"
+      >
+    {%- endif -%}
+    {%- if image != blank -%}
+      <picture class="media-wrapper block w-full h-full relative overflow-hidden">
+        {%- if image_mobile -%}
+          <source
+            media="(max-width: 767px)"
+            srcset="{{ image_mobile | image_url: width: '400x' }} 400w, {{ image_mobile | image_url: width: '600x' }} 600w, {{ image_mobile | image_url: width: '800x' }} 800w, {{ image_mobile | image_url: width: '1000x' }} 1000w"
+            width="{{ image_mobile.width }}"
+            height="{{ image_mobile.height }}"
+          >
+        {%- endif -%}
+        {% assign alt = image.alt | default: shop.name | escape %}
+        {{-
+          image
+          | image_url: width: image.width
+          | image_tag:
+            loading: loading,
+            fetchpriority: fetchpriority,
+            sizes: sizes,
+            widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200',
+            alt: alt
+        -}}
+      </picture>
+    {%- else -%}
+      <div class="media-wrapper h-full overflow-hidden">
+        {{- 'lifestyle-1' | placeholder_svg_tag: 'placeholder w-full h-full' -}}
+      </div>
+    {%- endif -%}
+    {%- if settings.animations_enabled -%}
+      </motion-component>
+    {%- else -%}
+      </div>
+    {%- endif -%}
+  {% else %}
+    {% render 'video',
+      video: block.settings.video,
+      video_loop: true,
+      video_autoplay: true,
+      video_ratio: 'auto',
+      disable_controls: true,
+      section_id: section.id
+    %}
+  {% endif %}
+  {%- if toggle_overlay -%}
+    {% render 'overlay', overlay_color: overlay_color %}
+  {%- endif -%}
+</parallax-component>
+{% schema %}
+{
+  "name": "t:content.media",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "t:settings.enable_parallax",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "parallax_direction",
+      "label": "t:settings.parallax_direction",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.horizontal"
+        },
+        {
+          "value": "zoom",
+          "label": "t:options.zoom"
+        }
+      ],
+      "default": "vertical",
+      "visible_if": "{{ block.settings.enable_parallax }}"
+    },
+    {
+      "type": "range",
+      "id": "parallax_intensity",
+      "label": "t:settings.parallax_intensity",
+      "min": 0.3,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.5,
+      "visible_if": "{{ block.settings.enable_parallax }}"
+    },
+    {
+      "type": "select",
+      "id": "type",
+      "label": "t:settings.type",
+      "options": [
+        { "value": "image", "label": "t:options.image" },
+        { "value": "video", "label": "t:options.video" }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "visible_if": "{{ block.settings.type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile",
+      "visible_if": "{{ block.settings.type == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "visible_if": "{{ block.settings.type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle_overlay",
+      "label": "t:settings.media_overlay",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:settings.overlay_color",
+      "alpha": true,
+      "default": "#00000033",
+      "visible_if": "{{ block.settings.toggle_overlay }}"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

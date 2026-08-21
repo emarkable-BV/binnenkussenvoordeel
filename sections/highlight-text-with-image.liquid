@@ -1,0 +1,167 @@
+<script
+  src="{{ 'highlight-text-with-image.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{%- liquid
+  assign color_scheme = section.settings.color_scheme
+  assign text_alignment = section.settings.text_alignment
+  assign items_alignment = section.settings.text_alignment | replace: 'left', 'start' | replace: 'right', 'end'
+-%}
+<div
+  id="section-{{ section.id }}"
+  class="highlight-text-with-image spacing-style color-{{ color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="section__container page-width">
+    <div class="section__wrapper flex flex-col items-{{ items_alignment }} text-{{ text_alignment }}">
+      {% content_for 'block', type: '_simple-text', id: 'subheading' %}
+      {% content_for 'block', type: '_highlight-text-main', id: 'main' %}
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.highlight_text_with_image",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/IiVLDrS)"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "center", "label": "t:options.center" },
+        { "value": "right", "label": "t:options.right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:options.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:options.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.highlight_text_with_image",
+      "category": "t:categories.basic",
+      "blocks": [
+        {
+          "type": "_simple-text",
+          "id": "subheading",
+          "name": "t:names.subheading",
+          "static": true,
+          "settings": {
+            "text": "<p>Subheading</p>",
+            "type_preset": "text-subheading",
+            "padding-block-end": 20
+          }
+        },
+        {
+          "type": "_highlight-text-main",
+          "id": "main",
+          "static": true,
+          "name": "t:names.highlight_main_text",
+          "blocks": [
+            {
+              "type": "_highlight-text-image"
+            },
+            {
+              "type": "_highlight-text-image"
+            },
+            {
+              "type": "_highlight-text-image"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

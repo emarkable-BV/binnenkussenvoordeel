@@ -1,0 +1,418 @@
+{% liquid
+  capture section_header
+    content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
+  endcapture
+
+  capture children
+    content_for 'blocks'
+  endcapture
+
+  assign items = children | strip | split: '<!-- @productHighlightPoint/split -->'
+
+  capture button
+    content_for 'block', type: '_button', id: 'button'
+  endcapture
+
+  assign header_has_image = false
+  if section_header contains '<!-- START block: image -->'
+    assign header_has_image = true
+  endif
+%}
+
+<div
+  class="product-highlight-points spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width">
+    <product-highlight-points class="product-highlight-points__inner block">
+      <div
+        class="product-highlight-points__header sticky-element sticky-element--adapt"
+        style="--sticky-element-top: 3rem;"
+      >
+        {{ section_header }}
+      </div>
+      <div
+        class="product-highlight-points__wrapper swipe-mobile swipe-mobile--1-cols"
+        style="
+          {% render 'layout-panel-style', type: 'grid', columns_mobile: '1', columns_xxl: '2', v_alignment: 'stretch' %}
+          {% render 'gap-style', column_gap_mobile: 8, row_gap_mobile: 80, column_gap: 30, row_gap: 140 %}
+        "
+      >
+        <div
+          class="product-highlight-points__inner layout-panel-grid gap-style swipe__inner"
+          ref="items[]"
+          data-begin="{% if header_has_image %}-40%{% else %}-10%{% endif %}"
+          data-end="5%"
+          data-section-id="{{ section.id }}"
+        >
+          {% for item in items %}
+            <div
+              class="product-highlight-points__column layout-panel-grid"
+              style="{% render 'layout-panel-style', type: 'grid', columns_mobile: '1', columns_md: '6', columns_lg: '6', columns_xl: '6', columns_xxl: '6' %}"
+            >
+              {{ item }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </product-highlight-points>
+    {% if button != blank %}
+      <div
+        class="product-highlight-points__footer spacing-style flex justify-center"
+        style="{% render 'clamp-calculate-style', property_name: 'margin-block-start', min_value: 24, max_value: 93 %}"
+      >
+        {{ button }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.product_highlight_points",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "blocks": [
+    {
+      "type": "_product-highlight-point"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/PRtCeDg)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_highlight_points",
+      "category": "t:categories.products",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "device": "desktop",
+        "padding-block-start": 100,
+        "padding-block-end": 100,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48
+      },
+      "blocks": {
+        "product_highlight_point_GpmjtW": {
+          "type": "_product-highlight-point",
+          "name": "t:names.product_highlight_point",
+          "settings": {
+            "icon": "tag",
+            "icon_size": "custom-size",
+            "icon_width": 38,
+            "icon_width_mobile": 38,
+            "heading": "Talk about your brand",
+            "heading_preset": "h5",
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_color": "subtext",
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 0,
+            "border_opacity": 10,
+            "border_radius": 20
+          },
+          "blocks": {}
+        },
+        "product_highlight_point_bVNywV": {
+          "type": "_product-highlight-point",
+          "name": "t:names.product_highlight_point",
+          "settings": {
+            "icon": "tag",
+            "icon_size": "custom-size",
+            "icon_width": 38,
+            "icon_width_mobile": 38,
+            "heading": "Talk about your brand",
+            "heading_preset": "h5",
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_color": "subtext",
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 0,
+            "border_opacity": 10,
+            "border_radius": 20
+          },
+          "blocks": {}
+        },
+        "product_highlight_point_KCUGL4": {
+          "type": "_product-highlight-point",
+          "name": "t:names.product_highlight_point",
+          "settings": {
+            "icon": "tag",
+            "icon_size": "custom-size",
+            "icon_width": 38,
+            "icon_width_mobile": 38,
+            "heading": "Talk about your brand",
+            "heading_preset": "h5",
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_color": "subtext",
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 0,
+            "border_opacity": 10,
+            "border_radius": 20
+          },
+          "blocks": {}
+        },
+        "product_highlight_point_VzMyGL": {
+          "type": "_product-highlight-point",
+          "name": "t:names.product_highlight_point",
+          "settings": {
+            "icon": "tag",
+            "icon_size": "custom-size",
+            "icon_width": 38,
+            "icon_width_mobile": 38,
+            "heading": "Talk about your brand",
+            "heading_preset": "h5",
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_color": "subtext",
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 0,
+            "border_opacity": 10,
+            "border_radius": 20
+          },
+          "blocks": {}
+        },
+        "product_highlight_point_W4xFWx": {
+          "type": "_product-highlight-point",
+          "name": "t:names.product_highlight_point",
+          "settings": {
+            "icon": "tag",
+            "icon_size": "custom-size",
+            "icon_width": 38,
+            "icon_width_mobile": 38,
+            "heading": "Talk about your brand",
+            "heading_preset": "h5",
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_color": "subtext",
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 0,
+            "border_opacity": 10,
+            "border_radius": 20
+          },
+          "blocks": {}
+        },
+        "product_highlight_point_YaeeTV": {
+          "type": "_product-highlight-point",
+          "name": "t:names.product_highlight_point",
+          "settings": {
+            "icon": "tag",
+            "icon_size": "custom-size",
+            "icon_width": 38,
+            "icon_width_mobile": 38,
+            "heading": "Talk about your brand",
+            "heading_preset": "h5",
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_color": "subtext",
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 0,
+            "border_opacity": 10,
+            "border_radius": 20
+          },
+          "blocks": {}
+        },
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "center",
+            "device": "mobile",
+            "padding-block-end": 0,
+            "padding-block-end-mobile": 24
+          },
+          "blocks": {
+            "text_kGybcT": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Add a tagline</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_MtybE4": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Talking about your brand</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": 53,
+                "font_size_mobile": 32,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 75,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 50,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "image_GEAtnd": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "link": "",
+                "image_ratio": "adapt",
+                "image_ratio_mobile": "adapt",
+                "width": "custom",
+                "custom_width": 29,
+                "width_mobile": "custom",
+                "custom_width_mobile": 70,
+                "rounded": true,
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["text_kGybcT", "text_MtybE4", "image_GEAtnd"]
+        },
+        "button": {
+          "type": "_button",
+          "static": true,
+          "settings": {
+            "label": "Button label",
+            "link": "shopify://collections/all",
+            "style": "primary",
+            "size": "large",
+            "icon": "caret-right",
+            "icon_only": false,
+            "icon_style": "solid",
+            "mobile_full_width": true
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "product_highlight_point_GpmjtW",
+        "product_highlight_point_bVNywV",
+        "product_highlight_point_KCUGL4",
+        "product_highlight_point_VzMyGL",
+        "product_highlight_point_W4xFWx",
+        "product_highlight_point_YaeeTV"
+      ]
+    }
+  ]
+}
+{% endschema %}

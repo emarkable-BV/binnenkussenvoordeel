@@ -1,0 +1,78 @@
+{%- doc -%}
+  Display tooltip for quantity rules & volume pricing
+
+  @param {object} product - Product with quantity rules or volume pricing (`quantity_price_breaks_configured?`).
+  @param {object} [variant] - Variant for rules and pricing; defaults to `selected_or_first_available_variant`.
+  @param {object} section - Parent section; used in tooltip ID and forwarded to child snippets.
+  @param {object} [block] - Optional block; appended to tooltip ID when rendered inside a theme block.
+  @param {boolean} [show_toggle_text] - Show label text beside the info icon (default: `true`); icon-only with `aria-label` when `false`.
+  @param {boolean} [variant_sync] - When true, adds data-variant-sync for DOM updates on variant change. Default false.
+{%- enddoc -%}
+{%- if product != blank and product.quantity_price_breaks_configured? -%}
+  {%- liquid
+    assign variant_sync = variant_sync | default: false, allow_false: true
+    assign selected_variant = variant | default: product.selected_or_first_available_variant
+    assign has_qty_rules = false
+    if selected_variant.quantity_rule.increment > 1 or selected_variant.quantity_rule.min > 1 or selected_variant.quantity_rule.max != null
+      assign has_qty_rules = true
+    endif
+    assign has_vol_pricing = false
+    if selected_variant.quantity_price_breaks.size > 0
+      assign has_vol_pricing = true
+    endif
+  -%}
+  {%- if has_qty_rules or has_vol_pricing -%}
+    <div
+      class="product-card__quantity-volume flex items-center gap-1"
+      {% if variant_sync %}
+        data-variant-sync="volume-pricing"
+      {% endif %}
+    >
+      {%- liquid
+        assign show_toggle_text = show_toggle_text | default: true, allow_false: true
+        assign first_color_scheme = settings.color_schemes | first
+      -%}
+      {%- capture tooltip_id -%}VolumePopover-{{ selected_variant.id }}-{{ section.id }}{%- if block.id != blank -%}-{{ block.id }}{%- endif -%}{%- endcapture -%}
+      <button
+        type="button"
+        class="product-card__quantity-volume-toggle button-unstyled flex items-center justify-center cursor-help color-subtext gap-1"
+        data-tooltip-html="#{{ tooltip_id }}"
+        data-tooltip-class="tooltip--color-scheme color-{{ first_color_scheme }}"
+        data-tooltip-mobile-sheet="true"
+        data-tooltip-interactive="true"
+        {% unless show_toggle_text %}
+          aria-label="{{ 'content.volumn_pricing_available' | t }}"
+        {% endunless %}
+      >
+        {% render 'icon', icon: 'info', class: 'shrink-0' %}
+        {%- if show_toggle_text -%}
+          <span>{{ 'content.volumn_pricing_available' | t }}</span>
+        {%- endif -%}
+      </button>
+      <template id="{{ tooltip_id }}">
+        <div class="product-card__quantity-volume-tooltip v-scrollable flex flex-col gap-4">
+          <div class="tooltip__header flex flex-row items-start justify-between md:hidden">
+            <div class="tooltip__titles flex min-w-0 flex-1 flex-col gap-1">
+              <p class="h5 m-0">{{- product.title -}}</p>
+              {%- unless product.has_only_default_variant -%}
+                <p class="color-subtext m-0 text-body-sm">{{- selected_variant.title -}}</p>
+              {%- endunless -%}
+            </div>
+            <button
+              type="button"
+              class="tooltip__close button-unstyled dialog__close shrink-0"
+              data-tooltip-close
+              aria-label="{{ 'accessibility.close_dialog' | t }}"
+            >
+              {% render 'icon', icon: 'close', size: 'large' %}
+            </button>
+          </div>
+          <div class="product-card__quantity-volume-tooltip-body flex flex-col gap-3 text-body-sm">
+            {% render 'product-quantity-rules', product: product, variant: selected_variant, section: section %}
+            {% render 'product-volume-pricing', product: product, variant: selected_variant, section: section %}
+          </div>
+        </div>
+      </template>
+    </div>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,611 @@
+{%- liquid
+  assign style = block.settings.style
+  assign direction = block.settings.direction
+  assign text_align = block.settings.text_align
+-%}
+{%- capture wrap_class -%}
+  {%- if direction == 'vertical' %}
+    flex-col text-{{ text_align }} {{ 'items-' | append: text_align | replace: 'left', 'start' | replace: 'right', 'end' }}
+  {%- else %}
+    text-left
+  {%- endif -%}
+  {%- if style == 'card' %} 
+    border-style
+    {%- if block.settings.border == 'solid' %} icon-box--shadow{%- endif -%}
+    {%- unless block.settings.inherit_color_scheme %} color-{{ block.settings.color_scheme }}{%- endunless -%}
+  {%- endif -%}
+  {%- if block.settings.link != blank -%}
+    {%- if direction == 'vertical' %} reversed-link{%- else %} icon-box--with-arrow{%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+{%- capture inline_style -%}
+  --content-gap: {{ block.settings.content_row_gap | divided_by: 10.0 }}rem;
+  --icon-spacing: {{ block.settings.icon_spacing | divided_by: 10.0 }}rem;
+  {% render 'border-style', settings: block.settings %}
+{%- endcapture -%}
+<div
+  class="icon-box icon-box--{{ direction }} icon-box--{{ style }} relative flex{{ wrap_class }}"
+  style="{{ inline_style | strip | strip_newlines }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.link != blank %}
+    <a
+      href="{{ block.settings.link }}"
+      class="absolute inset-0 focus-visible--absolute"
+      aria-label="{{ block.settings.heading | escape }}"
+    ></a>
+  {% endif -%}
+  <div class="icon-box__icon flex flex-col shrink-0">
+    {% render 'icon-or-image',
+      icon: block.settings.icon,
+      image_upload: block.settings.icon_image_upload,
+      icon_size: block.settings.icon_size,
+      width: block.settings.icon_width,
+      width_mobile: block.settings.icon_width_mobile,
+      class_name: ''
+    %}
+  </div>
+  <div class="icon-box__content flex flex-col relative">
+    {%- if block.settings.heading != blank -%}
+      <h3 class="{{ block.settings.heading_preset }}">
+        <span class="reversed-link__text">{{ block.settings.heading }}</span>
+      </h3>
+    {%- endif -%}
+    {% render 'text', text: block.settings.text, text_color: block.settings.text_color, preset: 'rte', width: '100%' %}
+  </div>
+  {%- if block.settings.link != blank and direction == 'horizontal' and block.settings.show_link_icon -%}
+    <div class="icon-box__action shrink-0 flex flex-col justify-center">
+      <div class="icon-box__arrow rounded right-0 pointer-events-none btn btn--extra-small btn--secondary btn--icon-only">
+        {% render 'icon', icon: 'caret-right' %}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+<!-- @iconBox/split -->
+{% schema %}
+{
+  "name": "t:names.icon_box",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:settings.direction",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "t:settings.text_align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ block.settings.direction == 'vertical' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.icon"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "caret-left",
+          "label": "t:options.caret_left"
+        },
+        {
+          "value": "caret-right",
+          "label": "t:options.caret_right"
+        },
+        {
+          "value": "caret-down",
+          "label": "t:options.caret_down"
+        },
+        {
+          "value": "arrow-up-left",
+          "label": "t:options.arrow_up_left"
+        },
+        {
+          "value": "arrow-up-left-down",
+          "label": "t:options.arrow_up_left_down"
+        },
+        {
+          "value": "close",
+          "label": "t:options.close"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        },
+        {
+          "value": "minus",
+          "label": "t:options.minus"
+        },
+        {
+          "value": "check",
+          "label": "t:options.check"
+        },
+        {
+          "value": "cart",
+          "label": "t:options.cart"
+        },
+        {
+          "value": "basket",
+          "label": "t:options.basket"
+        },
+        {
+          "value": "shopping-bag",
+          "label": "t:options.shopping_bag"
+        },
+        {
+          "value": "heart-beat",
+          "label": "t:options.heart_beat"
+        },
+        {
+          "value": "baby-carriage",
+          "label": "t:options.baby_carriage"
+        },
+        {
+          "value": "account",
+          "label": "t:options.account"
+        },
+        {
+          "value": "search",
+          "label": "t:options.search"
+        },
+        {
+          "value": "tag",
+          "label": "t:options.tag"
+        },
+        {
+          "value": "chat-teardrop",
+          "label": "t:options.chat_teardrop"
+        },
+        {
+          "value": "credit-card",
+          "label": "t:options.credit_card"
+        },
+        {
+          "value": "barcode",
+          "label": "t:options.barcode"
+        },
+        {
+          "value": "storefront",
+          "label": "t:options.storefront"
+        },
+        {
+          "value": "package",
+          "label": "t:options.package"
+        },
+        {
+          "value": "magic-wand",
+          "label": "t:options.magic_wand"
+        },
+        {
+          "value": "funnel",
+          "label": "t:options.funnel"
+        },
+        {
+          "value": "phone",
+          "label": "t:options.phone"
+        },
+        {
+          "value": "map-pin",
+          "label": "t:options.map_pin"
+        },
+        {
+          "value": "clock",
+          "label": "t:options.clock"
+        },
+        {
+          "value": "lightning",
+          "label": "t:options.lightning"
+        },
+        {
+          "value": "heart",
+          "label": "t:options.heart"
+        },
+        {
+          "value": "gift",
+          "label": "t:options.gift"
+        },
+        {
+          "value": "globe",
+          "label": "t:options.globe"
+        },
+        {
+          "value": "car-simple",
+          "label": "t:options.car_simple"
+        },
+        {
+          "value": "truck",
+          "label": "t:options.truck"
+        },
+        {
+          "value": "paper-plane",
+          "label": "t:options.paper_plane"
+        },
+        {
+          "value": "waves",
+          "label": "t:options.waves"
+        },
+        {
+          "value": "calendar-blank",
+          "label": "t:options.calendar_blank"
+        },
+        {
+          "value": "umbrella",
+          "label": "t:options.umbrella"
+        },
+        {
+          "value": "circle-half",
+          "label": "t:options.circle_half"
+        },
+        {
+          "value": "bell-ringing",
+          "label": "t:options.bell_ringing"
+        },
+        {
+          "value": "tiktok",
+          "label": "t:options.tiktok"
+        },
+        {
+          "value": "instagram",
+          "label": "t:options.instagram"
+        },
+        {
+          "value": "pinterest",
+          "label": "t:options.pinterest"
+        },
+        {
+          "value": "x",
+          "label": "t:options.x"
+        },
+        {
+          "value": "facebook",
+          "label": "t:options.facebook"
+        },
+        {
+          "value": "telegram",
+          "label": "t:options.telegram"
+        },
+        {
+          "value": "whatsapp",
+          "label": "t:options.whatsapp"
+        },
+        {
+          "value": "email",
+          "label": "t:options.email"
+        },
+        {
+          "value": "linkedin",
+          "label": "t:options.linkedin"
+        },
+        {
+          "value": "snapchat",
+          "label": "t:options.snapchat"
+        },
+        {
+          "value": "tumblr",
+          "label": "t:options.tumblr"
+        },
+        {
+          "value": "threads",
+          "label": "t:options.threads"
+        }
+      ],
+      "default": "tag"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_upload",
+      "label": "t:settings.image_icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_spacing",
+      "label": "t:settings.icon_spacing",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "t:settings.icon_size",
+      "options": [
+        {
+          "value": "extra-small",
+          "label": "t:options.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "extra-large",
+          "label": "t:options.extra_large"
+        },
+        {
+          "value": "custom-size",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "extra-large"
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "label": "t:settings.width",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.icon_size == 'custom-size' }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.icon_size == 'custom-size' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "t:settings.heading_preset",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h6"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        }
+      ],
+      "default": "subtext"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_link_icon",
+      "label": "t:settings.show_link_icon",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_row_gap",
+      "label": "t:settings.row_gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "standard",
+          "label": "t:options.standard"
+        },
+        {
+          "value": "card",
+          "label": "t:options.card"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true,
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2",
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 10,
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.icon_box_standard",
+      "category": "t:categories.basic",
+      "settings": {
+        "direction": "vertical",
+        "text_align": "center",
+        "icon": "magic-wand",
+        "icon_spacing": 16,
+        "icon_size": "custom-size",
+        "icon_width": 48,
+        "icon_width_mobile": 48,
+        "heading": "Talk about your brand",
+        "heading_preset": "h6",
+        "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+        "link": "",
+        "content_row_gap": 8,
+        "style": "standard",
+        "inherit_color_scheme": true,
+        "color_scheme": "",
+        "border": "solid",
+        "border_width": 1,
+        "border_opacity": 10,
+        "border_radius": 10
+      }
+    },
+    {
+      "name": "t:names.icon_box_card",
+      "category": "t:categories.basic",
+      "settings": {
+        "direction": "horizontal",
+        "text_align": "left",
+        "icon": "magic-wand",
+        "icon_spacing": 12,
+        "icon_size": "custom-size",
+        "icon_width": 32,
+        "icon_width_mobile": 32,
+        "heading": "Talk about your brand",
+        "heading_preset": "h6",
+        "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+        "link": "",
+        "content_row_gap": 8,
+        "style": "card",
+        "inherit_color_scheme": false,
+        "color_scheme": "",
+        "border": "solid",
+        "border_width": 1,
+        "border_opacity": 10,
+        "border_radius": 10
+      }
+    }
+  ]
+}
+{% endschema %}

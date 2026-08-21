@@ -1,0 +1,275 @@
+{% liquid
+  assign design = block.settings.design
+  assign product = block.settings.product
+%}
+{%- capture classes -%}
+  testimonial testimonial--{{ design }} flex items-start flex-nowrap flex-col{% if design == 'inline'%} md:flex-row{% endif %}
+  {% if block.settings.show_image %}
+    {% if block.settings.image_away_from_edge %} testimonial--image-away-edge{% endif %}
+    {% if design == 'inline' and block.settings.enable_image_stretch %} testimonial--image-stretch{% endif %}
+  {% else %}
+    testimonial--no-image
+  {% endif %}
+  {% unless block.settings.inherit_color_scheme %} border-style color-{{ block.settings.color_scheme }}{% else %} color-inherit{% endunless %}
+{%- endcapture -%}
+<div
+  class="{{ classes | strip | strip_newlines }}"
+  style="{% unless block.settings.inherit_color_scheme %}{% render 'border-style', settings: block.settings %}{% endunless %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.show_image -%}
+    <div
+      class="testimonial__media relative border-style media-mask-clip w-full"
+      style="--border-radius: {{ block.settings.image_border_radius }}px;"
+    >
+      {% render 'responsive-image',
+        mode: 'liquid',
+        image: block.settings.image,
+        image_mobile: block.settings.image_mobile,
+        image_ratio: block.settings.image_ratio,
+        image_ratio_mobile: block.settings.image_ratio_mobile,
+        default_alt: shop.name
+      %}
+    </div>
+  {%- endif -%}
+  <div class="testimonial__content reset-text-alignment flex flex-col flex-1">
+    {% content_for 'block', type: '_simple-text', id: 'static-testimonial-text', classes: 'testimonial__text' %}
+    {% content_for 'block', type: '_author-info', id: 'static-testimonial-info', classes: 'flex flex-col gap-y-1' %}
+    {% if product != blank %}
+      <div class="testimonial__product flex-1 flex flex-col justify-end">
+        <a href="{{ product.url }}" class="reversed-link flex items-center gap-x-3">
+          <div class="testimonial__product-media media-mask-clip">
+            {% render 'responsive-image',
+              image: product.featured_media,
+              image_ratio: '1',
+              media_width_desktop: '200px',
+              media_width_mobile: '200px',
+              widths: '80,160,200'
+            %}
+          </div>
+          <span class="testimonial__product-title reversed-link__text text-limit-1-line">
+            {{- product.title -}}
+          </span>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.testimonial",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "design",
+      "label": "t:settings.design",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "t:options.stacked"
+        },
+        {
+          "value": "inline",
+          "label": "t:options.inline"
+        }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:settings.show_image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile",
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt",
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "t:settings.aspect_ratio_mobile",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt",
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_away_from_edge",
+      "label": "t:settings.image_away_from_edge",
+      "default": true,
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image_stretch",
+      "label": "t:settings.enable_image_stretch",
+      "default": true,
+      "visible_if": "{{ block.settings.design == 'inline' and block.settings.show_image }}"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.testimonial",
+      "category": "t:categories.basic",
+      "settings": {
+        "image_away_from_edge": true,
+        "image_border_radius": 10,
+        "design": "stacked",
+        "border_radius": 20
+      },
+      "blocks": {
+        "static-testimonial-text": {
+          "type": "_simple-text",
+          "static": true,
+          "settings": {
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "type_preset": "paragraph",
+            "padding-block-end": 12,
+            "mobile-padding-scale": 100
+          }
+        },
+        "static-testimonial-info": {
+          "type": "_author-info",
+          "static": true,
+          "settings": {
+            "name": "<p>Author's name</p>",
+            "name_preset": "h6"
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

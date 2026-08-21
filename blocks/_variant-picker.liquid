@@ -1,0 +1,167 @@
+{% liquid
+  assign product_resource = closest.product
+  if request.visual_preview_mode and product_resource == blank
+    assign product_resource = collections.all.products.first
+  endif
+-%}
+
+{% render 'variant-main-picker', product_resource: product_resource %}
+{% schema %}
+{
+  "name": "t:names.variant_picker",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.resource_reference_product_variant_picker"
+    },
+    {
+      "type": "select",
+      "id": "variant_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "dropdowns",
+          "label": "t:options.dropdown"
+        },
+        {
+          "value": "buttons",
+          "label": "t:options.buttons"
+        }
+      ],
+      "default": "buttons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "t:settings.show_swatches",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_image",
+      "label": "t:settings.show_variant_image",
+      "default": false,
+      "visible_if": "{{ block.settings.show_swatches }}"
+    },
+    {
+      "type": "select",
+      "id": "swatch_shape",
+      "label": "t:settings.swatch_shape",
+      "options": [
+        {
+          "value": "circle",
+          "label": "t:options.circle"
+        },
+        {
+          "value": "square",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "square",
+      "visible_if": "{{ block.settings.show_swatches }}"
+    },
+    {
+      "type": "range",
+      "id": "swatch_width",
+      "label": "t:settings.swatch_width",
+      "min": 16,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 52,
+      "visible_if": "{{ block.settings.show_swatches }}"
+    },
+    {
+      "type": "range",
+      "id": "swatch_height",
+      "label": "t:settings.swatch_height",
+      "min": 16,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.show_swatches and block.settings.swatch_shape == 'square' }}"
+    },
+    {
+      "type": "range",
+      "id": "buttons_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.size_chart"
+    },
+    {
+      "type": "text",
+      "id": "size_chart_title",
+      "label": "t:settings.size_chart_title",
+      "info": "t:info.size_chart_title_info"
+    },
+    {
+      "type": "page",
+      "id": "size_chart_page",
+      "label": "t:settings.size_chart_page"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.size_chart_custom"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.variant_picker",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

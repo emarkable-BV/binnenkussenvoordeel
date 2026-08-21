@@ -1,0 +1,143 @@
+<div
+  class="location location--{{ block.settings.style }} flex gap-5 md:gap-6 mobile-column{% if block.settings.style == 'card' %} border-style color-{{ block.settings.color_scheme }}{% endif %}"
+  style="{%- render 'border-style', settings: block.settings -%}"
+  {{- block.shopify_attributes -}}
+>
+  <div class="location__media shrink-0">
+    {% content_for 'block', type: '_image-card-media', id: 'image' %}
+  </div>
+  <div class="location__inner flex flex-col justify-between gap-y-6">
+    <div class="location__texts flex flex-col">
+      {% content_for 'block', type: '_simple-text', id: 'heading' %}
+      {% content_for 'block', type: '_simple-text', id: 'text', classes: 'location__text' %}
+    </div>
+    {% content_for 'block', type: 'button', id: 'button' %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.locator",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "standard",
+          "label": "t:options.standard"
+        },
+        {
+          "value": "card",
+          "label": "t:options.card"
+        }
+      ],
+      "default": "card"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2",
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "t:settings.border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.locator",
+      "category": "t:categories.storytelling",
+      "blocks": [
+        {
+          "type": "_image-card-media",
+          "static": true,
+          "id": "image",
+          "settings": {
+            "border_radius": 10
+          }
+        },
+        {
+          "type": "_simple-text",
+          "id": "heading",
+          "name": "t:names.heading",
+          "static": true,
+          "settings": {
+            "text": "<p>Store name</p>",
+            "type_preset": "h3",
+            "padding-block-end": 16,
+            "mobile-padding-scale": 75
+          }
+        },
+        {
+          "type": "_simple-text",
+          "id": "text",
+          "static": true,
+          "settings": {
+            "text": "<p>shop@yourstore.com</p>",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "loose",
+            "text_color": "subtext"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

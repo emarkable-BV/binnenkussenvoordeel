@@ -1,0 +1,94 @@
+{%- liquid
+  assign swipe_on_mobile = block.settings.enable_swipe_on_mobile
+  assign columns_mobile = block.settings.columns_mobile | plus: 0
+
+  assign classes = 'layered-images z--1'
+  if swipe_on_mobile
+    assign classes = classes | append: ' swipe-mobile swipe-mobile--[columns]-cols' | replace: '[columns]', columns_mobile
+    if block.settings.swipe_custom_width_column
+      assign classes = classes | append: ' swipe-mobile--custom-width'
+    endif
+  endif
+-%}
+{%- capture inline_style -%}
+  {% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile, columns_xxl: columns_mobile %}
+  {% render 'gap-style', column_gap: 8, column_gap_mobile: 8, row_gap: 8, row_gap_mobile: 8 %}
+{%- endcapture -%}
+<div
+  class="{{ classes | strip_newlines }}"
+  {{ block.shopify_attributes }}
+  style="--swipe-column-width: {{ block.settings.swipe_column_width | divided_by: 100.0 }};"
+>
+  <div
+    class="layout-panel-grid gap-style{% if swipe_on_mobile %} swipe__inner{% endif %}"
+    style="{{ inline_style | strip | strip_newlines }}"
+  >
+    {%- for block in block.blocks -%}
+      <div class="f-column">
+        {% render block %}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.layered_images",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_swipe_on_mobile",
+      "label": "t:settings.enable_swipe_on_mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_custom_width_column",
+      "label": "t:settings.swipe_custom_width_column",
+      "default": false,
+      "visible_if": "{{ block.settings.enable_swipe_on_mobile == true }}"
+    },
+    {
+      "type": "range",
+      "id": "swipe_column_width",
+      "label": "t:settings.custom_width",
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 76,
+      "visible_if": "{{ block.settings.swipe_custom_width_column == true and block.settings.enable_swipe_on_mobile == true }}"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:settings.columns",
+      "default": "3",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:options.grid_1_column"
+        },
+        {
+          "value": "2",
+          "label": "t:options.grid_2_column"
+        },
+        {
+          "value": "3",
+          "label": "t:options.grid_3_column"
+        }
+      ],
+      "visible_if": "{{ block.settings.swipe_custom_width_column == false or block.settings.enable_swipe_on_mobile == false }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_layered-image"
+    }
+  ]
+}
+{% endschema %}

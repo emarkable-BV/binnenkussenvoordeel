@@ -1,0 +1,73 @@
+{% liquid
+  assign gift_wrap_variant = null
+  assign gift_wrap_variant_id = null
+  if settings.gift_wrap_product != blank
+    assign gift_wrap_product = all_products[settings.gift_wrap_product]
+    if gift_wrap_product != blank
+      assign gift_wrap_variant = gift_wrap_product.selected_or_first_available_variant
+      assign gift_wrap_variant_id = gift_wrap_variant.id
+    endif
+  endif
+%}
+{% if gift_wrap_variant != blank %}
+  {% liquid
+    if settings.enable_gift_wrap_per_product
+      assign gift_drawer_focus = '#gift-message-input-drawer'
+    else
+      assign gift_drawer_focus = '#gift-wrap-whole-order-drawer'
+    endif
+  %}
+  <dialog-component id="cart-gift-wrapping-drawer" focus-target="{{ gift_drawer_focus }}">
+    <button
+      type="button"
+      class="cart-drawer__addon-button btn btn--small btn--secondary btn--icon-only"
+      on:click="/showDialog"
+      aria-haspopup="dialog"
+      aria-controls="cart-gift-wrapping-dialog"
+      aria-label="{{ 'actions.gift_wrapping' | t }}"
+      data-tooltip="{{ 'actions.gift_wrapping' | t | escape }}"
+      data-tooltip-position="top"
+    >
+      {%- render 'icon', icon: 'gift', size: 'large' -%}
+    </button>
+    <dialog
+      id="cart-gift-wrapping-dialog"
+      ref="dialog"
+      class="cart-drawer__addon dialog dialog--drawer dialog--drawer-bottom dialog--drawer-bottom--right color-{{ color_scheme }}"
+      scroll-lock
+    >
+      <div class="cart-drawer__addon-inner flex flex-col gap-4 xl:gap-5">
+        <div class="cart-drawer__addon-header flex flex-row items-center justify-between">
+          <p class="cart-drawer__addon-title h5">{{ 'actions.gift_wrapping' | t }}</p>
+          <button
+            type="button"
+            class="cart-drawer__close cart-drawer__close--addon dialog__close shrink-0"
+            on:click="/closeDialog"
+            aria-label="{{ 'accessibility.close_dialog' | t }}"
+          >
+            {% render 'icon', icon: 'close', size: 'large' %}
+          </button>
+        </div>
+        <div class="cart-drawer__addon-content">
+          <gift-wrapping-component
+            class="gift-wrapping-component w-full"
+            data-gift-variant-id="{{ gift_wrap_variant_id }}"
+            data-sync-quantity="{{ settings.gift_wrap_sync_quantity }}"
+          >
+            <div class="flex flex-col gap-4 xl:gap-5">
+              {% render 'cart-gift-wrapping',
+                gift_wrap_variant: gift_wrap_variant,
+                gift_wrap_variant_id: gift_wrap_variant_id,
+                id_suffix: '-drawer',
+                compact: true
+              %}
+              <button type="button" class="btn btn--primary" on:click="#cart-gift-wrapping-drawer/closeDialog">
+                <span class="btn__text">{{ 'actions.save' | t }}</span>
+              </button>
+            </div>
+          </gift-wrapping-component>
+        </div>
+      </div>
+    </dialog>
+  </dialog-component>
+{% endif %}

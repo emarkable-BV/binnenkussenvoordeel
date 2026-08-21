@@ -1,0 +1,32 @@
+{% liquid
+  assign class = class
+  if cart.item_count > 99
+    assign class = class | append: ' cart-count--small-medium'
+  endif
+  if cart.empty?
+    assign class = class | append: ' hidden'
+  endif
+%}
+
+<cart-count
+  class="cart-count {{ class }}"
+  {% if in_drawer %}
+    data-context="drawer"
+  {% endif %}
+>
+  <span class="visually-hidden">
+    {{- 'accessibility.cart_count' | t -}}
+    : {{ cart.item_count }}
+  </span>
+  <span
+    class="cart-bubble__text-count"
+    ref="cartBubbleCount"
+    aria-hidden="true"
+  >
+    {% if cart.item_count < 100 %}
+      {{- cart.item_count -}}
+    {% else %}
+      99+
+    {% endif %}
+  </span>
+</cart-count>

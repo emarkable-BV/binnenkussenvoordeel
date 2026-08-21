@@ -1,0 +1,253 @@
+{%- doc -%}
+  Renders a default variant picker, used to display the variant picker in the variants block.
+
+  @param {object} product_resource - The product object.
+  @param {object} [block] - The block object
+  @param {string} [section] - The section id
+{%- enddoc -%}
+
+{% assign block_settings = block.settings %}
+
+{% unless product_resource.has_only_default_variant %}
+  {% liquid
+    assign size_chart_title = block_settings.size_chart_title | downcase
+    assign size_chart_content = product_resource.metafields.foxtheme.size_chart
+    assign size_chart_content_type = product_resource.metafields.foxtheme.size_chart.type
+
+    if size_chart_content_type == 'page_reference'
+      assign size_chart_content = pages[size_chart_content].content
+    else
+      assign size_chart_content = size_chart_content
+    endif
+
+    if size_chart_content == blank and block_settings.size_chart_page != blank
+      assign size_chart_content = pages[block_settings.size_chart_page].content
+    endif
+
+    assign has_size_chart = false
+    assign size_chart_dialog_component_id = 'size-chart-dialog-component-' | append: block.id | append: '-' | append: product_resource.id
+    assign size_chart_dialog_id = 'size-chart-dialog-' | append: block.id | append: '-' | append: product_resource.id
+
+    unless settings.dialog_color_scheme_inherit
+      assign dialog_color_scheme = settings.dialog_color_scheme
+    else
+      assign first_color_scheme = settings.color_schemes | first
+      assign dialog_color_scheme = first_color_scheme
+    endunless
+  %}
+  <variant-picker
+    class="variant-picker spacing-style"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product_resource.id }}"
+    data-block-id="{{ block.id }}"
+    data-product-url="{{ product_resource.url }}"
+    ref="mainVariantPicker"
+    {% if product.id == product_resource.id %}
+      data-template-product-match="true"
+    {% endif %}
+    {{ block.shopify_attributes }}
+    style="{% render 'spacing-style', settings: block_settings %}"
+  >
+    <form class="variant-picker__form">
+      {%- for product_option in product_resource.options_with_values -%}
+        {%- liquid
+          assign swatch_count = product_option.values | map: 'swatch' | compact | size
+          assign variant_style = block_settings.variant_style
+
+          if swatch_count > 0 and block_settings.show_swatches
+            if block_settings.variant_style == 'dropdown'
+              assign variant_style = 'swatch_dropdown'
+            else
+              assign variant_style = 'swatch'
+            endif
+          endif
+
+          # Check if this specific option matches size chart title
+          # Reset for each option to prevent false positives
+          assign option_has_size_chart = false
+          assign option_name = product_option.name | downcase
+          if size_chart_title contains option_name and size_chart_content != blank
+            assign option_has_size_chart = true
+            assign has_size_chart = true
+          endif
+        -%}
+        {%- if variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
+          <div
+            class="variant-option variant-option--fieldset variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% endif %}"
+            style="--swatch-width: {{ block_settings.swatch_width }}px; --swatch-height: {{ block_settings.swatch_height }}px;--border-radius: {{ block_settings.buttons_radius }}px;"
+          >
+            <div class="variant-option__label flex flex-wrap justify-between items-center gap-3 w-full p-0">
+              <div class="variant-option__label-content flex items-center gap-1">
+                <span class="h6 variant-option__label-text">
+                  {{- product_option.name | append: ': ' | escape -}}
+                </span>
+                <span class="variant-option__label-value color-subtext">
+                  {{- product_option.selected_value -}}
+                </span>
+              </div>
+              {%- if option_has_size_chart -%}
+                <button
+                  type="button"
+                  class="button-unstyled link link--underline relative"
+                  on:click="#{{ size_chart_dialog_component_id }}/showDialog"
+                  aria-haspopup="dialog"
+                  aria-controls="{{ size_chart_dialog_id }}"
+                >
+                  {{ 'content.size_chart' | t }}
+                </button>
+              {%- endif -%}
+            </div>
+            {%- for product_option_value in product_option.values -%}
+              <label
+                class="variant-option__button-label{% if variant_style == 'swatch' %} variant-option__button-label--has-swatch variant-option__button-label--{{ block_settings.swatch_shape }}{% endif %} focus-within--absolute"
+                {% if variant_style == 'swatch' %}
+                  data-tooltip="{{ product_option_value.name }}"
+                  data-tooltip-position="top"
+                {% endif %}
+              >
+                <input
+                  type="radio"
+                  name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                  value="{{ product_option_value | escape }}"
+                  aria-label="{{ product_option_value.name }}"
+                  {% if product_option_value.available == false %}
+                    aria-disabled="true"
+                  {% endif %}
+                  data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                  data-option-value-id="{{ product_option_value.id }}"
+                  data-option-available="{{ product_option_value.available }}"
+                  data-connected-product-url="{{ product_option_value.product_url }}"
+                  {% if product_option_value.variant.id %}
+                    data-variant-id="{{ product_option_value.variant.id }}"
+                  {% endif %}
+                  {% if product_option_value.selected %}
+                    checked
+                  {% endif %}
+                >
+                {% if variant_style == 'swatch' %}
+                  {% liquid
+                    assign featured_media = product_option_value.variant.featured_media
+
+                    # If the variant has no featured media, and we have a combined listing product, then fall back to
+                    # using the featured media of the child product that is linked to this option value.
+                    if featured_media == blank and product_option_value.product_url
+                      assign featured_media = product_option_value.variant.product.featured_media
+                    endif
+                  %}
+
+                  {% render 'swatch',
+                    swatch: product_option_value.swatch,
+                    variant_image: featured_media,
+                    swatch_width: block_settings.swatch_width,
+                    show_variant_image: block_settings.show_variant_image
+                  %}
+                {% else %}
+                  <span class="variant-option__button-label__text">
+                    {{- product_option_value | escape -}}
+                  </span>
+                {% endif %}
+                {% unless product_option_value.available %}
+                  <div class="strikethrough-variant"></div>
+                {% endunless %}
+              </label>
+            {%- endfor -%}
+          </div>
+        {%- elsif block_settings.variant_style == 'dropdowns' -%}
+          <div class="variant-option variant-option--dropdowns">
+            <div class="variant-option__label flex flex-wrap justify-between items-center gap-3 w-full">
+              <label
+                class="variant-option__label-content"
+                for="Option-{{ block.id }}-{{ forloop.index0 }}"
+              >
+                <span class="h6 variant-option__label-text">
+                  {{- product_option.name | append: ': ' | escape -}}
+                </span>
+                <span class="variant-option__label-value color-subtext">
+                  {{- product_option.selected_value -}}
+                </span>
+              </label>
+              {%- if option_has_size_chart -%}
+                <button
+                  type="button"
+                  class="button-unstyled link link--underline relative"
+                  on:click="#{{ size_chart_dialog_component_id }}/showDialog"
+                  aria-haspopup="dialog"
+                  aria-controls="{{ size_chart_dialog_id }}"
+                >
+                  {{ 'content.size_chart' | t }}
+                </button>
+              {%- endif -%}
+            </div>
+
+            <div class="variant-option__select-wrapper flex">
+              <div class="select">
+                <select
+                  id="Option-{{ block.id }}-{{ forloop.index0 }}"
+                  name="options[{{ product_option.name | escape }}]"
+                  class="variant-option__select form-control"
+                >
+                  {%- for product_option_value in product_option.values -%}
+                    <option
+                      value="{{ product_option_value | escape }}"
+                      data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                      data-option-value-id="{{ product_option_value.id }}"
+                      data-variant-id="{{ product_option_value.variant.id }}"
+                      data-connected-product-url="{{ product_option_value.product_url }}"
+                      {% if product_option_value.selected %}
+                        selected="selected"
+                      {% endif %}
+                    >
+                      {% if product_option_value.available == false %}
+                        {{ product_option_value | escape }} - {{ 'content.unavailable' | t }}
+                      {% else %}
+                        {{ product_option_value | escape }}
+                      {% endif %}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </form>
+    <script type="application/json">
+      {{ product_resource.selected_or_first_available_variant | json }}
+    </script>
+    {%- comment -%}
+      Preload first 250 variants for instant switching (no network delay)
+      This enables optimistic UI updates for the majority of products
+    {%- endcomment -%}
+    <script type="application/json" data-variants-cache>
+      {
+        "variants": {{ product_resource.variants | json }},
+        "media": {{ product_resource.media | json }}
+      }
+    </script>
+
+    {% if has_size_chart %}
+      <dialog-component id="{{ size_chart_dialog_component_id }}">
+        <dialog
+          id="{{ size_chart_dialog_id }}"
+          ref="dialog"
+          class="dialog dialog-size-chart dialog--modal dialog--drawer-mobile-bottom overflow-hidden color-{{ dialog_color_scheme }}"
+          scroll-lock
+        >
+          <button
+            type="button"
+            class="dialog__close dialog__close--absolute"
+            on:click="/closeDialog"
+            aria-label="{{ 'accessibility.close_dialog' | t }}"
+          >
+            {% render 'icon', icon: 'close', size: 'large' %}
+          </button>
+          <div class="dialog__inner v-scrollable">
+            <div class="dialog__content">
+              {{ size_chart_content }}
+            </div>
+          </div>
+        </dialog>
+      </dialog-component>
+    {% endif %}
+  </variant-picker>
+{% endunless %}

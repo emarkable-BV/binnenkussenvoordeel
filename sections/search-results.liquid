@@ -1,0 +1,260 @@
+{%- liquid
+  assign enable_filtering = section.settings.enable_filtering
+  assign columns = 3
+  assign columns_mobile = 2
+-%}
+{%- capture media_sizes -%}
+  {%- capture container_size -%}min(100vw, {{ settings.page_width | plus: 32 }}px){%- endcapture -%}
+  {% if enable_filtering %}(min-width: 1200px) calc(({{ container_size }} - 345px - 32px) / {{ columns }}), (min-width: 1024px) calc(({{ container_size }} - 295px - 32px) / {{ columns }}), {% endif %}(min-width: 768px) calc(({{ container_size }} - 32px) / {{ columns }}), calc((100vw - 32px) / {{ columns_mobile }})
+{%- endcapture -%}
+<script
+  src="{{ 'results-list.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+<results-list
+  class="collection main-collection spacing-style section-grid section-grid--{{ section.settings.container }}{% if search.results_count == 0 %} collection-empty{% endif %}{% unless search.performed %} hidden{% endunless %} color-{{ section.settings.color_scheme }}"
+  pagination-type="{{ section.settings.pagination }}"
+  show-filtering="{{ enable_filtering }}"
+  preload="false"
+  section-id="{{ section.id }}"
+  style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
+>
+  <div class="collection__wrapper">
+    {% render 'filters',
+      section_settings: section.settings,
+      results: search,
+      results_size: search.results_count,
+      total_products_count: search.results_count
+    %}
+    {% paginate search.results by section.settings.items_per_page %}
+      {% capture children %}
+        {% for item in search.results %}
+          {%- case item.object_type -%}
+          {%- when 'product' -%}
+            <li
+              id="{{ section.id }}-{{ item.id }}"
+              class="product-grid__item product-grid__item--{{ forloop.index0 }}"
+              data-page="{{ paginate.current_page }}"
+              data-product-id="{{ item.id }}"
+              ref="cards[]"
+            >
+              {% # theme-check-disable %}
+              {% content_for 'block', type: '_product-card', id: 'product-card', product: item, media_sizes: media_sizes %}
+              {% # theme-check-enable %}
+            </li>
+          {%- when 'page' -%}
+            <li
+              id="{{ section.id }}-{{ item.id }}"
+              class="product-grid__item product-grid__item--{{ forloop.index0 }} h-full"
+              data-page="{{ paginate.current_page }}"
+              data-page-id="{{ item.id }}"
+              ref="cards[]"
+            >
+              {% # theme-check-disable %}
+              <a href="{{ item.url }}" class="search-result-card flex flex-col items-start gap-2 reversed-link">
+                <span class="search-result-card__type badge">{{ item.object_type }}</span>
+                <h4 class="search-result-card__title reversed-link__text">{{ item.title }}</h4>
+              </a>
+              {% # theme-check-enable %}
+            </li>
+          {%- when 'article' -%}
+            <li
+              id="{{ section.id }}-{{ item.id }}"
+              class="product-grid__item product-grid__item--{{ forloop.index0 }} h-full"
+              data-page="{{ paginate.current_page }}"
+              data-article-id="{{ item.id }}"
+              ref="cards[]"
+            >
+              {% # theme-check-disable %}
+              <a href="{{ item.url }}" class="search-result-card flex flex-col items-start gap-2 reversed-link">
+                <span class="search-result-card__type badge">{{ item.object_type }}</span>
+                <h4 class="search-result-card__title reversed-link__text">{{ item.title }}</h4>
+              </a>
+              {% # theme-check-enable %}
+            </li>
+          {%- endcase -%}
+        {% endfor %}
+      {% endcapture %}
+
+      <div id="ResultsList" class="main-collection-grid">
+        {% if search.results_count == 0 %}
+          <div class="main-collection-grid__empty flex flex-col gap-2 items-center justify-center">
+            <h3 class="main-collection-grid__empty-title h2">
+              {{ 'content.no_products_found' | t }}
+            </h3>
+            {% assign link = routes.search_url
+              | append: '?q='
+              | append: search.terms
+              | append: '&options%5Bprefix%5D=last'
+              | append: '&sort_by='
+              | append: search.sort_by
+            %}
+            <p>
+              {{ 'content.use_fewer_filters_html' | t: link: link, class: 'main-collection-grid__empty-link link link--underline' }}
+            </p>
+          </div>
+        {% else %}
+          <div class="grid gap-6 xl:gap-8">
+            {% if children != blank %}
+              <ul
+                class="product-grid gap-style list-unstyled layout-panel-grid"
+                product-grid-view="{{ columns }}-columns"
+                ref="grid"
+                role="list"
+                data-last-page="{{ paginate.pages }}"
+                style="--f-columns-mobile: {{ columns_mobile }}; --f-columns-md: {{ columns }}; {% render 'gap-style', settings: section.settings %}"
+              >
+                {{- children -}}
+              </ul>
+            {% endif %}
+            {% if paginate.pages > 1 %}
+              {% render 'pagination', paginate: paginate, type: 'numer' %}
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endpaginate %}
+  </div>
+</results-list>
+
+{% schema %}
+{
+  "name": "t:names.search_results",
+  "enabled_on": {
+    "templates": ["search"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "fixed", "label": "t:options.fixed" }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "range",
+      "id": "items_per_page",
+      "label": "t:settings.items_per_page",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "t:content.filtering_and_sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "t:settings.enable_filtering",
+      "info": "t:info.enable_filtering_info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "t:settings.enable_sorting",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_grid_density",
+      "label": "t:settings.enable_grid_density",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "expand_filter_groups",
+      "label": "t:settings.expand_filter_groups",
+      "info": "t:info.expand_filter_groups_info"
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    }
+  ]
+}
+{% endschema %}

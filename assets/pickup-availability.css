@@ -1,0 +1,10 @@
+.pickup-availabilities__info-wrapper {
+  padding: 1.6rem 1.2rem;
+  border: 0.1rem solid rgb(var(--color-border)/var(--color-border-alpha));
+}
+
+.pickup-location__wrapper + .pickup-location__wrapper {
+  border-top: 0.1rem solid rgb(var(--color-border)/var(--color-border-alpha));
+  padding-top: 1.6rem;
+  margin-top: 1.6rem;
+}

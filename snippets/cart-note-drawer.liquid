@@ -1,0 +1,40 @@
+<dialog-component id="cart-note-drawer" focus-target=".cart-note__instructions">
+  <button
+    class="cart-drawer__addon-button btn btn--small btn--secondary btn--icon-only"
+    on:click="/showDialog"
+    aria-haspopup="dialog"
+    aria-controls="cart-note-dialog"
+    aria-label="{{ 'actions.order_notes' | t }}"
+    data-tooltip="{{ 'actions.order_notes' | t | escape }}"
+    data-tooltip-position="top"
+  >
+    {%- render 'icon', icon: 'pencil', size: 'large' -%}
+  </button>
+  <dialog
+    id="cart-note-dialog"
+    ref="dialog"
+    class="cart-drawer__addon dialog dialog--drawer dialog--drawer-bottom dialog--drawer-bottom--right color-{{ color_scheme }}"
+    scroll-lock
+  >
+    <div class="cart-drawer__addon-inner flex flex-col gap-4 xl:gap-5">
+      <div class="cart-drawer__addon-header flex flex-row items-center justify-between">
+        <p class="cart-drawer__addon-title h5">{{ 'actions.order_notes' | t }}</p>
+        <button
+          class="cart-drawer__close cart-drawer__close--addon dialog__close shrink-0"
+          on:click="/closeDialog"
+          aria-label="{{ 'accessibility.close_dialog' | t }}"
+        >
+          {% render 'icon', icon: 'close', size: 'large' %}
+        </button>
+      </div>
+      <div class="cart-drawer__addon-content">
+        <div class="flex flex-col gap-4 xl:gap-5">
+          {% render 'cart-note' %}
+          <button class="btn btn--primary" on:click="#cart-note-drawer/closeDialog">
+            <span class="btn__text">{{ 'actions.save' | t }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</dialog-component>

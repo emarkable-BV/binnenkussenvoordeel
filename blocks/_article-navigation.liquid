@@ -1,0 +1,44 @@
+<div
+  class="article__block article-navigation flex items-center justify-between gap-7"
+  {{ block.shopify_attributes }}
+>
+  <div class="f-column article-navigation__prev">
+    {%- if blog.previous_article -%}
+      <a
+        href="{{ blog.previous_article.url }}"
+        class="flex flex-col items-start gap-2 reversed-link"
+      >
+        <span class="inline-flex items-center gap-1">
+          {% render 'icon', icon: 'caret-left', size: 'small' %}
+          <span>{{ 'blogs.article.previous_post' | t }}</span>
+        </span>
+        <div class="article-navigation__heading h5 hidden md:block">
+          <span class="text-limit-1-line">{{ blog.previous_article.title }}</span>
+        </div>
+      </a>
+    {%- endif -%}
+  </div>
+  <div class="f-column article-navigation__next">
+    {%- if blog.next_article -%}
+      <a
+        href="{{ blog.next_article.url }}"
+        class="text-right flex flex-col items-end gap-2 reversed-link"
+      >
+        <span class="inline-flex items-center gap-1">
+          <span>{{ 'blogs.article.next_post' | t }}</span>
+          {% render 'icon', icon: 'caret-right', size: 'small' %}
+        </span>
+        <div class="article-navigation__heading h5 hidden md:block">
+          <span class="text-limit-1-line">{{ blog.next_article.title }}</span>
+        </div>
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.navigation",
+  "tag": null,
+  "presets": []
+}
+{% endschema %}

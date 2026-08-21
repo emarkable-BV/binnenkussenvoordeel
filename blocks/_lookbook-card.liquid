@@ -1,0 +1,142 @@
+{%- render 'lookbook-card', block: block -%}
+{% schema %}
+{
+  "name": "t:names.lookbook_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "t:settings.width",
+      "min": 200,
+      "max": 500,
+      "step": 4,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 200,
+      "max": 500,
+      "step": 4,
+      "unit": "px",
+      "default": 256
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.image_ratio",
+      "default": "adapt",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.adapt_to_image"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        }
+      ]
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "t:settings.products",
+      "limit": 3
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Shop The Look"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "t:settings.heading_preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.lookbook_card",
+      "category": "t:categories.product",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

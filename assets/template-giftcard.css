@@ -1,0 +1,123 @@
+.gift-card {
+  --buttons-max-width: min(24rem, 100%);
+  --gift-card-image-max-height: 35rem;
+  --gift-card-image-max-width: 21rem;
+  padding-block: 3.2rem;
+  padding-inline: 1.6rem;
+  /* stylelint-disable-next-line media-feature-range-notation */
+}
+@media only screen and (min-width: 750px) {
+  .gift-card {
+    padding-block: 6.4rem 4.8rem;
+    padding-inline: 6.4rem;
+  }
+}
+
+.gift-card__main {
+  display: flex;
+  flex-direction: column;
+}
+
+.gift-card__image-wrapper {
+  aspect-ratio: 5/3;
+  padding: 3.2rem;
+  margin-inline: auto;
+  max-width: 34rem;
+  border: 1px solid rgb(var(--color-border)/var(--color-border-alpha));
+  border-radius: 1rem;
+}
+
+.gift-card__image-wrapper:has(.gift-card__image-generic) {
+  padding: 0;
+  border: none;
+}
+
+.gift-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.5rem;
+}
+
+.gift-card__price {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.6rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.gift-card__code,
+.gift-card__text-wrapper h1,
+.gift-card__price h2 {
+  font-family: var(--font-paragraph--family);
+  font-style: var(--font-paragraph--style);
+  font-weight: var(--font-paragraph--weight);
+  text-align: center;
+}
+
+.gift-card__code,
+.gift-card__text-wrapper h1 {
+  margin-block-end: 0;
+}
+
+.gift-card__text-wrapper {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.gift-card__badge {
+  border: 1px solid rgb(var(--color-border)/var(--color-border-alpha));
+  border-radius: var(--style-border-radius-buttons);
+  display: inline-block;
+  line-height: 0.25;
+  padding: 1.2rem;
+  text-align: center;
+  background-color: rgb(var(--color-background));
+  border-color: rgb(var(--color-foreground), 5%);
+  color: rgb(var(--color-foreground));
+  margin-block: 0;
+}
+
+.gift-card__badge--expired {
+  opacity: 0.5;
+}
+
+.gift-card__qr-code img {
+  margin: 0 auto;
+  width: auto;
+}
+
+.gift-card__buttons {
+  display: flex;
+  flex-flow: column wrap;
+  width: var(--buttons-max-width);
+  margin: 0 auto;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.gift-card__buttons-full-width {
+  width: 100%;
+}
+
+.gift-card__buttons .button {
+  width: 100%;
+  justify-content: center;
+}
+
+.gift-card__copy-button {
+  position: relative;
+}
+
+.form__message {
+  transition: opacity var(--animation-duration--medium) var(--animation-easing), transform var(--animation-duration--medium) var(--animation-easing);
+  opacity: 0;
+  transform: translateY(var(--padding-md));
+}
+
+.form__message:not(.visually-hidden) {
+  opacity: 1;
+  transform: translateY(0);
+}

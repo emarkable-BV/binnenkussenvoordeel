@@ -1,0 +1,99 @@
+{%- style %}
+  {%- liquid
+    assign desktop_css = ''
+    assign mobile_css = ''
+  -%}
+  {%- for scheme in settings.color_schemes -%}
+    {%- liquid
+      assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id
+      assign input_background = scheme.settings.input_background | downcase
+      assign background = scheme.settings.background | downcase
+
+      assign input_focus_text = scheme.settings.input_focus_text.rgba
+      unless scheme.settings.input_focus_text.alpha > 0
+        if scheme.settings.input_focus_background.alpha > 0
+          assign input_focus_text = scheme.settings.input_text.rgb
+        else
+          assign input_focus_text = scheme.settings.foreground.rgb
+        endif
+      endunless
+
+      assign scheme_classes_desktop = scheme_classes_desktop | append: '.desktop-color-' | append: scheme.id
+      unless forloop.last
+        assign scheme_classes_desktop = scheme_classes_desktop | append: ', '
+      endunless
+
+      assign scheme_classes_mobile = scheme_classes_mobile | append: '.mobile-color-' | append: scheme.id
+      unless forloop.last
+        assign scheme_classes_mobile = scheme_classes_mobile | append: ', '
+      endunless
+    -%}
+    {%- capture css_vars -%}
+      --color-background: {{ scheme.settings.background.rgb }};
+      --color-background-secondary: {{ scheme.settings.background_secondary.rgb }};
+      --color-foreground: {{ scheme.settings.foreground.rgb }};
+      --color-foreground-secondary: rgba({{ scheme.settings.foreground_secondary.rgba }});
+      --color-border: {{ scheme.settings.border.rgb }};
+      --color-border-alpha: {{ scheme.settings.border.alpha }};
+      --color-sale-price: {{ scheme.settings.sale_price.rgb }};
+      --color-primary-button-background: {{ scheme.settings.primary_button_background.rgb }};
+      --color-primary-button-text: {{ scheme.settings.primary_button_text.rgb }};
+      --color-primary-button-border: {{ scheme.settings.primary_button_border.rgb }};
+      --color-secondary-button-background: {{ scheme.settings.secondary_button_background.rgb }};
+      --color-secondary-button-text: {{ scheme.settings.secondary_button_text.rgb }};
+      --color-secondary-button-border: {{ scheme.settings.secondary_button_border.rgb }};
+      --color-input-background: {{ scheme.settings.input_background.rgb }};
+      --color-input-text: {{ scheme.settings.input_text.rgb }};
+      {% if scheme.settings.input_focus_background.alpha > 0 %}
+      --color-input-focus-background: {{ scheme.settings.input_focus_background.rgba }};
+      {% endif %}
+      --color-input-focus-text: {{ input_focus_text }};
+      --color-swatch-border: rgb({{ scheme.settings.swatch_border.rgb }});
+      --color-notification-success: {{ scheme.settings.notification_success.rgb }};
+      --color-notification-error: {{ scheme.settings.notification_error.rgb }};
+      --color-notification-warning: {{ scheme.settings.notification_warning.rgb }};
+      --color-notification-info: {{ scheme.settings.notification_info.rgb }};
+      --color-notification-out-of-stock: {{ scheme.settings.notification_out_of_stock.rgb }};
+      --color-progress-bar: {{ scheme.settings.progress_bar.rgb }};
+      --input-border-color: rgb({% if input_background == background %}{{ scheme.settings.input_text.rgb }}/ 0.2{% else %}{{ scheme.settings.input_background.rgb }}{% endif %});
+    {%- endcapture -%}
+
+    {% if forloop.index == 1 %}:root,{% endif %}
+    .color-{{ scheme.id }} {
+      {{ css_vars }}
+    }
+    {%- capture desktop_scheme_css -%}
+    .desktop-color-{{ scheme.id }} {
+      {{ css_vars }}
+    }
+    {% endcapture %}
+    {%- capture mobile_scheme_css -%}
+    .mobile-color-{{ scheme.id }} {
+      {{ css_vars }}
+    }
+    {% endcapture %}
+    {%- liquid
+      assign desktop_css = desktop_css | append: desktop_scheme_css
+      assign mobile_css = mobile_css | append: mobile_scheme_css
+    -%}
+  {% endfor %}
+  {{ scheme_classes | prepend: 'body, .inherit-color-scheme' }} {
+    color: rgb(var(--color-foreground));
+    background-color: rgb(var(--color-background));
+  }
+
+  @media (min-width: 767.98px) {
+    {{ desktop_css }}
+    {{ scheme_classes_desktop  }} {
+      color: rgb(var(--color-foreground));
+      background-color: rgb(var(--color-background));
+    }
+  }
+  @media (max-width: 767px) {
+    {{ mobile_css }}
+    {{ scheme_classes_mobile  }} {
+      color: rgb(var(--color-foreground));
+      background-color: rgb(var(--color-background));
+    }
+  }
+{%- endstyle %}

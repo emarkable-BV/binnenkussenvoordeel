@@ -1,0 +1,226 @@
+{% liquid
+  assign block_index = section.blocks | find_index: 'id', block.id
+%}
+
+<div
+  class="swiper-slide"
+  ref="slides[]"
+  data-color-scheme="color-{{ block.settings.color_scheme }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="slide{% if section.settings.container == 'full' and section.settings.content_position == 'inside' %} section-grid{% else %} grid{% endif %}">
+    {% if section.settings.control_type == 'progress-text'
+      and block.settings.pagination_label != blank
+    %}
+      <span
+        data-pagination-text="{{ block.settings.pagination_label }}"
+        data-slide-id="slide-{{ block_index }}"
+        class="visually-hidden"
+      >
+        {{- block.settings.pagination_label -}}
+      </span>
+    {% endif %}
+    <div class="slide__media relative row-span-full col-span-full overflow-hidden">
+      {% render 'video',
+        video: block.settings.video,
+        video_loop: true,
+        video_autoplay: true,
+        video_ratio: 'auto',
+        disable_controls: true,
+        section_id: section.id
+      %}
+    </div>
+    {% liquid
+      assign position_mobile = block.settings.position_mobile | append: '-center'
+    %}
+    <div
+      class="slide__content relative col-span-full content-overlay-style"
+      style="{% render 'content-overlay-style', position: block.settings.position, position_mobile: position_mobile %}"
+    >
+      {%- content_for 'block',
+        type: '_slide-content',
+        id: 'static-slide-content',
+        parent_color_scheme: block.settings.color_scheme
+      -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.video_slide",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video"
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "t:settings.position",
+      "options": [
+        {
+          "label": "t:options.top_left",
+          "value": "top-left"
+        },
+        {
+          "label": "t:options.top_center",
+          "value": "top-center"
+        },
+        {
+          "label": "t:options.top_right",
+          "value": "top-right"
+        },
+        {
+          "label": "t:options.middle_left",
+          "value": "middle-left"
+        },
+        {
+          "label": "t:options.middle_center",
+          "value": "middle-center"
+        },
+        {
+          "label": "t:options.middle_right",
+          "value": "middle-right"
+        },
+        {
+          "label": "t:options.bottom_left",
+          "value": "bottom-left"
+        },
+        {
+          "label": "t:options.bottom_center",
+          "value": "bottom-center"
+        },
+        {
+          "label": "t:options.bottom_right",
+          "value": "bottom-right"
+        }
+      ],
+      "default": "middle-left"
+    },
+    {
+      "type": "select",
+      "id": "position_mobile",
+      "label": "t:settings.position_mobile",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:options.top"
+        },
+        {
+          "value": "middle",
+          "label": "t:options.middle"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.bottom"
+        }
+      ],
+      "default": "middle"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.pagination_label",
+      "visible_if": "{{ section.settings.control_type == 'progress-text' }}"
+    },
+    {
+      "type": "text",
+      "id": "pagination_label",
+      "label": "t:settings.text",
+      "visible_if": "{{ section.settings.control_type == 'progress-text' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.video_slide",
+      "blocks": {
+        "static-slide-content": {
+          "type": "_slide-content",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "width": "custom",
+            "custom_width": 27,
+            "inherit_color_scheme": true,
+            "enable_transparent": true
+          },
+          "blocks": {
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>Video slide</h2>",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": 68,
+                "font_size_mobile": 38,
+                "line_height": "normal",
+                "animation_type": "fade-up",
+                "animation_delay": 100
+              }
+            },
+            "spacer_1": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 16,
+                "gap_mobile": 16
+              }
+            },
+            "text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Introducing our latest products, made especially for the season. Shop your favorites before they're gone!</p>",
+                "type_preset": "custom",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "loose",
+                "animation_type": "fade-up",
+                "animation_delay": 200
+              }
+            },
+            "spacer_2": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 32,
+                "gap_mobile": 24
+              }
+            },
+            "button": {
+              "type": "button",
+              "settings": {
+                "label": "Button label",
+                "link": "shopify://collections/all",
+                "style": "primary",
+                "icon": "caret-right",
+                "icon_style": "solid",
+                "animation_type": "fade-up",
+                "animation_delay": 300
+              }
+            }
+          },
+          "block_order": ["heading", "spacer_1", "text", "spacer_2", "button"]
+        }
+      },
+      "block_order": []
+    }
+  ]
+}
+{% endschema %}

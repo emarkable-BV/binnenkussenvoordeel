@@ -1,0 +1,29 @@
+{%- comment -%}
+  Lightweight section that returns ONLY variant JSON data (no HTML)
+  Used for ultra-fast variant data fetching (~1-2KB vs ~50-100KB HTML)
+
+  Usage: Fetch this section with ?sections=variant-data&variant=VARIANT_ID
+  Response: { "variant-data": { variant JSON } }
+{%- endcomment -%}
+
+{%- liquid
+  # Get variant ID from URL parameter
+  assign variant_id_string = request.url | split: 'variant=' | last | split: '&' | first
+  assign variant_id = variant_id_string | plus: 0
+
+  # Find variant by ID
+  assign selected_variant = null
+  for variant in product.variants
+    if variant.id == variant_id
+      assign selected_variant = variant
+      break
+    endif
+  endfor
+
+  # Fallback to first available variant if not found
+  if selected_variant == blank
+    assign selected_variant = product.selected_or_first_available_variant
+  endif
+-%}
+
+{{- selected_variant | json -}}

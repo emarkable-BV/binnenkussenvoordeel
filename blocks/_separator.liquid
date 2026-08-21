@@ -1,0 +1,35 @@
+<div
+  class="separator-block separator--{{ block.settings.style }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="separator__shape"></div>
+</div>
+{% schema %}
+{
+  "name": "t:names.separator",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "label": "t:options.dot",
+          "value": "dot"
+        },
+        {
+          "label": "t:options.line",
+          "value": "line"
+        }
+      ],
+      "default": "dot"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.separator"
+    }
+  ]
+}
+{% endschema %}

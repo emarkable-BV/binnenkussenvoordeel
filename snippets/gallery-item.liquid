@@ -1,0 +1,73 @@
+{%- liquid
+  assign type = block.settings.type
+  assign image = block.settings.image
+  assign video = block.settings.video
+  assign heading = block.settings.heading
+  assign link = block.settings.link
+
+  assign media_wrapper_tag = 'div'
+  if type == 'image' and link != blank
+    assign media_wrapper_tag = 'a'
+  endif
+
+  assign has_fixed_width = false
+  if block.settings.width != blank and block.settings.width_mobile != blank and block.settings.width_tablet != blank
+    assign has_fixed_width = true
+  endif
+-%}
+{%- capture wrapper_class -%}
+  {%- if link != blank %} media-hover--scale{%- endif -%}
+  {%- if has_fixed_width %} size-style{%- endif -%}
+{%- endcapture -%}
+<div
+  class="media-gallery__item relative z-0 flex flex-col gap-1 md:gap-3 {{ wrapper_class }}"
+  {% if has_fixed_width %}
+    style="{% render 'clamp-calculate-style', property_name: 'size-style-width-tablet', min_value: block.settings.width_mobile, max_value: block.settings.width_tablet, min_breakpoint: 768, max_breakpoint: 1200 %}{% render 'clamp-calculate-style', property_name: 'size-style-width', min_value: block.settings.width_tablet, max_value: block.settings.width, min_breakpoint: 1200, max_breakpoint: 1455 %}--size-style-width-mobile: {{ block.settings.width_mobile | divided_by: 10.0 }}rem;"
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {%- if link != blank -%}
+    <a class="absolute inset-0 focus-visible--absolute" href="{{ link }}" aria-label="{{ heading | strip_html | escape }}"></a>
+  {%- endif -%}
+  <{{ media_wrapper_tag }}
+    {% if media_wrapper_tag == 'a' %}
+      href="{{ link }}"
+      aria-label="{{ heading | strip_html | escape }}"
+    {% endif %}
+    class="media-gallery__item-media border-style relative z-2"
+    style="{% render 'border-style', settings: block.settings %}"
+  >
+    {%- if type == 'image' -%}
+      {% render 'responsive-image', mode: 'js', image: image, image_ratio: '1/1' %}
+    {%- else -%}
+      {%- liquid
+        assign poster_image = block.settings.video_poster
+        if poster_image == blank
+          assign poster_image = video.preview_image
+        endif
+      -%}
+      {% capture video_style %}
+        {% if video == blank %}
+          --size-style-aspect-ratio: 1/1;
+        {% endif %}
+      {% endcapture %}
+      {% render 'video',
+        video: video,
+        video_loop: false,
+        video_autoplay: false,
+        disable_controls: true,
+        enable_toggle_button: true,
+        enable_toggle_volume_button: true,
+        video_preview_image: poster_image,
+        video_style: video_style,
+        video_ratio: '1/1',
+        section_id: section.id
+      %}
+    {%- endif -%}
+  </{{ media_wrapper_tag }}>
+  <div class="media-gallery__item-content rte pointer-events-none">
+    <p class="media-gallery__item-title {{ block.settings.type_preset }} color-{{ block.settings.text_color }}">
+      {{ heading }}
+    </p>
+  </div>
+</div>

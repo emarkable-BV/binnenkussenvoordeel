@@ -1,0 +1,419 @@
+{%- liquid
+  assign promotion_columns = block.settings.promotion_columns
+
+  case block.type
+    when 'banner'
+      assign banners = block.settings.image_1 | append: ',' | append: block.settings.image_2 | append: ',' | append: block.settings.image_3 | append: ',' | append: block.settings.image_4
+      assign has_banners = false
+
+      unless banners == ',,,'
+        assign has_banners = true
+      endunless
+
+    when 'text-with-banners'
+      assign banners = block.settings.image_1 | append: ',' | append: block.settings.image_2 | append: ',' | append: block.settings.image_3 | append: ',' | append: block.settings.image_4
+      assign has_banners = false
+      assign has_rich_content = false
+
+      unless banners == ',,,'
+        assign has_banners = true
+      endunless
+
+      if block.settings.column_heading != blank or block.settings.column_text != blank
+        assign has_rich_content = true
+      endif
+  endcase
+
+  assign submenu_class = ''
+  if link.links != blank
+    assign submenu_class = submenu_class | append: ' menu-drawer__submenu--with-links'
+  else
+    assign submenu_class = submenu_class | append: ' menu-drawer__submenu--no-links'
+  endif
+-%}
+<details
+  is="menu-drawer-details"
+  level="top"
+>
+  <summary
+    class="menu-drawer__item-link menu-drawer__item-link-heading flex items-center justify-between gap-4"
+    data-link-url="{{ link.url }}"
+  >
+    <span class="h3">{{- link.title | escape -}}</span>
+    <button class="menu-drawer__item-link-arrow button-unstyled flex items-center justify-center cursor-pointer">
+      {%- render 'icon', icon: 'caret-right', size: 'extra-medium' -%}
+    </button>
+  </summary>
+  <div
+    class="menu-drawer__submenu menu-drawer__submenu--{{ block.type }} absolute flex flex-col w-full h-full{{ submenu_class }}"
+    data-parent
+  >
+    <button
+      type="button"
+      class="menu-drawer__item-link menu-drawer__item-link-back flex items-center gap-3 w-full button-unstyled cursor-pointer color-subtext focus-visible--inset"
+    >
+      {%- render 'icon', icon: 'arrow-left', size: 'extra-medium' -%}
+      {{ link.title | escape }}
+    </button>
+    <div class="v-scrollable v-scrollable--hidden h-full flex flex-col gap-6">
+      {%- if link.links != blank or has_rich_content -%}
+        <div class="menu-drawer__nav flex flex-col gap-5">
+          {%- if has_rich_content -%}
+            <div class="menu-drawer__mega flex flex-col gap-3">
+              {%- if block.settings.column_heading -%}
+                {% render 'text', fallback_text: block.settings.column_heading, preset: block.settings.column_heading_size %}
+              {%- endif -%}
+              {%- if block.settings.column_text -%}
+                {% render 'text', fallback_text: block.settings.column_text, preset: 'rte', text_color: 'subtext' %}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if link.links != blank -%}
+            <ul class="menu-drawer__list list-unstyled flex flex-col" data-parent role="list">
+              {%- for childlink in link.links -%}
+                <li class="menu-drawer__item menu-drawer__item--{{ block.type }}" level="child">
+                  {%- if block.type != 'text-with-banners' and childlink.links != blank -%}
+                    <menu-drawer-submenu class="accordion">
+                      <details
+                        ref="item[]"
+                        class="accordion__details"
+                      >
+                        <summary
+                          ref="summary[]"
+                          class="accordion__summary flex focus-visible--inset"
+                          on:click="/onSummaryClick"
+                          data-link-url="{{ childlink.url }}"
+                        >
+                          <span class="h3">{{ childlink.title | escape }}</span>
+                          <button
+                            on:click="/onArrowClick"
+                            class="menu-drawer__item-link-arrow button-unstyled flex items-center justify-center cursor-pointer"
+                          >
+                            {% render 'icon', icon: 'caret-down', class: 'flex accordion__summary-arrow icon--caret' %}
+                          </button>
+                        </summary>
+                        <div ref="content[]" class="accordion__content">
+                          <div class="accordion__inner">
+                            {%- if block.type == 'sidebar' -%}
+                              <ul class="menu-sidebar__collections list-unstyled grid gap-1">
+                                {%- for grandchildlink in childlink.links -%}
+                                  {%- liquid
+                                    assign is_collection_link = false
+                                    assign default_alt = shop.name
+                                    if grandchildlink.type == 'collection_link' and block.settings.show_collection_image
+                                      assign is_collection_link = true
+                                      assign collection_object = grandchildlink.object
+                                      assign collection_image = collection_object.featured_image
+                                      assign default_alt = collection_object.title
+                                    endif
+
+                                    if collection_object.metafields.foxtheme.collection_megamenu_image.value
+                                      assign collection_image = collection_object.metafields.foxtheme.collection_megamenu_image.value
+                                    endif
+
+                                    if block.settings.show_image_of_first_product
+                                      assign collection_image = collections[grandchildlink.object.handle].all_products.first.featured_image
+                                    endif
+
+                                    assign image_ratio = block.settings.image_ratio
+                                    if image_ratio == 'adapt'
+                                      assign image_ratio = collection_image.aspect_ratio
+                                    endif
+                                  -%}
+                                  <li>
+                                    <a
+                                      href="{{ grandchildlink.url }}"
+                                      class="menu-drawer__item-link flex items-center gap-3 color-current text-decoration-none focus-visible--inset"
+                                    >
+                                      {%- if is_collection_link and collection_image != blank -%}
+                                        <div class="menu-sidebar__collection-image media-mask-clip shrink-0">
+                                          {% render 'responsive-image',
+                                            mode: 'liquid',
+                                            image: collection_image,
+                                            image_ratio: image_ratio,
+                                            default_alt: default_alt,
+                                            sizes: '50px',
+                                            widths: '50, 100'
+                                          %}
+                                        </div>
+                                      {%- endif -%}
+                                      <span class="menu-sidebar__collection-text min-w-0 text-wrap">{{- grandchildlink.title | escape -}}</span>
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- else -%}
+                              <ul class="list-unstyled">
+                                {%- for grandchildlink in childlink.links -%}
+                                  <li class="menu-drawer__item">
+                                    <a
+                                      href="{{ grandchildlink.url }}"
+                                      class="menu-drawer__item-link block color-subtext text-decoration-none focus-visible--inset"
+                                    >
+                                      {{- grandchildlink.title | escape -}}
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </details>
+                    </menu-drawer-submenu>
+                  {%- else -%}
+                    <a
+                      href="{{ childlink.url }}"
+                      class="menu-drawer__item-link block color-subtext text-decoration-none focus-visible--inset"
+                    >
+                      {{- childlink.title -}}
+                    </a>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- case block.type -%}
+        {%- when 'sidebar' -%}
+          {%- case block.settings.layout -%}
+            {%- when 'with-banner' -%}
+              {%- if block.settings.image != blank -%}
+                <div class="menu-drawer__mega">
+                  {% render 'mega-menu-banner',
+                    banner_design: block.settings.banner_design,
+                    color_scheme: block.settings.color_scheme,
+                    image: block.settings.image,
+                    image_mobile: block.settings.image_mobile,
+                    image_overlay_opacity: block.settings.image_overlay_opacity,
+                    heading: block.settings.heading,
+                    heading_preset: block.settings.heading_size,
+                    heading_font_size: block.settings.heading_font_size,
+                    heading_font_size_mobile: block.settings.heading_font_size_mobile,
+                    subheading: block.settings.subheading,
+                    badge: block.settings.badge,
+                    button_label: block.settings.button_label,
+                    button_link: block.settings.button_link,
+                    button_style: block.settings.button_style,
+                    button_size: block.settings.button_size,
+                    button_icon: block.settings.button_icon,
+                    button_icon_style: block.settings.button_icon_style
+                  %}
+                </div>
+              {%- endif -%}
+            {%- when 'with-products' -%}
+              {%- if block.settings.product_list != blank -%}
+                {%- liquid
+                  assign products_to_display = block.settings.product_list.count
+
+                  assign is_carousel = false
+                  if products_to_display > promotion_columns
+                    assign is_carousel = true
+                  endif
+                -%}
+                <div class="menu-drawer__mega">
+                  <carousel-slider class="carousel relative">
+                    <script type="application/json" ref="config">
+                      {
+                        "loop": false,
+                        "slidesPerView": {{ promotion_columns }},
+                        "spaceBetween": 10,
+                        "pagination": false,
+                        "counter": false,
+                        "destroyBelow": 768,
+                        "navigationPosition": {
+                          "enabled": true,
+                          "selector": ".media img"
+                        }
+                      }
+                    </script>
+                    <div ref="container" class="swiper swipe-mobile swipe-mobile--2-cols">
+                      <div
+                        class="swiper-wrapper swipe__inner"
+                        style="{% render 'gap-style', column_gap: 10, column_gap_mobile: 8 %}"
+                      >
+                        {%- for product in block.settings.product_list -%}
+                          <div class="swiper-slide">
+                            {%- render 'product-card',
+                              product: product,
+                              show_vendor: block.settings.show_product_vendor,
+                              show_type: block.settings.show_product_type,
+                              show_badges: block.settings.show_product_badges
+                            -%}
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                    {%- if is_carousel -%}
+                      {% render 'carousel-controls',
+                        type: 'absolute',
+                        pagination: false,
+                        counter: false,
+                        navigation: true,
+                        navigation_inside: true,
+                        navigation_size: 'small'
+                      %}
+                    {%- endif -%}
+                  </carousel-slider>
+                </div>
+              {%- endif -%}
+          {%- endcase -%}
+
+        {%- when 'banner' -%}
+          {%- if has_banners -%}
+            {%- liquid
+              assign columns_mobile = block.settings.columns_mobile | times: 1
+            -%}
+            {% capture inline_style %}
+              {% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile %}
+              {% render 'gap-style', column_gap: 30, column_gap_mobile: 12, row_gap: 30, row_gap_mobile: 12 %}
+            {% endcapture %}
+            <div class="menu-drawer__mega">
+              <div
+                class="layout-panel-grid gap-style"
+                style="{{ inline_style }}"
+              >
+                {%- for i in (1..4) -%}
+                  {%- liquid
+                    assign image = 'image_' | append: i
+                    assign image_mobile = 'image_mobile_' | append: i
+                    assign image_overlay_opacity = 'image_overlay_opacity_' | append: i
+                    assign heading = 'heading_' | append: i
+                    assign heading_preset = 'heading_size_' | append: i
+                    assign heading_font_size = 'heading_font_size_' | append: i
+                    assign heading_font_size_mobile = 'heading_font_size_mobile_' | append: i
+                    assign subheading = 'subheading_' | append: i
+                    assign badge = 'badge_' | append: i
+                    assign button_label = 'button_label_' | append: i
+                    assign button_link = 'button_link_' | append: i
+                    assign button_style = 'button_style_' | append: i
+                    assign button_size = 'button_size_' | append: i
+                    assign button_icon = 'button_icon_' | append: i
+                    assign button_icon_style = 'button_icon_style_' | append: i
+
+                    assign image = block.settings[image]
+                    assign image_mobile = block.settings[image_mobile]
+                    assign image_overlay_opacity = block.settings[image_overlay_opacity]
+                    assign heading = block.settings[heading]
+                    assign heading_preset = block.settings[heading_preset]
+                    assign heading_font_size = block.settings[heading_font_size]
+                    assign heading_font_size_mobile = block.settings[heading_font_size_mobile]
+                    assign subheading = block.settings[subheading]
+                    assign badge = block.settings[badge]
+                    assign button_label = block.settings[button_label]
+                    assign button_link = block.settings[button_link]
+                    assign button_style = block.settings[button_style]
+                    assign button_size = block.settings[button_size]
+                    assign button_icon = block.settings[button_icon]
+                    assign button_icon_style = block.settings[button_icon_style]
+
+                    if image == blank
+                      continue
+                    endif
+                  -%}
+                  <div class="f-column">
+                    {% render 'mega-menu-banner',
+                      banner_design: block.settings.banner_design,
+                      color_scheme: block.settings.color_scheme,
+                      image: image,
+                      image_mobile: image_mobile,
+                      image_overlay_opacity: image_overlay_opacity,
+                      heading: heading,
+                      heading_preset: heading_preset,
+                      heading_font_size: heading_font_size,
+                      heading_font_size_mobile: heading_font_size_mobile,
+                      subheading: subheading,
+                      badge: badge,
+                      button_label: button_label,
+                      button_link: button_link,
+                      button_style: button_style,
+                      button_size: button_size,
+                      button_icon: button_icon,
+                      button_icon_style: button_icon_style
+                    %}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- when 'text-with-banners' -%}
+          {%- if has_banners -%}
+            <div class="menu-drawer__mega">
+              {%- liquid
+                assign columns_mobile = block.settings.columns_mobile | times: 1
+              -%}
+              {% capture inline_style %}
+                {% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile %}
+                {% render 'gap-style', column_gap: 30, column_gap_mobile: 12, row_gap: 30, row_gap_mobile: 12 %} 
+              {% endcapture %}
+              <div
+                class="mega-menu__promotions-banners flex-grow layout-panel-grid gap-style"
+                style="{{ inline_style }}"
+              >
+                {%- for i in (1..4) -%}
+                  {%- liquid
+                    assign image = 'image_' | append: i
+                    assign image_mobile = 'image_mobile_' | append: i
+                    assign image_overlay_opacity = 'image_overlay_opacity_' | append: i
+                    assign heading = 'heading_' | append: i
+                    assign heading_preset = 'heading_size_' | append: i
+                    assign heading_font_size = 'heading_font_size_' | append: i
+                    assign heading_font_size_mobile = 'heading_font_size_mobile_' | append: i
+                    assign subheading = 'subheading_' | append: i
+                    assign badge = 'badge_' | append: i
+                    assign button_label = 'button_label_' | append: i
+                    assign button_link = 'button_link_' | append: i
+                    assign button_style = 'button_style_' | append: i
+                    assign button_size = 'button_size_' | append: i
+                    assign button_icon = 'button_icon_' | append: i
+                    assign button_icon_style = 'button_icon_style_' | append: i
+
+                    assign image = block.settings[image]
+                    assign image_mobile = block.settings[image_mobile]
+                    assign image_overlay_opacity = block.settings[image_overlay_opacity]
+                    assign heading = block.settings[heading]
+                    assign heading_preset = block.settings[heading_preset]
+                    assign heading_font_size = block.settings[heading_font_size]
+                    assign heading_font_size_mobile = block.settings[heading_font_size_mobile]
+                    assign subheading = block.settings[subheading]
+                    assign badge = block.settings[badge]
+                    assign button_label = block.settings[button_label]
+                    assign button_link = block.settings[button_link]
+                    assign button_style = block.settings[button_style]
+                    assign button_size = block.settings[button_size]
+                    assign button_icon = block.settings[button_icon]
+                    assign button_icon_style = block.settings[button_icon_style]
+
+                    if image == blank
+                      continue
+                    endif
+                  -%}
+                  <div class="f-column">
+                    {% render 'mega-menu-banner',
+                      banner_design: block.settings.banner_design,
+                      color_scheme: block.settings.color_scheme,
+                      image: image,
+                      image_mobile: image_mobile,
+                      image_overlay_opacity: image_overlay_opacity,
+                      heading: heading,
+                      heading_preset: heading_preset,
+                      heading_font_size: heading_font_size,
+                      heading_font_size_mobile: heading_font_size_mobile,
+                      subheading: subheading,
+                      badge: badge,
+                      button_label: button_label,
+                      button_link: button_link,
+                      button_style: button_style,
+                      button_size: button_size,
+                      button_icon: button_icon,
+                      button_icon_style: button_icon_style
+                    %}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+      {%- endcase -%}
+    </div>
+  </div>
+</details>

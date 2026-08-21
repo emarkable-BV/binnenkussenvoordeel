@@ -1,0 +1,119 @@
+{% doc %}
+  @param {string} [mode] - Badge mode. Accepted values: 'float', 'align'. 'float' for image with badge, 'align' for image card
+  @param {object} [settings] - section/block settings
+  @param {object} [subtext] - section/block settings
+  @param {object} text - section/block settings
+  @param {object} [style] - Additional styles
+  @param {object} [shopify_attributes] - Attributes
+  @param {boolean} [hide_on_mobile] - Hide on mobile
+{% enddoc %}
+
+{% liquid
+  assign mode = mode | default: 'float'
+  assign shape = settings.shape
+  assign round_shape = settings.round_shape
+  assign animation_type = settings.loop_animation
+  if shape == 'custom'
+    assign media_width_desktop = settings.width | times: 3 | append: 'px'
+    assign media_width_mobile = settings.width_mobile | times: 3 | append: 'px'
+    assign media_widths = '100,200,300,400,500'
+  endif
+
+  assign hide_on_mobile = hide_on_mobile | default: settings.hide_on_mobile, allow_false: true
+  if hide_on_mobile
+    assign classes = ' hidden md:block'
+  endif
+%}
+
+{% capture style %}
+  --transform-rotate: {{ settings.rotate }}deg;
+  {%- if shape != 'custom' -%}
+    --background-color: {{ settings.background_color }};
+  {%- endif -%}
+  {%- if round_shape == false and shape == 'custom' or shape == 'none' -%}
+    --border-radius: {{ settings.border_radius }}px;
+  {%- endif -%}
+  {% if mode == 'float' %}
+    --inset-inline-start: {{ settings.offset_left }}%;
+    --inset-block-start: {{ settings.offset_top }}%;
+    --inset-inline-start-mobile: {{ settings.offset_left_mobile }}%;
+    --inset-block-start-mobile: {{ settings.offset_top_mobile }}%;
+  {% endif %}
+  {% render 'clamp-calculate-style', property_name: 'badge-width', min_value: settings.width_mobile, max_value: settings.width, max_breakpoint: 1440 %}
+  {{ style }}
+{% endcapture %}
+
+{% capture badge_inner %}
+  <div class="badge-block__inner relative overflow-hidden badge-block--shape-{{ shape }}{% if round_shape %} rounded{% endif %}">
+    <div class="badge-block__shape absolute inset-0" aria-hidden="true">
+      {% case shape %}
+        {% when 'multi-point-star' %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="130"
+            height="130"
+            viewBox="0 0 130 130"
+            fill="none"
+          >
+            <path d="M65 0L72.6964 11.4705L83.3126 2.63296L87.4656 15.8071L100.142 10.3185L100.415 24.1291L114.124 22.4341L110.495 35.7621L124.126 37.998L116.889 49.7639L129.338 55.7495L119.08 65L129.338 74.2505L116.889 80.2361L124.126 92.002L110.495 94.2379L114.124 107.566L100.415 105.871L100.142 119.681L87.4656 114.193L83.3126 127.367L72.6964 118.53L65 130L57.3036 118.53L46.6874 127.367L42.5344 114.193L29.8583 119.681L29.5851 105.871L15.8763 107.566L19.505 94.2379L5.87392 92.002L13.1106 80.2361L0.661606 74.2505L10.92 65L0.661606 55.7495L13.1106 49.7639L5.87392 37.998L19.505 35.7621L15.8763 22.4341L29.5851 24.1291L29.8583 10.3185L42.5344 15.8071L46.6874 2.63296L57.3036 11.4705L65 0Z" fill="currentColor"/>
+          </svg>
+        {% when 'petal-star' %}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="114"
+            height="114"
+            viewBox="0 0 114 111"
+            fill="none"
+          >
+            <path d="M48.7526 5.02796C52.7249 -0.765208 61.2751 -0.765211 65.2474 5.02796L72.143 15.0845C74.1526 18.0153 77.5668 19.6595 81.1112 19.4033L93.273 18.5244C100.279 18.0181 105.61 24.7029 103.557 31.4206L99.9942 43.0819C98.9558 46.4804 99.799 50.1748 102.209 52.7863L110.479 61.7468C115.243 66.9086 113.341 75.2444 106.809 77.828L95.4699 82.3129C92.1654 83.62 89.8027 86.5827 89.2637 90.0953L87.4144 102.148C86.349 109.091 78.6455 112.801 72.5531 109.305L61.977 103.236C58.8947 101.467 55.1053 101.467 52.023 103.236L41.4469 109.305C35.3545 112.801 27.651 109.091 26.5856 102.148L24.7363 90.0953C24.1973 86.5827 21.8347 83.62 18.5301 82.3129L7.1913 77.828C0.659459 75.2444 -1.24315 66.9086 3.52086 61.7468L11.7908 52.7863C14.201 50.1748 15.0442 46.4804 14.0058 43.0819L10.4426 31.4206C8.39002 24.7029 13.721 18.0181 20.727 18.5244L32.8888 19.4033C36.4332 19.6595 39.8473 18.0153 41.857 15.0845L48.7526 5.02796Z" fill="currentColor"/>
+          </svg>
+        {% when 'scalloped-circle' %}
+          <svg
+            width="85"
+            height="85"
+            viewBox="0 0 85 85"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M39.6051 2.55316C41.0626 0.380928 44.2577 0.380928 45.7152 2.55316C46.9309 4.36494 49.4472 4.72673 51.124 3.33083C53.1345 1.65722 56.2002 2.55738 56.9866 5.05224C57.6426 7.13313 59.9551 8.1892 61.9573 7.32226C64.3578 6.28286 67.0457 8.01025 67.0974 10.6256C67.1406 12.807 69.0619 14.4718 71.2272 14.2041C73.8233 13.8831 75.9157 16.2978 75.2285 18.8218C74.6553 20.927 76.0297 23.0656 78.1828 23.4188C80.7642 23.8422 82.0915 26.7486 80.721 28.9767C79.578 30.8352 80.2942 33.2744 82.2605 34.2199C84.6181 35.3534 85.0728 38.516 83.1301 40.2678C81.5098 41.7289 81.5098 44.2711 83.1301 45.7322C85.0728 47.484 84.6181 50.6466 82.2605 51.7801C80.2942 52.7256 79.578 55.1648 80.721 57.0233C82.0915 59.2514 80.7642 62.1578 78.1828 62.5812C76.0297 62.9344 74.6553 65.073 75.2285 67.1782C75.9157 69.7022 73.8233 72.1169 71.2272 71.7959C69.0619 71.5282 67.1406 73.193 67.0974 75.3744C67.0457 77.9897 64.3578 79.7171 61.9573 78.6777C59.9551 77.8108 57.6426 78.8669 56.9867 80.9478C56.2002 83.4426 53.1345 84.3428 51.124 82.6692C49.4472 81.2733 46.9309 81.6351 45.7152 83.4468C44.2577 85.6191 41.0626 85.6191 39.6051 83.4468C38.3894 81.6351 35.8731 81.2733 34.1963 82.6692C32.1858 84.3428 29.1201 83.4426 28.3337 80.9478C27.6777 78.8669 25.3652 77.8108 23.363 78.6777C20.9625 79.7171 18.2746 77.9897 18.2229 75.3744C18.1797 73.193 16.2585 71.5282 14.0931 71.7959C11.497 72.1169 9.40464 69.7022 10.0918 67.1782C10.665 65.073 9.29059 62.9344 7.13753 62.5812C4.55613 62.1578 3.22884 59.2514 4.5993 57.0233C5.74235 55.1648 5.02614 52.7256 3.05978 51.7801C0.702239 50.6466 0.247531 47.484 2.19022 45.7322C3.81056 44.2711 3.81056 41.7289 2.19022 40.2678C0.24753 38.516 0.702239 35.3534 3.05978 34.2199C5.02614 33.2744 5.74235 30.8352 4.5993 28.9767C3.22884 26.7486 4.55613 23.8422 7.13753 23.4188C9.29059 23.0656 10.665 20.927 10.0918 18.8218C9.40464 16.2978 11.497 13.8831 14.0931 14.2041C16.2585 14.4718 18.1797 12.807 18.2229 10.6256C18.2746 8.01025 20.9625 6.28286 23.363 7.32226C25.3652 8.1892 27.6777 7.13313 28.3337 5.05224C29.1201 2.55738 32.1858 1.65722 34.1963 3.33083C35.8731 4.72673 38.3894 4.36494 39.6051 2.55316Z" fill="currentColor"/>
+          </svg>
+        {% when 'custom' %}
+          {% render 'responsive-image',
+            mode: 'liquid',
+            image: settings.custom_shape,
+            image_ratio: '1',
+            default_alt: shop.name,
+            media_width_desktop: media_width_desktop,
+            media_width_mobile: media_width_mobile,
+            widths: media_widths
+          %}
+      {% endcase %}
+    </div>
+    <div class="badge-block__texts relative flex flex-col items-center justify-center text-center w-full h-full z-1">
+      {% if subtext != blank %}{{ subtext }}{% endif %}
+      {{ text }}
+    </div>
+  </div>
+{% endcapture %}
+
+{% if mode == 'float' %}
+  <badge-float
+    class="badge-block badge-block--mode-float {{ classes }}"
+    style="{{ style | strip | strip_newlines }}"
+    role="status"
+    {{ shopify_attributes }}
+  >
+    <div class="badge-block__float-layer{% if animation_type != 'none' %} badge-block--animation-{{ animation_type }}{% endif %}">
+      {{ badge_inner }}
+    </div>
+  </badge-float>
+{% else %}
+  <div
+    class="badge-block badge-block--mode-{{ mode }} badge-block--animation-{{ animation_type }} {{ classes }}"
+    style="{{ style | strip | strip_newlines }}"
+    role="status"
+    {{ shopify_attributes }}
+  >
+    {{ badge_inner }}
+  </div>
+{% endif %}

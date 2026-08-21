@@ -1,0 +1,219 @@
+{%- doc -%}
+  Renders a list filter component with checkbox inputs for facet filtering
+
+  @param {object} filter - The filter object containing values and settings
+  @param {boolean} [autofocus] - Whether to autofocus the first input
+  @param {string} [sectionId] - The section ID for unique element identification
+  @param {boolean} [in_drawer] - Whether this filter is rendered inside a drawer
+  @param {boolean} [expand] - Whether to expand the accordion by default
+{%- enddoc -%}
+
+{% liquid
+  assign is_swatch = false
+  assign swatch_index = filter.values | find_index: 'swatch'
+
+  if swatch_index != null
+    assign is_swatch = true
+  endif
+
+  assign is_image = false
+  if filter.presentation == 'image'
+    assign is_image = true
+  endif
+%}
+
+<accordion-component class="facets__inputs-accordion accordion accordion--standard accordion--arrow-plus">
+  <details
+    ref="item[]"
+    class="accordion__details{% if expand %} is-open{% endif %}"
+    {% if expand %}
+      open
+    {% endif %}
+  >
+    <summary
+      ref="summary[]"
+      class="accordion__summary flex facet__summary h6"
+      on:click="/onSummaryClick"
+      {% if expand %}
+        aria-expanded="true"
+      {% endif %}
+    >
+      <span class="accordion__summary-text facet__label">{{ filter.label }}</span>
+      {% render 'icon', icon: 'plus', class: 'flex accordion__summary-arrow' %}
+    </summary>
+    <div ref="content[]" class="accordion__content">
+      <div class="accordion__inner">
+        <facet-inputs-component
+          on:change="/updateFilters"
+          id="facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}{% if in_drawer %}-in-drawer{% endif %}"
+        >
+          {%- liquid
+            assign inital_visible_values = 10
+            if is_swatch
+              assign inital_visible_values = 10
+            endif
+            if is_image
+              assign inital_visible_values = 6
+            endif
+            assign max_visible_values = inital_visible_values | plus: 1
+            assign render_show_more = false
+            if filter.values.size > max_visible_values
+              assign render_show_more = true
+            endif
+
+            if render_show_more
+              echo '<show-more-component class="show-more" data-expanded="false" data-skip-node-update="true">'
+            endif
+          -%}
+          {%- capture filter_list_id -%}filters-list-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}{% if in_drawer %}-in-drawer{% endif %}{%- endcapture -%}
+          <div
+            class="facets__inputs-wrapper"
+            ref="showMoreContent"
+          >
+            <ul
+              id="{{ filter_list_id }}"
+              class="facets__inputs-list flex flex-col gap-3 list-unstyled{% if is_swatch %} facets__inputs-list--swatches{% endif %}{% if is_image %} facets__inputs-list--images{% endif %}"
+              name="{{ filter.label }}"
+            >
+              {%- for value in filter.values -%}
+                {% liquid
+                  assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index | replace: '.', '-'
+                  if in_drawer
+                    assign input_id = input_id | append: '-in-drawer'
+                  endif
+                  assign is_disabled = false
+                  if value.count == 0 and value.active == false
+                    assign is_disabled = true
+                  endif
+                  assign is_visible = true
+                  if forloop.index > inital_visible_values and render_show_more
+                    assign is_visible = false
+                  endif
+                %}
+                <li
+                  data-skip-node-update="true"
+                  class="facets__inputs-list-item{% unless is_visible %} hidden{% endunless %}"
+                  {% unless is_visible %}
+                    ref="showMoreItems[]"
+                  {% endunless %}
+                >
+                  {%- if is_image -%}
+                    <fieldset
+                      class="flex items-center relative justify-between gap-3 focus-within--inset{% if is_disabled %} disabled{% else %} reversed-link{% endif %}"
+                      aria-label="{{ value.label }}"
+                      on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}/handleKeyDown"
+                    >
+                      <input
+                        tabindex="0"
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        aria-label="{{ value.label }}"
+                        id="{{ input_id }}"
+                        {% if value.active %}
+                          checked
+                        {% endif %}
+                        {% if is_disabled %}
+                          disabled
+                        {% endif %}
+                        {% if autofocus %}
+                          autofocus
+                        {% endif %}
+                        ref="facetInputs[]"
+                      >
+                      {%- liquid
+                        assign image_alt = value.alt | default: value.label | escape
+                      -%}
+                      <div class="facets__image-wrapper flex items-center gap-2 flex-1">
+                        {% if value.image %}
+                          {{ value.image | image_url: width: 300 | image_tag: alt: image_alt, sizes: '50px', widths: '50, 100', loading: 'lazy' }}
+                        {% endif %}
+                        <label
+                          class="facets__image-label color-subtext flex-1"
+                          for="{{ input_id }}"
+                          tabindex="-1"
+                        >
+                          <span class="reversed-link__text">{{- value.label }}</span>
+                        </label>
+                      </div>
+                      <span class="color-subtext">{{ value.count }}</span>
+                    </fieldset>
+                  {%- elsif is_swatch -%}
+                    <fieldset
+                      class="facets__swatch block focus-within--inset{% if is_disabled %} disabled{% else %} reversed-link{% endif %}"
+                      aria-label="{{ value.label }}"
+                      on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}/handleKeyDown"
+                    >
+                      <label
+                        class="flex items-center gap-2 flex-1"
+                        on:pointerenter="/prefetchPage"
+                        on:pointerleave="/cancelPrefetchPage"
+                        for="{{ input_id }}"
+                      >
+                        <input
+                          tabindex="0"
+                          type="checkbox"
+                          class="visually-hidden"
+                          name="{{ value.param_name }}"
+                          value="{{ value.value }}"
+                          aria-label="{{ value.label }}"
+                          id="{{ input_id }}"
+                          {% if value.active %}
+                            checked
+                          {% endif %}
+                          {% if is_disabled %}
+                            disabled
+                          {% endif %}
+                          {% if autofocus %}
+                            autofocus
+                          {% endif %}
+                          ref="facetInputs[]"
+                        >
+                        {% render 'swatch', swatch: value.swatch %}
+                        <span class="flex-1 color-subtext">
+                          <span class="reversed-link__text">{{- value.label }}</span>
+                        </span>
+                        <span class="color-subtext">{{ value.count }}</span>
+                      </label>
+                    </fieldset>
+                  {%- else -%}
+                    {% render 'checkbox',
+                      name: value.param_name,
+                      value: value.value,
+                      label: value.label,
+                      count: value.count,
+                      checked: value.active,
+                      id: input_id,
+                      disabled: is_disabled,
+                      inputRef: 'facetInputs[]',
+                      events: 'on:pointerenter="/prefetchPage" on:pointerleave="/cancelPrefetchPage"',
+                      autofocus: autofocus
+                    %}
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+          {%- if render_show_more -%}
+            <button
+              class="show-more__button button-unstyled flex items-center gap-2 text-body-sm color-subtext"
+              ref="showMoreButton"
+              on:click="/toggle"
+              aria-expanded="false"
+              aria-controls="{{ filter_list_id }}"
+            >
+              {% render 'icon', icon: 'plus', size: 'small' %}
+              <span class="show-more__label show-more__label--more">
+                {{- 'actions.show_more' | t -}}
+              </span>
+              <span class="show-more__label show-more__label--less">
+                {{- 'actions.show_less' | t -}}
+              </span>
+            </button>
+            {% echo '</show-more-component>' %}
+          {%- endif -%}
+        </facet-inputs-component>
+      </div>
+    </div>
+  </details>
+</accordion-component>

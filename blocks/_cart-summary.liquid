@@ -1,0 +1,117 @@
+{% liquid
+  assign gift_wrap_variant = null
+  assign gift_wrap_variant_id = null
+  if settings.gift_wrap_product != blank
+    assign gift_wrap_product = all_products[settings.gift_wrap_product]
+    if gift_wrap_product != blank
+      assign gift_wrap_variant = gift_wrap_product.selected_or_first_available_variant
+      assign gift_wrap_variant_id = gift_wrap_variant.id
+    endif
+  endif
+%}
+<div
+  class="cart-summary__container flex flex-col gap-5 xl:gap-6 sticky-element sticky-element--adapt"
+  style="--sticky-element-top: 3rem;"
+>
+  {% if settings.show_free_shipping_goal and settings.free_shipping_goal_amount != blank %}
+    <div class="cart-summary__free-shipping-goal">
+      {% render 'free-shipping-goal', section: section %}
+    </div>
+  {% endif %}
+  {% if settings.show_add_discount_code or settings.show_cart_note or settings.show_caculate_shipping_rate or gift_wrap_variant != blank %}
+    <accordion-component
+      class="accordion cart-summary__addons flex flex-col"
+      data-single-open="true"
+    >
+      {%- capture details_class -%}
+        {%- if section.settings.cart_addons_inherit_color_scheme -%}
+          inherit-color-scheme
+        {%- else -%}
+          color-{{ section.settings.cart_addons_color_scheme }}
+        {%- endif -%}
+      {%- endcapture -%}
+      {% if settings.show_add_discount_code %}
+        <details
+          ref="item[]"
+          class="accordion__details cart-summary__addon {{ details_class }}"
+          data-skip-node-update="true"
+        >
+          <summary ref="summary[]" class="accordion__summary flex" on:click="/onSummaryClick">
+            <span class="accordion__summary-text h6">{{ 'actions.discount_code' | t }}</span>
+            {% render 'icon', icon: 'caret-down', class: 'icon--caret flex accordion__summary-arrow' %}
+          </summary>
+          <div ref="content[]" class="accordion__content">
+            <div class="accordion__inner">
+              {% render 'cart-discount', section_id: section.id %}
+            </div>
+          </div>
+        </details>
+      {% endif %}
+      {% if settings.show_cart_note %}
+        <details ref="item[]" class="accordion__details cart-summary__addon {{ details_class }}">
+          <summary ref="summary[]" class="accordion__summary flex" on:click="/onSummaryClick">
+            <span class="accordion__summary-text h6">{{ 'actions.order_notes' | t }}</span>
+            {% render 'icon', icon: 'caret-down', class: 'icon--caret flex accordion__summary-arrow' %}
+          </summary>
+          <div ref="content[]" class="accordion__content">
+            <div class="accordion__inner">
+              {% render 'cart-note', section: section %}
+            </div>
+          </div>
+        </details>
+      {% endif %}
+      {% if gift_wrap_variant != blank %}
+        <details ref="item[]" class="accordion__details cart-summary__addon {{ details_class }}">
+          <summary ref="summary[]" class="accordion__summary flex" on:click="/onSummaryClick">
+            <span class="accordion__summary-text h6">
+              {{ 'actions.gift_wrapping' | t }}
+            </span>
+            {% render 'icon', icon: 'caret-down', class: 'icon--caret flex accordion__summary-arrow' %}
+          </summary>
+          <div ref="content[]" class="accordion__content">
+            <div class="accordion__inner">
+              <gift-wrapping-component
+                class="gift-wrapping-component w-full"
+                data-gift-variant-id="{{ gift_wrap_variant_id }}"
+                data-sync-quantity="{{ settings.gift_wrap_sync_quantity }}"
+              >
+                {% render 'cart-gift-wrapping',
+                  gift_wrap_variant: gift_wrap_variant,
+                  gift_wrap_variant_id: gift_wrap_variant_id,
+                  id_suffix: '-page-addon',
+                  compact: true
+                %}
+              </gift-wrapping-component>
+            </div>
+          </div>
+        </details>
+      {% endif %}
+      {% if settings.show_caculate_shipping_rate %}
+        <details ref="item[]" class="accordion__details cart-summary__addon {{ details_class }}">
+          <summary ref="summary[]" class="accordion__summary flex" on:click="/onSummaryClick">
+            <span class="accordion__summary-text h6">{{ 'actions.shipping' | t }}</span>
+            {% render 'icon', icon: 'caret-down', class: 'icon--caret flex accordion__summary-arrow' %}
+          </summary>
+          <div ref="content[]" class="accordion__content">
+            <div class="accordion__inner">
+              {% render 'cart-shipping', section: section %}
+            </div>
+          </div>
+        </details>
+      {% endif %}
+    </accordion-component>
+  {% endif %}
+  {% render 'cart-summary', section: section, context: 'cart-page' %}
+</div>
+
+{% schema %}
+{
+  "name": "t:names.summary",
+  "tag": null,
+  "presets": [
+    {
+      "name": "t:names.summary"
+    }
+  ]
+}
+{% endschema %}

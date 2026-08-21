@@ -1,0 +1,147 @@
+<script type="importmap">
+  {
+    "imports": {
+      "@theme/critical": "{{ 'critical.js' | asset_url }}",
+      "@theme/utilities": "{{ 'utilities.js' | asset_url }}",
+      "@theme/component": "{{ 'component.js' | asset_url }}",
+      "@theme/events": "{{ 'events.js' | asset_url }}",
+      "@theme/dialog": "{{ 'dialog.js' | asset_url }}",
+      "@theme/carousel": "{{ 'carousel.js' | asset_url }}",
+      "@theme/swiper": "{{ 'swiper.js' | asset_url }}",
+      "@theme/modules": "{{ 'modules.js' | asset_url }}",
+      "@theme/morph": "{{ 'morph.js' | asset_url }}",
+      "@theme/section-renderer": "{{ 'section-renderer.js' | asset_url }}",
+      "@theme/product-form": "{{ 'product-form.js' | asset_url }}",
+      "@theme/variant-picker": "{{ 'variant-picker.js' | asset_url }}",
+      "@theme/media-gallery": "{{ 'media-gallery.js' | asset_url }}",
+      "@theme/animation": "{{ 'animation.js' | asset_url }}",
+      "@theme/testimonial-slider": "{{ 'testimonial-slider.js' | asset_url }}",
+      "@theme/photoswipe": "{{ 'photoswipe.js' | asset_url }}",
+      "@theme/zoom-dialog": "{{ 'zoom-dialog.js' | asset_url }}",
+      "@theme/paginated-list": "{{ 'paginated-list.js' | asset_url }}",
+      "@theme/carousel-features/counter": "{{ 'counter.js' | asset_url }}",
+      "@theme/carousel-features/custom-pagination": "{{ 'custom-pagination.js' | asset_url }}",
+      "@theme/carousel-features/navigation-position": "{{ 'navigation-position.js' | asset_url }}",
+      "@theme/carousel-features/thumbnails": "{{ 'thumbnails.js' | asset_url }}",
+      "@theme/carousel-features/progressbar-autoplay": "{{ 'progressbar-autoplay.js' | asset_url }}",
+      "@theme/lenis": "{{ 'lenis.js' | asset_url }}",
+      "@theme/motion-coordinator": "{{ 'motion-coordinator.js' | asset_url }}",
+      "@theme/image-coordinator": "{{ 'image-coordinator.js' | asset_url }}",
+      "@theme/sticky-add-to-cart": "{{ 'sticky-add-to-cart.js' | asset_url }}",
+      "@theme/badge-float": "{{ 'badge-float.js' | asset_url }}"
+    }
+  }
+</script>
+
+<!-- Preload critical resources -->
+<link rel="modulepreload" href="{{ 'utilities.js' | asset_url }}">
+<link rel="modulepreload" href="{{ 'component.js' | asset_url }}">
+<link rel="modulepreload" href="{{ 'events.js' | asset_url }}">
+<link rel="modulepreload" href="{{ 'swiper.js' | asset_url }}">
+<link rel="modulepreload" href="{{ 'morph.js' | asset_url }}">
+{% if settings.animations_enabled %}
+  <link rel="modulepreload" href="{{ 'animation.js' | asset_url }}">
+  <link rel="modulepreload" href="{{ 'motion-component.js' | asset_url }}">
+  <script src="{{ 'motion-component.js' | asset_url }}" type="module"></script>
+{% endif %}
+<link rel="modulepreload" href="{{ 'section-renderer.js' | asset_url }}" fetchpriority="low">
+<link rel="modulepreload" href="{{ 'page-transition.js' | asset_url }}" fetchpriority="low">
+<link rel="modulepreload" href="{{ 'modules.js' | asset_url }}" fetchpriority="low">
+<link rel="modulepreload" href="{{ 'carousel.js' | asset_url }}" fetchpriority="low">
+<link rel="modulepreload" href="{{ 'theme.js' | asset_url }}" fetchpriority="low">
+
+<script src="{{ 'custom-elements.js' | asset_url }}" defer></script>
+<script src="{{ 'carousel.js' | asset_url }}" type="module"></script>
+<script src="{{ 'modules.js' | asset_url }}" type="module"></script>
+<script src="{{ 'theme.js' | asset_url }}" type="module"></script>
+
+<script src="{{ 'dialog.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'variant-picker.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'media-gallery.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'product-card.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'product-price.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'product-title.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'product-badge.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'product-inventory.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'quantity-selector.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'product-form.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'price-per-item.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'gift-card-recipient-form.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'cart-count.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'quick-add.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'video-card.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+{% if template == 'product' or template.name == 'product' or request.page_type == 'product' %}
+  <script src="{{ 'sticky-add-to-cart.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+
+{% if settings.search_predictive_enabled %}
+  <script src="{{ 'search.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+{% if template.directory == 'customers' %}
+  <script src="{{ 'customer-addresses.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+{% if settings.show_cart_note %}
+  <script src="{{ 'cart-note.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+{% if settings.gift_wrap_product != blank %}
+  <script src="{{ 'gift-wrapping.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+{% if settings.show_add_discount_code %}
+  <script src="{{ 'cart-discount.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+{% if settings.show_free_shipping_goal %}
+  <script src="{{ 'free-shipping-goal.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+{% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
+  <script src="{{ 'localization.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+{% if settings.page_transitions_enabled %}
+  <script src="{{ 'page-transition.js' | asset_url }}" type="module"></script>
+{% endif %}
+
+<script>
+  window.FoxTheme = {
+    translations: {
+      placeholder_image: `{{ 'content.placeholder_image' | t }}`,
+      added: `{{ 'actions.added' | t }}`,
+      recipient_form_fields_visible: `{{ 'content.recipient_form_fields_visible' | t }}`,
+      recipient_form_fields_hidden: `{{ 'content.recipient_form_fields_hidden' | t }}`,
+      recipient_form_error: `{{ 'content.recipient_form_error' | t }}`,
+      shipping_calculator_error: `{{ 'content.shipping_calculator.error' | t }}`,
+      shipping_calculator_not_found: `{{ 'content.shipping_calculator.notFound' | t }}`,
+      shipping_calculator_one_result: `{{ 'content.shipping_calculator.oneResult' | t }}`,
+      shipping_calculator_multiple_results: `{{ 'content.shipping_calculator.multipleResults' | t }}`,
+    },
+    routes: {
+      cart: '{{ routes.cart_url | append: '.js' }}',
+      cart_add_url: '{{ routes.cart_add_url | append: '.js' }}',
+      cart_change_url: '{{ routes.cart_change_url }}',
+      cart_update_url: '{{ routes.cart_update_url }}',
+      cart_url: '{{ routes.cart_url }}',
+      shop_url: '{{ shop.url }}',
+      predictive_search_url: '{{ routes.predictive_search_url }}',
+      search_url: '{{ routes.search_url }}',
+    },
+    template: {
+      name: '{{ template }}',
+    },
+    settings: {
+      cartType: '{{ settings.cart_type }}',
+      pageTransitionsEnabled: {{ settings.page_transitions_enabled }},
+      smoothScroll: true,
+      themeName: 'Pebble',
+      themeVersion: '1.3.0',
+    },
+    moneyFormat: '{{ shop.money_format }}',
+  };
+
+  console.log(
+    '%c' +
+      window.FoxTheme.settings.themeName +
+      ' theme (v' +
+      window.FoxTheme.settings.themeVersion +
+      ') by Foxecom | Learn more https://foxecom.com/products/pebble-shopify-theme',
+    'font-size: 14px; color: #FF5C00;'
+  );
+</script>

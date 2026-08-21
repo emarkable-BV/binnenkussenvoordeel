@@ -1,0 +1,51 @@
+{%- doc -%}
+  Renders block content for all blocks that extend the group block.
+
+  @param {string} children - The DOM content of the group block.
+  @param {object} settings - The settings of the group block.
+  @param {string} shopify_attributes - String with Shopify attributes for the editor.
+  @param {string} [class] - Custom classes for the group block.
+  @param {string} [styles] - Custom inline styles for the group block.
+
+  @example
+  {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
+{%- enddoc -%}
+{%- liquid
+  assign enable_swipe_on_mobile = settings.enable_swipe_on_mobile
+  assign swipe_mobile_classes = ''
+
+  if enable_swipe_on_mobile
+    assign swipe_mobile_classes = ' swipe-mobile swipe-mobile--[columns]-cols' | replace: '[columns]', settings.columns_mobile
+
+    if settings.swipe_custom_width_column
+      assign swipe_mobile_classes = swipe_mobile_classes | append: ' swipe-mobile--custom-width'
+    endif
+  endif
+-%}
+{%- capture group_block_content_class -%}
+  group-block-content layout-panel-flex gap-style layout-panel-flex--{{ settings.content_direction | default: 'column' }}{% if request.design_mode %} group-block-content--design-mode{% endif %}
+  {%- if settings.enable_swipe_on_mobile %} swipe__inner{%- endif -%}
+  {%- if settings.content_direction == 'row' and settings.vertical_on_mobile %} mobile-column{%- endif -%}
+{%- endcapture -%}
+{%- capture group_block_class -%}
+  group-block spacing-style border-style size-style{% if settings.inherit_color_scheme == false %} color-{{ settings.color_scheme }}{% endif %}{{ class }}
+  {%- if settings.enable_swipe_on_mobile %} {{ swipe_mobile_classes }}{%- endif -%}
+  {% if settings.enable_sticky_desktop %} sticky-element sticky-element--adapt{% endif %}
+{%- endcapture -%}
+{%- capture inline_style -%}
+  {%- if enable_swipe_on_mobile and settings.swipe_custom_width_column %} --swipe-column-width: {{ settings.swipe_column_width | divided_by: 100.0 }};{%- endif -%}
+  --order-mobile: {% if settings.order_mobile != blank %}{{ settings.order_mobile }}{% else %}initial{% endif %};
+  {% if settings.enable_sticky_desktop %}--sticky-element-top: 3rem;{% endif %}
+{%- endcapture -%}
+<div
+  class="{{ group_block_class | strip_newlines }}"
+  style="{% render 'spacing-style', settings: settings %}{% render 'border-style', settings: settings %}{% render 'size-style', settings: settings, type: 'grid', swipe_on_mobile: settings.enable_swipe_on_mobile %}{{ inline_style }}{{ styles }}"
+  {{ shopify_attributes }}
+>
+  <div
+    class="{{ group_block_content_class | strip_newlines }}"
+    style="{% render 'layout-panel-style', settings: settings, type: 'flex' %}{% render 'gap-style', settings: settings %}"
+  >
+    {{- children -}}
+  </div>
+</div>

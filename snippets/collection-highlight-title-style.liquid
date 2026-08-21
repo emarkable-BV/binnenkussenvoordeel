@@ -1,0 +1,24 @@
+{% doc %}
+  @param {object} [settings] - Section/block settings
+{% enddoc %}
+{%- capture title_color -%}
+  {%- case settings.collection_title_text_color -%}
+    {%- when 'text' -%}
+      rgb(var(--color-foreground))
+    {%- when 'subtext' -%}
+      var(--color-foreground-secondary)
+    {%- when 'custom' -%}
+      {%- if settings.collection_title_custom_text_color.alpha > 0 -%}rgb({{ settings.collection_title_custom_text_color.rgb }} / {{ settings.collection_title_custom_text_color.alpha }}){%- else -%}rgb(var(--color-foreground)){%- endif -%}
+  {%- endcase -%}
+{%- endcapture -%}
+{%- capture highlighted_title_color -%}
+  {%- case settings.collection_title_highlight_text_color -%}
+    {%- when 'text' -%}
+      rgb(var(--color-foreground))
+    {%- when 'subtext' -%}
+      var(--color-foreground-secondary);
+    {%- when 'custom' -%}
+      {%- if settings.collection_title_highlight_custom_text_color.alpha > 0 -%}rgb({{ settings.collection_title_highlight_custom_text_color.rgb }} / {{ settings.collection_title_highlight_custom_text_color.alpha }}){%- else -%}rgb(var(--color-foreground)){%- endif -%}
+  {%- endcase -%}
+{%- endcapture -%}
+--color-title: {{ title_color }}; --color-highlighted-title: {{ highlighted_title_color }};

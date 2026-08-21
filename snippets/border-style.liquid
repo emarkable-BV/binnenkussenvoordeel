@@ -1,0 +1,44 @@
+{%- doc -%}
+  @param {object} [settings] - The settings of the group block.
+  @param {number} [border_width] - Border width in px
+  @param {string} [border] - Border style
+  @param {number} [border_opacity] - Border opacity
+  @param {number} [border_radius] - Border radius in px
+  @param {boolean} [use_mask_clip] - Whether to render overflow and mask. Default true
+  @param {boolean} [rounded] - Whether to render rounded border
+{%- enddoc -%}
+{%- liquid
+  if rounded == null
+    assign rounded = settings.rounded
+  endif
+  if border_width == null
+    assign border_width = settings.border_width
+  endif
+  if border == null
+    assign border = settings.border
+  endif
+  if border_opacity == null
+    assign border_opacity = settings.border_opacity
+  endif
+  if border_radius == null
+    assign border_radius = settings.border_radius
+  endif
+  if rounded
+    assign border_radius = 999
+  endif
+
+  assign use_mask_clip = use_mask_clip | default: true, allow_false: true
+-%}
+{%- capture border_style -%}
+  {%- if border_width != blank -%}--border-width: {{ border_width }}px;{%- endif -%}
+  {%- if border != blank -%}--border-style: {{ border }};{%- else -%}--border-style: none;{%- endif -%}
+  {%- if border_opacity != blank and border_opacity != 0 -%}--border-color: rgb(var(--color-border) / {{ border_opacity | divided_by: 100.0 }});{%- endif -%}
+  {%- if border_radius != blank -%}
+    --border-radius: {{ border_radius }}px; 
+    {%- if border_radius > 0 and use_mask_clip -%}
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+      overflow: hidden; 
+    {%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+{{- border_style | replace: '  ', ' ' | strip | strip_newlines -}}

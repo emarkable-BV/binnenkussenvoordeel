@@ -1,0 +1,312 @@
+{%- liquid
+  assign block_index = section.blocks | find_index: 'id', block.id
+  assign is_selected = false
+  if block_index == 0
+    assign is_selected = true
+  endif
+
+  assign product_placeholder_index = block_index | plus: 1 | modulo: 6
+  if product_placeholder_index == 0
+    assign product_placeholder_index = 6
+  endif
+  assign svg_placeholder = 'product-' | append: product_placeholder_index
+  assign dialog_component_id = section.id | append: block.id | append: '-dialog-component'
+  assign dialog_id = section.id | append: block.id | append: '-dialog'
+-%}
+{%- capture hotspot_icon_style -%}
+  --offset-top: {{ block.settings.offset_top }}%;
+  --offset-left: {{ block.settings.offset_left }}%;
+  --offset-top-mobile: {{ block.settings.offset_top_mobile }}%;
+  --offset-left-mobile: {{ block.settings.offset_left_mobile }}%;
+{%- endcapture -%}
+{% capture hotspot_icon %}
+  <div
+    class="hotspot-icon hotspot__element absolute inline-flex items-center justify-center{% if is_selected %} is-selected{% endif %}"
+    style="{{ hotspot_icon_style }}"
+    ref="hotspots[]"
+    data-index="{{ block_index }}"
+    aria-haspopup="true"
+    aria-controls="{{ dialog_id }}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="hotspot-icon__dot inline-flex items-center justify-center"></div>
+    <div class="hotspot-icon__tooltip absolute inline-flex items-center">
+      {{ block.settings.label }}
+      {% render 'icon', icon: 'caret-right', size:'extra-small' %}
+    </div>
+  </div>
+{% endcapture %}
+{%- capture hotspot_card -%}
+  <div
+    class="hotspot-card hotspot__element flex flex-col gap-1 md:gap-6 swiper-slide{% if is_selected %} is-selected{% endif %}"
+    data-index="{{ block_index }}"
+  >
+    {% content_for 'block', type: '_hotspot-card-image', id: 'banner', svg_placeholder: svg_placeholder %}
+    <div class="hotspot-card__content flex flex-col">
+      <div class="hotspot-card__heading">
+      {% content_for 'block', type: 'text', id: 'heading' %}
+      </div>
+      <div class="hotspot-card__info">
+        {% content_for 'block', type: 'text', id: 'description' %}
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+{%- endcapture -%}
+<!-- @shopTheLook/split -->
+{{ hotspot_icon }}
+<!-- @shopTheLook/split -->
+{{ hotspot_card }}
+<!-- @shopTheLook/split -->
+<dialog-component id="{{ dialog_component_id }}">
+  <dialog
+    id="{{ dialog_id }}"
+    ref="dialog"
+    class="shop-the-look__dialog dialog dialog--modal dialog--drawer-mobile-bottom overflow-hidden{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}"
+    scroll-lock
+  >
+    <button
+      class="dialog__close dialog__close--absolute"
+      on:click="/closeDialog"
+      aria-label="{{ 'accessibility.close_dialog' | t }}"
+    >
+      {% render 'icon', icon: 'close', size: 'large' %}
+    </button>
+    <div class="dialog__content flex flex-col gap-3">
+      {%- if block.settings.heading != blank -%}
+        <h2 class="{{ block.settings.label }}">
+          {{ block.settings.label }}
+        </h2>
+      {%- endif -%}
+      {{ hotspot_card }}
+    </div>
+  </dialog>
+</dialog-component>
+{% schema %}
+{
+  "name": "t:content.hotspot",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.button_label"
+    },
+    {
+      "type": "range",
+      "id": "offset_top",
+      "label": "t:settings.offset_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_left",
+      "label": "t:settings.offset_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_top_mobile",
+      "label": "t:settings.offset_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_left_mobile",
+      "label": "t:settings.offset_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button"
+    },
+    {
+      "type": "icon-list"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:content.hotspot",
+      "settings": {
+        "label": "Product name",
+        "offset_top": 25,
+        "offset_left": 50,
+        "offset_top_mobile": 25,
+        "offset_left_mobile": 50
+      },
+      "blocks": {
+        "icon_list": {
+          "type": "icon-list",
+          "name": "t:names.icon_list",
+          "settings": {
+            "row_gap": 12,
+            "row_gap_mobile": 12,
+            "item_icon_style": "circle",
+            "item_vertical_alignment": "center",
+            "device": "desktop",
+            "padding-block-start": 20,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 20,
+            "padding-block-end-mobile": 0,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0
+          },
+          "blocks": {
+            "list_item_MDcdtU": {
+              "type": "_list-item",
+              "name": "t:names.list_item",
+              "settings": {
+                "icon": "check",
+                "icon_size": "small",
+                "icon_width": 24,
+                "icon_width_mobile": 24,
+                "text": "Talk about your product",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": ""
+              },
+              "blocks": {}
+            },
+            "list_item_3h6qHP": {
+              "type": "_list-item",
+              "name": "t:names.list_item",
+              "settings": {
+                "icon": "check",
+                "icon_size": "small",
+                "icon_width": 24,
+                "icon_width_mobile": 24,
+                "text": "Talk about your product",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["list_item_MDcdtU", "list_item_3h6qHP"]
+        },
+        "button": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop Now",
+            "style": "primary",
+            "size": "large",
+            "icon": "caret-right",
+            "icon_only": false,
+            "icon_style": "solid",
+            "mobile_full_width": true,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
+        "banner": {
+          "type": "_hotspot-card-image",
+          "static": true,
+          "settings": {
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "border_radius": 20
+          },
+          "blocks": {}
+        },
+        "heading": {
+          "type": "text",
+          "name": "t:names.heading",
+          "static": true,
+          "settings": {
+            "text": "<p>Product name</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
+        "description": {
+          "type": "text",
+          "static": true,
+          "settings": {
+            "text": "<p>Introduce products, highlight features, share updates, promote new releases</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "subtext",
+            "text_color_gradient": "",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 8,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 100,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["icon_list", "button"]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,36 @@
+{% # Non-critical CSS %}
+<link
+  rel="stylesheet"
+  href="{{ 'photoswipe.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+<link
+  rel="stylesheet"
+  href="{{ 'component-non-critical.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+<link
+  rel="stylesheet"
+  href="{{ 'menu-drawer.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+<link
+  rel="stylesheet"
+  href="{{ 'header-menu.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+{% if template.name == 'product' %}
+  {{ 'section-product-information.css' | asset_url | stylesheet_tag: preload: true }}
+{% endif %}
+
+{% if template.name == 'collection' or template.name == 'search' %}
+  {{ 'template-collection.css' | asset_url | stylesheet_tag: preload: true }}
+{% endif %}
+
+{% if template.directory == 'customers' %}
+  {{ 'customer.css' | asset_url | stylesheet_tag }}
+{% endif %}

@@ -1,0 +1,81 @@
+{% liquid
+  assign minimum_amounts = settings.free_shipping_goal_amount | remove: ' '
+  assign show_free_shipping_bar = false
+  assign is_single_currency = false
+
+  if minimum_amounts contains ':'
+    assign minimum_amounts = minimum_amounts | split: ','
+    for amount in minimum_amounts
+      assign amount_parts = amount | split: ':'
+      assign currency_code = amount_parts | first | upcase
+      if currency_code == cart.currency.iso_code
+        assign minimum_amount = amount_parts | last
+        assign show_free_shipping_bar = true
+        break
+      endif
+    endfor
+  else
+    assign minimum_amount = minimum_amounts
+    assign show_free_shipping_bar = true
+    assign is_single_currency = true
+  endif
+
+  assign minimum_amount_in_cents = minimum_amount | times: 100
+  assign total_price = cart.total_price
+  assign progress_percent = 0
+  if minimum_amount_in_cents > 0
+    assign progress_percent = total_price | times: 100 | divided_by: minimum_amount_in_cents
+    if progress_percent > 100
+      assign progress_percent = 100
+    endif
+  endif
+%}
+
+{% if show_free_shipping_bar and settings.show_free_shipping_goal %}
+  <free-shipping-goal
+    class="free-shipping-goal grid gap-2"
+    data-skip-subtree-update="true"
+    data-minimum-amount="{{ minimum_amount }}"
+    data-is-single-currency="{{ is_single_currency }}"
+    data-shop-currency="{{ shop.currency }}"
+    data-current-currency="{{ cart.currency.iso_code }}"
+    data-cart-total="{{ cart.total_price }}"
+  >
+    {%- if total_price >= minimum_amount_in_cents -%}
+      <span class="free-shipping-goal__congratulations">
+        {{ 'content.free_shipping_goal.congratulations_html' | t }}
+      </span>
+      <div class="free-shipping-goal__remaining hidden">
+        <span class="free-shipping-goal__remaining-text">
+          {{
+            'content.free_shipping_goal.remaining_html'
+            | t:
+              remaining_amount: '<span class="font-bold free-shipping-goal__remaining-amount"></span>'
+          }}
+        </span>
+      </div>
+    {%- else -%}
+      <span class="free-shipping-goal__congratulations hidden">
+        {{ 'content.free_shipping_goal.congratulations_html' | t }}
+      </span>
+      <div class="free-shipping-goal__remaining">
+        <span class="free-shipping-goal__remaining-text">
+          {{
+            'content.free_shipping_goal.remaining_html'
+            | t:
+              remaining_amount: '<span class="font-bold free-shipping-goal__remaining-amount"></span>'
+          }}
+        </span>
+      </div>
+    {%- endif -%}
+    <progress-bar
+      class="progress-bar"
+      percent="{{ progress_percent }}"
+      label="Free shipping progress"
+    >
+      <div class="progress-bar__container w-full overflow-hidden">
+        <div class="progress-bar__fill h-full"></div>
+      </div>
+    </progress-bar>
+  </free-shipping-goal>
+{% endif %}

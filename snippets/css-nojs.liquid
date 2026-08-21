@@ -1,0 +1,83 @@
+{%- doc -%}
+  Fallback CSS for users with JS disabled
+{%- enddoc -%}
+<noscript>
+  <style>
+    /* General */
+    .no-js-hidden {
+      display: none !important;
+    }
+
+    .no-js-alert {
+      margin-top: 1.6rem;
+    }
+
+    motion-component {
+      visibility: visible !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    /* Component: Tab panels */
+    .tabs__panels {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    .tabs__panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4rem;
+    }
+
+    /* Component: Accordion */
+    .accordion__details .accordion__summary-arrow.icon--caret svg {
+      transform: rotateX(0deg) !important;
+    }
+
+    .accordion__details[open] .accordion__summary-arrow.icon--caret svg {
+      transform: rotateX(180deg) !important;
+    }
+
+    /* Block: Card layered */
+    .card-layered__description {
+      max-height: unset;
+    }
+
+    /* Section: Scrolling cards. */
+    .scrolling-cards__headings {
+      height: auto;
+    }
+
+    .block-scrolling__headings {
+      position: static;
+    }
+
+    /* Template: Collection */
+    @media (min-width: 1024px) {
+      results-list .collection__wrapper {
+        grid-template-areas:
+          'toolbar toolbar'
+          'remove-buttons remove-buttons'
+          'main-collection-grid main-collection-grid' !important;
+      }
+    }
+
+    /* Template: Product */
+
+    /* Template: Cart */
+    .cart-summary__addon[open] {
+      border-radius: min(1rem, var(--button-corner-radius));
+    }
+
+    .quantity-selector .quantity-input {
+      padding-inline: 2.8rem 1.2rem;
+    }
+
+    .quantity-selector .quantity-input::-webkit-outer-spin-button,
+    .quantity-selector .quantity-input::-webkit-inner-spin-button {
+      -webkit-appearance: auto;
+    }
+  </style>
+</noscript>

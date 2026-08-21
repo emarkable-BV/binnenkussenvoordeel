@@ -1,0 +1,55 @@
+{%- liquid
+  assign wrapper_tag = 'div'
+  if request.page_type == 'index'
+    assign wrapper_tag = 'h1'
+  endif
+
+  assign logo = settings.logo
+  assign logo_mobile = settings.logo_mobile
+  assign has_logo = false
+
+  if logo != blank or logo_mobile != blank
+    assign has_logo = true
+  endif
+-%}
+<{{ wrapper_tag }} class="header__logo flex justify-center items-center m-0">
+  <a
+    href="{{ routes.root_url }}"
+    class="h3 relative flex{% unless has_logo %} header__logo--text{% else %} header__logo--image{% endunless %}"
+  >
+    {%- if has_logo -%}
+      {%- liquid
+        assign logo_width = settings.logo_width
+        assign logo_width_2x = logo_width | times: 2
+        assign logo_width_mobile = settings.logo_width_mobile
+        assign logo_width_mobile_2x = logo_width_mobile | times: 2
+      -%}
+      {%- if logo_mobile -%}
+        <img
+          srcset="{{ logo_mobile | image_url: width: logo_width_mobile }} 1x, {{ logo_mobile | image_url: width: logo_width_mobile_2x }} 2x"
+          src="{{ logo_mobile | image_url: width: logo_width_mobile }}"
+          loading="eager"
+          width="{{ logo_mobile.width }}"
+          height="{{ logo_mobile.height }}"
+          alt="{{ logo_mobile.alt | default: shop.name | escape }}"
+          class="logo logo--mobile{% if logo != blank %} header__logo--mobile lg:hidden{% endif %}"
+          sizes="(min-width: 768px) {{ logo_width }}px, {{ logo_width_mobile }}px"
+        >
+      {%- endif -%}
+      {%- if logo -%}
+        <img
+          srcset="{{ logo | image_url: width: logo_width }} 1x, {{ logo | image_url: width: logo_width_2x }} 2x"
+          src="{{ logo | image_url: width: logo_width }}"
+          loading="eager"
+          width="{{ logo.width }}"
+          height="{{ logo.height }}"
+          alt="{{ logo.alt | default: shop.name | escape }}"
+          class="logo logo--desktop{% if logo_mobile %} header__logo--desktop lg:block hidden{% endif %}"
+          sizes="(min-width: 768px) {{ logo_width }}px, {{ logo_width_mobile }}px"
+        >
+      {%- endif -%}
+    {%- else -%}
+      {{ shop.name }}
+    {%- endif -%}
+  </a>
+</{{ wrapper_tag }}>

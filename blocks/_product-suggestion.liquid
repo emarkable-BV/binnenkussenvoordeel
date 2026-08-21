@@ -1,0 +1,392 @@
+{%- liquid
+  assign limit = section.settings.product_count
+  assign type = section.settings.type
+  assign enable_swipe_on_mobile = section.settings.enable_swipe_on_mobile
+  assign swipe_custom_width_column = section.settings.swipe_custom_width_column
+  assign column_gap = section.settings.column_gap
+  assign columns_xxl = section.settings.columns_xxl
+  assign columns_xl = columns_xxl | at_most: 4
+  assign columns_lg = columns_xxl | at_most: 3
+  assign columns_md = columns_xxl | at_most: 3
+  assign columns_mobile = section.settings.columns_mobile | plus: 0
+
+  if section.settings.custom_columns != blank
+    assign custom_columns_array = section.settings.custom_columns | split: ','
+    for custom_column in custom_columns_array
+      assign pair = custom_column | strip
+      if pair == ''
+        continue
+      endif
+
+      assign custom_column_key = pair | split: ':' | first | strip
+      assign value_str = pair | split: ':' | last | strip
+      if value_str == ''
+        continue
+      endif
+      assign custom_column_value = value_str | plus: 0
+
+      case custom_column_key
+        when 'mb'
+          assign columns_mobile = custom_column_value
+        when 'md'
+          assign columns_md = custom_column_value
+        when 'lg'
+          assign columns_lg = custom_column_value
+        when 'xl'
+          assign columns_xl = custom_column_value
+        when 'xxl'
+          assign columns_xxl = custom_column_value
+      endcase
+    endfor
+  endif
+
+  assign swipe_mobile_classes = ''
+  assign swipe_mobile_inner_classes = ''
+
+  if enable_swipe_on_mobile
+    assign swipe_mobile_classes = ' swipe-mobile swipe-mobile--[columns]-cols' | replace: '[columns]', columns_mobile
+    assign swipe_mobile_inner_classes = ' swipe__inner'
+
+    if swipe_custom_width_column
+      assign swipe_mobile_classes = swipe_mobile_classes | append: ' swipe-mobile--custom-width'
+    endif
+  endif
+
+  assign collection = block.settings.collection
+  assign collection_name = 'placeholders.collection_title' | t
+
+  if collection != blank
+    assign collection_name = collection.title
+  endif
+  if block.settings.title != blank
+    assign collection_name = block.settings.title
+  endif
+
+  assign block_index = section.blocks | find_index: 'id', block.id
+  assign block_number = block_index | plus: 1
+-%}
+{%- capture children -%}
+  {%- content_for 'blocks' -%}
+{%- endcapture -%}
+<details
+  ref="item[]"
+  class="accordion__details product-suggestion__card border-style color-{{ block.settings.color_scheme }} overflow-hidden{% if block_index == 0 %} is-open{% endif %}"
+  style="{% render 'border-style', settings: block.settings %}"
+  {% if block_index == 0 %}
+    open
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  <summary
+    ref="summary[]"
+    on:click="/onSummaryClick"
+    class="product-suggestion__card-header accordion__summary flex flex-col items-start justify-between gap-4 md:flex-row md:items-center focus-visible--absolute"
+  >
+    <div class="flex items-center gap-3 md:gap-4">
+      <div class="product-suggestion__card-number flex items-center justify-center text-center rounded shrink-0">
+        {{- block_number -}}
+      </div>
+      {% liquid
+        assign preset = block.settings.type_preset
+        assign main_classes = 'm-0 ' | append: preset
+        if preset == 'custom'
+          assign main_classes = main_classes | append: ' custom-typography'
+        endif
+      %}
+      <h3
+        class="{{ main_classes }}"
+        style="{%- render 'typography-style', settings: block.settings -%}"
+      >
+        {{ collection_name }}
+      </h3>
+    </div>
+    <div class="product-suggestion__card-badges hidden md:flex flex-wrap items-center gap-2{% if request.design_mode %} mobile-visible{% endif %}">
+      {{ children }}
+    </div>
+  </summary>
+  <div
+    ref="content[]"
+    class="accordion__content product-suggestion__card-content"
+  >
+    <div class="accordion__inner flex flex-col gap-6">
+      <div class="product-suggestion__card-badges md:hidden flex flex-wrap items-center gap-2">
+        {{ children }}
+      </div>
+      {%- capture list_items -%}
+        {%- if collection != blank and shop.products_count != 0 -%} 
+          {%- paginate collection.products by limit -%}
+            {%- for product in collection.products limit: limit -%}
+              <div class="f-column{% if type == 'carousel' %} swiper-slide{% endif %}">
+                {%- render 'product-card', product: product -%}
+              </div>
+            {%- endfor -%}
+          {%- endpaginate -%}
+        {%- else -%}
+          {%- for i in (1..limit) -%}
+            <div class="f-column{% if type == 'carousel' %} swiper-slide{% endif %}">
+              {%- render 'product-card', product: null -%}
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endcapture -%}
+      {% if type == 'carousel' %}
+        <carousel-slider
+          class="carousel--visible carousel--grid block"
+          style="{% render 'gap-style', settings: section.settings %}{% render 'layout-panel-style', settings: section.settings, type: 'grid', columns_mobile: columns_mobile, columns_md: columns_md, columns_lg: columns_lg, columns_xl: columns_xl, columns_xxl: columns_xxl %}"
+        >
+          <script type="application/json" ref="config">
+            {
+              "slidesPerView": {{ columns_md }},
+              "spaceBetween": {{ column_gap }},
+              "loop": false,
+              "autoplay": false,
+              "counter": false,
+              "loopAddBlankSlides": false,
+              "pagination": { "type": "progressbar" },
+              "mousewheel": {
+                "enabled": true,
+                "forceToAxis": true,
+                "thresholdTime": 300,
+                "thresholdDelta": 10
+              },
+              "destroyBelow": 768,
+              "breakpoints": {
+                "1024": {
+                  "slidesPerView": {{ columns_lg }}
+                },
+                "1200": {
+                  "slidesPerView": {{ columns_xl }}
+                },
+                "1440": {
+                  "slidesPerView": {{ columns_xxl }}
+                }
+              }
+            }
+          </script>
+          <div
+            class="swiper{{ swipe_mobile_classes }}"
+            ref="container"
+            style="{% if swipe_custom_width_column %} --swipe-column-width: {{ section.settings.swipe_column_width | divided_by: 100.0 }};{% endif %}"
+          >
+            <div class="swiper-wrapper layout-panel-grid-mobile gap-style{{ swipe_mobile_inner_classes }}">
+              {{- list_items -}}
+            </div>
+          </div>
+          {% render 'carousel-controls', ref: 'controls', type: 'relative', class: 'hidden md:flex' %}
+        </carousel-slider>
+      {% else %}
+        <div class="{{ swipe_mobile_classes }}">
+          <div
+            class="layout-panel-grid gap-style{{ swipe_mobile_inner_classes }}"
+            style="
+              {% render 'layout-panel-style', settings: section.settings, type: 'grid', columns_mobile: columns_mobile, columns_md: columns_md, columns_lg: columns_lg, columns_xl: columns_xl, columns_xxl: columns_xxl %}
+              {% render 'gap-style', settings: section.settings %}
+            "
+          >
+            {{- list_items -}}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</details>
+{% schema %}
+{
+  "name": "t:names.product_suggestion",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_product-suggestion-badge"
+    }
+  ],
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:settings.collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.collection_title",
+      "info": "t:info.collection_title"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "text-subheading",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "t:settings.border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_suggestion",
+      "blocks": {
+        "product_suggestion_badge_1": {
+          "type": "_product-suggestion-badge",
+          "settings": {
+            "label": "Eco-Friendly"
+          }
+        },
+        "product_suggestion_badge_2": {
+          "type": "_product-suggestion-badge",
+          "settings": {
+            "label": "Colorful"
+          }
+        }
+      },
+      "block_order": ["product_suggestion_badge_1", "product_suggestion_badge_2"]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,162 @@
+localization-form-component {
+  width: var(--width, auto);
+}
+
+.localization-wrapper {
+  top: calc(100% + 10px);
+  inset-inline: 0 auto;
+  max-height: 30.7rem;
+  max-width: 90vw;
+  z-index: calc(var(--layer-header-menu) + 1);
+  transition-property: display, opacity, translate;
+  transition-duration: var(--animation-duration--medium);
+  transition-timing-function: var(--animation-easing--smooth);
+  transition-behavior: allow-discrete;
+  translate: 0 20px;
+  border: 1px solid var(--dropdown-border-color);
+  border-radius: 0.8rem;
+}
+.localization-wrapper:not([hidden]) {
+  translate: 0 0;
+  opacity: 1;
+}
+
+@starting-style {
+  .localization-wrapper:not([hidden]) {
+    translate: 0 20px;
+    opacity: 0;
+  }
+}
+.localization-form__list {
+  max-height: 20rem;
+  padding-block: 0.8rem;
+  scroll-padding: 0.8rem 0;
+  scrollbar-width: none;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+.localization-form__list::-webkit-scrollbar {
+  display: none;
+}
+.localization-form__list-item[aria-current=true] {
+  background: rgb(var(--color-foreground)/10%);
+}
+.localization-form__list-item:not([hidden]) {
+  margin-block-end: 0.2rem;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+  display: flex;
+  transition: background-color var(--animation-duration--medium);
+}
+.localization-form__list-item:not([hidden]):hover {
+  background-color: rgb(var(--color-foreground)/10%);
+}
+.localization-form__list-item:not([hidden])[aria-current=true] .country {
+  font-weight: 500;
+}
+.localization-form__list-item.no-results-message {
+  grid-template-columns: 1fr;
+}
+.localization-form__list-item:not([aria-current=true]) .icon {
+  visibility: hidden;
+}
+
+.is-searching .localization-form__list-item .country {
+  color: rgb(var(--color-foreground)/80%);
+}
+
+.country-filter {
+  --input-height: 4.4rem;
+  padding: 0.8rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--animation-duration--medium);
+  color: rgb(var(--color-input-text));
+}
+@media screen and (width >= 768px) {
+  .country-filter {
+    --input-height: 3.6rem;
+  }
+}
+.country-filter.is-scrolled {
+  border-color: rgb(var(--color-border)/var(--color-border-alpha));
+}
+.country-filter__input {
+  height: var(--input-height);
+  padding-block: 1.2rem;
+  padding-inline: var(--input-height) 1.2rem;
+  border: 1px solid var(--dropdown-border-color);
+  border-radius: 0.8rem;
+  outline-offset: -1px;
+}
+.country-filter__input::placeholder {
+  color: inherit;
+}
+.country-filter .field__button:not([hidden]) {
+  display: flex;
+  place-items: center center;
+  height: var(--input-height);
+  width: var(--input-height);
+}
+.country-filter__reset-button[hidden] {
+  display: none;
+}
+.country-filter input[type=search]::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.country-selector-form__wrapper {
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.country mark {
+  background: none;
+  color: inherit;
+}
+
+.localization-form__select {
+  color: var(--color-foreground);
+  text-align: end;
+  max-width: 40vw;
+  text-overflow: ellipsis;
+  padding-inline: 0 2rem;
+}
+.localization-form__select:focus-visible {
+  outline: var(--focus-outline-width) solid currentcolor;
+}
+.localization-form__select:focus {
+  outline: none;
+}
+.localization-form__select option {
+  background-color: rgb(var(--color-input-background));
+  color: rgb(var(--color-input-text));
+}
+
+dropdown-localization-component .localization-form__list-item {
+  margin-inline: 0.8rem;
+}
+dropdown-localization-component .language-selector__wrapper {
+  padding: 1rem 1.6rem;
+}
+dropdown-localization-component .language-selector__wrapper::before {
+  content: "";
+  box-shadow: 0 0 1.5rem rgb(var(--color-foreground)/15%);
+  position: absolute;
+  z-index: var(--layer-lowest);
+  inset: 0;
+  clip-path: inset(-59px 0 0 0);
+}
+
+.localization-form__currency {
+  width: max-content;
+  opacity: 0;
+  visibility: hidden;
+  transition: none;
+}
+:is(.localization-form__list-item:hover,
+.localization-form__list-item[aria-selected=true],
+.localization-form__list-item[aria-current=true]) .localization-form__currency {
+  transition: opacity var(--animation-duration--medium) var(--animation-easing--smooth);
+  opacity: 1;
+  visibility: visible;
+}

@@ -1,0 +1,528 @@
+{% style %}
+  {%- comment -%}
+    Optimized font-face loading (compact)
+    - Iterate roles and variants; emit once per variant
+  {%- endcomment -%}
+
+  {%- liquid
+    assign loaded = ''
+    assign roles = 'body,head,highlight' | split: ','
+    assign variants = 'regular|normal, bold|normal, regular|italic, bold|italic' | split: ','
+
+    # Parse extra weights from settings
+    assign body_extra_weights_array = settings.body_extra_weights | strip | split: ','
+    assign heading_extra_weights_array = settings.heading_extra_weights | strip | split: ','
+  %}
+
+  {%- for role in roles -%}
+    {%- liquid
+      assign base = nil
+      assign extra_weights_array = ''
+      case role
+        when 'body'
+          assign base = settings.type_body_font
+          assign extra_weights_array = body_extra_weights_array
+        when 'head'
+          assign base = settings.type_heading_font
+          assign extra_weights_array = heading_extra_weights_array
+        when 'highlight'
+          assign base = settings.type_highlight_font
+      endcase
+      if base == blank
+        continue
+      endif
+    -%}
+    {%- for variant in variants -%}
+      {%- liquid
+        assign variant_parts = variant | strip | split: '|'
+        assign weight = variant_parts[0] | strip
+        assign style = variant_parts[1] | strip
+        assign font_to_load = base
+
+        if weight == 'bold'
+          assign font_to_load = font_to_load | font_modify: 'weight', 'bold'
+        endif
+        if style == 'italic'
+          assign font_to_load = font_to_load | font_modify: 'style', 'italic'
+        endif
+
+        assign url = font_to_load | font_url
+        assign key = url | default: role
+      -%}
+      {%- unless loaded contains key -%}
+        {{ font_to_load | font_face: font_display: 'swap' }}
+        {%- assign loaded = loaded | append: key | append: '|' -%}
+      {%- endunless -%}
+    {%- endfor -%}
+
+    {%- comment -%} Load extra weights for body and heading fonts {%- endcomment -%}
+    {%- if extra_weights_array != blank and extra_weights_array.size > 0 -%}
+      {%- assign extra_styles = 'normal,italic' | split: ',' -%}
+      {%- for extra_weight in extra_weights_array -%}
+        {%- liquid
+          assign weight_value = extra_weight | strip
+          if weight_value == blank
+            continue
+          endif
+        -%}
+        {%- for style_value in extra_styles -%}
+          {%- liquid
+            assign font_to_load = base | font_modify: 'weight', weight_value
+            if style_value == 'italic'
+              assign font_to_load = font_to_load | font_modify: 'style', 'italic'
+            endif
+            assign url = font_to_load | font_url
+            assign key = url | default: role
+          -%}
+          {%- unless loaded contains key -%}
+            {{ font_to_load | font_face: font_display: 'swap' }}
+            {%- assign loaded = loaded | append: key | append: '|' -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  :root {
+    /* Page layout */
+    --page-width: {{ settings.page_width | divided_by: 10.0 }}rem;
+    --page-width-narrow: 88.0rem;
+
+    --logo-width: {{ settings.logo_width }}px;
+    --logo-width-mobile: {{ settings.logo_width_mobile }}px;
+    --logo-width-menu-drawer: {{ settings.logo_width_menu_drawer }}px;
+
+    /* Typography presets */
+    {%- liquid
+      assign min_breakpoint = 767
+      assign max_breakpoint = 1280
+      assign root_font_size = 10.0
+      assign breakpoint_diff = max_breakpoint | minus: min_breakpoint
+
+      # Create array of heading configurations
+      # Format: [prefix, multiplier, min_fallback, base_size_multiplier]
+      # assign heading_configs = 'hd,0.1,3.36,display|h1,0,2.8,4.0|h2,0,2.24,3.2|h3,0,1.96,2.8|h4,0,1.6,2.2' | split: '|'
+      assign heading_configs = 'hd,0,3.36,4.8|h1,0,2.8,4.0|h2,0,2.24,3.2|h3,0,1.96,2.8|h4,0,1.6,2.2|h5,0,1.6,1.8|h6,0,1.6,1.6' | split: '|'
+
+      assign desktop_scale = settings.heading_size_scale | divided_by: 100.0
+      assign mobile_scale = settings.heading_size_scale_mobile | divided_by: 100.0
+
+      for config in heading_configs
+        assign config_parts = config | split: ','
+        assign prefix = config_parts[0]
+        # assign multiplier = config_parts[1] | plus: 0
+        # min_fallback
+        assign min_size = config_parts[2] | plus: 0 | times: mobile_scale
+        # base_size
+        assign max_size = config_parts[3] | plus: 0 | times: desktop_scale
+
+        # Convert to pixels
+        assign min_px = min_size | times: root_font_size
+        assign max_px = max_size | times: root_font_size
+
+        # Calculate slope and coefficient
+        assign px_diff = max_px | minus: min_px
+        assign slope = px_diff | divided_by: breakpoint_diff
+        assign coefficient = slope | times: 100
+
+        # Calculate intercept
+        assign coefficient_times_min_breakpoint = coefficient | times: min_breakpoint
+        assign coefficient_divided = coefficient_times_min_breakpoint | divided_by: 100
+        assign intercept_px = min_px | minus: coefficient_divided
+        assign base_rem = intercept_px | divided_by: root_font_size
+
+        # Assign dynamic variables
+        assign min_var = prefix | append: '_min'
+        assign max_var = prefix | append: '_max'
+        assign coefficient_var = prefix | append: '_coefficient'
+        assign base_var = prefix | append: '_base'
+
+        assign temp = min_size
+        case min_var
+          when 'hd_min'
+            assign hd_min = temp
+          when 'h1_min'
+            assign h1_min = temp
+          when 'h2_min'
+            assign h2_min = temp
+          when 'h3_min'
+            assign h3_min = temp
+          when 'h4_min'
+            assign h4_min = temp
+          when 'h5_min'
+            assign h5_min = temp
+          when 'h6_min'
+            assign h6_min = temp
+        endcase
+
+        assign temp = max_size
+        case max_var
+          when 'hd_max'
+            assign hd_max = temp
+          when 'h1_max'
+            assign h1_max = temp
+          when 'h2_max'
+            assign h2_max = temp
+          when 'h3_max'
+            assign h3_max = temp
+          when 'h4_max'
+            assign h4_max = temp
+          when 'h5_max'
+            assign h5_max = temp
+          when 'h6_max'
+            assign h6_max = temp
+        endcase
+
+        assign temp = coefficient
+        case coefficient_var
+          when 'hd_coefficient'
+            assign hd_coefficient = temp
+          when 'h1_coefficient'
+            assign h1_coefficient = temp
+          when 'h2_coefficient'
+            assign h2_coefficient = temp
+          when 'h3_coefficient'
+            assign h3_coefficient = temp
+          when 'h4_coefficient'
+            assign h4_coefficient = temp
+          when 'h5_coefficient'
+            assign h5_coefficient = temp
+          when 'h6_coefficient'
+            assign h6_coefficient = temp
+        endcase
+
+        assign temp = base_rem
+        case base_var
+          when 'hd_base'
+            assign hd_base = temp
+          when 'h1_base'
+            assign h1_base = temp
+          when 'h2_base'
+            assign h2_base = temp
+          when 'h3_base'
+            assign h3_base = temp
+          when 'h4_base'
+            assign h4_base = temp
+          when 'h5_base'
+            assign h5_base = temp
+          when 'h6_base'
+            assign h6_base = temp
+        endcase
+      endfor
+    -%}
+    --font-size--mega-title: clamp(
+      {{hd_min}}rem,
+      calc({{hd_coefficient | round: 3}}vw + {{hd_base | round: 3}}rem),
+      {{hd_max}}rem
+    );
+    --font-size--h1: clamp(
+      {{h1_min}}rem,
+      calc({{h1_coefficient | round: 3}}vw + {{h1_base | round: 3}}rem),
+      {{h1_max}}rem
+    );
+    --font-size--h2: clamp(
+      {{h2_min}}rem,
+      calc({{h2_coefficient | round: 3}}vw + {{h2_base | round: 3}}rem),
+      {{h2_max}}rem
+    );
+    --font-size--h3: clamp(
+      {{h3_min}}rem,
+      calc({{h3_coefficient | round: 3}}vw + {{h3_base | round: 3}}rem),
+      {{h3_max}}rem
+    );
+    --font-size--h4: clamp(
+      {{h4_min}}rem,
+      calc({{h4_coefficient | round: 3}}vw + {{h4_base | round: 3}}rem),
+      {{h4_max}}rem
+    );
+    --font-size--h5: clamp(
+      {{h5_min}}rem,
+      calc({{h5_coefficient | round: 3}}vw + {{h5_base | round: 3}}rem),
+      {{h5_max}}rem
+    );
+    --font-size--h6: clamp(
+      {{h6_min}}rem,
+      calc({{h6_coefficient | round: 3}}vw + {{h6_base | round: 3}}rem),
+      {{h6_max}}rem
+    );
+    --font-size--paragraph: {{ settings.paragraph_font_size | divided_by: 10.0 }}rem;
+    --font-size--paragraph-small: {{ settings.paragraph_font_size | divided_by: 10.0 | times: 0.9 | round: 2 }}rem;
+
+    {%- liquid
+      assign type_presets = "paragraph, h1, h2, h3, h4, h5, h6" | split: ", "
+
+      for preset_name in type_presets
+        assign preset_size = '--font-size--[preset_name]' | replace: '[preset_name]', preset_name
+
+        if preset_name == 'paragraph'
+          assign preset_font = '--font-body--family'
+          assign preset_style = '--font-body--style'
+          assign preset_weight = '400'
+
+          echo '--font-[preset_name]--weight: [preset_weight];' | replace: '[preset_name]', preset_name | replace: '[preset_weight]', preset_weight
+        else
+          assign preset_font = '--font-heading--family'
+          assign preset_style = '--font-heading--style'
+          assign preset_weight = '--font-heading--weight'
+
+          echo '--font-[preset_name]--weight: var([preset_weight]);' | replace: '[preset_name]', preset_name | replace: '[preset_weight]', preset_weight
+        endif
+
+        echo '--font-[preset_name]--size: var([preset_size]);' | replace: '[preset_name]', preset_name | replace: '[preset_size]', preset_size
+        echo '--font-[preset_name]--family: var([preset_font]);' | replace: '[preset_name]', preset_name | replace: '[preset_font]', preset_font
+        echo '--font-[preset_name]--style: var([preset_style]);' | replace: '[preset_name]', preset_name | replace: '[preset_style]', preset_style
+      endfor
+    -%}
+
+    /* Line heights */
+    --font-mega-title--line-height: 1.2;
+    --font-h1--line-height: 1.2;
+    --font-h2--line-height: 1.3125;
+    --font-h3--line-height: 1.357;
+    --font-h4--line-height: 1.454;
+    --font-h5--line-height: 1.555;
+    --font-h6--line-height: 1.625;
+    --font-paragraph--line-height: 1.6;
+
+    --line-height--display-tight: 1;
+    --line-height--display-normal: 1.1;
+    --line-height--display-loose: 1.2;
+
+    --line-height--heading-tight: 1.2;
+    --line-height--heading-normal: 1.357;
+    --line-height--heading-loose: 1.625;
+
+    --line-height--subheading-tight: 1.2;
+    --line-height--subheading-normal: 1.357;
+    --line-height--subheading-loose: 1.625;
+
+    --line-height--body-tight: 1.2;
+    --line-height--body-normal: 1.4;
+    --line-height--body-loose: 1.6;
+
+    /* Spacing */
+    --spacing-scale-sm: 0.6;
+    --spacing-scale-md: 0.7;
+    --spacing-scale-default: 1.0;
+    --font-heading--spacing: clamp(2.4rem, .8em, 6rem);
+    --font-paragraph--spacing: clamp(2.4rem, .8em, 6rem);
+
+
+    /* Animations */
+    --animation-duration--fast: 0.25s;
+    --animation-duration--medium: 0.35s;
+    --animation-duration--slow: 0.5s;
+    --animation-duration--long: 0.6s;
+    --animation-easing: ease-in-out;
+    --animation-easing--smooth: cubic-bezier(0.3, 1, 0.3, 1);
+    --fixed-overlay-easing: cubic-bezier(0.7, 0, 0.2, 1);
+    --transform-origin-start: left;
+    --transform-origin-end: right;
+    --flip-x-factor: 1;
+
+    /* Font families */
+    --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body--style: {{ settings.type_body_font.style }};
+    --font-body--weight: {{ settings.type_body_font.weight }};
+
+    {%- liquid
+      if settings.subheading_font == 'body'
+        assign subheading_font_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+        assign subheading_font_style = settings.type_body_font.style
+        assign subheading_font_weight_inherit = settings.type_body_font.weight
+      else
+        assign subheading_font_family = settings.type_heading_font.family | append: ', ' | append: settings.type_heading_font.fallback_families
+        assign subheading_font_style = settings.type_heading_font.style
+        assign subheading_font_weight_inherit = settings.type_heading_font.weight
+      endif
+
+      if settings.subheading_font_weight == blank
+        assign subheading_font_weight = subheading_font_weight_inherit
+      else
+        assign subheading_font_weight = settings.subheading_font_weight
+      endif
+    -%}
+    --font-subheading--family: {{ subheading_font_family }};
+    --font-subheading--style: {{ subheading_font_style }};
+    --font-subheading--weight: {{ subheading_font_weight }};
+    --font-subheading--transform: {{ settings.subheading_text_transform }};
+    --font-subheading--letter-spacing: {{ settings.subheading_letter_spacing | divided_by: 100.0 }}em;
+    --font-subheading--size-scale: {{ settings.subheading_size_scale | divided_by: 100.0 }};
+    --font-subheading--size: {{ settings.subheading_size_scale | divided_by: 100.0 | times: settings.paragraph_font_size | divided_by: 10.0 }}rem;
+
+    {%- liquid
+      if settings.pcard_title_font == 'body'
+        assign pcard_title_font_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+        assign pcard_title_font_style = settings.type_body_font.style
+        assign pcard_title_font_weight_inherit = settings.type_body_font.weight
+      else
+        assign pcard_title_font_family = settings.type_heading_font.family | append: ', ' | append: settings.type_heading_font.fallback_families
+        assign pcard_title_font_style = settings.type_heading_font.style
+        assign pcard_title_font_weight_inherit = settings.type_heading_font.weight
+      endif
+
+      if settings.pcard_title_font_weight == blank
+        assign pcard_title_font_weight = pcard_title_font_weight_inherit
+      else
+        assign pcard_title_font_weight = settings.pcard_title_font_weight
+      endif
+    -%}
+    --font-pcard-title--family: {{ pcard_title_font_family }};
+    --font-pcard-title--style: {{ pcard_title_font_style }};
+    --font-pcard-title--weight: {{ pcard_title_font_weight }};
+    --font-pcard-title--size-scale: {{ settings.pcard_title_size_scale | divided_by: 100.0 }};
+    --font-pcard-title--size: {{ settings.pcard_title_size_scale | divided_by: 100.0 | times: settings.paragraph_font_size | divided_by: 10.0 }}rem;
+
+    {%- liquid
+      if settings.pcard_price_font == 'body'
+        assign pcard_price_font_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+        assign pcard_price_font_style = settings.type_body_font.style
+        assign pcard_price_font_weight_inherit = settings.type_body_font.weight
+      else
+        assign pcard_price_font_family = settings.type_heading_font.family | append: ', ' | append: settings.type_heading_font.fallback_families
+        assign pcard_price_font_style = settings.type_heading_font.style
+        assign pcard_price_font_weight_inherit = settings.type_heading_font.weight
+      endif
+
+      if settings.pcard_price_font_weight == blank
+        assign pcard_price_font_weight = pcard_price_font_weight_inherit
+      else
+        assign pcard_price_font_weight = settings.pcard_price_font_weight
+      endif
+    -%}
+    --font-pcard-price--family: {{ pcard_price_font_family }};
+    --font-pcard-price--style: {{ pcard_price_font_style }};
+    --font-pcard-price--weight: {{ pcard_price_font_weight }};
+
+    {%- liquid
+      if settings.pcard_badge_font == 'body'
+        assign pcard_badge_font_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+        assign pcard_badge_font_style = settings.type_body_font.style
+        assign pcard_badge_font_weight_inherit = settings.type_body_font.weight
+      else
+        assign pcard_badge_font_family = settings.type_heading_font.family | append: ', ' | append: settings.type_heading_font.fallback_families
+        assign pcard_badge_font_style = settings.type_heading_font.style
+        assign pcard_badge_font_weight_inherit = settings.type_heading_font.weight
+      endif
+
+      if settings.pcard_badge_font_weight == blank
+        assign pcard_badge_font_weight = pcard_badge_font_weight_inherit
+      else
+        assign pcard_badge_font_weight = settings.pcard_badge_font_weight
+      endif
+    -%}
+    --font-pcard-badge--family: {{ pcard_badge_font_family }};
+    --font-pcard-badge--style: {{ pcard_badge_font_style }};
+    --font-pcard-badge--weight: {{ pcard_badge_font_weight }};
+    --font-pcard-badge--transform: {{ settings.pcard_badge_text_transform }};
+    --font-pcard-badge--letter-spacing: {{ settings.pcard_badge_letter_spacing | divided_by: 100.0 }}em;
+
+    {%- liquid
+      if settings.navigation_font == 'body'
+        assign navigation_font_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+        assign navigation_font_style = settings.type_body_font.style
+        assign navigation_font_weight_inherit = settings.type_body_font.weight
+      else
+        assign navigation_font_family = settings.type_heading_font.family | append: ', ' | append: settings.type_heading_font.fallback_families
+        assign navigation_font_style = settings.type_heading_font.style
+        assign navigation_font_weight_inherit = settings.type_heading_font.weight
+      endif
+
+      if settings.navigation_font_weight == blank
+        assign navigation_font_weight = navigation_font_weight_inherit
+      else
+        assign navigation_font_weight = settings.navigation_font_weight
+      endif
+    -%}
+    --font-navigation--family: {{ navigation_font_family }};
+    --font-navigation--style: {{ navigation_font_style }};
+    --font-navigation--weight: {{ navigation_font_weight }};
+    --font-navigation--transform: {{ settings.navigation_text_transform }};
+    --font-navigation--letter-spacing: {{ settings.navigation_letter_spacing | divided_by: 100.0 }}em;
+
+    {%- liquid
+      if settings.button_font == 'body'
+        assign button_font_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
+        assign button_font_style = settings.type_body_font.style
+        assign button_font_weight_inherit = settings.type_body_font.weight
+      else
+        assign button_font_family = settings.type_heading_font.family | append: ', ' | append: settings.type_heading_font.fallback_families
+        assign button_font_style = settings.type_heading_font.style
+        assign button_font_weight_inherit = settings.type_heading_font.weight
+      endif
+
+      if settings.button_font_weight == blank
+        assign button_font_weight = button_font_weight_inherit
+      else
+        assign button_font_weight = settings.button_font_weight
+      endif
+    -%}
+    --font-button--family: {{ button_font_family }};
+    --font-button--style: {{ button_font_style }};
+    --font-button--weight: {{ button_font_weight }};
+
+    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-heading--style: {{ settings.type_heading_font.style }};
+    --font-heading--weight: {{ settings.type_heading_font.weight }};
+
+    --font-highlight--family: {{ settings.type_highlight_font.family }}, {{ settings.type_highlight_font.fallback_families }};
+    --font-highlight--style: {{ settings.type_highlight_font.style }};
+    --font-highlight--weight: {{ settings.type_highlight_font.weight }};
+
+    /* Buttons */
+    --font-button--transform: {{ settings.button_text_transform }};
+    --font-button--letter-spacing: {{ settings.button_letter_spacing | divided_by: 100.0 }}em;
+
+    /* Inputs */
+    --select-arrow-icon: url('{{ 'icon-select-arrow.svg' | asset_url }}');
+    --input-border-radius: {{ settings.input_corner_radius | divided_by: 10.0 }}rem;
+    --input-height: {{ settings.input_height | divided_by: 10.0 }}rem;
+    --input-border-width: {{ settings.input_border_width | divided_by: 10.0 }}rem;
+    --textareas-radius:  min({{ settings.input_corner_radius | divided_by: 10.0 }}rem, 1rem);
+    /* Buttons */
+    --button-height: {{ settings.button_height | divided_by: 10.0 }}rem;
+    --button-corner-radius: {{ settings.button_corner_radius | divided_by: 10.0 }}rem;
+    --button-border-thickness: {{ settings.button_border_thickness | divided_by: 10.0 }}rem;
+
+    /* Z-index */
+    --layer-section-background: -2;
+    --layer-lowest: -1;
+    --layer-base: 0;
+    --layer-flat: 1;
+    --layer-raised: 2;
+    --layer-heightened: 4;
+    --layer-sticky: 8;
+    --layer-window-overlay: 10;
+    --layer-header-menu: 12;
+    --layer-overlay: 16;
+    --layer-menu-drawer: 18;
+    --layer-temporary: 40;
+
+    /* Badges */
+    --color-new-badge-background: {{ settings.new_badge_background.rgb }};
+    --color-new-badge-text: {{ settings.new_badge_text.rgb }};
+    --color-hot-badge-background: {{ settings.hot_badge_background.rgb }};
+    --color-hot-badge-text: {{ settings.hot_badge_text.rgb }};
+    --color-popular-badge-background: {{ settings.popular_badge_background.rgb }};
+    --color-popular-badge-text: {{ settings.popular_badge_text.rgb }};
+    --color-sale-badge-background: {{ settings.sale_badge_background.rgb }};
+    --color-sale-badge-text: {{ settings.sale_badge_text.rgb }};
+    --color-sold-out-badge-background: {{ settings.sold_out_badge_background.rgb }};
+    --color-sold-out-badge-text: {{ settings.sold_out_badge_text.rgb }};
+    --color-cart-bubble-text: {{ settings.cart_bubble_text }};
+    --color-cart-bubble-background: {{ settings.cart_bubble_background }};
+    --badge-corner-radius: {{ settings.badge_corner_radius | divided_by: 10.0 }}rem;
+
+    /* Hardcoded Color */
+    --color-white: 255 255 255;
+    --color-black: 0 0 0;
+    --color-focus-ring: 27 87 192;
+
+    /* Product card */
+    --product-card-media-radius: {{ settings.pcard_media_radius | divided_by: 10.0 }}rem;
+
+    /* Dialog */
+    --dialog-radius: {{ settings.dialog_radius | divided_by: 10.0 }}rem;
+    --dialog-backdrop-opacity: 60%;
+  }
+{% endstyle %}

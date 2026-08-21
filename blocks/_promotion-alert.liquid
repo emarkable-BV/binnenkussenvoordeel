@@ -1,0 +1,143 @@
+{%- liquid
+  assign promotion_alert_color = block.settings.color.rgb
+-%}
+
+<div
+  class="promotion-alert spacing-style border-style"
+  style="{% render 'spacing-style', settings: block.settings %} {% render 'border-style', settings: block.settings %} --promotion-alert-color: {{ promotion_alert_color }};"
+  {{ block.shopify_attributes }}
+>
+  <div class="promotion-alert__wrapper">
+    <div class="promotion-alert__content">
+      {% content_for 'block', type: '_icon', id: 'promotion-alert-icon' %}
+      <div class="promotion-alert__text">
+        {% content_for 'block', type: '_simple-text', id: 'promotion-alert-title' %}
+        {% content_for 'block', type: '_simple-text', id: 'promotion-alert-description' %}
+      </div>
+    </div>
+    <div class="promotion-alert__button">
+      {% content_for 'block', type: '_button', id: 'promotion-alert-button' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.promotion_alert",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:settings.color",
+      "default": "#1469E8"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.promotion_alert",
+      "blocks": [
+        {
+          "type": "_icon",
+          "static": true,
+          "id": "promotion-alert-icon",
+          "settings": {
+            "icon": "magic-wand"
+          }
+        },
+        {
+          "type": "_simple-text",
+          "static": true,
+          "id": "promotion-alert-title",
+          "settings": {
+            "text": "<p>Promotion alert</p>",
+            "type_preset": "h6"
+          }
+        },
+        {
+          "type": "_simple-text",
+          "static": true,
+          "id": "promotion-alert-description",
+          "settings": {
+            "text": "<p>Promotion alert description</p>",
+            "type_preset": "custom",
+            "font_size": 15,
+            "font_size_mobile": 15
+          }
+        },
+        {
+          "type": "_button",
+          "static": true,
+          "id": "promotion-alert-button",
+          "settings": {
+            "label": "",
+            "style": "white",
+            "icon": "caret-right",
+            "size": "extra-small",
+            "icon_style": "default"
+          }
+        }
+      ],
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

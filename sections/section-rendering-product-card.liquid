@@ -1,0 +1,60 @@
+{% liquid
+  if product == blank
+    assign product = closest.product
+  endif
+
+  assign url = product.selected_or_first_available_variant.url
+  unless url
+    assign url = product.first_available_variant.url
+  endunless
+  unless url
+    assign url = product.url
+  endunless
+%}
+
+<product-card>
+  <a
+    href="{{ url }}"
+    ref="productCardLink"
+  >
+    {% render 'variant-quick-add', product_resource: product %}
+    {% render 'variant-swatches',
+      product_resource: product,
+      has_option_selected: true,
+      show_variant_image: settings.pcard_show_variant_image,
+      swatch_shape: settings.pcard_swatch_shape,
+      swatch_width: settings.pcard_swatch_width,
+      context: 'card'
+    %}
+    <product-badge class="product-card__badges">
+      {% render 'product-badges',
+        product: product,
+        use_variant: false,
+        show_soldout_badge: settings.pcard_show_sold_out_badge,
+        sale_badge_type: settings.pcard_sale_badge_type,
+        show_sale_badge: settings.pcard_show_sale_badge,
+        show_custom_badges: settings.pcard_show_custom_badges,
+        badge_layout: settings.pcard_badge_layout
+      %}
+    </product-badge>
+    <product-price>
+      {% render 'price', product_resource: product, show_unit_price: true, use_variant: false %}
+    </product-price>
+  </a>
+</product-card>
+
+{% schema %}
+{
+  "name": "t:names.product_card_rendering",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    }
+  ]
+}
+{% endschema %}

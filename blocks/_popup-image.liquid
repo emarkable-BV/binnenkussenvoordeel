@@ -1,0 +1,31 @@
+<div
+  class="subscribe-popup__image relative shrink-0 w-full overflow-hidden"
+  {{ block.shopify_attributes }}
+>
+  {% render 'responsive-image',
+    mode: 'liquid',
+    image: block.settings.image,
+    image_mobile: block.settings.image_mobile,
+    default_alt: shop.name,
+    media_width_desktop: '440px',
+    media_width_mobile: 'min(440px, calc(100vw - 32px))'
+  %}
+</div>
+{% schema %}
+{
+  "name": "t:names.popup_image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile"
+    }
+  ]
+}
+{% endschema %}

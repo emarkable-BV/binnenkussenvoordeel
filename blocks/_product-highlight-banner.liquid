@@ -1,0 +1,286 @@
+{%- liquid
+  assign has_video = false
+  if block.settings.source == 'uploaded' and block.settings.video != blank
+    assign has_video = true
+  elsif block.settings.source == 'url' and block.settings.video_url != blank
+    assign has_video = true
+  endif
+-%}
+{%- capture image_sizes -%}
+  (min-width: 768px) calc(min(100vw, {{ settings.page_width }}px) / 2), 100vw
+{%- endcapture -%}
+<div
+  class="products-highlight__banner w-full"
+  {{ block.shopify_attributes }}
+>
+  <div class="grid media-hover--scale">
+    <div
+      class="products-highlight__banner-image border-style col-span-full row-span-full"
+      style="{% render 'border-style', settings: block.settings %}"
+    >
+      {% render 'responsive-image',
+        mode: 'liquid',
+        image: block.settings.image,
+        image_mobile: block.settings.image_mobile,
+        image_ratio: block.settings.image_ratio,
+        image_ratio_mobile: block.settings.image_ratio_mobile,
+        sizes: image_sizes,
+        default_alt: shop.name
+      %}
+    </div>
+    {%- if has_video -%}
+      <div class="products-highlight__banner-video col-span-full row-span-full flex items-center justify-center">
+        <div
+          class="products-highlight__banner-video-inner border-style"
+          style="{% render 'border-style', settings: block.settings %}"
+        >
+          {%- capture video_style -%}
+          {% render 'border-style', settings: block.settings %}
+          {%- if block.settings.source == 'url' -%}
+            {% if block.settings.video_ratio == 'auto' %}
+              {% if block.settings.cover_image != blank %}
+                --size-style-aspect-ratio: {{ block.settings.cover_image.aspect_ratio }};
+              {% else %}
+                --size-style-aspect-ratio: 16/9;
+              {% endif %}
+            {% else %}
+              --size-style-aspect-ratio: {{ block.settings.video_ratio }};
+            {% endif %}
+          {%- endif -%}
+          {%- if block.settings.video == blank -%}
+            --size-style-aspect-ratio: {{ block.settings.video_ratio }};
+          {%- endif -%}
+        {%- endcapture -%}
+          {%- if block.settings.source == 'uploaded' -%}
+            {% render 'video',
+              disable_controls: true,
+              enable_toggle_button: true,
+              enable_toggle_volume_button: true,
+              video: block.settings.video,
+              video_loop: block.settings.video_loop,
+              video_autoplay: block.settings.video_autoplay,
+              video_preview_image: block.settings.video.preview_image,
+              video_style: video_style,
+              video_class: 'size-style border-style spacing-style',
+              additional_attributes: block.shopify_attributes,
+              video_ratio: block.settings.video_ratio,
+              section_id: section.id
+            %}
+          {%- else -%}
+            {% render 'video',
+              video_from_url: true,
+              video: block.settings.video_url.id,
+              video_type: block.settings.video_url.type,
+              video_alt: block.settings.alt,
+              video_preview_image: block.settings.cover_image,
+              additional_attributes: block.shopify_attributes,
+              video_style: video_style,
+              section_id: section.id,
+              video_class: 'size-style border-style spacing-style',
+              video_ratio: block.settings.video_ratio
+            %}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.product_highlight_banner",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "t:settings.aspect_ratio_mobile",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "header",
+      "content": "t:content.video"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "t:settings.source",
+      "options": [
+        {
+          "value": "uploaded",
+          "label": "t:options.video_uploaded"
+        },
+        {
+          "value": "url",
+          "label": "t:options.video_external_url"
+        }
+      ],
+      "default": "uploaded"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "visible_if": "{{ block.settings.source == 'uploaded' }}"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "t:settings.video_url",
+      "accept": ["youtube", "vimeo"],
+      "info": "t:info.video_url",
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "visible_if": "{{ block.settings.source == 'url' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "t:settings.video_autoplay",
+      "info": "t:info.video_autoplay",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "video_loop",
+      "label": "t:settings.video_loop",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "t:settings.cover_image",
+      "visible_if": "{{ block.settings.source == 'url' and block.settings.video_autoplay == false }}"
+    },
+    {
+      "type": "select",
+      "id": "video_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "16/9"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_highlight_banner"
+    }
+  ]
+}
+{% endschema %}

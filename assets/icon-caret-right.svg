@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="rtl-flip-x">
+  <path fill="none" d="M0 0H20V20H0V0z"/>
+  <path points="96 48 176 128 96 208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width, 2)" d="M7.5 3.75L13.75 10L7.5 16.25"/>
+</svg>

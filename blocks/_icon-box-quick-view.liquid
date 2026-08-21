@@ -1,0 +1,436 @@
+{% doc %}
+  @param {string} children - Modal children content
+{% enddoc %}
+{% capture quick_view_content %}
+  {% if block.settings.heading != blank %}
+    <p 
+      class="dialog__heading h2 spacing-style"
+      style="{% render 'clamp-calculate-style', property_name: 'margin-block-end', min_value: 16, max_value: 24 %}"
+    >{{ block.settings.heading }}</p>
+  {% endif %}
+  {{ children }}
+{% endcapture %}
+<div
+  class="icon-box-quick-view w-full spacing-style flex justify-center"
+  style="{% render 'spacing-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  {%- render 'popup-button',
+    children: quick_view_content,
+    id: block.id,
+    label: block.settings.button_label,
+    style: block.settings.button_style,
+    size: block.settings.button_size,
+    icon: block.settings.button_icon,
+    icon_style: block.settings.button_icon_style,
+    icon_only: block.settings.button_icon_only,
+    class: 'w-full text-center',
+    mobile_full_width: block.settings.button_mobile_full_width,
+    animation_type: block.settings.animation_type,
+    animation_delay: block.settings.animation_delay
+  -%}
+</div>
+{% schema %}
+{
+  "name": "t:names.quick_view",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Icon boxes"
+    },
+    {
+      "type": "header",
+      "content": "t:content.button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.button_label",
+      "default": "t:text_defaults.button_label"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "t:settings.button_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.secondary"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.outline"
+        },
+        {
+          "value": "plain",
+          "label": "t:options.plain"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "select",
+      "id": "button_size",
+      "label": "t:settings.button_size",
+      "options": [
+        {
+          "value": "extra-small",
+          "label": "t:options.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "button_icon",
+      "label": "t:settings.button_icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "caret-left",
+          "label": "t:options.caret_left"
+        },
+        {
+          "value": "caret-right",
+          "label": "t:options.caret_right"
+        },
+        {
+          "value": "caret-down",
+          "label": "t:options.caret_down"
+        },
+        {
+          "value": "arrow-up-left",
+          "label": "t:options.arrow_up_left"
+        },
+        {
+          "value": "arrow-up-left-down",
+          "label": "t:options.arrow_up_left_down"
+        },
+        {
+          "value": "close",
+          "label": "t:options.close"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        },
+        {
+          "value": "minus",
+          "label": "t:options.minus"
+        },
+        {
+          "value": "check",
+          "label": "t:options.check"
+        },
+        {
+          "value": "cart",
+          "label": "t:options.cart"
+        },
+        {
+          "value": "basket",
+          "label": "t:options.basket"
+        },
+        {
+          "value": "shopping-bag",
+          "label": "t:options.shopping_bag"
+        },
+        {
+          "value": "heart-beat",
+          "label": "t:options.heart_beat"
+        },
+        {
+          "value": "baby-carriage",
+          "label": "t:options.baby_carriage"
+        },
+        {
+          "value": "account",
+          "label": "t:options.account"
+        },
+        {
+          "value": "search",
+          "label": "t:options.search"
+        },
+        {
+          "value": "tag",
+          "label": "t:options.tag"
+        },
+        {
+          "value": "chat-teardrop",
+          "label": "t:options.chat_teardrop"
+        },
+        {
+          "value": "credit-card",
+          "label": "t:options.credit_card"
+        },
+        {
+          "value": "barcode",
+          "label": "t:options.barcode"
+        },
+        {
+          "value": "storefront",
+          "label": "t:options.storefront"
+        },
+        {
+          "value": "package",
+          "label": "t:options.package"
+        },
+        {
+          "value": "magic-wand",
+          "label": "t:options.magic_wand"
+        },
+        {
+          "value": "funnel",
+          "label": "t:options.funnel"
+        },
+        {
+          "value": "phone",
+          "label": "t:options.phone"
+        },
+        {
+          "value": "map-pin",
+          "label": "t:options.map_pin"
+        },
+        {
+          "value": "clock",
+          "label": "t:options.clock"
+        },
+        {
+          "value": "lightning",
+          "label": "t:options.lightning"
+        },
+        {
+          "value": "heart",
+          "label": "t:options.heart"
+        },
+        {
+          "value": "gift",
+          "label": "t:options.gift"
+        },
+        {
+          "value": "globe",
+          "label": "t:options.globe"
+        },
+        {
+          "value": "car-simple",
+          "label": "t:options.car_simple"
+        },
+        {
+          "value": "truck",
+          "label": "t:options.truck"
+        },
+        {
+          "value": "paper-plane",
+          "label": "t:options.paper_plane"
+        },
+        {
+          "value": "waves",
+          "label": "t:options.waves"
+        },
+        {
+          "value": "calendar-blank",
+          "label": "t:options.calendar_blank"
+        },
+        {
+          "value": "umbrella",
+          "label": "t:options.umbrella"
+        },
+        {
+          "value": "circle-half",
+          "label": "t:options.circle_half"
+        },
+        {
+          "value": "bell-ringing",
+          "label": "t:options.bell_ringing"
+        },
+        {
+          "value": "tiktok",
+          "label": "t:options.tiktok"
+        },
+        {
+          "value": "instagram",
+          "label": "t:options.instagram"
+        },
+        {
+          "value": "pinterest",
+          "label": "t:options.pinterest"
+        },
+        {
+          "value": "x",
+          "label": "t:options.x"
+        },
+        {
+          "value": "facebook",
+          "label": "t:options.facebook"
+        },
+        {
+          "value": "telegram",
+          "label": "t:options.telegram"
+        },
+        {
+          "value": "whatsapp",
+          "label": "t:options.whatsapp"
+        },
+        {
+          "value": "email",
+          "label": "t:options.email"
+        },
+        {
+          "value": "linkedin",
+          "label": "t:options.linkedin"
+        },
+        {
+          "value": "snapchat",
+          "label": "t:options.snapchat"
+        },
+        {
+          "value": "tumblr",
+          "label": "t:options.tumblr"
+        },
+        {
+          "value": "threads",
+          "label": "t:options.threads"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon_only",
+      "label": "t:settings.icon_only",
+      "default": false,
+      "visible_if": "{{ block.settings.button_icon != 'none' }}"
+    },
+    {
+      "type": "select",
+      "id": "button_icon_style",
+      "label": "t:settings.icon_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "default",
+      "visible_if": "{{ block.settings.button_style != 'plain' and block.settings.button_icon != 'none' and block.settings.button_icon_only == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_mobile_full_width",
+      "label": "t:settings.button_mobile_full_width",
+      "default": false,
+      "visible_if": "{{ block.settings.button_icon_only == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60,
+      "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.animation",
+      "visible_if": "{{ settings.animations_enabled == true }}"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:settings.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "fade-in",
+          "label": "t:options.fade_in"
+        },
+        {
+          "value": "fade-up",
+          "label": "t:options.fade_up"
+        },
+        {
+          "value": "slide-in-left",
+          "label": "t:options.slide_in_left"
+        },
+        {
+          "value": "slide-in-right",
+          "label": "t:options.slide_in_right"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ settings.animations_enabled == true }}"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:settings.delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "default": 250,
+      "visible_if": "{{ block.settings.animation_type != 'none' and settings.animations_enabled == true }}"
+    }
+  ]
+}
+{% endschema %}

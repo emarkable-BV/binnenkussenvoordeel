@@ -1,0 +1,236 @@
+{%- liquid
+  assign show_tags = block.settings.show_tags
+  assign show_author = block.settings.show_author
+  assign show_date = block.settings.show_date
+  assign preset = block.settings.heading_size
+  assign font_size = block.settings.font_size
+  assign font_size_mobile = block.settings.font_size_mobile
+  assign font_family = block.settings.font
+  assign font_weight = block.settings.font_weight
+  assign line_height = block.settings.line_height
+  capture text_block_classes
+    if preset == 'custom'
+      echo ' custom-typography'
+      if block.settings.font_size != ''
+        echo ' custom-font-size'
+      endif
+    elsif preset == 'paragraph'
+      echo ' rte '
+    endif
+  endcapture
+-%}
+
+<header
+  class="article__block article__header flex flex-col items-center gap-3 md:gap-4 text-center"
+  {{ block.shopify_attributes }}
+>
+  {%- if show_tags and article.tags.first -%}
+    <a
+      href="{{ blog.url }}/tagged/{{ article.tags.first | handle }}"
+      class="article-card__tag{% if section.settings.color_scheme.settings.background == '#ffffff' %} article-card__tag--outline{% endif %}"
+    >
+      <span class="badge">{{ article.tags.first }}</span>
+    </a>
+  {%- endif -%}
+
+  <h1
+    class="article-card__title {{ preset }}{{ text_block_classes }}"
+    style="
+      {%- render 'typography-style',
+        settings: block.settings,
+        preset: preset,
+        font_size: font_size,
+        font_size_mobile: font_size_mobile,
+        font_family: font_family,
+        font_weight: font_weight,
+        line_height: line_height
+      -%}
+    "
+  >
+    {{ article.title }}
+  </h1>
+
+  {%- if show_date or show_author -%}
+    <div class="article-card__metas color-subtext flex justify-center gap-2">
+      {%- if show_date -%}
+        <span class="article-card__meta article-card__date">
+          {{ article.published_at | time_tag: format: 'abbreviated_date' | default: 'May 27, 2024' }}
+        </span>
+      {%- endif -%}
+
+      {%- if show_date and show_author -%}
+        <span class="article-card__separator rounded no-empty"></span>
+      {%- endif -%}
+
+      {%- if show_author -%}
+        <span class="article-card__meta article-card__author">
+          {{ article.author | default: 'Author' }}
+        </span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</header>
+{% schema %}
+{
+  "name": "t:names.title",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:settings.show_tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "t:settings.show_date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:settings.show_author",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:settings.heading_size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.heading_size == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.heading_size == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.heading_size == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.heading_size == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.heading_size == 'custom' }}"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

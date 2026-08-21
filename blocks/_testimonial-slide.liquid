@@ -1,0 +1,140 @@
+{% liquid
+  assign image = block.settings.image
+  assign rounded_image = block.settings.rounded_image
+%}
+
+<div
+  class="testimonial-slide flex flex-nowrap flex-row"
+  {{ block.shopify_attributes }}
+>
+  <!-- @testimonialInner/split -->
+  <div
+    class="testimonial-slide__media testimonial-slider__slide-avatar relative media-mask-clip{% if rounded_image %} rounded{% else %} border-style{% endif %}"
+    style="{% unless rounded_image %}--border-radius: {{ block.settings.image_border_radius }}px;{% endunless %}"
+  >
+    {%- liquid
+      assign image_ratio = block.settings.image_ratio
+
+      if rounded_image
+        assign image_ratio = '1'
+      endif
+    -%}
+    {%- capture image_sizes -%}(min-width: 1440px) 170px, (min-width: 1200px) 140px, (min-width: 640px) 120px, 100px{%- endcapture -%}
+    {% render 'responsive-image',
+      mode: 'liquid',
+      sizes: image_sizes,
+      widths: '100, 120, 140, 170, 200, 240, 280, 340',
+      image: image,
+      image_ratio: image_ratio,
+      default_alt: shop.name
+    %}
+  </div>
+  <!-- @testimonialInner/split -->
+  <div class="testimonial-slide__content testimonial-slider__slide-content flex-1">
+    <div class="testimonial-slide__inner testimonial-slider__slide-inner">
+      {% content_for 'block', type: '_text-basic', id: 'static-testimonial-text', classes: 'testimonial-slide__text' %}
+      {% content_for 'block', type: '_author-info', id: 'static-testimonial-info', classes: 'testimonial-slide__info flex flex-col gap-y-1' %}
+    </div>
+  </div>
+</div>
+<!-- @testimonialItem/split -->
+
+{% schema %}
+{
+  "name": "t:names.testimonial",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded_image",
+      "label": "t:settings.rounded_image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt",
+      "visible_if": "{{ block.settings.rounded_image == false }}"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.rounded_image == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.testimonial",
+      "category": "t:categories.basic",
+      "settings": {},
+      "blocks": {
+        "static-testimonial-text": {
+          "type": "_text-basic",
+          "static": true,
+          "settings": {
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "type_preset": "h2",
+            "padding-block-end": 12,
+            "mobile-padding-scale": 100
+          }
+        },
+        "static-testimonial-info": {
+          "type": "_author-info",
+          "static": true,
+          "settings": {
+            "name": "<p>Author's name</p>",
+            "name_preset": "h6",
+            "bio_text_color": "text"
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

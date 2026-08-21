@@ -1,0 +1,158 @@
+{%- liquid
+  assign is_carousel = false
+  if section.blocks.size > 1
+    assign is_carousel = true
+  endif
+-%}
+{%- capture inline_style -%}
+  {% render 'spacing-style', settings: section.settings %}
+  --content-width: {{ section.settings.content_width }}%;
+{%- endcapture -%}
+<div
+  class="announcement-bar color-{{ section.settings.color_scheme }} spacing-style"
+  style="{{ inline_style | strip | strip_newlines }}"
+>
+  <div class="page-width flex justify-center">
+    <carousel-slider class="announcement-bar__wrapper carousel relative w-full">
+      <script type="application/json" ref="config">
+        {
+          "loop": {% if is_carousel %}true{% else %}false{% endif %},
+          {%- if section.settings.autoplay %}
+          "autoplay": {
+            "delay": {{ section.settings.autoplay_speed | times: 1000 }},
+            "pauseOnMouseEnter": true
+          },
+          {%- endif %}
+          "slidesPerView": 1,
+          "spaceBetween": 10,
+          "pagination": false,
+          "counter": false
+        }
+      </script>
+      <div ref="container" class="swiper">
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+            <div class="swiper-slide flex flex-col items-center text-center announcement__content">
+              {% render block %}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- if is_carousel -%}
+        <div class="carousel__controls">
+          <div class="carousel__controls-buttons">
+            <button
+              ref="prev"
+              class="swiper-button-prev carousel__button button-unstyled carousel__button--prev flex items-center justify-center"
+              aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+            >
+              {% render 'icon', icon: 'caret-left', class: 'carousel__button-icon' %}
+            </button>
+            <button
+              ref="next"
+              class="swiper-button-next carousel__button button-unstyled carousel__button--next flex items-center justify-center"
+              aria-label="{{ 'accessibility.slideshow_next' | t }}"
+            >
+              {% render 'icon', icon: 'caret-right', class: 'carousel__button-icon' %}
+            </button>
+          </div>
+        </div>
+      {%- endif -%}
+    </carousel-slider>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.announcement_bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.general"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "t:settings.desktop_content_width",
+      "min": 20,
+      "max": 100,
+      "unit": "%",
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:settings.autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:settings.autoplay_delay",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.announcement_bar",
+      "category": "t:categories.banners",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Welcome to our store</p>",
+            "type_preset": "rte"
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

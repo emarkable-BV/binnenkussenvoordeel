@@ -1,0 +1,343 @@
+{% render 'button',
+  label: block.settings.label,
+  link: block.settings.link,
+  style: block.settings.style,
+  size: block.settings.size,
+  icon: block.settings.icon,
+  icon_style: block.settings.icon_style,
+  icon_only: block.settings.icon_only,
+  mobile_full_width: block.settings.mobile_full_width,
+  block: block
+%}
+{% schema %}
+{
+  "name": "t:names.button",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.secondary"
+        },
+        {
+          "value": "white",
+          "label": "t:options.white"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.outline"
+        },
+        {
+          "value": "plain",
+          "label": "t:options.plain"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:settings.size",
+      "options": [
+        {
+          "value": "extra-small",
+          "label": "t:options.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "caret-left",
+          "label": "t:options.caret_left"
+        },
+        {
+          "value": "caret-right",
+          "label": "t:options.caret_right"
+        },
+        {
+          "value": "caret-down",
+          "label": "t:options.caret_down"
+        },
+        {
+          "value": "arrow-up-left",
+          "label": "t:options.arrow_up_left"
+        },
+        {
+          "value": "arrow-up-left-down",
+          "label": "t:options.arrow_up_left_down"
+        },
+        {
+          "value": "close",
+          "label": "t:options.close"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        },
+        {
+          "value": "minus",
+          "label": "t:options.minus"
+        },
+        {
+          "value": "check",
+          "label": "t:options.check"
+        },
+        {
+          "value": "cart",
+          "label": "t:options.cart"
+        },
+        {
+          "value": "basket",
+          "label": "t:options.basket"
+        },
+        {
+          "value": "shopping-bag",
+          "label": "t:options.shopping_bag"
+        },
+        {
+          "value": "heart-beat",
+          "label": "t:options.heart_beat"
+        },
+        {
+          "value": "baby-carriage",
+          "label": "t:options.baby_carriage"
+        },
+        {
+          "value": "account",
+          "label": "t:options.account"
+        },
+        {
+          "value": "search",
+          "label": "t:options.search"
+        },
+        {
+          "value": "tag",
+          "label": "t:options.tag"
+        },
+        {
+          "value": "chat-teardrop",
+          "label": "t:options.chat_teardrop"
+        },
+        {
+          "value": "credit-card",
+          "label": "t:options.credit_card"
+        },
+        {
+          "value": "barcode",
+          "label": "t:options.barcode"
+        },
+        {
+          "value": "storefront",
+          "label": "t:options.storefront"
+        },
+        {
+          "value": "package",
+          "label": "t:options.package"
+        },
+        {
+          "value": "magic-wand",
+          "label": "t:options.magic_wand"
+        },
+        {
+          "value": "funnel",
+          "label": "t:options.funnel"
+        },
+        {
+          "value": "phone",
+          "label": "t:options.phone"
+        },
+        {
+          "value": "map-pin",
+          "label": "t:options.map_pin"
+        },
+        {
+          "value": "clock",
+          "label": "t:options.clock"
+        },
+        {
+          "value": "lightning",
+          "label": "t:options.lightning"
+        },
+        {
+          "value": "heart",
+          "label": "t:options.heart"
+        },
+        {
+          "value": "gift",
+          "label": "t:options.gift"
+        },
+        {
+          "value": "globe",
+          "label": "t:options.globe"
+        },
+        {
+          "value": "car-simple",
+          "label": "t:options.car_simple"
+        },
+        {
+          "value": "truck",
+          "label": "t:options.truck"
+        },
+        {
+          "value": "paper-plane",
+          "label": "t:options.paper_plane"
+        },
+        {
+          "value": "waves",
+          "label": "t:options.waves"
+        },
+        {
+          "value": "calendar-blank",
+          "label": "t:options.calendar_blank"
+        },
+        {
+          "value": "umbrella",
+          "label": "t:options.umbrella"
+        },
+        {
+          "value": "circle-half",
+          "label": "t:options.circle_half"
+        },
+        {
+          "value": "bell-ringing",
+          "label": "t:options.bell_ringing"
+        },
+        {
+          "value": "tiktok",
+          "label": "t:options.tiktok"
+        },
+        {
+          "value": "instagram",
+          "label": "t:options.instagram"
+        },
+        {
+          "value": "pinterest",
+          "label": "t:options.pinterest"
+        },
+        {
+          "value": "x",
+          "label": "t:options.x"
+        },
+        {
+          "value": "facebook",
+          "label": "t:options.facebook"
+        },
+        {
+          "value": "telegram",
+          "label": "t:options.telegram"
+        },
+        {
+          "value": "whatsapp",
+          "label": "t:options.whatsapp"
+        },
+        {
+          "value": "email",
+          "label": "t:options.email"
+        },
+        {
+          "value": "linkedin",
+          "label": "t:options.linkedin"
+        },
+        {
+          "value": "snapchat",
+          "label": "t:options.snapchat"
+        },
+        {
+          "value": "tumblr",
+          "label": "t:options.tumblr"
+        },
+        {
+          "value": "threads",
+          "label": "t:options.threads"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "checkbox",
+      "id": "icon_only",
+      "label": "t:settings.icon_only",
+      "default": false,
+      "visible_if": "{{ block.settings.icon != 'none' }}"
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "t:settings.icon_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "default",
+      "visible_if": "{{ block.settings.style != 'plain' and block.settings.icon != 'none' and block.settings.icon_only != true }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_settings",
+      "visible_if": "{{ block.settings.icon_only == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_full_width",
+      "label": "t:settings.mobile_full_width",
+      "default": false,
+      "visible_if": "{{ block.settings.icon_only == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.button",
+      "category": "t:categories.basic",
+      "settings": {
+        "label": "Button label",
+        "style": "primary"
+      }
+    }
+  ]
+}
+{% endschema %}

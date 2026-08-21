@@ -1,0 +1,233 @@
+{% liquid
+  assign main_image = block.settings.image_1
+  assign main_image_width = block.settings.image_width_1
+  assign main_image_ratio = block.settings.image_ratio_1
+
+  assign second_image = block.settings.image_2
+  assign second_image_ratio = block.settings.image_ratio_2
+
+  if main_image_ratio == 'adapt'
+    assign main_image_ratio = main_image.aspect_ratio | default: 1
+  else
+    assign ratio = main_image_ratio | split: '/'
+    assign width = ratio[0] | plus: 0.0
+    assign height = ratio[1] | plus: 0.0
+    assign main_image_ratio = width | divided_by: height
+  endif
+
+  if second_image_ratio == 'adapt'
+    assign second_image_ratio = second_image.aspect_ratio | default: 1
+  else
+    assign ratio = second_image_ratio | split: '/'
+    assign width = ratio[0] | plus: 0.0
+    assign height = ratio[1] | plus: 0.0
+    assign second_image_ratio = width | divided_by: height
+  endif
+
+  # The ratio of the image height to the wrapper height in %
+  assign percent = 89
+
+  if main_image_ratio >= 1
+    assign percent = 75
+  endif
+
+  if second_image != blank
+    if second_image_ratio >= 1 and main_image_ratio >= 1 or second_image_ratio < 1 and main_image_ratio < 1
+      assign percent = 89
+    endif
+  endif
+
+  assign main_image_ratio = main_image_ratio | plus: 0.0
+  assign wrapper_ratio = main_image_ratio | times: percent | divided_by: main_image_width
+%}
+
+<div
+  class="timeline-media-block timeline-media relative"
+  style="--block-ratio: {{ wrapper_ratio }};"
+  {{ block.shopify_attributes }}
+>
+  <div
+    class="timeline-media__image timeline-media__image--first absolute"
+    style="--width: {{ block.settings.image_width_1 }}%; --border-radius: {{ block.settings.image_border_radius_1 }}px;"
+  >
+    {% content_for 'block', type: 'spinning-icon-badge', id: 'spinning-icon-badge' %}
+    <div class="media-mask-clip border-style">
+      {% render 'responsive-image', mode: 'js', image: block.settings.image_1, image_ratio: block.settings.image_ratio_1 %}
+    </div>
+  </div>
+  <div
+    class="timeline-media__image timeline-media__image--secondary absolute media-mask-clip border-style"
+    style="--width: {{ block.settings.image_width_2 }}%; --border-radius: {{ block.settings.image_border_radius_2 }}px;"
+  >
+    {% render 'responsive-image', mode: 'js', image: block.settings.image_2, image_ratio: block.settings.image_ratio_2 %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.media",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.image_1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_1",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "range",
+      "id": "image_width_1",
+      "label": "t:settings.width",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius_1",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.image_2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_2",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "range",
+      "id": "image_width_2",
+      "label": "t:settings.width",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius_2",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.media",
+      "settings": {
+        "image_ratio_1": "adapt",
+        "image_width_1": 84,
+        "image_ratio_2": "adapt",
+        "image_width_2": 48
+      },
+      "blocks": {
+        "spinning-icon-badge": {
+          "type": "spinning-icon-badge",
+          "static": true,
+          "settings": {
+            "icon": "heart",
+            "text": "Talk about your brand",
+            "font_size": 12,
+            "font_size_mobile": 8,
+            "text_color": "text",
+            "text_color_gradient": "",
+            "color_scheme": "scheme-2",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100
+          },
+          "blocks": {}
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

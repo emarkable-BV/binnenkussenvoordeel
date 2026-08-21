@@ -1,0 +1,166 @@
+{%- liquid
+  assign block_title = block.settings.heading
+  assign wrapper_tag = 'div'
+  assign tag = 'div'
+  assign is_collapsible = false
+
+  if block_title != blank
+    assign wrapper_tag = 'accordion-component'
+    assign tag = 'details'
+    assign is_collapsible = true
+  endif
+-%}
+{%- capture inline_style -%}
+  --col-width: {{ block.settings.width }}%;
+  {%- if block.settings.order != blank -%} 
+    --col-order: {{ block.settings.order }};
+  {%- endif -%}
+{%- endcapture -%}
+<{{ wrapper_tag }}
+  class="footer__top-block{% if block.settings.enable_divider %} footer__top-block--with-border{% endif %} accordion f-column relative w-full shrink-0"
+  style="{{ inline_style }}"
+  {{ block.shopify_attributes }}
+  data-section-id="{{ section.id }}"
+>
+  <{{ tag }}
+    class="footer__details accordion__details{% if block.settings.open_default %} is-open{% endif %}"
+    {% if is_collapsible %}
+      is="footer-details"
+      ref="item"
+      open
+      {% if block.settings.open_default %}
+        data-open-default="true"
+      {% endif %}
+    {% endif %}
+  >
+    {%- if block_title != blank -%}
+      <summary ref="summary" class="accordion__summary flex" on:click="/onSummaryClick">
+        <span class="{{ block.settings.heading_size }}">
+          {{ block_title }}
+        </span>
+        {% render 'icon', icon: 'caret-down', class: 'flex accordion__summary-arrow icon--caret lg:hidden' %}
+      </summary>
+    {%- endif -%}
+    <div
+      class="accordion__content"
+      ref="content"
+    >
+      <div class="accordion__inner">
+        {%- content_for 'blocks' -%}
+      </div>
+    </div>
+  </{{ tag }}>
+</{{ wrapper_tag }}>
+{% schema %}
+{
+  "name": "t:names.column",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "width",
+      "label": "t:settings.width",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Footer column",
+      "label": "t:settings.heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:settings.heading_size",
+      "default": "h5",
+      "options": [
+        {
+          "label": "t:options.h6",
+          "value": "h6"
+        },
+        {
+          "label": "t:options.h5",
+          "value": "h5"
+        },
+        {
+          "label": "t:options.h4",
+          "value": "h4"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_default",
+      "label": "t:settings.open_by_default",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_divider",
+      "default": false,
+      "label": "t:settings.enable_divider"
+    },
+    {
+      "type": "number",
+      "id": "order",
+      "label": "t:settings.column_order",
+      "info": "t:info.column_order"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "grid"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "newsletter"
+    },
+    {
+      "type": "_footer-menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.column",
+      "settings": {},
+      "blocks": {
+        "menu_1": {
+          "type": "_footer-menu"
+        }
+      },
+      "block_order": ["menu_1"]
+    }
+  ]
+}
+{% endschema %}

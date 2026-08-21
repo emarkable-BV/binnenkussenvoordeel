@@ -1,0 +1,84 @@
+{%- liquid
+  assign mode = mode | default: 'select'
+  assign is_drawer_mode = false
+  if mode == 'drawer'
+    assign is_drawer_mode = true
+  endif
+-%}
+
+<sorting-filter-component
+  class="sorting-filter{% if is_drawer_mode %} sorting-filter--drawer{% endif %} no-js-hidden"
+  on:change="/updateFilterAndSorting"
+  data-mode="{{ mode }}"
+>
+  {% if is_drawer_mode %}
+    <!-- Drawer mode: Radio buttons like checkboxes -->
+    <div class="sorting-filter__drawer-container">
+      <div class="sorting-filter__label facets__label visually-hidden">
+        {{- 'actions.sort' | t -}}
+      </div>
+      <div class="sorting-filter__options">
+        {% for option in results.sort_options %}
+          {% assign option_id = 'sort-radio-'
+            | append: section_id
+            | append: '-'
+            | append: forloop.index
+          %}
+          <div class="sorting-filter__option">
+            <input
+              type="radio"
+              id="{{ option_id }}"
+              name="sort_by"
+              value="{{ option.value }}"
+              form="{{ form_id }}"
+              class="sorting-filter__radio visually-hidden"
+              {% if option.value == sort_by %}
+                checked
+              {% endif %}
+              ref="sortingInputs[]"
+            >
+            <label
+              for="{{ option_id }}"
+              class="sorting-filter__radio-label facets__checkbox-label"
+              tabindex="0"
+            >
+              <span class="facets__checkbox-wrapper">
+                <span class="facets__checkbox"></span>
+              </span>
+              <span class="facets__checkbox-text color-subtext">{{ option.name }}</span>
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <!-- Default mode: Select dropdown -->
+    <div class="sorting-filter__container flex items-center gap-2">
+      <label
+        for="sort-select-{{ section_id }}"
+        class="facets__label hidden md:block"
+      >
+        {{- 'actions.sort' | t -}}
+      </label>
+      <div class="select">
+        <select
+          id="sort-select-{{ section_id }}"
+          name="sort_by"
+          form="{{ form_id }}"
+          class="sorting-filter__select form-control"
+        >
+          {% for option in results.sort_options %}
+            <option
+              value="{{ option.value }}"
+              {% if option.value == sort_by %}
+                selected
+              {% endif %}
+            >
+              {{ option.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  {% endif %}
+</sorting-filter-component>

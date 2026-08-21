@@ -1,0 +1,24 @@
+{%- doc -%}
+  Renders the CSS variables for the `gap` styles needed for responsive scaling.
+  Intended for use with the `gap-style` class.
+  Following the exact same pattern as typography presets.
+
+  @param {object} [settings] - The settings of the group block.
+  @param {number} [column_gap] - Column gap in px
+  @param {number} [column_gap_mobile] - Column gap in px on mobile
+  @param {number} [row_gap] - Row gap in px
+  @param {number} [row_gap_mobile] - Row gap in px on mobile
+{%- enddoc -%}
+{%- liquid
+  assign column_gap = column_gap | default: settings.column_gap
+  assign column_gap_mobile = column_gap_mobile | default: settings.column_gap_mobile
+  assign column_gap_in_rem = column_gap | divided_by: 10.0
+  assign row_gap = row_gap | default: settings.row_gap
+  assign row_gap_mobile = row_gap_mobile | default: settings.row_gap_mobile
+-%}
+{%- capture variables -%}
+  --f-column-gap-max: {{ column_gap_in_rem }}rem;{% comment %}Used for carousel before initialized{% endcomment %}
+  {% render 'clamp-calculate-style', property_name: 'f-column-gap', min_value: column_gap_mobile, max_value: column_gap %}
+  {% render 'clamp-calculate-style', property_name: 'f-row-gap', min_value: row_gap_mobile, max_value: row_gap %}
+{%- endcapture -%}
+{{- variables | strip_newlines | strip -}}

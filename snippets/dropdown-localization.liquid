@@ -1,0 +1,81 @@
+{%- doc -%}
+  Determines whether to wrap the localization-form in a dropdown-component and passes variables to it.
+
+  @param {string} block_id - The block ID
+  @param {boolean} [show_language] - Whether to show the language selector.
+  @param {boolean} [show_country] - Whether to show the country selector.
+  @param {boolean} [show_country_flag] - Whether to show the country flag.
+  @param {string} [toggle_button_style] - Accepted value: 'blank', 'outline'
+{%- enddoc -%}
+{%- if show_country == false -%}
+  {%- if show_language and localization.available_languages.size > 1 -%}
+    <div class="dropdown-localization">
+      {% render 'localization-form', show_country: show_country, show_language: show_language, block_id: block_id %}
+    </div>
+  {%- endif -%}
+{%- elsif localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+  {%- liquid
+    assign toggle_button_class = ''
+
+    case toggle_button_style
+      when 'outline'
+        assign toggle_button_class = ' btn btn--small btn--outline'
+      else
+        assign toggle_button_class = ' button-unstyled cursor-pointer'
+    endcase
+  -%}
+  <dropdown-localization-component class="dropdown-localization block relative">
+    <button
+      type="button"
+      class="dropdown-localization__button relative z-0{{ toggle_button_class }}"
+      aria-expanded="false"
+      ref="toggle"
+      on:click="/toggleSelector"
+    >
+      <div class="btn__text paragraph text-body-sm flex items-center gap-2">
+        <span class="visually-hidden">
+          {{- 'accessibility.localization_region_and_language' | t -}}
+        </span>
+        {%- if show_country and show_country_flag -%}
+          <span
+            class="icon-flag block"
+            style="background-image: url({{- localization.country | image_url: width: 32 }});"
+          ></span>
+        {%- endif -%}
+        <div>
+          {%- if show_country -%}
+            <span class="currency-code">
+              {{- localization.country.currency.iso_code -}}
+            </span>
+          {%- endif -%}
+
+          {%- if show_country and show_language -%}
+            <span>/&nbsp</span>
+          {%- endif -%}
+
+          {%- if show_language -%}
+            <span>
+              {{- localization.language.iso_code | upcase -}}
+            </span>
+          {%- endif -%}
+        </div>
+        {% render 'icon', icon: 'caret-down', size: 'extra-small', class: 'dropdown-localization__button-arrow shrink-0' %}
+      </div>
+    </button>
+    {%- capture localization_popover -%}
+      {{ 'component-localization-dropdown.css' | asset_url | stylesheet_tag }}
+      <div
+        class="localization-wrapper absolute color-background opacity-0"
+        hidden
+        ref="panel"
+      >
+        {% render 'localization-form',
+          show_country: show_country,
+          show_language: show_language,
+          block_id: block_id
+        %}
+      </div>    
+    {%- endcapture -%}
+    <template ref="template">{{ localization_popover }}</template>
+  </dropdown-localization-component>
+{%- endif -%}

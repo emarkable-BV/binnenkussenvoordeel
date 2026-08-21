@@ -1,0 +1,10 @@
+{%- doc -%}
+  @param {string} [media_sizes] - Sizes for media
+{%- enddoc -%}
+{% render 'product-card', children: '', product: product, media_sizes: media_sizes %}
+{% schema %}
+{
+  "name": "t:names.product_card",
+  "tag": null
+}
+{% endschema %}

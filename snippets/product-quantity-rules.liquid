@@ -1,0 +1,22 @@
+{%- doc -%}
+  Quantity rules
+
+  @param {object} product - Product object
+  @param {object} variant - Selected variant
+  @param {object} section - Parent section
+{%- enddoc -%}
+<div
+  class="quantity__rules flex flex-wrap gap-x-2 gap-y-1 text-body-sm color-subtext empty-hidden"
+  id="QuantityRules-{{ section.id }}"
+  data-variant-id="{{ variant.id }}"
+>
+  {%- if variant.quantity_rule.increment > 1 -%}
+    <span class="divider">{{- 'content.increments_of' | t: quantity: variant.quantity_rule.increment -}}</span>
+  {%- endif -%}
+  {%- if variant.quantity_rule.min > 1 -%}
+    <span class="divider">{{- 'content.minimum_of' | t: quantity: variant.quantity_rule.min -}}</span>
+  {%- endif -%}
+  {%- if variant.quantity_rule.max != null -%}
+    <span class="divider">{{- 'content.maximum_of' | t: quantity: variant.quantity_rule.max -}}</span>
+  {%- endif -%}
+</div>

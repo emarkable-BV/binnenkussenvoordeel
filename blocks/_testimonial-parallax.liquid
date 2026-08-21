@@ -1,0 +1,195 @@
+{% liquid
+  assign index = section.blocks | find_index: 'id', block.id | plus: 1
+  assign total = section.blocks.size
+
+  assign divisor = 3
+  assign mod = index | modulo: divisor
+
+  assign y_begin = 0
+  assign y_end = 0
+  assign item_classes = ' col-span-2'
+
+  case mod
+    when 1
+      assign y_begin = 25
+      assign y_end = -10
+      assign item_classes = item_classes | append: ' col-start-1 justify-self-start'
+    when 2
+      assign y_begin = -25
+      assign y_end = 0
+      assign item_classes = item_classes | append: ' col-start-7 justify-self-end'
+    when 0
+      assign y_begin = 20
+      assign y_end = -10
+      assign item_classes = item_classes | append: ' col-start-4 justify-self-center'
+  endcase
+
+  assign product = block.settings.product
+%}
+
+{% capture style %}
+  {% render 'border-style', settings: block.settings %}
+{% endcapture %}
+{% capture classes %}
+  testimonial testimonial--stacked testimonial--parallax
+  {% if block.settings.show_image %}{% if block.settings.image_away_from_edge %} testimonial--image-away-edge{% endif %}{% else %} testimonial--no-image{% endif %}
+  flex flex-col h-full border-style color-{{ block.settings.color_scheme }}
+{% endcapture %}
+
+<div
+  class="{{ classes | strip | strip_newlines }}{{ item_classes }}"
+  style="{{ style | strip | strip_newlines }}"
+  data-total="{{ total }}"
+  data-begin="{{ y_begin }}%"
+  data-end="{{ y_end }}%"
+  data-section-id="{{ section.id }}"
+  ref="items[]"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.show_image %}
+    {%- capture image_sizes -%}(min-width: 1200px) 246px, (min-width: 768px) 208px, 66vw{%- endcapture -%}
+    <div
+      class="testimonial__media relative border-style media-mask-clip"
+      style="--border-radius: {{ block.settings.image_border_radius }}px;"
+    >
+      {% render 'responsive-image',
+        mode: 'liquid',
+        sizes: image_sizes,
+        widths: '210, 260, 420, 520, 640, 750, 767, 828, 960, 1024, 1280',
+        image: block.settings.image,
+        image_ratio: 'adapt',
+        default_alt: shop.name
+      %}
+    </div>
+  {% endif %}
+  <div class="testimonial__content flex flex-col flex-1">
+    {% content_for 'block', type: '_simple-text', id: 'static-testimonial-text', classes: 'testimonial__text' %}
+
+    {% content_for 'block', type: '_author-info', id: 'static-testimonial-info', classes: 'flex flex-col gap-y-1' %}
+
+    {% if product != blank %}
+      <div class="testimonial__product flex-1 flex flex-col justify-end">
+        <a href="{{ product.url }}" class="reversed-link flex items-center gap-x-3">
+          <div
+            class="testimonial__product-media media-mask-clip"
+            aria-hidden="true"
+          >
+            {% render 'responsive-image',
+              image: product.featured_media,
+              image_ratio: '1',
+              media_width_desktop: '200px',
+              media_width_mobile: '200px',
+              widths: '80,160,200'
+            %}
+          </div>
+          <span class="testimonial__product-title reversed-link__text text-limit-1-line">
+            {{- product.title -}}
+          </span>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+<!-- @testimonialParallax/split -->
+
+{% schema %}
+{
+  "name": "t:names.testimonial",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:settings.show_image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_away_from_edge",
+      "label": "t:settings.image_away_from_edge",
+      "default": true,
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.show_image }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.testimonial",
+      "category": "t:categories.basic",
+      "settings": {
+        "image_border_radius": 10,
+        "border_radius": 20
+      },
+      "blocks": {
+        "static-testimonial-text": {
+          "type": "_simple-text",
+          "static": true,
+          "settings": {
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "type_preset": "paragraph",
+            "padding-block-end": 12,
+            "mobile-padding-scale": 100
+          }
+        },
+        "static-testimonial-info": {
+          "type": "_author-info",
+          "static": true,
+          "settings": {
+            "name": "<p>Author</p>",
+            "name_preset": "h6"
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

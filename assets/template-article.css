@@ -1,0 +1,101 @@
+.article__main {
+  row-gap: var(--article-main-row-gap);
+}
+
+.article__wrapper > * + * {
+  margin-top: 2.4rem;
+}
+
+.article__footer > * + * {
+  margin-top: 2.4rem;
+}
+
+.article--width {
+  position: relative;
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+}
+
+.article__header .article-card__tag--outline .badge {
+  border: 0.1rem solid rgb(var(--color-border)/20%);
+}
+
+.article .comment {
+  padding-bottom: 2.4rem;
+  border-bottom: 0.1rem solid rgb(var(--color-border)/10%);
+}
+.article .comment p {
+  margin-block-end: 1.2rem;
+}
+.article .comment + .comment {
+  margin-block-start: 2.4rem;
+}
+.article .comment-form .form-footer {
+  margin-block-start: 2.4rem;
+}
+.article .form-control--textarea {
+  min-height: 18rem;
+}
+.article .form-status-list {
+  margin-bottom: 2rem;
+}
+.article .form-status-list ~ ul {
+  margin-bottom: 2rem;
+}
+.article .form-message svg {
+  flex-shrink: 0;
+}
+.article .form-field + .form-field {
+  margin-block-start: 2rem;
+}
+.article .form-row .form-field {
+  margin-block-start: 0 !important;
+}
+.article .comment-form__warning,
+.article .form-message--error {
+  margin-block-start: 0.8rem;
+}
+.article .pagination {
+  margin-block-start: 2rem;
+}
+
+.form-control--textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.article-navigation {
+  padding-block-start: 2.4rem;
+  border-block-start: 0.1rem solid rgb(var(--color-border)/var(--color-border-alpha));
+}
+
+.article-tags__heading,
+.article__share-title {
+  font-family: var(--font-button--family);
+  font-weight: var(--font-button--weight);
+}
+
+@media (min-width: 768px) {
+  .article__wrapper > * + * {
+    margin-top: 4rem;
+  }
+  .article .comment {
+    padding-block-end: 3.2rem;
+  }
+  .article .comment + .comment {
+    margin-block-start: 4rem;
+  }
+  .article .form-control--textarea {
+    min-height: 16rem;
+  }
+  .article .comment-form .form-footer {
+    margin-block-start: 3.2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .article--width {
+    max-width: 88rem;
+    margin-inline: auto;
+  }
+}

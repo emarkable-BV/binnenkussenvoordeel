@@ -1,0 +1,253 @@
+{% capture children %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+
+{% render 'marquee', settings: block.settings, children: children, shopify_attributes: block.shopify_attributes %}
+
+{% schema %}
+{
+  "name": "t:names.marquee",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "_icon-with-text"
+    },
+    {
+      "type": "_lookbook-card"
+    },
+    {
+      "type": "_marquee-gallery-item"
+    },
+    {
+      "type": "_separator"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:settings.direction",
+      "options": [
+        {
+          "label": "t:options.forward",
+          "value": "forward"
+        },
+        {
+          "label": "t:options.reverse",
+          "value": "reverse"
+        }
+      ],
+      "default": "forward"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "t:settings.speed",
+      "min": 0.1,
+      "max": 3,
+      "unit": "x",
+      "step": 0.1,
+      "default": 0.3
+    },
+    {
+      "type": "range",
+      "id": "angle",
+      "label": "t:settings.rotate",
+      "min": -5,
+      "max": 5,
+      "step": 1,
+      "unit": "deg",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "t:settings.pause_on_hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_edge_fade",
+      "label": "t:settings.show_edge_fade",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "t:settings.enable_parallax",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.column_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.column_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.marquee",
+      "category": "t:categories.banners",
+      "settings": {
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      },
+      "blocks": {
+        "item_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>WELCOME TO OUR STORE</p>",
+            "type_preset": "h3"
+          }
+        },
+        "item_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>WELCOME TO OUR STORE</p>",
+            "type_preset": "h3"
+          }
+        }
+      },
+      "block_order": ["item_1", "item_2"]
+    },
+    {
+      "name": "t:names.marquee_lookbook_cards",
+      "category": "t:categories.banners",
+      "settings": {
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      },
+      "blocks": {
+        "item_1": {
+          "type": "_lookbook-card",
+          "settings": {
+            "width": 408
+          }
+        },
+        "item_2": {
+          "type": "_lookbook-card",
+          "settings": {
+            "width": 288
+          }
+        }
+      },
+      "block_order": ["item_1", "item_2"]
+    },
+    {
+      "name": "t:names.marquee_icon_with_text",
+      "category": "t:categories.banners",
+      "settings": {
+        "padding-block-start": 16,
+        "padding-block-end": 16,
+        "column_gap": 40
+      },
+      "blocks": {
+        "item_1": {
+          "type": "_icon-with-text",
+          "blocks": {
+            "static-icon-block": {
+              "type": "_icon",
+              "static": true,
+              "settings": {
+                "icon": "tag",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 32
+              }
+            },
+            "static-text-block": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Exclusive discount</p>",
+                "type_preset": "h3"
+              }
+            }
+          }
+        },
+        "item_2": {
+          "type": "button"
+        }
+      },
+      "block_order": ["item_1", "item_2"]
+    }
+  ]
+}
+{% endschema %}

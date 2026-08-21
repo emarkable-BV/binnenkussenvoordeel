@@ -1,0 +1,89 @@
+{%- liquid
+  assign text_align = text_align | default: 'start'
+  assign text_align_mobile = text_align_mobile | default: 'inherit'
+
+  if text_align_mobile == 'inherit'
+    assign text_align_mobile = text_align
+  endif
+
+  assign justify = text_align | replace: 'left', 'start' | replace: 'right', 'end'
+  assign justify_mobile = text_align_mobile | replace: 'left', 'start' | replace: 'right', 'end'
+-%}
+<nav
+  class="breadcrumbs flex items-center justify-{{ justify_mobile }} md:justify-{{ justify }} gap-x-3 text-body-sm"
+  role="navigation"
+  aria-label="breadcrumbs"
+>
+  <a
+    href="{{ routes.root_url }}"
+    title="{{- 'content.home' | t -}}"
+    class="reversed-link"
+  >
+    {{- 'content.home' | t -}}
+  </a>
+  {%- if template contains 'page' -%}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    <span class="breadcrumbs__last color-subtext text-ellipsis">{{ page.title }}</span>
+  {%- elsif template contains 'product' -%}
+    {%- liquid
+      assign primary_collection = product.metafields.breadcrumbs.primary_collection
+
+      if primary_collection != blank
+        assign product_collection = primary_collection.value
+      else
+        assign product_collection = product.collections | first
+      endif
+    -%}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    {%- if product_collection != blank -%}
+      <a href="{{ product_collection.url }}" class="reversed-link">
+        {{- product_collection.title -}}
+      </a>
+    {%- else -%}
+      <a href="{{ routes.all_products_collection_url }}" class="reversed-link">
+        {{- 'content.collection' | t -}}
+      </a>
+    {%- endif -%}
+    <span aria-hidden="true" class="breadcrumbs__sep breadcrumbs__sep--last"></span>
+    <span class="breadcrumbs__last color-subtext text-ellipsis">{{ product.title }}</span>
+  {%- elsif template contains 'collection' and collection.handle -%}
+    {%- if collection.handle != 'all' -%}
+      <span aria-hidden="true" class="breadcrumbs__sep"></span>
+      <a href="{{ routes.all_products_collection_url }}" class="reversed-link">
+        {{- 'content.collection' | t -}}
+      </a>
+    {% endif %}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    {%- if current_tags -%}
+      {%- capture url -%}{{ routes.collections_url }}/{{ collection.handle }}{%- endcapture -%}
+      {{ collection.title | link_to: url, class: 'reversed-link' }}
+      <span aria-hidden="true" class="breadcrumbs__sep"></span>
+      <span class="breadcrumbs__last color-subtext text-ellipsis">{{ current_tags | join: ' + ' }}</span>
+    {%- else -%}
+      <span class="breadcrumbs__last color-subtext text-ellipsis">{{ collection.title }}</span>
+    {%- endif -%}
+  {%- elsif template == 'list-collections' -%}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    <span class="breadcrumbs__last color-subtext text-ellipsis">{{ 'content.collections' | t }}</span>
+  {%- elsif template == 'blog' -%}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    {%- if current_tags -%}
+      {{ blog.title | link_to: blog.url, class: 'reversed-link' }}
+      <span aria-hidden="true" class="breadcrumbs__sep"></span>
+      <span class="breadcrumbs__last color-subtext text-ellipsis">{{ current_tags | join: ' + ' }}</span>
+    {%- else -%}
+      <span class="breadcrumbs__last color-subtext text-ellipsis">{{ blog.title }}</span>
+    {%- endif -%}
+  {%- elsif template == 'article' -%}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    {{ blog.title | link_to: blog.url, class: 'reversed-link' }}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    <span class="breadcrumbs__last color-subtext text-ellipsis">{{ article.title }}</span>
+  {%- elsif template == 'cart' -%}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    <span class="breadcrumbs__last color-subtext text-ellipsis">{{ 'content.cart' | t }}</span>
+  {%- else -%}
+    <span aria-hidden="true" class="breadcrumbs__sep"></span>
+    <span class="breadcrumbs__last color-subtext text-ellipsis">{{ page_title }}</span>
+  {%- endif -%}
+</nav>

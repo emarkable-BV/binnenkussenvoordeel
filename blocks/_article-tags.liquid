@@ -1,0 +1,52 @@
+{%- liquid
+  assign limit = block.settings.limit
+-%}
+
+{% if blog.articles_count > 0 %}
+  <div
+    class="blog-post__tags swipe-mobile"
+    {{ block.shopify_attributes }}
+  >
+    <ul class="inline-flex items-center flex-nowrap md:flex-wrap gap-2">
+      <li>
+        <a
+          href="{{ blog.url }}"
+          class="blog-post__tag flex{% unless current_tags %} active{% endunless %}"
+        >
+          {{ 'blogs.all_posts' | t }}
+        </a>
+      </li>
+      {% if blog.tags.size > 0 %}
+        {% for tag in blog.tags limit: limit %}
+          <li>
+            <a
+              href="{{ blog.url }}/tagged/{{ tag | handle }}"
+              class="blog-post__tag flex{% if current_tags contains tag %} active{% endif %}"
+            >
+              {{- tag -}}
+            </a>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:names.tags",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "t:settings.limit_tags"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

@@ -1,0 +1,104 @@
+{%- doc -%}
+  This snippet is used to render a product card.
+  It is used in the product block,featured product block, and the product card block.
+
+  @param {product} product_resource - The product to render
+  @param {boolean} [show_unit_price] - Whether to show the unit price
+  @param {string} [type_preset] - The type preset to use for the price
+  @param {boolean} [ref] - Ref attribute for querying element
+  @param {boolean} [use_variant] - Whether to use the selected variant or the product resource
+
+  @example
+  {% render 'price', product_resource: product, use_variant: true %}
+  @example
+  {% render 'price', product_resource: product, use_variant: false %}
+  @example
+  {% render 'price', product_resource: product, use_variant: true, show_unit_price: true %}
+  @example
+  {% render 'price', product_resource: product, use_variant: false, show_unit_price: true %}
+{%- enddoc -%}
+
+{%- liquid
+  if use_variant
+    assign target = product_resource.selected_or_first_available_variant
+  else
+    assign target = product_resource
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 1999
+
+  assign show_unit_price = show_unit_price | default: false
+  assign selected_variant = product_resource.selected_or_first_available_variant
+  assign price_min = product_resource.price_min
+  assign price_max = product_resource.price_max
+  assign available = target.available | default: false
+  assign money_price = price | money
+  assign money_compare_at_price = compare_at_price | money
+  assign money_price_min = price_min | money
+  assign money_price_max = price_max | money
+
+  # Format price with or without currency code based on settings
+  if settings.show_currency_code
+    assign money_price = price | money_with_currency
+    assign money_price_min = price_min | money_with_currency
+    assign money_price_max = price_max | money_with_currency
+    assign money_compare_at_price = compare_at_price | money_with_currency
+  endif
+
+  if target == product_resource and product_resource.price_varies
+    assign money_price = 'content.price_from_html' | t: price: money_price
+  endif
+
+  assign ref = ref | default: 'priceContainer', allow_false: true
+-%}
+
+<div
+  {% if ref != blank %}
+    ref="priceContainer"
+  {% endif %}
+  data-quantity-breaks="{{ product_resource.quantity_price_breaks_configured? }}"
+  class="
+    price-container {{ type_preset }}
+    {%- if available == false %} price--sold-out{% endif -%}
+    {%- if compare_at_price > price and target.quantity_price_breaks_configured? != true %} price--on-sale{% endif -%}
+    {%- if compare_at_price > price and target.quantity_price_breaks_configured? %} volume-pricing--sale-badge{% endif -%}
+    {%- if target.price_varies == false and target.compare_at_price_varies %} price--no-compare{% endif -%}
+  "
+>
+  <div class="price__regular">
+    {%- if product_resource.quantity_price_breaks_configured? -%}
+      <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
+      <span class="price">{{- 'content.price_range' | t: minimum: money_price_min, maximum: money_price_max -}}</span>
+      {% if compare_at_price %}
+        {% unless product_resource.price_varies == false and product_resource.compare_at_price_varies %}
+          <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
+          <span class="compare-at-price">{{- money_compare_at_price -}}</span>
+        {% endunless %}
+      {% endif %}
+    {%- else -%}
+      <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
+      <span class="price">{{- money_price -}}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="price__sale">
+    <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
+    <span class="price price--sale">{{- money_price -}}</span>
+    {%- unless target.price_varies == false and target.compare_at_price_varies %}
+      <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
+      <span class="compare-at-price">{{- money_compare_at_price -}}</span>
+    {%- endunless -%}
+  </div>
+
+  {%- if selected_variant.unit_price and show_unit_price %}
+    {%- liquid
+      if settings.show_currency_code
+        assign unit_price = selected_variant.unit_price | money_with_currency
+      else
+        assign unit_price = selected_variant.unit_price | money
+      endif
+    -%}
+    {% render 'unit-price', price: unit_price, measurement: selected_variant.unit_price_measurement %}
+  {%- endif -%}
+</div>

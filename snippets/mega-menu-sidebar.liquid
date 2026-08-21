@@ -1,0 +1,84 @@
+{%- liquid
+  assign promotion_columns = block.settings.promotion_columns
+-%}
+{%- case block.settings.layout -%}
+  {%- when 'with-banner' -%}
+    {%- if block.settings.image != blank -%}
+      <div class="mega-menu__promotions">
+        {% render 'mega-menu-banner',
+          banner_design: block.settings.banner_design,
+          color_scheme: block.settings.color_scheme,
+          image: block.settings.image,
+          image_mobile: block.settings.image_mobile,
+          image_overlay_opacity: block.settings.image_overlay_opacity,
+          heading: block.settings.heading,
+          heading_preset: block.settings.heading_size,
+          heading_font_size: block.settings.heading_font_size,
+          heading_font_size_mobile: block.settings.heading_font_size_mobile,
+          subheading: block.settings.subheading,
+          badge: block.settings.badge,
+          button_label: block.settings.button_label,
+          button_link: block.settings.button_link,
+          button_style: block.settings.button_style,
+          button_size: block.settings.button_size,
+          button_icon: block.settings.button_icon,
+          button_icon_style: block.settings.button_icon_style
+        %}
+      </div>
+    {%- endif -%}
+  {%- when 'with-products' -%}
+    {%- if block.settings.product_list != blank -%}
+      <div class="mega-menu__promotions menu-sidebar__products">
+        {%- liquid
+          assign products_to_display = block.settings.product_list.count
+
+          assign is_carousel = false
+          if products_to_display > promotion_columns
+            assign is_carousel = true
+          endif
+        -%}
+        <carousel-slider
+          class="carousel carousel--grid relative"
+          style="{% render 'gap-style', column_gap: 10, column_gap_mobile: 10 %};--f-columns-xxl: {{ promotion_columns }};--f-columns-mobile: {{ promotion_columns }};"
+        >
+          <script type="application/json" ref="config">
+            {
+              "loop": false,
+              "slidesPerView": {{ promotion_columns }},
+              "spaceBetween": 10,
+              "pagination": false,
+              "counter": false,
+              "navigationPosition": {
+                "enabled": true,
+                "selector": ".media img"
+              }
+            }
+          </script>
+          <div ref="container" class="swiper">
+            <div class="swiper-wrapper">
+              {%- for product in block.settings.product_list -%}
+                <div class="swiper-slide">
+                  {%- render 'product-card',
+                    product: product,
+                    show_vendor: block.settings.show_product_vendor,
+                    show_type: block.settings.show_product_type,
+                    show_badges: block.settings.show_product_badges
+                  -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+          {%- if is_carousel -%}
+            {% render 'carousel-controls',
+              type: 'absolute',
+              pagination: false,
+              counter: false,
+              navigation: true,
+              navigation_inside: true,
+              navigation_size: 'small'
+            %}
+          {%- endif -%}
+        </carousel-slider>
+      </div>
+    {%- endif -%}
+{%- endcase -%}

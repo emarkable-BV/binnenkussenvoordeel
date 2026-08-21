@@ -1,0 +1,278 @@
+{%- if block.blocks.size > 0 -%}
+  {%- capture inline_style -%}
+    --item-ver-align: {{ block.settings.item_vertical_alignment }};
+    {% render 'gap-style', settings: block.settings  %}
+    {% render 'spacing-style', settings: block.settings  %}
+  {%- endcapture -%}
+  <ul
+    class="icon-list-block list-unstyled flex flex-col gap-style spacing-style icon-list--{{ block.settings.item_icon_style }}"
+    style="{{ inline_style }}"
+    {{ block.shopify_attributes }}
+  >
+    {% content_for 'blocks' %}
+  </ul>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:names.icon_list",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_list-item"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_settings"
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "t:content.list_items"
+    },
+    {
+      "type": "select",
+      "id": "item_icon_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "standard",
+          "label": "t:options.standard"
+        },
+        {
+          "value": "circle",
+          "label": "t:options.circle"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "select",
+      "id": "item_vertical_alignment",
+      "label": "t:settings.position",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start-mobile",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end-mobile",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.icon_list",
+      "category": "t:categories.basic",
+      "settings": {
+        "row_gap": 12,
+        "row_gap_mobile": 12,
+        "item_icon_style": "circle",
+        "item_vertical_alignment": "center"
+      },
+      "blocks": {
+        "list_item_1": {
+          "type": "_list-item",
+          "name": "t:names.list_item",
+          "settings": {
+            "icon": "check",
+            "icon_size": "small",
+            "icon_width": 24,
+            "icon_width_mobile": 24,
+            "text": "Talk about your brand",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": ""
+          },
+          "blocks": {}
+        },
+        "list_item_2": {
+          "type": "_list-item",
+          "name": "t:names.list_item",
+          "settings": {
+            "icon": "check",
+            "icon_size": "small",
+            "icon_width": 24,
+            "icon_width_mobile": 24,
+            "text": "Talk about your brand",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": ""
+          },
+          "blocks": {}
+        },
+        "list_item_3": {
+          "type": "_list-item",
+          "name": "t:names.list_item",
+          "settings": {
+            "icon": "check",
+            "icon_size": "small",
+            "icon_width": 24,
+            "icon_width_mobile": 24,
+            "text": "Talk about your brand",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["list_item_1", "list_item_2", "list_item_3"]
+    }
+  ]
+}
+{% endschema %}

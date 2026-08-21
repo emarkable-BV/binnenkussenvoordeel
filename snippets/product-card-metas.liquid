@@ -1,0 +1,36 @@
+{%- liquid
+  assign show_vendor = show_vendor | default: settings.pcard_show_vendor, allow_false: true
+  assign show_type = show_type | default: settings.pcard_show_type, allow_false: true
+  assign has_vendor = false
+  assign has_type = false
+
+  if show_vendor and product.vendor != blank
+    assign has_vendor = true
+  endif
+
+  if show_type and product.type != blank
+    assign has_type = true
+  endif
+-%}
+{%- if has_vendor or has_type -%}
+  <div class="product-card__metas">
+    {%- if has_vendor -%}
+      <a
+        class="product-card__meta reversed-link"
+        href="{{ product.vendor | url_for_vendor }}"
+        aria-label="{{ 'accessibility.vendor' | t }}{{ product.vendor }}"
+      >
+        <span class="reversed-link__text">{{- product.vendor -}}</span>
+      </a>
+    {%- endif -%}
+    {%- if has_type -%}
+      <a
+        class="product-card__meta reversed-link"
+        href="{{ product.type | url_for_type }}"
+        aria-label="{{ 'accessibility.product_type' | t }}{{ product.type }}"
+      >
+        <span class="reversed-link__text">{{ product.type }}</span>
+      </a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

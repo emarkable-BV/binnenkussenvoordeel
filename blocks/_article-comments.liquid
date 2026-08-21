@@ -1,0 +1,381 @@
+{% liquid
+  assign preset = block.settings.comments_heading_size
+  assign font_size = block.settings.font_size
+  assign font_size_mobile = block.settings.font_size_mobile
+  assign font_family = block.settings.font
+  assign font_weight = block.settings.font_weight
+  assign line_height = block.settings.line_height
+
+  capture text_block_classes
+    if preset == 'custom'
+      echo ' custom-typography'
+      if block.settings.font_size != ''
+        echo ' custom-font-size'
+      endif
+    elsif preset == 'paragraph'
+      echo ' rte '
+    endif
+  endcapture
+%}
+
+{%- capture styles -%}
+  {% render 'typography-style', 
+    settings: block.settings,
+    preset: preset,
+    font_size: font_size,
+    font_size_mobile: font_size_mobile,
+    font_family: font_family,
+    font_weight: font_weight,
+    line_height: line_height
+  %}
+{%- endcapture -%}
+
+{%- if blog.comments_enabled? -%}
+  <div class="article-comment article--width">
+    <div id="comments">
+      <div class="article-comment__wrapper article__main flex flex-col gap-style">
+        {%- if article.comments_count > 0 -%}
+          {%- assign anchor_id = '#Comments-' | append: article.id -%}
+          <div class="article-comment__comment-area">
+            <h2
+              id="Comments-{{ article.id }}"
+              tabindex="-1"
+              class="section__header article-comment__title text-center {{ preset }}{{ text_block_classes }}"
+              style="{{ styles | strip | strip_newlines }}"
+            >
+              {{ 'blogs.article.comments_heading' | t: count: article.comments_count }}
+            </h2>
+            {% paginate article.comments by 5 %}
+              <div class="article-comment__list">
+                {%- for comment in article.comments -%}
+                  {%- if comment.status == 'pending' and comment.content -%}
+                    <article id="{{ comment.id }}" class="comment">
+                      {{ comment.content }}
+                      <footer class="comment__meta">
+                        <span class="comment__author">{{ comment.author }}</span>
+                      </footer>
+                    </article>
+                  {%- else -%}
+                    <article id="{{ comment.id }}" class="comment color-subtext">
+                      {{ comment.content }}
+                      <footer class="comment__meta flex gap-2">
+                        <span class="article-card__meta comment__date">
+                          {{ comment.created_at | time_tag: format: 'abbreviated_date' }}
+                        </span>
+                        <span class="article-card__separator no-empty"></span>
+                        <span class="article-card__meta comment__author">
+                          {{ comment.author }}
+                        </span>
+                      </footer>
+                    </article>
+                  {%- endif -%}
+                {%- endfor -%}
+                {% render 'pagination', paginate: paginate, anchor: anchor_id %}
+              </div>
+            {% endpaginate %}
+          </div>
+        {%- endif -%}
+
+        {% comment %} Comment form {% endcomment %}
+        {% form 'new_comment', article, class: 'comment-form' %}
+          <h2
+            class="section__header article-comment__form-title {{ preset }}{{ text_block_classes }} text-center"
+            style="{{ styles | strip | strip_newlines }}"
+          >
+            {{ 'blogs.comment_form.heading' | t }}
+          </h2>
+          {%- if form.errors -%}
+            <div class="form-status-list alert alert--error" role="alert">
+              <h3 class="form-message h6 flex gap-2 items-center" tabindex="-1" autofocus>
+                {% render 'icon', icon: 'warning', size: 'large', class: 'shrink-0' %}
+                {{ 'blogs.comment_form.error' | t }}
+              </h3>
+            </div>
+            <ul>
+              {%- for field in form.errors -%}
+                <li>
+                  <a href="#CommentForm-{{ field }}" class="link">
+                    {%- if form.errors.translated_fields[field] contains 'author' -%}
+                      <span id="CommentForm-author-error">
+                        {{ 'blogs.comment_form.name' | t }}
+                      </span>
+                    {%- elsif form.errors.translated_fields[field] contains 'body' -%}
+                      <span id="CommentForm-email-error">
+                        {{ 'blogs.comment_form.message' | t }}
+                      </span>
+                    {%- else -%}
+                      <span id="{{ form.errors.translated_fields[field] | handleize }}-error">
+                        {{ form.errors.translated_fields[field] | capitalize }}
+                      </span>
+                    {%- endif -%}
+                    {{ form.errors.messages[field] }}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- elsif form.posted_successfully? -%}
+            <div class="form-status-list alert alert--success" role="status">
+              <h3 class="form-message h6 flex gap-2 items-center" tabindex="-1" autofocus>
+                {% render 'icon', icon: 'check', size: 'large', class: 'shrink-0' %}
+                {% # theme-check-disable %}
+                {%- if blog.moderated? and comment.status == 'unapproved' -%}
+                  {% # theme-check-enable %}
+                  {{ 'blogs.comment_form.success_moderated' | t }}
+                {%- else -%}
+                  {{ 'blogs.comment_form.success' | t }}
+                {%- endif -%}
+              </h3>
+            </div>
+          {%- endif -%}
+          <div
+            {% if blog.moderated? == false %}
+              class="form-comment__comments-fields"
+            {% endif %}
+          >
+            <div
+              class="form-row form-field layout-panel-grid gap-5 md:gap-6"
+              style="--f-columns-mobile: 1;--f-columns-md: 2;"
+            >
+              <div class="form-field">
+                <label class="form-label" for="CommentForm-author">
+                  {{- 'blogs.comment_form.name' | t }}
+                  <span aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="comment[author]"
+                  id="CommentForm-author"
+                  class="form-control w-full"
+                  autocomplete="name"
+                  value="{{ form.author }}"
+                  aria-required="true"
+                  required
+                  {% if form.errors contains 'author' %}
+                    aria-invalid="true"
+                    aria-describedby="CommentForm-author-error"
+                  {% endif %}
+                  placeholder="{{ 'blogs.comment_form.name' | t }}"
+                >
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="CommentForm-email">
+                  {{- 'blogs.comment_form.email' | t }}
+                  <span aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="email"
+                  name="comment[email]"
+                  id="CommentForm-email"
+                  autocomplete="email"
+                  class="form-control w-full"
+                  value="{{ form.email }}"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  aria-required="true"
+                  required
+                  {% if form.errors contains 'email' %}
+                    aria-invalid="true"
+                    aria-describedby="CommentForm-email-error"
+                  {% endif %}
+                  placeholder="{{ 'blogs.comment_form.email' | t }}"
+                >
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="CommentForm-body">
+                {{- 'blogs.comment_form.message' | t }}
+                <span aria-hidden="true">*</span>
+              </label>
+              <textarea
+                rows="5"
+                name="comment[body]"
+                id="CommentForm-body"
+                class="form-control form-control--textarea block w-full"
+                aria-required="true"
+                required
+                {% if form.errors contains 'body' %}
+                  aria-invalid="true"
+                  aria-describedby="CommentForm-body-error"
+                {% endif %}
+                placeholder="{{ 'blogs.comment_form.message' | t }}"
+              >{{ form.body }}</textarea>
+            </div>
+            {%- if form.errors contains 'body' -%}
+              <span
+                id="CommentForm-body-error"
+                class="form-message form-message--small flex gap-2 form-message--error"
+              >
+                {% render 'icon', icon: 'warning', size: 'small', class: 'shrink-0' %}
+                {{- 'blogs.comment_form.message' | t }}
+                {{ form.errors.messages.body }}.
+              </span>
+            {%- endif -%}
+          </div>
+          {%- if blog.moderated? -%}
+            <p class="comment-form__warning color-subtext text-body-xs">{{ 'blogs.comment_form.moderated' | t }}</p>
+          {%- endif -%}
+
+          {% comment %} Button Submit {% endcomment %}
+          <div class="form-footer text-center">
+            <button type="submit" class="btn btn--primary btn--large btn--icon-solid">
+              <span class="btn__text">{{ 'blogs.comment_form.post' | t }}</span>
+              <span class="btn__icon">
+                <span class="btn__icon-text">{{ 'blogs.comment_form.post' | t }}</span>
+                <span class="btn__icon-icon">
+                  {% render 'icon', icon: 'caret-right' %}
+                </span>
+              </span>
+            </button>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:content.comments",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "comments_heading_size",
+      "label": "t:settings.heading_size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.comments_heading_size == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.comments_heading_size == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.comments_heading_size == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.comments_heading_size == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.comments_heading_size == 'custom' }}"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

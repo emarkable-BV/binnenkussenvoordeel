@@ -1,0 +1,37 @@
+<div
+  class="images-stack flex"
+  {{ block.shopify_attributes }}
+>
+  <div class="images-stack__wrapper inline-flex relative z-0">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.images_stack",
+  "tag": null,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "_image-stack"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.images_stack",
+      "category": "t:categories.basic",
+      "blocks": [
+        {
+          "type": "_image-stack"
+        },
+        {
+          "type": "_image-stack"
+        },
+        {
+          "type": "_image-stack"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

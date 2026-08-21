@@ -1,0 +1,28 @@
+{%- if block.blocks.size > 0 -%}
+  <div
+    class="scrolling-card-layered__cards w-full flex flex-col gap-10"
+    {{ block.shopify_attributes }}
+  >
+    {%- for block in block.blocks -%}
+      <div
+        class="scrolling-card-layered__card"
+        style="--item-index: {{ forloop.index0 }};"
+        ref="cards[]"
+      >
+        {% render block %}
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:names.scrolling_cards",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_scrolling-card-layered-image-card"
+    }
+  ],
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,152 @@
+{%- doc -%}
+  This snippet is used to render a collection card.
+  To be used inside a block to inherit the block object settings.
+
+  @param {object} collection - The collection to render the card for
+  @param {string} [layout] - Card layout
+  @param {string} [title] - Collection title override
+  @param {string} [title_preset] - Text preset for collection's title. Default: 'h6'
+  @param {boolean} [show_description] - Whether to show collection
+  @param {string} [description] - Collection description override
+  @param {object} section - The section object for accessing section settings
+  @param {string} [attributes] - Additional HTML attributes for the root element
+  @param {string} text_alignment
+  @param {boolean} show_product_count
+  @param {object} [image] - Collection image override
+  @param {string} [image_ratio] - The image ratio for the collection card
+  @param {string} [image_preload] - True preloads the image on page load; false uses lazy loading.
+  @param {string} [image_sizes] - Sizes for image in Liquid mode. Leave blank to use JS mode
+  @param {string} [image_widths] - Widths for image in Liquid mode. Leave blank to use JS mode
+
+  @example
+  {% render 'collection-card',
+    collection: collection,
+    section: section,
+    text_alignment: block.settings.text_alignment,
+    show_product_count: block.settings.show_product_count,
+    attributes: block.shopify_attributes,
+  %}
+{%- enddoc -%}
+
+{%- liquid
+  assign layout = layout | default: 'standard'
+  assign collection_thumbnail = collection.metafields.foxtheme.collection_thumbnail.value
+  assign collection_alias = collection.metafields.foxtheme.collection_alias.value
+
+  assign attributes = attributes | default: ''
+  assign show_product_count = show_product_count | default: true, allow_false: true
+
+  if image != blank
+    assign image_source = image
+  else
+    assign image_source = collection_thumbnail | default: collection.featured_image
+  endif
+
+  assign image_ratio = image_ratio | default: settings.collection_card_aspect_ratio
+  if image_ratio == 'inherit'
+    assign image_ratio = settings.collection_card_aspect_ratio
+  endif
+
+  assign image_sizes = image_sizes | default: ''
+  assign image_widths = image_widths | default: ''
+  assign image_preload = image_preload | default: false, allow_false: true
+  assign loading = 'lazy'
+  assign fetchpriority = 'low'
+  if image_preload
+    assign loading = 'eager'
+    assign fetchpriority = 'high'
+  endif
+
+  assign title_preset = title_preset | default: 'h6'
+  if title == blank
+    assign title = collection_alias | default: collection.title
+    if title == blank
+      assign title = 'placeholders.collection_title' | t
+    endif
+  endif
+
+  assign show_description = show_description | default: false, allow_false: true
+  if description == blank
+    if collection != blank
+      assign description = collection.description
+    else
+      assign description = 'placeholders.collection_description' | t
+    endif
+  endif
+
+  assign all_products_count = collection.all_products_count
+  if collection == blank
+    assign all_products_count = 12
+  endif
+
+  if layout == 'circle-thumbnail'
+    assign text_alignment = 'center'
+    assign image_ratio = '1'
+  endif
+-%}
+<div
+  class="collection-card collection-card--{{ layout }} block border-style size-style relative z-0 w-full reversed-link media-hover--scale"
+  style="{% render 'border-style', settings: settings.collection_card_media_radius %}{% render 'size-style', settings: settings.collection_card_media_radius %};"
+  {{- attributes -}}
+>
+  <a
+    {% if collection.url != blank %}
+      href="{{ collection.url }}"
+    {% else %}
+      role="link"
+      aria-disabled="true"
+    {% endif %}
+    class="collection-card__link absolute inset-0 cursor-pointer"
+    aria-label="{{ title | escape }}"
+  ></a>
+  <div
+    class="collection-card__inner flex flex-col"
+    style="--row-gap: {{ section.settings.card_row_gap | default: 12 }}px;--row-gap-mobile: {{ section.settings.card_row_gap_mobile | default: 12 }}px;"
+  >
+    <div
+      class="collection-card__image image-block border-style relative z--1 media-mask-clip w-full"
+      style="--border-radius: {{ settings.collection_card_media_radius }}px;"
+    >
+      {%- if image_sizes != blank -%}
+        {% render 'responsive-image',
+          mode: 'liquid',
+          sizes: image_sizes,
+          widths: image_widths,
+          image: image_source,
+          image_ratio: image_ratio,
+          default_alt: title,
+          loading: loading,
+          fetchpriority: fetchpriority,
+          img_class: 'w-full'
+        %}
+      {%- else -%}
+        {% render 'responsive-image',
+          mode: 'js',
+          image: image_source,
+          image_ratio: image_ratio,
+          default_alt: title,
+          loading: loading,
+          fetchpriority: fetchpriority,
+          img_class: 'w-full'
+        %}
+      {%- endif -%}
+    </div>
+    <div class="collection-card__content flex flex-col gap-2 md:gap-3 w-full text-{{ text_alignment }} items-{{ text_alignment | replace: 'left', 'start' | replace: 'right', 'end' }}">
+      <h3 class="collection-card__title inline-flex gap-2 {{ title_preset }}">
+        <span>
+          <span class="reversed-link__text">{{ title }}</span>
+        </span>
+        {%- if show_product_count -%}
+          <sup class="collection-card__count paragraph">
+            {{ all_products_count }}
+          </sup>
+        {%- endif -%}
+      </h3>
+      {%- if show_description and description != blank -%}
+        <div class="collection-card__description color-subtext rte">
+          {{ description }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

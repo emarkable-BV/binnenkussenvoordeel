@@ -1,0 +1,114 @@
+<nav class="header__menu flex" role="navigation" aria-label="Primary">
+  <ul class="flex flex-wrap gap-1 list-unstyled">
+    {%- for link in menu.links -%}
+      {%- liquid
+        assign enable_mega_menu = false
+        assign link_title_handle = link.title | handle
+        for block in blocks
+          assign menu_title_handle = block.settings.menu_title | handle
+          if menu_title_handle == link_title_handle
+            assign enable_mega_menu = true
+            assign mega_menu_block = block
+            break
+          endif
+        endfor
+      -%}
+      <li class="inline-flex items-center">
+        {%- if link.links != blank -%}
+          {%- if enable_mega_menu -%}
+            {% render 'mega-menu', link: link, block: mega_menu_block %}
+          {%- else -%}
+            <details
+              is="details-dropdown"
+              level="top"
+              trigger="{{ section.settings.menu_trigger }}"
+              {{ block.shopify_attributes }}
+            >
+              <summary data-link="{{ link.url }}">
+                <span class="menu__item flex items-center relative">
+                  {{- link.title | escape -}}
+                  {%- render 'icon', icon: 'caret-down', size: 'extra-small' -%}
+                </span>
+              </summary>
+              <div class="dropdown{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}">
+                <div class="dropdown__container">
+                  <ul class="dropdown__nav list-unstyled" role="list">
+                    {%- for childlink in link.links -%}
+                      {%- if childlink.links != blank -%}
+                        <li class="relative color-subtext">
+                          <details level="child" trigger="hover" is="details-dropdown">
+                            <summary data-link="{{ childlink.url }}">
+                              <a
+                                class="flex items-center justify-between gap-x-1 no-js-hidden reversed-link text-decoration-none color-current"
+                                href="{{ childlink.url }}"
+                                tabindex="-1"
+                              >
+                                <span class="reversed-link__text">
+                                  {{- childlink.title | escape -}}
+                                </span>
+                                {%- render 'icon', icon: 'caret-right', size: 'extra-small' -%}
+                              </a>
+                              <noscript>
+                                <span
+                                  class="link-no-script reversed-link flex items-center justify-between gap-x-1"
+                                  tabindex="-1"
+                                >
+                                  <span class="reversed-link__text">
+                                    {{- childlink.title | escape -}}
+                                  </span>
+                                  {%- render 'icon', icon: 'caret-down', size: 'extra-small' -%}
+                                </span>
+                              </noscript>
+                            </summary>
+                            <div class="dropdown">
+                              <div class="dropdown__container">
+                                <ul class="dropdown__nav list-unstyled" role="list">
+                                  {%- for grandchildlink in childlink.links -%}
+                                    <li class="reversed-link color-subtext">
+                                      <a
+                                        class="block text-decoration-none color-current"
+                                        href="{{ grandchildlink.url }}"
+                                      >
+                                        <span class="reversed-link__text">
+                                          {{- grandchildlink.title | escape -}}
+                                        </span>
+                                      </a>
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              </div>
+                            </div>
+                          </details>
+                        </li>
+                      {%- else -%}
+                        <li class="reversed-link color-subtext">
+                          <a
+                            class="block text-decoration-none color-current"
+                            href="{{ childlink.url }}"
+                          >
+                            <span class="reversed-link__text">{{ childlink.title | escape }}</span>
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </div>
+            </details>
+          {%- endif -%}
+        {%- else -%}
+          {%- if enable_mega_menu -%}
+            {% render 'mega-menu', link: link, block: mega_menu_block %}
+          {%- else -%}
+            <a
+              href="{{ link.url }}"
+              class="menu__item flex items-center relative text-decoration-none color-current"
+            >
+              {{- link.title | escape -}}
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>

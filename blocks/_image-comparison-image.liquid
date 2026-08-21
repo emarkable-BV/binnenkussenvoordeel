@@ -1,0 +1,65 @@
+{%- doc -%}
+  Before/After image
+
+  @param {boolean} [is_before] - Whether the block is before image
+  @param {string} [svg_placeholder] - Svg for placeholder
+  @param {string} [image_ratio] - Aspect ratio for image
+  @param {string} [image_ratio_mobile] - Aspect ratio for image on mobile
+
+  @example
+  {% content_for 'block', type: '_image-comparison-image', id: 'image-comparison-image', is_before: true %}
+{%- enddoc -%}
+{%- liquid
+  assign heading = block.settings.heading
+  assign svg_placeholder = svg_placeholder | default: 'lifestyle-1'
+-%}
+<div
+  class="image-comparison__image image-comparison__image-{% if is_before %}before{% else %}after{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if heading != blank -%}
+    <p class="image-comparison__heading badge flex m-0 absolute z-1">
+      {{ heading }}
+    </p>
+  {%- endif -%}
+  {% render 'responsive-image',
+    mode: 'js',
+    image: block.settings.image,
+    image_mobile: block.settings.image_mobile,
+    svg_placeholder: svg_placeholder,
+    image_ratio: image_ratio,
+    image_ratio_mobile: image_ratio_mobile
+  %}
+</div>
+{% schema %}
+{
+  "name": "t:names.image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "t:settings.image",
+      "id": "image"
+    },
+    {
+      "type": "image_picker",
+      "label": "t:settings.image_mobile",
+      "id": "image_mobile"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme"
+    }
+  ]
+}
+{% endschema %}

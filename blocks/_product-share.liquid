@@ -1,0 +1,113 @@
+{%- liquid
+  assign share_url = closest.product.selected_variant.url | default: closest.product.url | prepend: request.origin
+  assign share_image = closest.product.selected_variant.featured_image | default: closest.product.featured_image
+-%}
+<div
+  class="product-share-block spacing-style flex items-center justify-between gap-3 flex-wrap"
+  {{ block.shopify_attributes }}
+  style="{% render 'spacing-style', settings: block.settings %}"
+>
+  {% render 'social-sharing', share_url: share_url, share_image: share_image, share_title: closest.product.title, share_label: block.settings.text %}
+
+  {% if block.settings.show_help_desk %}
+    <a
+      {% if block.settings.help_desk_link %}
+        href="{{ block.settings.help_desk_link }}"
+      {% else %}
+        role="link"
+        aria-disabled="true"
+      {% endif %}
+      class="help-desk-link btn btn--outline btn--medium paragraph"
+      style="--button-outline-border-alpha: 0.1;"
+    >
+      <span class="btn__text">{{ block.settings.help_desk_label }}</span>
+    </a>
+  {% endif %}
+</div>
+{% schema %}
+{
+  "name": "t:names.share",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.share"
+    },
+    {
+      "type": "header",
+      "content": "t:content.help_desk"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_help_desk",
+      "label": "t:settings.show_help_desk",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "help_desk_label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.help_desk",
+      "visible_if": "{{ block.settings.show_help_desk }}"
+    },
+    {
+      "type": "url",
+      "id": "help_desk_link",
+      "label": "t:settings.link",
+      "visible_if": "{{ block.settings.show_help_desk }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.share",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

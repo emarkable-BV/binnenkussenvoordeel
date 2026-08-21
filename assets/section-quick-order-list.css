@@ -1,0 +1,161 @@
+.quick-order-list__container {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.quick-order-list__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 0.1rem solid rgb(var(--color-border)/var(--color-border-alpha));
+  overflow: hidden;
+}
+.quick-order-list__table th,
+.quick-order-list__table td {
+  padding-block: var(--table-cell-padding-block, 1.6rem);
+  padding-inline-end: var(--table-cell-padding-inline, 1.6rem);
+  vertical-align: middle;
+}
+.quick-order-list__table th:first-child,
+.quick-order-list__table td:first-child {
+  padding-inline-start: var(--table-cell-padding-inline, 1.6rem);
+}
+.quick-order-list__table th {
+  font-size: var(--font-size--paragraph);
+  font-weight: 600;
+  background-color: rgb(var(--color-background-secondary));
+}
+.quick-order-list__table td {
+  border-bottom: 0.1rem solid rgb(var(--color-border)/var(--color-border-alpha));
+}
+.quick-order-list__table tr:last-child td {
+  border-block-end: 0;
+}
+.quick-order-list__errors:empty {
+  display: none;
+}
+.quick-order-list__total {
+  flex: 0 0 30rem;
+  width: 30rem;
+  max-width: 100%;
+}
+@media (max-width: 1023.98px) {
+  .quick-order-list__total {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}
+.quick-order-list-total__info, .quick-order-list-total__confirmation {
+  padding-block: 3.2rem;
+  padding-inline: 2.4rem;
+}
+.quick-order-list__quantity {
+  --quantity-selector-padding-inline: 1.2rem;
+  --quantity-selector-height: 3.8rem;
+  --quantity-selector-max-width: 8.8rem;
+}
+.quick-order-list__quantity-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.quick-order-list__remove {
+  width: 3rem;
+  height: 3rem;
+}
+.quick-order-list__remove .icon--close {
+  transition: rotate 0.2s ease;
+}
+.quick-order-list__remove:not(.btn--loading):hover .icon--close {
+  rotate: 180deg;
+}
+.quick-order-list__remove.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+.quick-order-list__remove.btn--loading.is-hidden {
+  visibility: visible;
+}
+.quick-order-list .variant-item__media {
+  --border-radius: min(1rem, var(--product-card-media-radius));
+  width: 7rem;
+}
+.quick-order-list .variant-item__price-inner {
+  display: block;
+}
+.quick-order-list .variant-item__title {
+  line-height: 1.3;
+  font-weight: 500;
+}
+.quick-order-list.is-loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+.quick-order-list .quick-order-list__row.is-loading {
+  pointer-events: none;
+}
+@media (max-width: 767.98px) {
+  .quick-order-list {
+    --table-cell-padding-block: 1rem;
+    --table-cell-padding-inline: 1rem;
+  }
+  .quick-order-list__table {
+    display: block;
+    width: 100%;
+  }
+  .quick-order-list__table thead {
+    display: none;
+  }
+  .quick-order-list__table tbody {
+    display: block;
+  }
+  .quick-order-list__table td {
+    padding: 0;
+    border-block-end: 0;
+  }
+  .quick-order-list .quick-order-list__row.variant-item {
+    --quick-order-media-size: 5rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--quick-order-media-size) minmax(0, 1fr) auto;
+    grid-template-areas: "media details details" "media price price" "media quantity total";
+    gap: 0.4rem var(--spacing-3);
+    padding-block: var(--table-cell-padding-block);
+    padding-inline: var(--table-cell-padding-inline);
+    border-block-end: 0.1rem solid rgb(var(--color-border)/var(--color-border-alpha));
+  }
+  .quick-order-list .quick-order-list__row.variant-item:last-child {
+    border-block-end: 0;
+  }
+  .quick-order-list .quick-order-list__row.variant-item--no-media {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "details details" "price price" "quantity total";
+  }
+  .quick-order-list .variant-item__media {
+    grid-area: media;
+    width: var(--quick-order-media-size);
+    align-self: start;
+  }
+  .quick-order-list .variant-item__info {
+    grid-area: details;
+    min-width: 0;
+    justify-content: flex-start;
+    padding-inline-end: 3rem;
+  }
+  .quick-order-list .quick-order-list__remove {
+    position: absolute;
+    inset-block-start: calc(var(--table-cell-padding-block) - 0.8rem);
+    inset-inline-end: calc(var(--table-cell-padding-inline) - 0.8rem);
+    z-index: 1;
+  }
+  .quick-order-list .variant-item__price {
+    grid-area: price;
+  }
+  .quick-order-list .variant-item__quantity {
+    grid-area: quantity;
+    align-self: center;
+  }
+  .quick-order-list .variant-item__line-total {
+    grid-area: total;
+    align-self: center;
+  }
+}

@@ -1,0 +1,429 @@
+{%- liquid
+  assign image = section.settings.image
+  assign image_mobile = section.settings.image_mobile
+  assign container = section.settings.container
+  assign color_scheme = section.settings.color_scheme
+
+  assign use_padding_inline = false
+  if container == 'full'
+    assign use_padding_inline = true
+  endif
+-%}
+{%- capture container_style -%}
+  {% render 'border-style', settings: section.settings %}
+  {% render 'spacing-style', settings: section.settings, use_padding_inline: use_padding_inline %}
+  {%- if container == 'fixed' -%}
+    {% render 'clamp-calculate-style', property_name: 'padding-inline', min_value: 0, max_value: 50, min_breakpoint: 1200, max_breakpoint: 1455 %}
+  {%- endif -%}
+{%- endcapture -%}
+<div
+  id="section-{{ section.id }}"
+  class="comparison-table relative"
+>
+  {% if image != blank %}
+    <div class="comparison-table__media col-span-full row-span-full relative absolute inset-0 z-0">
+      {% render 'responsive-image', mode: 'js', image: image, image_mobile: image_mobile, use_zoom: false %}
+    </div>
+  {% endif %}
+  <div
+    class="section__container section-grid section-grid--{{ container }} spacing-style relative z-1"
+    style="{{ container_style }}"
+  >
+    <div class="block quick-comparison-table-container relative z-1 border-style overflow-hidden color-{{ color_scheme }}">
+      <div class="comparison-table__header">
+        {% comment %} {% content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical' %} {% endcomment %}
+        {% content_for 'block', type: '_products-bundle-header', id: 'section-header' %}
+      </div>
+      <div class="comparison-table__content h-scrollable relative z-0" id="comparison-table-{{ section.id }}">
+        {% content_for 'block', type: '_comparison-table-content', id: 'comparison-table' %}
+      </div>
+    </div>
+    <scroll-progress-bar class="scroll-progress-bar" target="comparison-table-{{ section.id }}">
+      <div class="progress-container color-{{ color_scheme }}">
+        <div class="progress-bar no-empty"></div>
+      </div>
+    </scroll-progress-bar>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.comparison_table",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/7nXF4ID)"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "t:options.fixed"
+        },
+        {
+          "value": "full",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.border",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "t:settings.border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.background_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.background_image_mobile"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "devices",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.devices == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.devices == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "visible_if": "{{ section.settings.devices == 'desktop' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "visible_if": "{{ section.settings.devices == 'desktop' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.devices == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.devices == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start-mobile",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.devices == 'mobile' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end-mobile",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.devices == 'mobile' and section.settings.container == 'full' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.comparison_table",
+      "category": "t:categories.basic",
+      "settings": {
+        "container": "fixed",
+        "color_scheme": "scheme-1",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 20,
+        "devices": "desktop",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 0,
+        "padding-inline-end-mobile": 0
+      },
+      "blocks": {
+        "section-header": {
+          "type": "_products-bundle-header",
+          "static": true,
+          "blocks": {
+            "text_VcaWKe": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Add a tagline</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_UQzBGz": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Talking about your brand</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            "text_JnpwTR": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 24,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 83,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            }
+          },
+          "block_order": ["text_VcaWKe", "text_UQzBGz", "text_JnpwTR"]
+        },
+        "comparison-table": {
+          "type": "_comparison-table-content",
+          "static": true,
+          "settings": {
+            "title-1": "Description",
+            "title-2": "Aluminium Case",
+            "title-3": "Battery",
+            "title-4": "Screen",
+            "title-5": "Display",
+            "title-6": "",
+            "title-7": "",
+            "title-8": "",
+            "title-9": "",
+            "title-10": ""
+          },
+          "blocks": {
+            "comparison_col_RnwVhD": {
+              "type": "_comparison-col",
+              "name": "t:names.comparison_column",
+              "settings": {
+                "title": "t:settings.title",
+                "checkbox-1": true,
+                "checkbox-2": true,
+                "checkbox-3": true,
+                "checkbox-4": true,
+                "checkbox-5": true,
+                "checkbox-6": false,
+                "checkbox-7": false,
+                "checkbox-8": false,
+                "checkbox-9": false,
+                "checkbox-10": false
+              },
+              "blocks": {}
+            },
+            "comparison_col_xWiHMG": {
+              "type": "_comparison-col",
+              "name": "t:names.comparison_column",
+              "settings": {
+                "title": "t:names.title",
+                "checkbox-1": false,
+                "checkbox-2": false,
+                "checkbox-3": false,
+                "checkbox-4": false,
+                "checkbox-5": false,
+                "checkbox-6": false,
+                "checkbox-7": false,
+                "checkbox-8": false,
+                "checkbox-9": false,
+                "checkbox-10": false
+              }
+            }
+          },
+          "block_order": ["comparison_col_RnwVhD", "comparison_col_xWiHMG"]
+        }
+      },
+      "block_order": []
+    }
+  ]
+}
+{% endschema %}

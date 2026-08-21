@@ -1,0 +1,61 @@
+{%- doc -%}
+  Renders a checkbox input and label
+
+  @param {string} id - input id attribute
+  @param {string} name - input name attribute
+  @param {string} value - input value attribute
+  @param {string} label - label text
+  @param {boolean} checked - whether the input is checked
+  @param {string} events - event attributes for the input, e.g. 'on:click="/action"'
+  @param {boolean} disabled - whether the input is disabled
+  @param {boolean} [required] - whether the input is required
+  @param {string} [formId] - form id attribute for the input
+  @param {string} [inputRef] - input ref attribute for use with component framework
+  @param {string} [labelRef] - label ref attribute for use with component framework
+  @param {boolean} [autofocus] - whether the input should be autofocused
+  @param {number} [count] - the count of the input
+{%- enddoc -%}
+{{ value.count }}
+<div
+  class="checkbox focus-within--inset{% if disabled %} disabled{% else %} reversed-link{% endif %}"
+  {{ events }}
+>
+  <label
+    class="flex items-center gap-2 flex-1"
+    for="{{ id }}"
+    {% if labelRef != blank %}
+      ref="{{ labelRef }}"
+    {% endif %}
+  >
+    <input
+      type="checkbox"
+      name="{{ name }}"
+      value="{{ value }}"
+      id="{{ id }}"
+      class="checkbox__input form-control"
+      data-label="{{ label }}"
+      {% if checked %}
+        checked
+      {% endif %}
+      {% if disabled %}
+        disabled
+      {% endif %}
+      {% if required %}
+        required aria-required="true"
+      {% endif %}
+      {% if formId != blank %}
+        form="{{ formId }}"
+      {% endif %}
+      {% if inputRef != blank %}
+        ref="{{ inputRef }}"
+      {% endif %}
+      {% if autofocus %}
+        autofocus
+      {% endif %}
+    >
+    <span class="checkbox__label flex-1">
+      <span class="checkbox__label-text color-subtext reversed-link__text">{{- label -}}</span>
+    </span>
+    <span class="checkbox__count color-subtext">{{ count }}</span>
+  </label>
+</div>

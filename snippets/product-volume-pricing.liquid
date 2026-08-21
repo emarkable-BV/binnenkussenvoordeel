@@ -1,0 +1,92 @@
+{%- doc -%}
+  Show volume pricing tiers list
+
+  @param {object} product - Product object
+  @param {object} variant - Selected variant
+  @param {object} section - Parent section
+  @param {boolean} [is_collapsible] - If true, extra tiers stay collapsed until Show more expands them.
+{%- enddoc -%}
+{%- if product.quantity_price_breaks_configured? -%}
+  <div id="Volume-{{ section.id }}" class="empty-hidden">
+    {%- if variant.quantity_price_breaks.size > 0 -%}
+      {%- liquid
+        assign volume_prices_sorted = variant.quantity_price_breaks | sort: 'quantity'
+        assign volume_tiers_list_id = 'Volume-' | append: section.id | append: '-tiers'
+      -%}
+      <volume-pricing
+        class="volume-pricing flex flex-col gap-3{% if is_collapsible %} show-more{% endif %}"
+        {% if is_collapsible %}
+          data-expanded="false"
+        {% endif %}
+      >
+        <p class="volume-pricing__heading h6 m-0">{{ 'content.volume_pricing' | t }}</p>
+        <ul
+          class="volume-pricing__list list-unstyled w-full flex flex-col text-body-sm"
+          id="{{ volume_tiers_list_id }}"
+        >
+          <li
+            class="volume-pricing__row flex justify-between gap-2"
+            data-volume-tier="{{ variant.quantity_rule.min }}"
+          >
+            <span class="volume-pricing__qty">{{ variant.quantity_rule.min }}+</span>
+            {%- liquid
+              if settings.show_currency_code
+                assign price = variant.price | money_with_currency
+              else
+                assign price = variant.price | money
+              endif
+            -%}
+            <span
+              class="volume-pricing__price"
+              data-text="{{ 'content.price_each' | t: price: price }}"
+            >
+              {{- 'content.price_each' | t: price: price -}}
+            </span>
+          </li>
+          {%- for price_break in volume_prices_sorted -%}
+            {%- liquid
+              if settings.show_currency_code
+                assign price_break_price = price_break.price | money_with_currency
+              else
+                assign price_break_price = price_break.price | money
+              endif
+            -%}
+            <li
+              class="volume-pricing__row flex justify-between gap-3{% if is_collapsible and forloop.index >= 3 %} volume-pricing__row--collapsible{% endif %}"
+              data-volume-tier="{{ price_break.minimum_quantity }}"
+            >
+              <span class="volume-pricing__qty">
+                {{- price_break.minimum_quantity -}}
+                <span aria-hidden="true">+</span>
+              </span>
+              <span
+                class="volume-pricing__price"
+                data-text="{{ 'content.price_each' | t: price: price_break_price }}"
+              >
+                {{- 'content.price_each' | t: price: price_break_price -}}
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+        {%- if is_collapsible and variant.quantity_price_breaks.size >= 3 -%}
+          <button
+            class="show-more__button button-unstyled cursor-pointer flex items-center gap-2 text-body-sm color-subtext"
+            type="button"
+            ref="button"
+            on:click="/toggle"
+            aria-expanded="false"
+            aria-controls="{{ volume_tiers_list_id }}"
+          >
+            {% render 'icon', icon: 'plus', size: 'small' %}
+            <span class="show-more__label show-more__label--more">
+              {{- 'actions.show_more' | t -}}
+            </span>
+            <span class="show-more__label show-more__label--less">
+              {{- 'actions.show_less' | t -}}
+            </span>
+          </button>
+        {%- endif -%}
+      </volume-pricing>
+    {%- endif -%}
+  </div>
+{%- endif -%}

@@ -1,0 +1,1383 @@
+<link
+  rel="stylesheet"
+  href="{{ 'section-tabs.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+<noscript>{{ 'section-tabs.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- liquid
+  assign direction = section.settings.direction
+
+  assign tab_component_class = 'block'
+  assign tab_nav_class = ''
+  assign tab_buttons_class = 'flex gap-1'
+  assign tab_panels_class = ''
+
+  if direction == 'vertical'
+    assign tab_component_class = tab_component_class | append: ' md:flex md:flex-row'
+    assign tab_buttons_class = tab_buttons_class | append: ' md:flex-col items-start'
+    assign tab_nav_class = tab_nav_class | append: ' swipe-mobile swipe-mobile--auto-cols'
+  else
+    assign tab_buttons_class = tab_buttons_class | append: ' md:gap-2'
+    assign tab_nav_class = tab_nav_class | append: ' swipe-all swipe-all--auto-cols'
+  endif
+
+  capture blocks
+    content_for 'blocks'
+  endcapture
+
+  assign parts = blocks | strip | split: '<!-- @tabs/split -->'
+  assign tab_buttons = ''
+  assign tab_panels = ''
+
+  for item in parts
+    assign mod = forloop.index0 | modulo: 2
+    if mod == 1
+      assign tab_buttons = tab_buttons | append: item
+    else
+      assign tab_panels = tab_panels | append: item
+    endif
+  endfor
+-%}
+<div
+  class="section-tabs color-{{ section.settings.color_scheme }} border-style spacing-style"
+  style="{% render 'border-style', settings: section.settings %}{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width">
+    <tabs-component
+      data-section-id="{{ section.id }}"
+      class="tabs tabs--{{ direction }} {{ tab_component_class }}"
+    >
+      <div is="swipe-component" class="tabs__header section__header edge__shadows">
+        <div
+          class="tabs__header-inner swipe__element {{ tab_nav_class }}"
+          style="{% render 'gap-style', column_gap: 8, column_gap_mobile: 4 %}"
+          ref="tabNav"
+        >
+          <div
+            class="swipe__inner flex {{ tab_buttons_class }}"
+            role="tablist"
+          >
+            {{ tab_buttons }}
+          </div>
+        </div>
+      </div>
+      <div class="tabs__panels w-full {{ tab_panels_class }}">
+        {{ tab_panels }}
+      </div>
+    </tabs-component>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.tabs",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:settings.direction",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.horizontal"
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:options.top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:options.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_tab"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.tabs_faqs",
+      "category": "t:categories.storytelling",
+      "blocks": {
+        "tab_dmeDjJ": {
+          "type": "_tab",
+          "settings": {
+            "text": "Secure Payment"
+          },
+          "blocks": {
+            "group_L4hMd3": {
+              "type": "group",
+              "name": "t:names.section_header_vertical",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 0,
+                "row_gap": 0,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "column_gap_mobile": 0,
+                "row_gap_mobile": 0,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 20,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "text_grNdJV": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>Secure Payment</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h2",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "text_color_gradient": "",
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": ["text_grNdJV"]
+            },
+            "accordion_a9fYFF": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "open_behavior": "multiple",
+                "type_preset": "h5",
+                "style": "standard",
+                "card_color_scheme": "",
+                "icon_arrow": "caret",
+                "icon_style": "solid",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_L3zpfh": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Return policy",
+                    "open_row_by_default": true,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_eXkDA7": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We accept returns within 30 days of purchase. Please note that all items must be returned in their original condition, including all tags and packaging. Shipping costs are non-refundable.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_eXkDA7"]
+                },
+                "accordion_row_RnfjRk": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Shipping",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_yik4qq": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_yik4qq"]
+                },
+                "accordion_row_QypH7b": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Manufacturing",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_zzTE7h": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_zzTE7h"]
+                }
+              },
+              "block_order": ["accordion_row_L3zpfh", "accordion_row_RnfjRk", "accordion_row_QypH7b"]
+            }
+          },
+          "block_order": ["group_L4hMd3", "accordion_a9fYFF"]
+        },
+        "tab_q4JxKJ": {
+          "type": "_tab",
+          "settings": {
+            "text": "Track Order"
+          },
+          "blocks": {
+            "group_QBQKJH": {
+              "type": "group",
+              "name": "t:names.section_header_vertical",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 0,
+                "row_gap": 0,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "column_gap_mobile": 0,
+                "row_gap_mobile": 0,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 20,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "text_nxeXfG": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>Track Order</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h2",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "text_color_gradient": "",
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": ["text_nxeXfG"]
+            },
+            "accordion_qa6ghE": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "open_behavior": "multiple",
+                "type_preset": "h5",
+                "style": "standard",
+                "card_color_scheme": "",
+                "icon_arrow": "caret",
+                "icon_style": "solid",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_xCC8Q4": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Return policy",
+                    "open_row_by_default": true,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_AP8bBe": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We accept returns within 30 days of purchase. Please note that all items must be returned in their original condition, including all tags and packaging. Shipping costs are non-refundable.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_AP8bBe"]
+                },
+                "accordion_row_FVQbcd": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Shipping",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_7TP46k": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_7TP46k"]
+                },
+                "accordion_row_kEGi4D": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Manufacturing",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_zwDYzE": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_zwDYzE"]
+                }
+              },
+              "block_order": ["accordion_row_xCC8Q4", "accordion_row_FVQbcd", "accordion_row_kEGi4D"]
+            }
+          },
+          "block_order": ["group_QBQKJH", "accordion_qa6ghE"]
+        },
+        "tab_gwFncx": {
+          "type": "_tab",
+          "settings": {
+            "text": "Orders & Shipping"
+          },
+          "blocks": {
+            "group_XBDYXV": {
+              "type": "group",
+              "name": "t:names.section_header_vertical",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 0,
+                "row_gap": 0,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "column_gap_mobile": 0,
+                "row_gap_mobile": 0,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 20,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "text_DkBb6x": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>Orders & Shipping</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h2",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "text_color_gradient": "",
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": ["text_DkBb6x"]
+            },
+            "accordion_dT8NaV": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "open_behavior": "multiple",
+                "type_preset": "h5",
+                "style": "standard",
+                "card_color_scheme": "",
+                "icon_arrow": "caret",
+                "icon_style": "solid",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_dBKWM9": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Return policy",
+                    "open_row_by_default": true,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_6PEULW": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We accept returns within 30 days of purchase. Please note that all items must be returned in their original condition, including all tags and packaging. Shipping costs are non-refundable.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_6PEULW"]
+                },
+                "accordion_row_F4WwXn": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Shipping",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_eTHrUJ": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_eTHrUJ"]
+                },
+                "accordion_row_hE8giQ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Manufacturing",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_eFxM4L": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_eFxM4L"]
+                }
+              },
+              "block_order": ["accordion_row_dBKWM9", "accordion_row_F4WwXn", "accordion_row_hE8giQ"]
+            }
+          },
+          "block_order": ["group_XBDYXV", "accordion_dT8NaV"]
+        },
+        "tab_g8Ez8X": {
+          "type": "_tab",
+          "settings": {
+            "text": "Payment & Store Credit"
+          },
+          "blocks": {
+            "group_FPEngD": {
+              "type": "group",
+              "name": "t:names.section_header_vertical",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 0,
+                "row_gap": 0,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "column_gap_mobile": 0,
+                "row_gap_mobile": 0,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 20,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "text_tr3X4L": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>Payment & Store Credit</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h2",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "text_color_gradient": "",
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": ["text_tr3X4L"]
+            },
+            "accordion_VHPUfH": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "open_behavior": "multiple",
+                "type_preset": "h5",
+                "style": "standard",
+                "card_color_scheme": "",
+                "icon_arrow": "caret",
+                "icon_style": "solid",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_CyY39e": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Return policy",
+                    "open_row_by_default": true,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_FYwE4K": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We accept returns within 30 days of purchase. Please note that all items must be returned in their original condition, including all tags and packaging. Shipping costs are non-refundable.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_FYwE4K"]
+                },
+                "accordion_row_TMqagL": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Shipping",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_fzPAGx": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_fzPAGx"]
+                },
+                "accordion_row_DYwpXz": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Manufacturing",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_dpY4Gz": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_dpY4Gz"]
+                }
+              },
+              "block_order": ["accordion_row_CyY39e", "accordion_row_TMqagL", "accordion_row_DYwpXz"]
+            }
+          },
+          "block_order": ["group_FPEngD", "accordion_VHPUfH"]
+        },
+        "tab_NdXxGA": {
+          "type": "_tab",
+          "settings": {
+            "text": "Sizing & Product Info"
+          },
+          "blocks": {
+            "group_JWcUXV": {
+              "type": "group",
+              "name": "t:names.section_header_vertical",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 0,
+                "row_gap": 0,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "column_gap_mobile": 0,
+                "row_gap_mobile": 0,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 20,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "text_gVpFUA": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>Sizing & Product Info</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h2",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "text_color_gradient": "",
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": ["text_gVpFUA"]
+            },
+            "accordion_mmA6jP": {
+              "type": "accordion",
+              "name": "t:names.accordion",
+              "settings": {
+                "open_behavior": "multiple",
+                "type_preset": "h5",
+                "style": "standard",
+                "card_color_scheme": "",
+                "icon_arrow": "caret",
+                "icon_style": "solid",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_VYADQw": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Return policy",
+                    "open_row_by_default": true,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_jN8RBe": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We accept returns within 30 days of purchase. Please note that all items must be returned in their original condition, including all tags and packaging. Shipping costs are non-refundable.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_jN8RBe"]
+                },
+                "accordion_row_WUapn6": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Shipping",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_zawWiG": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_zawWiG"]
+                },
+                "accordion_row_jGf8Nq": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Manufacturing",
+                    "open_row_by_default": false,
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_3ihJHD": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": ["text_3ihJHD"]
+                }
+              },
+              "block_order": ["accordion_row_VYADQw", "accordion_row_WUapn6", "accordion_row_jGf8Nq"]
+            }
+          },
+          "block_order": ["group_JWcUXV", "accordion_mmA6jP"]
+        }
+      },
+      "block_order": ["tab_dmeDjJ", "tab_q4JxKJ", "tab_gwFncx", "tab_g8Ez8X", "tab_NdXxGA"],
+      "settings": {
+        "direction": "vertical",
+        "color_scheme": "",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 50,
+        "padding-block-end": 50
+      }
+    }
+  ]
+}
+{% endschema %}

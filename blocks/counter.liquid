@@ -1,0 +1,351 @@
+{%- liquid
+  assign style = block.settings.style
+  assign direction = block.settings.direction
+  assign direction_mobile = block.settings.direction_mobile
+  assign wrap_class = ''
+  assign content_class = ''
+
+  if direction == 'vertical'
+    assign horizontal_alignment = block.settings.horizontal_alignment
+    assign flex_value = horizontal_alignment | replace: 'left', 'start' | replace: 'right', 'end'
+
+    assign wrap_class = wrap_class | append: ' md:flex-col md:text-' | append: horizontal_alignment | append: ' md:items-' | append: flex_value
+    assign content_class = content_class | append: ' md:items-' | append: flex_value | append: ' md:text-' | append: horizontal_alignment
+  else
+    assign vertical_alignment = block.settings.vertical_alignment
+    assign flex_value = vertical_alignment | replace: 'top', 'start' | replace: 'middle', 'center' | replace: 'bottom', 'end'
+
+    assign wrap_class = wrap_class | append: ' md:flex-row md:text-left' | append: ' md:items-' | append: flex_value
+    assign content_class = content_class | append: ' md:items-start md:text-left'
+  endif
+
+  if direction_mobile == 'vertical'
+    assign horizontal_alignment = block.settings.horizontal_alignment_mobile
+    assign flex_value = horizontal_alignment | replace: 'left', 'start' | replace: 'right', 'end'
+
+    assign wrap_class = wrap_class | append: ' flex-col text-' | append: horizontal_alignment | append: ' items-' | append: flex_value
+    assign content_class = content_class | append: ' items-' | append: flex_value | append: ' text-' | append: horizontal_alignment
+  else
+    assign vertical_alignment = block.settings.vertical_alignment_mobile
+    assign flex_value = vertical_alignment | replace: 'top', 'start' | replace: 'middle', 'center' | replace: 'bottom', 'end'
+
+    assign wrap_class = wrap_class | append: ' flex-row text-left' | append: ' items-' | append: flex_value
+  endif
+
+  if style == 'card'
+    assign wrap_class = wrap_class | append: ' border-style'
+
+    if block.settings.border == 'solid'
+      assign wrap_class = wrap_class | append: ' counter--shadow'
+    endif
+
+    unless block.settings.inherit_color_scheme
+      assign wrap_class = wrap_class | append: ' color-' | append: block.settings.color_scheme
+    endunless
+  endif
+-%}
+<div
+  class="counter-block counter--{{ style }} flex gap-3 {{ wrap_class }}"
+  style="{% render 'border-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'block', type: '_counter-number', id: 'counter-number' %}
+  {%- if block.blocks.size > 0 -%}
+    <div class="counter__content min-w-0 flex-grow flex flex-col {{ content_class }}">
+      {% content_for 'blocks' %}
+    </div>
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "t:names.counter",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:settings.direction",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ block.settings.direction == 'vertical' }}"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "t:settings.position",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:options.top"
+        },
+        {
+          "value": "middle",
+          "label": "t:options.middle"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.bottom"
+        }
+      ],
+      "default": "top",
+      "visible_if": "{{ block.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "select",
+      "id": "direction_mobile",
+      "label": "t:settings.direction",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment_mobile",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ block.settings.direction_mobile == 'vertical' }}"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment_mobile",
+      "label": "t:settings.position",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:options.top"
+        },
+        {
+          "value": "middle",
+          "label": "t:options.middle"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.bottom"
+        }
+      ],
+      "default": "top",
+      "visible_if": "{{ block.settings.direction_mobile == 'horizontal' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "standard",
+          "label": "t:options.standard"
+        },
+        {
+          "value": "card",
+          "label": "t:options.card"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true,
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2",
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 10,
+      "visible_if": "{{ block.settings.style == 'card' and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.counter",
+      "category": "t:categories.basic",
+      "settings": {
+        "direction": "vertical",
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "direction_mobile": "horizontal",
+        "horizontal_alignment_mobile": "center",
+        "vertical_alignment_mobile": "top",
+        "style": "card",
+        "inherit_color_scheme": false,
+        "color_scheme": "scheme-2",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 10,
+        "border_radius": 20
+      },
+      "blocks": {
+        "counter-number": {
+          "type": "_counter-number",
+          "name": "t:names.number",
+          "static": true,
+          "settings": {
+            "number": 75,
+            "number_prefix": "",
+            "number_suffix": "%",
+            "number_format": "comma-period",
+            "type_preset": "custom",
+            "font_size": 53,
+            "font_size_mobile": 38
+          }
+        },
+        "text": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Display numerical highlights paired with text to reinforce credibility and brand performance.</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "subtext",
+            "text_color_gradient": "",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["text"]
+    }
+  ]
+}
+{% endschema %}

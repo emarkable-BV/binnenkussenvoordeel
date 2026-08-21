@@ -1,0 +1,158 @@
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+  assign selected_variant = product_resource.selected_or_first_available_variant
+-%}
+
+<product-price
+  class="block product-price-block product-price spacing-style"
+  data-block-id="{{ block.id }}"
+  data-product-id="{{ product_resource.id }}"
+  style="{% render 'spacing-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  {% render 'price', use_variant: true, show_unit_price: true, product_resource: product_resource, type_preset: block_settings.type_preset %}
+
+  {% if block_settings.show_tax_info %}
+    <div class="tax-note text-body-sm color-subtext">
+      {%- if cart.duties_included and cart.taxes_included -%}
+        {{ 'content.duties_and_taxes_included' | t }}
+      {%- elsif cart.taxes_included -%}
+        {{ 'content.taxes_included' | t }}
+      {%- elsif cart.duties_included -%}
+        {{ 'content.duties_included' | t }}
+      {%- endif -%}
+
+      {%- if shop.shipping_policy.body != blank -%}
+        {{ 'content.shipping_policy' | t }}
+      {%- endif -%}
+    </div>
+  {% endif %}
+
+  {%- if selected_variant != blank and block_settings.show_installments -%}
+    <div class="installments">
+      {%- assign product_form_installment_id = 'product-form-installment-' | append: block.id -%}
+      {%- form 'product', product_resource, id: product_form_installment_id, class: 'payment-terms' -%}
+        <input
+          type="hidden"
+          name="id"
+          value="{{ selected_variant.id }}"
+        >
+        {{ form | payment_terms }}
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</product-price>
+
+{% schema %}
+{
+  "name": "t:names.product_price",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.resource_reference_product_price"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.edit_price_in_theme_settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_installments",
+      "label": "t:settings.show_installments"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tax_info",
+      "label": "t:settings.show_tax_info"
+    },
+    {
+      "type": "header",
+      "content": "t:content.typography"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_price",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

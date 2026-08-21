@@ -1,0 +1,356 @@
+.customer__header {
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 767.98px) {
+  .customer__header {
+    margin-bottom: 3.2rem;
+  }
+}
+.customer__body {
+  display: flex;
+  gap: 3.2rem;
+}
+
+.customer__sidebar {
+  flex: 0 0 32rem;
+  align-self: self-start;
+}
+
+.customer__sidebar p {
+  color: var(--color-foreground-secondary);
+  margin: 0;
+}
+
+.customer__widget {
+  padding: 2.4rem;
+  background-color: rgb(var(--color-background-secondary));
+}
+
+.customer__content {
+  flex: 1;
+}
+
+.customer .rich-text {
+  margin-bottom: 2.4rem;
+}
+
+@media (max-width: 767.98px) {
+  .customer .rich-text {
+    margin-bottom: 1.2rem;
+  }
+}
+@media (max-width: 1023.98px) {
+  .customer__body {
+    flex-direction: column;
+  }
+  .customer__sidebar {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
+}
+.activate-section .page-width {
+  width: 100%;
+  max-width: 50rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
+.activate-section p {
+  margin: 1.2rem 0 0;
+}
+
+.activate-section .form-field + a {
+  margin-top: 0.8rem;
+}
+
+.activate-section form {
+  margin: 2.4rem 0 0;
+}
+
+.activate-section form .form-field ~ .form-field {
+  margin-top: 2rem;
+}
+
+.activate-section form .form-error {
+  margin-bottom: 1.6rem;
+}
+
+.activate-section form button,
+.activate-section form .btn--secondary {
+  margin-top: 2.4rem;
+}
+
+.activate-section form button + a,
+.activate-section form .btn--secondary + a {
+  margin-top: 1.6rem;
+}
+
+.activate-section form button + button,
+.activate-section form .btn--secondary + button {
+  margin-top: 1.6rem;
+}
+
+@media (max-width: 767.98px) {
+  .activate-section form {
+    margin-top: 2rem;
+  }
+  .activate-section form button {
+    margin-top: 2rem;
+  }
+}
+.addresses-section .page-width {
+  width: 100%;
+  max-width: 79rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
+.addresses-section [data-address] {
+  padding: 2.4rem 3.2rem;
+  margin-bottom: 2.4rem;
+}
+
+.addresses-section form .form-field ~ .form-field {
+  margin-top: 2.4rem;
+}
+
+.addresses-section form .form-error {
+  margin-bottom: 1.6rem;
+}
+
+@media (width <= 767.98px) {
+  .addresses-section [data-address] {
+    padding: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .addresses-section form .form-field ~ .form-field {
+    margin-top: 2rem;
+  }
+  .addresses-section form .form-error {
+    margin-bottom: 1.6rem;
+  }
+}
+.addresses__edit-form {
+  margin-top: 2.4rem;
+  padding-top: 2.4rem;
+  border-top: 0.1rem solid rgb(var(--color-border)/var(--color-border-alpha));
+}
+
+.address-info__default-badge {
+  margin-bottom: 0.4rem;
+}
+
+.address-info p {
+  margin: 0;
+}
+
+.address-info button {
+  padding: 0;
+  height: auto;
+  line-height: normal;
+}
+
+/* Login */
+.login-section .page-width {
+  width: 100%;
+  max-width: 50rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
+.login-section p {
+  margin: 1.2rem 0 0;
+}
+
+.login-section .form-field + a {
+  margin-top: 0.8rem;
+}
+
+.login-section form {
+  margin: 2.4rem 0 0;
+}
+
+.login-section .form-field ~ .form-field {
+  margin-top: 2.4rem;
+}
+
+.login-section form .form-error {
+  margin-bottom: 1.6rem;
+}
+
+.login-section form button,
+.login-section form .btn--secondary {
+  margin-top: 2.4rem;
+}
+
+.login-section form button + a,
+.login-section form .btn--secondary + a {
+  margin-top: 1.6rem;
+}
+
+.login-section form button + button,
+.login-section form .btn--secondary + button {
+  margin-top: 1.6rem;
+}
+
+@media (max-width: 767.98px) {
+  .login-section form {
+    margin-top: 2rem;
+  }
+  .login-section form button {
+    margin-top: 2rem;
+  }
+  .login-section form .form-field:not(:first-child) {
+    margin-top: 2rem;
+  }
+}
+#recover {
+  display: none;
+}
+
+#login {
+  display: block;
+}
+
+#recover:target {
+  display: block;
+}
+
+#recover:target + div {
+  display: block;
+}
+
+#recover:target ~ #login,
+#recover:target ~ #login + div {
+  display: none;
+}
+
+#recover,
+#login {
+  scroll-margin-top: 20rem;
+}
+
+#recover {
+  margin-bottom: 0;
+}
+
+.order-total-amount {
+  margin-top: 2.4rem;
+}
+
+.order-total-amount li + li {
+  margin-top: 0.8rem;
+}
+
+.order-info__header {
+  margin-bottom: 2.4rem;
+}
+
+.order-info__paragraph {
+  margin-top: 1.2rem;
+}
+
+.register-section .page-width {
+  width: 100%;
+  max-width: 50rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
+.register-section p {
+  margin: 1.2rem 0 0;
+}
+
+.register-section .form-field ~ .form-field {
+  margin-top: 2.4rem;
+}
+
+.register-section form .form-error {
+  margin-bottom: 1.6rem;
+}
+
+.register-section .form-field + a {
+  margin-top: 0.8rem;
+}
+
+.register-section form {
+  margin: 2.4rem 0 0;
+}
+
+.register-section form button,
+.register-section form .btn--secondary {
+  margin-top: 2.4rem;
+}
+
+.register-section form button + a,
+.register-section form .btn--secondary + a {
+  margin-top: 1.6rem;
+}
+
+.register-section form button + button,
+.register-section form .btn--secondary + button {
+  margin-top: 1.6rem;
+}
+
+@media (max-width: 767.98px) {
+  .register-section form {
+    margin-top: 2rem;
+  }
+  .register-section form button {
+    margin-top: 2rem;
+  }
+}
+.reset-password-section .page-width {
+  width: 100%;
+  max-width: 50rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
+.reset-password-section p {
+  margin: 1.2rem 0 0;
+}
+
+.reset-password-section .form-field + a {
+  margin-top: 0.8rem;
+}
+
+.reset-password-section form {
+  margin: 2.4rem 0 0;
+}
+
+.reset-password-section form .form-field ~ .form-field {
+  margin-top: 2.4rem;
+}
+
+.reset-password-section form .form-error {
+  margin-bottom: 1.6rem;
+}
+
+.reset-password-section form button,
+.reset-password-section form .btn--secondary {
+  margin-top: 2.4rem;
+}
+
+.reset-password-section form button + a,
+.reset-password-section form .btn--secondary + a {
+  margin-top: 1.6rem;
+}
+
+.reset-password-section form button + button,
+.reset-password-section form .btn--secondary + button {
+  margin-top: 1.6rem;
+}
+
+@media (max-width: 767.98px) {
+  .reset-password-section form {
+    margin-top: 2rem;
+  }
+  .reset-password-section form button {
+    margin-top: 2rem;
+  }
+  .reset-password-section form .form-field ~ .form-field {
+    margin-top: 2rem;
+  }
+}

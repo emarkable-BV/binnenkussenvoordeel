@@ -1,0 +1,39 @@
+{%- doc -%}
+  Renders a text with highlight words.
+
+  @param {string} text - Text to render
+  @param {string} style - Highlight text style. Accepted value: 'wavy-underline', 'solid-background'
+  @param {string} [font_style] - Highlight font style. Accepted value: 'normal', 'italic'
+  @param {object} [shape_color] - Color for shape
+  @param {object} [text_color] - Color for text
+
+  @example
+  {% render 'highlight-text', text: "This is <em>highlight text</em>", style: 'underline' %}
+{%- enddoc -%}
+{%- liquid
+  assign style = style | default: 'none'
+-%}
+{%- unless style == 'none' -%}
+  {%- liquid
+    assign highlight_text = text
+
+    for i in (1..5)
+      assign highlight_text = highlight_text | replace: '  ', ' '
+    endfor
+
+    assign highlight_text = highlight_text | replace: '<em> </em>', ' '
+  -%}
+  {%- if highlight_text contains '<em>' -%}
+    {% render 'highlighted-text',
+      text: highlight_text,
+      style: style,
+      font_style: font_style,
+      shape_color: shape_color,
+      text_color: text_color
+    %}
+  {%- else -%}
+    {{ highlight_text }}
+  {%- endif -%}
+{%- else -%}
+  {{- text -}}
+{%- endunless -%}

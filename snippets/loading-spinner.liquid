@@ -1,0 +1,16 @@
+<span
+  class="loading-spinner{% if class %} {{ class }}{% endif %}"
+  {% if attributes %}
+    {{ attributes -}}
+  {% endif %}
+>
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    class="spinner icon icon--{{ size | default: 'medium' }}"
+    viewBox="0 0 66 66"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle class="path" fill="none" stroke-width="4" cx="33" cy="33" r="30"></circle>
+  </svg>
+</span>

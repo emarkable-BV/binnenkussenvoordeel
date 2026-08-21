@@ -1,0 +1,38 @@
+<ul
+  class="list-unstyled flex flex-col gap-2"
+  {{ block.shopify_attributes }}
+>
+  {%- for link in block.settings.menu.links -%}
+    <li>
+      <a
+        href="{{ link.url }}"
+        class="block reversed-link color-subtext"
+      >
+        <span class="reversed-link__text">
+          {{ link.title }}
+        </span>
+      </a>
+    </li>
+  {%- endfor -%}
+</ul>
+{% schema %}
+{
+  "name": "t:names.menu",
+  "tag": null,
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "footer",
+      "label": "t:settings.menu",
+      "info": "t:info.footer_menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.menu",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,30 @@
+<div
+  class="popup__newsletter w-full"
+  {{ block.shopify_attributes }}
+>
+  {% render 'newsletter-form',
+    block_id: block.id,
+    design: 'design-2',
+    button_label: block.settings.button_label
+  %}
+</div>
+{% schema %}
+{
+  "name": "t:names.newsletter",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.button_label",
+      "info": "t:info.leave_blank_to_use_default"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.newsletter",
+      "category": "t:categories.forms"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,480 @@
+{{ 'section-quick-order-list.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign use_padding_inline = true
+  if section.settings.container == 'fixed'
+    assign use_padding_inline = false
+  endif
+
+  capture section_header
+    content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
+  endcapture
+
+  assign items_in_cart = cart | line_items_for: product | sum: 'quantity'
+  assign line_total_price = cart | line_items_for: product | sum: 'original_line_price'
+  assign has_multiple_variants = true
+  if product.has_only_default_variant or product.variants.size == 1
+    assign has_multiple_variants = false
+  endif
+-%}
+
+{%- capture section_style -%}
+  {% render 'border-style', settings: section.settings %}
+  {% render 'spacing-style', settings: section.settings, use_padding_inline: use_padding_inline %}
+{%- endcapture -%}
+
+<div
+  class="section quick-order-list block spacing-style border-style color-{{ section.settings.color_scheme }}"
+  style="{{ section_style | strip_newlines | strip }}"
+>
+  <div class="section__container section-grid section-grid--{{ section.settings.container }}">
+    {{ section_header }}
+    <quick-order-list-component
+      id="QuickOrderList-{{ section.id }}"
+      class="quick-order-list__inner flex flex-col lg:flex-row gap-style"
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ product.id }}"
+      data-product-url="{{ product.url }}"
+      style="--f-column-gap: 3rem; --f-row-gap: 2.4rem"
+    >
+      <div class="quick-order-list__container flex-1 w-full{% unless has_multiple_variants %} quick-order-list__container--single{% endunless %}">
+        <table
+          class="quick-order-list__table border-style color-{{ section.settings.table_color_scheme }}"
+          style="{% render 'border-style', border_radius: section.settings.table_border_radius %}"
+        >
+          <caption class="visually-hidden">{{ 'content.cart_total' | t }}</caption>
+          <thead>
+            <tr>
+              <th class="quick-order-list__th-product text-left" scope="col">
+                {{- 'content.variant' | t -}}
+              </th>
+              <th class="quick-order-list__th-quantity text-left" scope="col">
+                {{- 'content.quantity' | t -}}
+              </th>
+              <th class="quick-order-list__th-price text-right" scope="col">
+                {{- 'content.price' | t -}}
+              </th>
+              <th class="quick-order-list__th-total text-right" scope="col">
+                {{- 'content.variant_total' | t -}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- if has_multiple_variants -%}
+              {%- for variant in product.variants -%}
+                {%- render 'quick-order-list-row',
+                  section: section,
+                  product: product,
+                  variant: variant,
+                  image: variant.image,
+                  show_image: section.settings.show_image,
+                  show_sku: section.settings.show_sku
+                -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- render 'quick-order-list-row',
+                section: section,
+                product: product,
+                variant: product.selected_or_first_available_variant,
+                image: product.featured_image,
+                show_image: section.settings.show_image,
+                show_sku: section.settings.show_sku
+              -%}
+            {%- endif -%}
+          </tbody>
+        </table>
+        <div class="quick-order-list__errors flex flex-col gap-2 color-{{ section.settings.table_color_scheme }}">
+          {%- if has_multiple_variants -%}
+            {%- for variant in product.variants -%}
+              <div
+                class="quick-order-list__error-row alert alert--error alert--small"
+                role="alert"
+                ref="errorRows[]"
+                data-variant-id="{{ variant.id }}"
+                hidden
+              >
+                <span class="alert__content">
+                  {%- render 'icon', icon: 'warning', size: 'small' -%}
+                  <small class="text-body-sm"></small>
+                </span>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- assign single_variant = product.selected_or_first_available_variant -%}
+            <div
+              class="quick-order-list__error-row alert alert--error alert--small"
+              role="alert"
+              ref="errorRows[]"
+              data-variant-id="{{ single_variant.id }}"
+              hidden
+            >
+              <span class="alert__content">
+                {%- render 'icon', icon: 'warning', size: 'small' -%}
+                <small class="text-body-sm"></small>
+              </span>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+      {%- if has_multiple_variants -%}
+        <aside class="quick-order-list__total flex flex-col">
+          <div
+            class="quick-order-list__total-inner sticky-element sticky-element--adapt border-style color-{{ section.settings.summary_bar_color_scheme }}"
+            style="--sticky-element-top: 3rem;{% render 'border-style', border_radius: section.settings.summary_bar_border_radius %}"
+          >
+            <div
+              class="quick-order-list-total__info flex flex-col gap-4"
+              ref="totalInfo"
+            >
+              <div class="quick-order-list-total__items color-subtext flex gap-2 items-center justify-between">
+                <div class="flex gap-1">
+                  <span ref="totalItemsCount">{{ items_in_cart }}</span>
+                  <span>{{ 'content.total_items' | t }}</span>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn btn--plain color-subtext text-body-sm"
+                  ref="removeAllConfirmBtn"
+                  on:click="/onRequestRemoveAll"
+                  {% if items_in_cart == 0 %}
+                    hidden
+                  {% endif %}
+                >
+                  <span class="btn__text">{{ 'actions.remove_all' | t }}</span>
+                </button>
+              </div>
+              <div class="quick-order-list-total__price flex flex-col gap-1">
+                <div class="flex items-center justify-between gap-2">
+                  <span>{{ 'content.product_total' | t }}</span>
+                  <span class="quick-order-list-total__amount" ref="totalAmount">
+                    {{- line_total_price | money -}}
+                  </span>
+                </div>
+                {% render 'tax-info' %}
+              </div>
+              <div class="quick-order-list-total__actions flex flex-col items-stretch gap-2">
+                <a
+                  href="{{ routes.cart_url }}"
+                  class="btn btn--primary btn--medium w-full text-center"
+                >
+                  <span class="btn__text">{{ 'actions.view_cart' | t }}</span>
+                </a>
+              </div>
+              <div
+                class="quick-order-list__error hidden"
+                ref="errorContainer"
+              >
+                <div class="alert alert--error alert--small" role="alert">
+                  <span class="alert__content" ref="errorMessage"></span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="quick-order-list-total__confirmation flex flex-col gap-4 hidden"
+              ref="confirmation"
+            >
+              <span class="color-subtext">
+                {{- 'content.remove_all_items_confirmation' | t: quantity: items_in_cart -}}
+              </span>
+              <div class="flex gap-3 justify-between items-center">
+                <button
+                  type="button"
+                  class="btn btn--primary btn--medium flex-1"
+                  on:click="/onConfirmRemoveAll"
+                >
+                  <span class="btn__text">{{ 'actions.remove_all' | t }}</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn--outline btn--medium flex-1"
+                  on:click="/onCancelRemoveAll"
+                >
+                  <span class="btn__text">{{ 'actions.cancel' | t }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      {%- endif -%}
+    </quick-order-list-component>
+  </div>
+</div>
+
+<script src="{{ 'quick-order-list.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+{% schema %}
+{
+  "name": "t:names.quick_order_list",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/LURLL3H)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "fixed", "label": "t:options.fixed" }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "header",
+      "content": "t:content.table"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:settings.show_image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "label": "t:settings.show_sku",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "table_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "table_border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "t:content.summary_bar"
+    },
+    {
+      "type": "color_scheme",
+      "id": "summary_bar_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "summary_bar_border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        { "value": "desktop", "label": "t:options.desktop" },
+        { "value": "mobile", "label": "t:options.mobile" }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start-mobile",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.device == 'mobile' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end-mobile",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.device == 'mobile' and section.settings.container == 'full' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.quick_order_list",
+      "blocks": {
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "device": "desktop",
+            "padding-block-end": 40,
+            "padding-block-end-mobile": 24
+          },
+          "blocks": {
+            "subheading": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Bulk order</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "fade-up",
+                "animation_delay": 50
+              }
+            },
+            "heading": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Quick order list</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "fade-up",
+                "animation_delay": 100
+              }
+            }
+          },
+          "block_order": ["subheading", "heading"]
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

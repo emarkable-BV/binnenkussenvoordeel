@@ -1,0 +1,23 @@
+<cart-note class="flex flex-col gap-4 xl:gap-5">
+  <label
+    for="cart-note"
+    class="visually-hidden"
+  >
+    {{- 'content.seller_note' | t -}}
+  </label>
+  <textarea
+    form="cart-form"
+    on:input="/updateCartNote"
+    id="cart-note"
+    class="cart-note__instructions form-control w-full"
+    placeholder="{{ 'content.seller_note' | t }}"
+    name="note"
+    rows="5"
+  >{{ cart.note }}</textarea>
+
+  <noscript>
+    <button class="btn btn--primary w-full" type="submit" form="cart-form">
+      <span class="btn__text">{{ 'actions.save' | t }}</span>
+    </button>
+  </noscript>
+</cart-note>

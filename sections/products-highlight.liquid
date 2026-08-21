@@ -1,0 +1,352 @@
+{%- liquid
+  assign products = section.settings.product_list
+  assign product_count = products.count
+  assign products_per_page = 1
+  assign is_carousel = false
+
+  if products == blank
+    assign product_count = products_per_page | times: 2
+  endif
+
+  if product_count > 1
+    assign is_carousel = true
+  endif
+
+  capture section_header
+    content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
+  endcapture
+  capture banner
+    content_for 'block', type: '_product-highlight-banner', id: 'product-highlight-banner'
+  endcapture
+-%}
+{%- capture inline_style -%}
+  {% render 'clamp-calculate-style', property_name: 'banner-padding-y', min_value: 40, max_value: 110 %}
+  {% render 'clamp-calculate-style', property_name: 'content-padding-start', min_value: 30, max_value: 100 %}
+  --f-column-gap-mobile: 0.8rem;
+  --1-col-percent: 0.853;
+{%- endcapture -%}
+<div
+  class="products-highlight products-highlight--image-{{ section.settings.desktop_image_position }} spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}{{ inline_style }}"
+>
+  <div class="page-width products-highlight__wrapper flex flex-col md:flex-row">
+    {{ banner }}
+    <div class="products-highlight__products w-full flex flex-col justify-center">
+      {{ section_header }}
+      <div class="products-highlight__products-carousel w-full flex items-end flex-grow">
+        <carousel-slider class="carousel w-full">
+          <script type="application/json" ref="config">
+            {
+              "loop": false,
+              "slidesPerView": 1,
+              "spaceBetween": 30,
+              "pagination": { "type": "progressbar" },
+              "counter": true,
+              "destroyBelow": 768
+            }
+          </script>
+          <div ref="container" class="swiper swipe-mobile swipe-mobile--1-cols">
+            <div class="swiper-wrapper swipe__inner">
+              {%- if products != blank -%}
+                {%- for highlight_product in products -%}
+                  <div class="swiper-slide">
+                    {% render 'product-card-horizontal',
+                      product: highlight_product,
+                      mobile_box_style: true,
+                      show_badges: section.settings.pcard_show_badges,
+                      show_vendor: section.settings.pcard_show_vendor,
+                      show_type: section.settings.pcard_show_type
+                    %}
+                  </div>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for i in (1..product_count) -%}
+                  <div class="swiper-slide">
+                    {% render 'product-card-horizontal', product: blank, mobile_box_style: true %}
+                  </div>
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          </div>
+          {%- if is_carousel -%}
+            {%- render 'carousel-controls', counter: true, pagination: true, pagination_class: 'carousel__pagination--progressbar-short' -%}
+          {%- endif -%}
+        </carousel-slider>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.products_highlight",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/aYxqPxb)"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "t:settings.products"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_position",
+      "label": "t:settings.desktop_image_position",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:content.product_cards"
+    },
+    {
+      "type": "checkbox",
+      "id": "pcard_show_badges",
+      "label": "t:settings.show_badges",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "pcard_show_vendor",
+      "label": "t:settings.show_product_vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "pcard_show_type",
+      "label": "t:settings.show_product_type",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.products_highlight",
+      "category": "t:categories.products",
+      "settings": {
+        "product_list": [],
+        "color_scheme": "scheme-1",
+        "device": "desktop",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48
+      },
+      "blocks": {
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "blocks": {
+            "subheading": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Hot Items</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            "heading": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Shop The Winter Set</p>",
+                "highlight_style": "wavy-underline",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": 68,
+                "font_size_mobile": 38,
+                "line_height": "loose",
+                "text_color": "text",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            "text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Comfortably wear Oura Ring all day and night to collect deeply personal health metrics.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 24,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 83,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "button": {
+              "type": "button",
+              "settings": {
+                "label": "Shop now",
+                "link": "",
+                "style": "primary",
+                "size": "large",
+                "icon": "caret-right",
+                "icon_style": "solid",
+                "mobile_full_width": true,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["subheading", "heading", "text", "button"]
+        },
+        "product-highlight-banner": {
+          "type": "_product-highlight-banner",
+          "static": true,
+          "settings": {
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "source": "uploaded",
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_autoplay": false,
+            "video_loop": false,
+            "video_ratio": "3/4",
+            "border_radius": 20
+          },
+          "blocks": {}
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

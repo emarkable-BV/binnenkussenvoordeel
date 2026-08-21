@@ -1,0 +1,34 @@
+.subscribe-popup__content {
+  padding: 2.4rem 2rem;
+  --text-align: center;
+}
+@media (min-width: 768px) {
+  .subscribe-popup__image {
+    width: 50%;
+  }
+  .subscribe-popup__image .media {
+    width: 100%;
+    height: 100%;
+  }
+  .subscribe-popup__image + .subscribe-popup__content {
+    width: 50%;
+  }
+  .subscribe-popup__content {
+    padding: 6rem 3rem;
+  }
+}
+@media (max-width: 767.98px) {
+  .subscribe-popup .dialog {
+    max-width: 44rem;
+  }
+  .subscribe-popup .dialog__close {
+    color: #000;
+  }
+  .subscribe-popup .dialog__close::before {
+    background: #fff;
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+  }
+  .subscribe-popup .dialog__close .icon {
+    --icon-size: 1.6rem;
+  }
+}

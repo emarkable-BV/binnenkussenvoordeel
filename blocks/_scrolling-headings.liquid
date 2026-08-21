@@ -1,0 +1,21 @@
+{%- if block.blocks.size > 0 -%}
+  <div
+    ref="headings"
+    class="block-scrolling__headings flex flex-col items-center absolute top-0 left-0 w-full"
+    {{ block.shopify_attributes }}
+  >
+    {% content_for 'blocks' %}
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:names.scrolling_cards_heading",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "text"
+    }
+  ],
+  "settings": []
+}
+{% endschema %}

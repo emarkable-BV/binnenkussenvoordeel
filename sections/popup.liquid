@@ -1,0 +1,276 @@
+{%- liquid
+  assign should_show = section.settings.enable
+  if section.settings.show_for_visitors_only and customer
+    assign should_show = false
+  endif
+
+  if section.settings.show_for_homepage_only and template != 'index'
+    assign should_show = false
+  endif
+
+  if request.design_mode
+    assign should_show = true
+  endif
+
+  unless section.settings.inherit_color_scheme
+    assign color_scheme = section.settings.color_scheme
+  else
+    unless settings.dialog_color_scheme_inherit
+      assign color_scheme = settings.dialog_color_scheme
+    endunless
+  endunless
+-%}
+{%- if should_show -%}
+  {%- liquid
+    capture popup_image
+      content_for 'block', type: '_popup-image', id: 'popup-image'
+    endcapture
+  -%}
+  <link
+    rel="stylesheet"
+    href="{{ 'section-popup.css' | asset_url }}"
+    media="print"
+    onload="this.media='all'"
+  >
+  <script src="{{ 'popup.js' | asset_url }}" type="module" fetchpriority="low"></script>
+  <subscribe-popup-component
+    class="subscribe-popup"
+    id="SubscribePopup"
+    data-trigger-open="{{ section.settings.trigger_open }}"
+    data-repeat-open="{{ section.settings.repeat_open }}"
+    shopify-design-mode
+  >
+    <dialog
+      ref="dialog"
+      class="dialog dialog--modal{% if color_scheme != blank %} color-{{ color_scheme }}{% endif %}"
+      scroll-lock
+    >
+      <button
+        class="dialog__close dialog__close--absolute"
+        on:click="#SubscribePopup/closeDialog"
+        aria-label="{{ 'accessibility.close_dialog' | t }}"
+      >
+        {% render 'icon', icon: 'close', size: 'large' %}
+      </button>
+      <div class="dialog__content flex-grow flex flex-wrap">
+        {{ popup_image }}
+        <div class="subscribe-popup__content w-full flex flex-col text-center items-center">
+          {% content_for 'blocks' %}
+        </div>
+      </div>
+    </dialog>
+  </subscribe-popup-component>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:names.popup",
+  "enabled_on": {
+    "groups": ["custom.overlay"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/SLKa2eB)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "t:settings.enable",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_for_homepage_only",
+      "label": "t:settings.show_for_homepage_only",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_for_visitors_only",
+      "label": "t:settings.show_for_visitors_only",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "trigger_open",
+      "label": "t:settings.popup_trigger_open",
+      "info": "t:info.popup_trigger_open",
+      "options": [
+        {
+          "value": "immediately",
+          "label": "t:options.trigger_open_immediately"
+        },
+        {
+          "value": "delay",
+          "label": "t:options.trigger_open_delay"
+        },
+        {
+          "value": "scroll_down",
+          "label": "t:options.trigger_open_scroll_down"
+        }
+      ],
+      "default": "delay"
+    },
+    {
+      "type": "select",
+      "id": "repeat_open",
+      "label": "t:settings.popup_repeat_open",
+      "info": "t:info.popup_repeat_open",
+      "options": [
+        {
+          "value": "no_repeat",
+          "label": "t:options.no_repeat"
+        },
+        {
+          "value": "every_30_mins",
+          "label": "t:options.every_30_minutes"
+        },
+        {
+          "value": "every_1_hr",
+          "label": "t:options.every_1_hour"
+        },
+        {
+          "value": "every_6_hrs",
+          "label": "t:options.every_6_hours"
+        },
+        {
+          "value": "every_12_hrs",
+          "label": "t:options.every_12_hours"
+        },
+        {
+          "value": "every_day",
+          "label": "t:options.every_day"
+        },
+        {
+          "value": "every_3_days",
+          "label": "t:options.every_3_days"
+        },
+        {
+          "value": "every_week",
+          "label": "t:options.every_week"
+        },
+        {
+          "value": "every_2_weeks",
+          "label": "t:options.every_2_weeks"
+        },
+        {
+          "value": "every_month",
+          "label": "t:options.every_month"
+        }
+      ],
+      "default": "every_day"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ section.settings.inherit_color_scheme == false }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "grid"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "_spacer"
+    },
+    {
+      "type": "_popup-newsletter"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.popup",
+      "blocks": [
+        {
+          "type": "_popup-image",
+          "static": true,
+          "id": "popup-image"
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Unlock 10% OFF your order</p>",
+            "type_preset": "h2"
+          }
+        },
+        {
+          "type": "_spacer",
+          "settings": {
+            "gap": 16,
+            "gap_mobile": 12
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Sexy and sustainable goodies? Sign me up</p>",
+            "type_preset": "rte",
+            "text_color": "subtext"
+          }
+        },
+        {
+          "type": "_spacer",
+          "settings": {
+            "gap": 24,
+            "gap_mobile": 20
+          }
+        },
+        {
+          "type": "_popup-newsletter"
+        },
+        {
+          "type": "_spacer",
+          "settings": {
+            "gap": 16,
+            "gap_mobile": 12
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>I’ll pay full price</p>",
+            "type_preset": "rte",
+            "text_color": "subtext"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

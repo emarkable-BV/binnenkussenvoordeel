@@ -1,0 +1,15 @@
+{% doc %}
+  @param {string} [icon] - Icon element
+  @param {string} [text] - Text element
+  @param {string} [attributes] - Block attributes
+  @param {string} [class] - Additional classes
+  @param {string} [settings] - Section/Block settings
+{% enddoc %}
+<div 
+  class="icon-with-text flex items-center gap-style{% if class != blank %} {{ class }}{% endif %}" 
+  style="{% render 'gap-style', settings: settings %}"
+  {{ attributes }}
+>
+  {{ icon }}
+  {{ text }}
+</div>

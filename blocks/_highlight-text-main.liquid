@@ -1,0 +1,267 @@
+{% liquid
+  assign heading = block.settings.heading
+  assign preset = block.settings.preset_type
+  assign font_size = block.settings.font_size
+  assign font_size_mobile = block.settings.font_size_mobile
+  assign font_family = block.settings.font
+  assign font_weight = block.settings.font_weight
+  assign line_height = block.settings.line_height
+
+  capture text_block_classes
+    if preset == 'custom'
+      echo ' custom-typography'
+      if block.settings.font_size != ''
+        echo ' custom-font-size'
+      endif
+    elsif preset == 'paragraph'
+      echo ' rte '
+    endif
+  endcapture
+%}
+
+<highlight-text-image
+  class="highlight-text-image block size-style {{ preset }}{{ text_block_classes }}"
+  style="
+    {%- render 'size-style', settings: block.settings %}
+    {%- render 'typography-style',
+      settings: block.settings,
+      preset: preset,
+      font_size: font_size,
+      font_size_mobile: font_size_mobile,
+      font_family: font_family,
+      font_weight: font_weight,
+      line_height: line_height
+    %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {{- heading -}}
+</highlight-text-image>
+<template>
+  {% content_for 'blocks' %}
+</template>
+
+{% schema %}
+{
+  "name": "t:names.highlight_main_text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "t:options.heading",
+      "default": "Highlight products, [img1] a collection, or [img2] images alongside a brand message [img3]",
+      "info": "t:info.highlight-text-with-image"
+    },
+    {
+      "type": "select",
+      "id": "preset_type",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.preset_type == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.preset_type == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.preset_type == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.preset_type == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.preset_type == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 70,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_highlight-text-image"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

@@ -1,0 +1,91 @@
+{% liquid
+  assign columns = settings.cart_empty_recommendation_columns
+  assign style = settings.cart_empty_recommendation_style
+  assign preset = settings.cart_empty_recommendation_type_preset
+  assign alignment = settings.cart_empty_recommendation_alignment
+  assign color_scheme = settings.cart_empty_recommendation_color_scheme
+
+  assign class_link = 'cart-empty-recommendation-item__link relative flex flex-col gap-3 media-hover--scale focus-visible--absolute'
+  unless style == 'overlay'
+    assign class_link = class_link | append: ' reversed-link'
+  else
+    assign class_link = class_link | append: ' border-style color-' | append: color_scheme
+  endunless
+  assign columns_desktop = columns
+  assign columns_mobile = columns_desktop | default: 3
+  if columns > 3
+    assign columns_mobile = 3
+  endif
+%}
+<div class="cart-empty-recommendation w-full">
+  <carousel-slider
+    class="carousel carousel--grid"
+    style="--f-columns-xxl: {{ columns_desktop }};--f-columns-mobile: {{ columns_mobile }};"
+  >
+    <script type="application/json" ref="config">
+      {
+        "slidesPerView": {% if columns > 3 %}3{% else %}{{ columns }}{% endif %},
+        "spaceBetween": 8,
+        "mousewheel": {
+          "enabled": true,
+          "forceToAxis": true
+        },
+        "navigationPosition": {
+          "enabled": true,
+          "selector": ".media img"
+        },
+        "breakpoints": {
+          "1200": {
+            "slidesPerView": {{ columns }},
+            "spaceBetween": {% if context == 'drawer' %}10{% else %}30{% endif %}
+          }
+        },
+        "counter": false
+      }
+    </script>
+    <div ref="container" class="swiper">
+      <div class="swiper-wrapper">
+        {%- liquid
+          assign container_width = '692px'
+          if context == 'drawer'
+            assign container_width = '500px'
+          endif
+        -%}
+        {%- capture image_sizes -%}(min-width: 768px) calc((min(100vw, {{ container_width }}) - 32px) / {{ columns }}), calc((min(100vw, {{ container_width }}) - 32px) / {{ columns_mobile }}){%- endcapture -%}
+        {% for collection in collections %}
+          {%- liquid
+            assign collection_image = collection.image | default: collection.products.first.featured_media.preview_image
+          -%}
+          <div class="swiper-slide cart-empty-recommendation-item cart-empty-recommendation-item--{{ style }}">
+            <a
+              href="{{ collection.url }}"
+              class="{{ class_link }}"
+              style="--border-radius: {{ settings.cart_empty_recommendation_collection_thumbnail_border_radius | divided_by: 10 }}rem;"
+            >
+              <div class="cart-empty-recommendation-item__image border-style media-mask-clip">
+                {% render 'responsive-image',
+                  image: collection_image,
+                  mode: 'liquid',
+                  sizes: image_sizes,
+                  widths: '220, 300, 380, 460, 540, 620, 700, 780, 860',
+                  image_ratio: settings.cart_thumbnail_ratio
+                %}
+              </div>
+              <p class="cart-empty-recommendation-item__title text-{{ alignment }}">
+                <span class="reversed-link__text {{ preset }}">
+                  {{ collection.title }}
+                </span>
+              </p>
+              {% if style == 'overlay' %}
+                {% render 'overlay', overlay_color: settings.cart_empty_recommendation_overlay_color %}
+              {% endif %}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      {% if collections.count > columns %}
+        {% render 'carousel-controls', type: 'absolute', pagination: false, navigation_inside: true, navigation_size: 'small' %}
+      {% endif %}
+    </div>
+  </carousel-slider>
+</div>

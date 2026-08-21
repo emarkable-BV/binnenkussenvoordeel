@@ -1,0 +1,230 @@
+{%- doc -%}
+  @param {string} mode - Mode of image card. Accepted value: 'static', 'dynamic'
+  @param {string} [card_link] - Link that apply to image
+  @param {string} [card_image] - Image for dynamic mode
+  @param {string} [image] - Image for static mode
+  @param {string} [overlay] - Media overlay for static mode
+  @param {string} [color_scheme] - Color scheme for static mode
+  @param {string} [subheading] - Subheading
+  @param {string} [heading] - Heading
+  @param {string} [heading_tag] - Heading tag for static mode
+  @param {string} [text] - Text
+  @param {string} [button] - Button
+  @param {string} [card_label] - Card label
+  @param {boolean} [card_label_in_content] - Show card label in content
+  @param {string} [card_countdown] - Card badge
+  @param {string} [card_badge] - Card badge
+  @param {string} [card_badge_color] - Color for badge text in rgb. For eg: 255 255 255
+  @param {string} [edge_gap] - Space between content and edge of card. Accepted value: lg,md,sm
+  @param {object} [settings] - Settings for dynamic mode: Section/block settings
+  @param {boolean} [show_content_below] - Show content below image
+  @param {string} [content_direction] - Content direction
+  @param {string} [h_alignment] - Horizontal alignment
+  @param {string} [h_alignment_mobile] - Horizontal alignment on mobile
+  @param {string} [v_alignment] - Vertical alignment
+  @param {string} [v_alignment_mobile] - Vertical alignment on mobile
+  @param {number} [gap] - Row gap in px (space between the image and content when displaying content below the image)
+  @param {number} [gap_mobile] - Row gap in px on mobile (space between the image and content when displaying content below the image)
+  @param {number} [column_gap] - Column gap in px (space between text and button)
+  @param {number} [column_gap_mobile] - Column gap in px on mobile (space between text and button)
+  @param {number} [row_gap] - Row gap in px (space between text and button)
+  @param {number} [row_gap_mobile] - Row gap in px on mobile (space between text and button)
+  @param {number} [border_width] - Border width in px
+  @param {string} [border] - Border style
+  @param {number} [border_opacity] - Border opacity
+  @param {number} [border_radius] - Border radius in px
+  @param {string} [attributes] - HTML attributes
+  @param {string} [classes] - Additional classes
+{%- enddoc -%}
+{%- liquid
+  assign mode = mode | default: 'dynamic'
+  assign show_content_below = show_content_below | default: settings.show_content_below | default: false
+  assign card_label = card_label | default: settings.card_label
+  assign card_label_in_content = card_label_in_content | default: settings.card_label_in_content | default: false
+  assign edge_gap = edge_gap | default: settings.edge_gap | default: 'md'
+  assign gap = gap | default: settings.gap
+  assign gap_mobile = gap_mobile | default: settings.gap_mobile
+  assign heading_tag = heading_tag | default: 'div'
+  assign card_radius = border_radius
+
+  if content_direction == blank
+    assign content_direction = settings.content_direction
+  endif
+
+  assign v_align = v_alignment
+  assign v_align_mobile = v_alignment_mobile
+
+  assign content_direction = content_direction | default: 'column'
+
+  assign card_classes = ''
+  assign card_inner_classes = 'image-card__inner layout-panel-flex layout-panel-flex--[contentDirection] gap-style' | replace: '[contentDirection]', content_direction
+
+  if edge_gap != 'none'
+    assign card_classes = card_classes | append: ' edge-gap--' | append: edge_gap
+  endif
+
+  if show_content_below
+    assign card_classes = card_classes | append: ' image-card--content-outside'
+    assign v_align = v_alignment | default: 'flex-start'
+    assign v_align_mobile = v_alignment_mobile | default: 'flex-start'
+  else
+    assign card_classes = card_classes | append: ' image-card--content-inside media-hover--scale !bg-transparent-20'
+  endif
+
+  if settings.width != blank
+    assign card_classes = card_classes | append: ' size-style'
+  endif
+
+  if settings.enable_full_height == true
+    assign card_classes = card_classes | append: ' self-stretch'
+  endif
+
+  if mode == 'dynamic'
+    if settings.vertical_on_mobile
+      assign card_inner_classes = card_inner_classes | append: ' mobile-column'
+    endif
+
+    if settings.inherit_color_scheme == false
+      assign card_classes = card_classes | append: ' color-' | append: settings.color_scheme
+    endif
+  else
+    if gap == blank
+      assign gap = 20
+    endif
+    if row_gap == blank
+      assign row_gap = 32
+    endif
+    if color_scheme != blank
+      assign card_classes = card_classes | append: ' color-' | append: color_scheme
+    endif
+    if show_content_below
+      assign card_radius = 0
+    endif
+  endif
+
+  assign image_wrap_tag = 'div'
+
+  if card_link != blank
+    assign image_wrap_tag = 'a'
+  endif
+-%}
+{% capture card_style %}
+  {% render 'border-style', 
+    settings: settings,
+    border_width: border_width,
+    border: border,
+    border_opacity: border_opacity,
+    border_radius: card_radius
+  %}
+  {% if show_content_below %}
+    --gap: {{ gap }}px;
+    --gap-mobile: {{ gap_mobile }}px;
+  {% endif %}
+  {% if settings.width != blank %}
+    {% render 'size-style', settings: settings %}
+  {% endif %}
+  {% if card_badge_color != blank %}
+  --badge-text-color: {{ card_badge_color }};
+  {% endif %}
+{% endcapture %}
+
+{%- capture content_inner_style -%}
+  {%- render 'gap-style', 
+    settings: settings,
+    column_gap: column_gap,
+    column_gap_mobile: column_gap_mobile,
+    row_gap: row_gap,
+    row_gap_mobile: row_gap_mobile
+  -%}
+  {%- render 'layout-panel-style', 
+    settings: settings, 
+    content_direction: content_direction, 
+    h_alignment: h_alignment, 
+    h_alignment_mobile: h_alignment_mobile, 
+    v_alignment: v_align, 
+    v_alignment_mobile: v_align_mobile, 
+    type: 'flex' 
+  -%}
+{%- endcapture -%}
+<div
+  class="swiper-slide-custom image-card image-card--{{ mode }} relative grid border-style{{ card_classes }}{% if classes != blank %} {{ classes }}{% endif %}"
+  style="{{ card_style | strip | strip_newlines }}"
+  {{- attributes -}}
+>
+  {%- if card_link != blank -%}
+    <a
+      class="absolute inset-0 focus-visible--absolute"
+      href="{{ card_link }}"
+    ></a>
+  {%- endif -%}
+  <{{ image_wrap_tag }}
+    class="image-card__media{% unless show_content_below %} col-span-full row-span-full{% else %} media-hover--scale{% endunless %} relative z-0 block overflow-hidden"
+    {% if card_link != blank %}
+      href="{{ card_link }}"
+    {% endif %}
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    {% if mode == 'dynamic' %}
+      {{ card_image }}
+    {% else %}
+      <div
+        class="image-card__media-wrapper relative w-full h-full{% if show_content_below %} border-style{% endif %}"
+        {% if show_content_below %}
+          style="{% render 'border-style', border_radius: border_radius %}"
+        {% endif %}
+      >
+        {{ image }}
+        {{ overlay }}
+      </div>
+    {% endif %}
+
+    {% if card_label != blank and card_label_in_content == false %}
+      <span class="image-card__label badge absolute z-1">
+        {{ card_label }}
+      </span>
+    {% endif %}
+    {% if card_badge != blank %}
+      {{ card_badge }}
+    {% endif %}
+  </{{ image_wrap_tag }}>
+  <div class="image-card__content pointer-events-none edge-gap relative{% unless show_content_below %} col-span-full row-span-full{% endunless %}">
+    <div
+      class="{{ card_inner_classes | strip | strip_newlines }}"
+      style="{{ content_inner_style | strip | strip_newlines }}"
+    >
+      <div class="image-card__texts flex flex-col">
+        {% if card_label != blank and card_label_in_content == true %}
+          <span class="image-card__label badge">
+            {{ card_label }}
+          </span>
+        {% endif %}
+        {% if subheading != blank %}
+          <div class="image-card__subheading">
+            {{ subheading }}
+          </div>
+        {% endif %}
+        {% if heading != blank %}
+          <{{ heading_tag }} class="image-card__heading">
+            {{ heading }}
+          </{{ heading_tag }}>
+        {% endif %}
+        {% if text != blank %}
+          <div class="image-card__text">
+            {{ text }}
+          </div>
+        {% endif %}
+        {%- if card_countdown != blank -%}
+          <div class="image-card__countdown">
+            {{ card_countdown }}
+          </div>
+        {%- endif -%}
+      </div>
+      {% if button != blank %}
+        <div class="image-card__button">
+          {{ button }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

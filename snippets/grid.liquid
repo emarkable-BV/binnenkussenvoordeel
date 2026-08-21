@@ -1,0 +1,73 @@
+{%- doc -%}
+  Renders block content for all blocks that extend the group block.
+
+  @param {string} children - The DOM content of the group block.
+  @param {object} settings - The settings of the group block.
+  @param {string} shopify_attributes - String with Shopify attributes for the editor.
+  @param {string} [class] - Custom classes for the group block.
+  @param {string} [styles] - Custom inline styles for the group block.
+
+  @example
+  {% render 'grid', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
+{%- enddoc -%}
+{% liquid
+  if settings.custom_columns != blank
+    assign custom_columns_array = settings.custom_columns | split: ','
+    for custom_column in custom_columns_array
+      assign pair = custom_column | strip
+      if pair == ''
+        continue
+      endif
+
+      assign custom_column_key = pair | split: ':' | first | strip
+      assign value_str = pair | split: ':' | last | strip
+      if value_str == ''
+        continue
+      endif
+      assign custom_column_value = value_str | plus: 0
+
+      case custom_column_key
+        when 'mb'
+          assign columns_mobile = custom_column_value
+        when 'md'
+          assign columns_md = custom_column_value
+        when 'lg'
+          assign columns_lg = custom_column_value
+        when 'xl'
+          assign columns_xl = custom_column_value
+        when 'xxl'
+          assign columns_xxl = custom_column_value
+      endcase
+    endfor
+  endif
+%}
+{%- capture grid_block_content_class -%}
+  grid-block-content layout-panel-grid gap-style {% if request.design_mode %} grid-block-content--design-mode{% endif %}
+  {% if settings.enable_swipe_on_mobile %} swipe__inner{% endif %}
+{%- endcapture -%}
+{%- capture grid_block_class -%}
+  grid-block spacing-style border-style size-style{% if settings.inherit_color_scheme == false %} color-{{ settings.color_scheme }}{% endif %}{{ class }}
+  grid-block--width-{{ settings.width }} grid-block--width-mobile-{{ settings.width_mobile }}
+  {% if settings.enable_swipe_on_mobile %} swipe-mobile swipe-mobile--{{ settings.columns_mobile }}-cols{% endif %}
+  {% if settings.swipe_custom_width_column %} swipe-mobile--custom-width{% endif %}
+{%- endcapture -%}
+{%- capture grid_block_content_style -%}
+  {% render 'layout-panel-style', settings: settings, type: 'grid', columns_mobile: columns_mobile, columns_md: columns_md, columns_lg: columns_lg, columns_xl: columns_xl, columns_xxl: columns_xxl %} 
+  {% render 'gap-style', settings: settings %}
+{%- endcapture -%}
+{%- capture grid_block_style -%}
+  {% render 'spacing-style', settings: settings %}{% render 'border-style', settings: settings %}{% render 'size-style', settings: settings, type: 'grid', swipe_on_mobile: settings.enable_swipe_on_mobile %}{{ styles }}
+  {% if settings.swipe_custom_width_column %} --swipe-column-width: {{ settings.swipe_column_width | divided_by: 100.0 }};{% endif %}
+{%- endcapture -%}
+<div
+  class="{{ grid_block_class | strip_newlines }}"
+  style="{{ grid_block_style | strip | strip_newlines }}"
+  {{ shopify_attributes }}
+>
+  <div
+    class="{{ grid_block_content_class | strip_newlines }}"
+    style="{{ grid_block_content_style | strip | strip_newlines }}"
+  >
+    {{- children -}}
+  </div>
+</div>

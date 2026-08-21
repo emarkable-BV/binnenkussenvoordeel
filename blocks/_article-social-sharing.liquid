@@ -1,0 +1,56 @@
+<div
+  class="article__block flex flex-col md:flex-row md:items-center justify-between gap-4"
+  {{ block.shopify_attributes }}
+>
+  {%- if article.tags.size > 0 and block.settings.show_tags -%}
+    <div class="article-tags flex flex-wrap items-center gap-3">
+      <span class="article-tags__heading">{{ 'blogs.article.tags' | t }}</span>
+      <span class="article-tags__list flex flex-wrap items-center gap-2">
+        {%- for tag in article.tags -%}
+          <a
+            href="{{ blog.url }}/tagged/{{ tag | handle }}"
+            class="btn btn--secondary btn--tag"
+          >
+            <span class="btn__text">{{- tag -}}</span>
+          </a>
+        {%- endfor -%}
+      </span>
+    </div>
+  {%- endif -%}
+  {%- if block.settings.show_share -%}
+    {%- if settings.share_on_facebook
+      or settings.share_on_pinterest
+      or settings.share_on_x
+      or settings.share_on_telegram
+      or settings.share_on_whatsapp
+      or settings.share_on_email
+    -%}
+      <div class="article__share flex items-center gap-4">
+        <span class="article__share-title">{{ 'content.share' | t }}</span>
+        {% render 'social-sharing', url: article.url, share_image: article.featured_media.preview_image %}
+      </div>
+    {% endif %}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:names.social_sharing",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "default": true,
+      "label": "t:settings.show_tags"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "default": true,
+      "label": "t:settings.show_social_sharing"
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

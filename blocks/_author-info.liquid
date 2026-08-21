@@ -1,0 +1,198 @@
+{% doc %}
+  @param {string} [classes] - Additional classes
+{% enddoc %}
+{% liquid
+  assign name = block.settings.name
+  assign bio = block.settings.bio
+  assign icon = block.settings.icon
+  assign avatar = block.settings.avatar
+%}
+{% if name != blank or bio != blank %}
+  <div
+    class="author-info spacing-style {{ classes }}"
+    style="{% render 'spacing-style', settings: block.settings %}"
+    {{ block.shopify_attributes }}
+  >
+    {% if avatar != blank %}
+      <div
+        class="author-info__avatar rounded"
+        style="--width: {{ block.settings.image_width }}px; --width-mobile: {{ block.settings.image_width_mobile }}px;"
+      >
+        {% render 'responsive-image',
+          mode: 'liquid',
+          image: avatar,
+          image_ratio: '1/1',
+          media_width_desktop: block.settings.image_width,
+          media_width_mobile: block.settings.image_width_mobile,
+          loading: 'lazy',
+          fetchpriority: 'low',
+          use_hover: false
+        %}
+      </div>
+    {% endif %}
+    <div class="author-info__inner flex flex-col gap-y-1">
+      {% if name != blank %}
+        <div class="author-info__name {{ block.settings.name_preset }}">{{ name }}</div>
+      {% endif %}
+      {% if bio != blank %}
+        <div class="author-info__bio paragraph flex items-center gap-1 color-{{ block.settings.bio_text_color }}">
+          {% if icon != 'none' %}
+            {%- render 'icon', icon: icon, size: 'medium' -%}
+          {% endif %}
+          {{ bio }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:names.information",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.avatar"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "t:settings.width",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "t:content.name"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "select",
+      "id": "name_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h6"
+    },
+    {
+      "type": "header",
+      "content": "t:content.bio"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "check-circle",
+          "label": "t:options.check_circle"
+        },
+        {
+          "value": "check",
+          "label": "t:options.check"
+        },
+        {
+          "value": "tag",
+          "label": "t:options.tag"
+        }
+      ],
+      "default": "check-circle"
+    },
+    {
+      "type": "text",
+      "id": "bio",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "select",
+      "id": "bio_text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        }
+      ],
+      "default": "subtext"
+    },
+    {
+      "type": "header",
+      "content": "t:settings.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-scale",
+      "label": "t:settings.mobile_scale",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.information"
+    }
+  ]
+}
+{% endschema %}

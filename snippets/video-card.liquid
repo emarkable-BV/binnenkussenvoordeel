@@ -1,0 +1,59 @@
+{%- doc -%}
+  @param {object} block - the block object
+  @param {string} information - infomation card
+{%- enddoc -%}
+
+{% liquid
+  assign block_settings = block.settings
+  assign source = 'uploaded'
+  assign cover_image = block.settings.cover_image
+  assign aspect_ratio = block.settings.video_ratio
+
+  if block.settings.cover_image == blank
+    if source == 'uploaded'
+      assign cover_image = block.settings.video.preview_image
+    endif
+  endif
+
+  assign default_aspect_ratio = '3/4'
+  if aspect_ratio == 'auto'
+    if source == 'uploaded'
+      assign aspect_ratio = block_settings.video.aspect_ratio | default: cover_image.aspect_ratio | default: default_aspect_ratio
+    else
+      assign aspect_ratio = cover_image.aspect_ratio | default: default_aspect_ratio
+    endif
+  endif
+-%}
+
+{% capture video_style %}
+  {% render 'border-style', settings: block_settings %}
+  {% if block.settings.video == blank %}
+    --size-style-aspect-ratio: {{ aspect_ratio }};
+  {% endif %}
+{% endcapture %}
+
+<video-card
+  class="swiper-slide-custom video-card grid relative border-style size-style"
+  style="{% render 'border-style', settings: block.settings %}{% render 'size-style', settings: block_settings %}"
+  {{ block.shopify_attributes }}
+>
+  <div
+    class="video-block spacing-style col-span-full row-span-full"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    {% render 'video',
+      video: block_settings.video,
+      video_loop: true,
+      video_autoplay: false,
+      disable_controls: true,
+      enable_toggle_button: true,
+      enable_toggle_volume_button: true,
+      video_preview_image: cover_image,
+      video_style: video_style,
+      video_ratio: aspect_ratio,
+      section_id: block.id
+    %}
+  </div>
+  {{ information }}
+</video-card>

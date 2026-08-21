@@ -1,0 +1,384 @@
+{% assign block_settings = block.settings %}
+{% capture styles %}
+  --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
+  --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
+  --summary-font-weight: var(--font-{{ block_settings.type_preset }}--weight);
+  --summary-font-size: var(--font-{{ block_settings.type_preset }}--size);
+  --summary-line-height: var(--font-{{ block_settings.type_preset }}--line-height);
+{% render 'spacing-style', settings: block_settings %}
+{% render 'border-style', settings: block_settings %}
+{% render 'size-style', settings: block_settings %}
+{% endcapture %}
+
+<accordion-component
+  class="accordion block-accordion accordion--{{ block.settings.style }} reset-text-alignment accordion--icon-{{ block.settings.icon_style }} accordion--arrow-{{ block.settings.icon_arrow }} accrodion--{{ block.id }} spacing-style size-style min-w-0{% if block.settings.inherit_color_scheme == false %} color-{{ block.settings.color_scheme }}{% endif %}{% if block.settings.inherit_color_scheme == false or block.settings.border != 'none' %} border-style{% endif %}"
+  {% if block.settings.open_behavior == 'single' %}
+    data-single-open="true"
+  {% endif %}
+  style="{{ styles | strip | strip_newlines }}"
+  {{ block.shopify_attributes }}
+  data-section-id="{{ section.id }}"
+>
+  {% capture item_classes %}
+    {% if block.settings.style == 'card' %} color-{{ block.settings.card_color_scheme }}{% endif %}
+  {% endcapture %}
+
+  {%- for block in block.blocks -%}
+    <div class="accordion__row {{ item_classes }}">
+      {% render block %}
+    </div>
+  {%- endfor -%}
+</accordion-component>
+
+{% schema %}
+{
+  "name": "t:names.accordion",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "open_behavior",
+      "label": "t:settings.open_behavior",
+      "default": "multiple",
+      "options": [
+        { "value": "multiple", "label": "t:options.multiple" },
+        { "value": "single", "label": "t:options.single" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:content.accordion_row_settings"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.heading_preset",
+      "options": [
+        {
+          "value": "rte",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h5"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "standard",
+          "label": "t:options.standard"
+        },
+        {
+          "value": "card",
+          "label": "t:options.card"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-2",
+      "visible_if": "{{ block.settings.style == 'card' }}"
+    },
+    {
+      "type": "select",
+      "id": "icon_arrow",
+      "label": "t:settings.icon_arrow",
+      "options": [
+        {
+          "value": "caret",
+          "label": "t:options.caret"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        }
+      ],
+      "default": "caret"
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "t:settings.icon_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.borders"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.border != 'none' or block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_accordion-row"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.accordion",
+      "category": "t:categories.layout",
+      "blocks": [
+        {
+          "type": "_accordion-row",
+          "settings": {
+            "text": "Return policy"
+          },
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>We accept returns within 30 days of purchase. Please note that all items must be returned in their original condition, including all tags and packaging. Shipping costs are non-refundable.</p>"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_accordion-row",
+          "settings": {
+            "text": "Shipping"
+          },
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_accordion-row",
+          "settings": {
+            "text": "Manufacturing"
+          },
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>We offer free shipping on all orders over $100. Orders under $100 will be charged a flat rate of $10.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

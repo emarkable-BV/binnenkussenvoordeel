@@ -1,0 +1,262 @@
+{%- liquid
+  assign product = block.settings.product
+  assign featured_media = product.featured_media
+  assign featured_media_alt = product.featured_media.alt
+  assign featured_media_type = featured_media.media_type
+  if featured_media_type == 'model' or featured_media_type == 'video'
+    assign featured_media = product.featured_media.preview_image
+  endif
+
+  assign image_wrap_tag = 'div'
+  if product != blank
+    assign image_wrap_tag = 'a'
+  endif
+
+  assign loading = 'lazy'
+  assign fetchpriority = 'low'
+  if block.settings.image_preload
+    assign loading = 'eager'
+    assign fetchpriority = 'high'
+  endif
+-%}
+<div
+  class="product-overlay-card relative border-style media-mask-clip w-full media-hover--scale"
+  style="{% render 'border-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  {% render 'responsive-image',
+    mode: 'js',
+    image: block.settings.image,
+    image_mobile: block.settings.image_mobile,
+    image_ratio: block.settings.image_ratio,
+    image_ratio_mobile: block.settings.image_ratio_mobile,
+    default_alt: shop.name,
+    loading: loading,
+    fetchpriority: fetchpriority
+  %}
+  <div class="product-overlay-card__content absolute flex items-center gap-3 color-{{ block.settings.color_scheme }}">
+    <div class="product-overlay-card__image-wrap shrink-0">
+      <{{ image_wrap_tag }}
+        class="product-overlay-card__image block media-mask-clip"
+        {% if product != blank %}
+          href="{% render 'product-card-variant-url', product: product %}"
+          aria-label="{{ product.title | escape }}"
+          tabindex="-1"
+        {% endif %}
+      >
+        {% render 'responsive-image',
+          mode: 'liquid',
+          image: featured_media,
+          image_ratio: block.settings.product_image_ratio,
+          default_alt: featured_media_alt,
+          media_width_desktop: '60px',
+          media_width_mobile: '50px',
+          loading: loading,
+          fetchpriority: fetchpriority,
+          svg_placeholder: 'product-1',
+          use_hover: false
+        %}
+      </{{ image_wrap_tag }}>
+    </div>
+    <div class="product-overlay-card__info flex-grow flex flex-col gap-1">
+      {%- if product == blank -%}
+        <p class="product-overlay-card__title">
+          {{ 'placeholders.product_title' | t }}
+        </p>
+      {%- else -%}
+        <a
+          class="product-overlay-card__title reversed-link text-limit-1-line"
+          href="{% render 'product-card-variant-url', product: product %}"
+          aria-label="{{ product.title | escape }}"
+          tabindex="-1"
+        >
+          <span class="reversed-link__text">{{ product.title }}</span>
+        </a>
+      {%- endif -%}
+      {% render 'price', ref: false, show_unit_price: true, product_resource: product, use_variant: false %}
+    </div>
+    <div class="product-overlay-card__action shrink-0">
+      {% render 'button', style: 'primary', label: 'Shop', link: product.url %}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.product_overlay_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "select",
+      "id": "product_image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "1/1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "t:settings.aspect_ratio_mobile",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.advanced"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_preload_image",
+      "label": "t:settings.enable_preload_image",
+      "info": "t:info.enable_preload_image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_overlay_card",
+      "category": "t:categories.product",
+      "settings": {
+        "color_scheme": "scheme-inverse",
+        "border_radius": 20
+      },
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

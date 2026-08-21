@@ -1,0 +1,255 @@
+{%- liquid
+  assign enable_country_selector = false
+  if section.settings.enable_country_selector and localization.available_countries.size > 1
+    assign enable_country_selector = true
+  endif
+
+  assign enable_language_selector = false
+  if section.settings.enable_language_selector and localization.available_languages.size > 1
+    assign enable_language_selector = true
+  endif
+
+  assign enable_social_media_icons = false
+  if section.settings.enable_social_media_icons
+    assign socials = 'facebook,instagram,tiktok,pinterest,x,threads,youtube,vimeo,snapchat,linkedin,tumblr'
+    assign socials_arr = socials | split: ','
+
+    for social in socials_arr
+      assign setting_key = social | append: '_url'
+      if settings[setting_key] != blank
+        assign enable_social_media_icons = true
+        break
+      endif
+    endfor
+  endif
+
+  assign enable_follow_on_shop = false
+  if section.settings.enable_follow_on_shop and shop.features.follow_on_shop?
+    assign enable_follow_on_shop = true
+  endif
+
+  assign enable_payment_icons = section.settings.enable_payment_icons
+%}
+{%- capture inline_style -%}
+  {% render 'spacing-style', settings: section.settings %}
+{%- endcapture -%}
+<footer
+  class="footer block color-{{ section.settings.color_scheme }}"
+  style="{% render 'border-style', settings: section.settings %}"
+>
+  <div
+    class="footer__top spacing-style"
+    style="{{ inline_style | strip | strip_newlines }}"
+  >
+    <div class="page-width">
+      <div class="footer__top-blocks flex flex-wrap">
+        {%- content_for 'blocks' -%}
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom page-width">
+    {%- if enable_social_media_icons or section.settings.menu != blank -%}
+      <div class="footer__bottom-row flex flex-wrap gap-5 md:gap-6 justify-between items-end">
+        {%- if enable_social_media_icons -%}
+          {% render 'social-icons', icon_type: 'solid' %}
+        {%- endif -%}
+
+        <ul class="footer__links list-unstyled flex flex-wrap gap-1 gap-x-3 md:gap-x-6">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a href="{{ link.url }}" class="reversed-link block">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+    <div class="footer__bottom-row flex flex-wrap gap-5 md:gap-6 justify-between items-center">
+      {%- if enable_country_selector or enable_language_selector or enable_payment_icons or enable_follow_on_shop -%}
+        <div class="flex flex-wrap items-center justify-start md:justify-end gap-5 md:gap-6">
+          {%- if enable_follow_on_shop -%}
+            <div class="footer__follow-on-shop">
+              {% comment %} TODO: enable theme-check once `login_button` is accepted as valid filter {% endcomment %}
+              {% # theme-check-disable %}
+              {{ shop | login_button: action: 'follow' }}
+              {% # theme-check-enable %}
+            </div>
+          {%- endif -%}
+          {%- if enable_country_selector or enable_language_selector -%}
+            {%- render 'dropdown-localization',
+              block_id: section.id,
+              toggle_button_style: 'outline',
+              show_country: enable_country_selector,
+              show_country_flag: true,
+              show_language: enable_language_selector
+            -%}
+          {%- endif -%}
+
+          {%- if enable_payment_icons -%}
+            <div class="footer__payment">
+              {%- render 'payment-icons' -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      <div class="footer__copyright text-wrap">
+        &copy;
+        {{ 'now' | date: '%Y' }}
+        {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+      </div>
+    </div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "t:names.footer",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/QV7hJTv)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:settings.menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_follow_on_shop",
+      "label": "t:settings.enable_follow_on_shop",
+      "info": "t:info.enable_follow_on_shop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_social_media_icons",
+      "label": "t:settings.enable_social_media_icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "t:settings.enable_language_selector",
+      "info": "t:info.enable_language_selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "t:settings.enable_country_selector",
+      "info": "t:info.enable_country_selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_payment_icons",
+      "label": "t:settings.enable_payment_icons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_footer-column"
+    }
+  ]
+}
+{% endschema %}

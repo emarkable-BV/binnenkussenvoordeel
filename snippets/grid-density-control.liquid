@@ -1,0 +1,40 @@
+<div class="column-options-wrapper hidden lg:block no-js-hidden">
+  <fieldset class="column-options flex items-center gap-2">
+    <legend class="column-options__legend visually-hidden">
+      {{ 'content.grid_view.grid_fieldset' | t }}
+    </legend>
+    <span class="column-options__label">
+      {{ 'content.grid_view.view_as' | t }}
+    </span>
+    <label class="column-options__option inline-block relative">
+      <span class="column-picker column-picker--3 btn btn--outline btn--icon-only focus-within--absolute">
+        <input
+          type="radio"
+          name="grid"
+          value="default"
+          class="column-options__option-input"
+          checked
+          aria-label="{{ 'content.grid_view.default_view' | t }}"
+          data-grid-layout="desktop-default-option"
+          on:change="results-list/updateLayout"
+          data-skip-node-update
+        >
+        {% render 'icon', icon: 'grid-default', size: 'extra-large', class: 'pointer-events-none' %}
+      </span>
+    </label>
+    <label class="column-options__option inline-block relative">
+      <span class="column-picker column-picker--4 btn btn--outline btn--icon-only focus-within--absolute">
+        <input
+          type="radio"
+          name="grid"
+          value="zoom-out"
+          class="column-options__option-input"
+          aria-label="{{ 'content.grid_view.zoom_out' | t }}"
+          on:change="results-list/updateLayout"
+          data-skip-node-update
+        >
+        {% render 'icon', icon: 'grid-dense', size: 'extra-large', class: 'pointer-events-none' %}
+      </span>
+    </label>
+  </fieldset>
+</div>

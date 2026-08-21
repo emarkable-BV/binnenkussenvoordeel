@@ -1,0 +1,397 @@
+{%- liquid
+  assign collection = block.settings.collection
+  assign collection_name = 'placeholders.collection_title' | t
+
+  if collection != blank
+    assign collection_name = collection.title
+  endif
+  if block.settings.title != blank
+    assign collection_name = block.settings.title
+  endif
+
+  assign block_index = section.blocks | find_index: 'id', block.id
+-%}
+{%- capture images_html -%}
+  <div 
+    ref="images[]"
+    data-index="{{ block_index }}"
+    class="collection-highlight__part collection-highlight__image absolute inset-0 overflow-hidden h-full w-full{% if block_index == 0 %} is-active{% endif %}"
+    style="--aspect-ratio: 1"
+  >
+  {%- content_for 'block', type: '_collection-highlight-image-card', id: 'collection-highlight-image-card' -%}
+  </div>
+{%- endcapture -%}
+{%- capture texts_html -%}
+  <div
+    class="collection-highlight__preview{% unless block_index == 0 %} absolute top-0 left-0{% else %} is-active{% endunless %} w-full flex flex-col gap-3 md:gap-4 items-center text-center"
+    data-index="{{ block_index }}"
+    ref="texts[]"
+  >
+    <h3 class="h5 collection-highlight__preview-title text-capitalize">{{ 'content.x_collection' | t: name: collection_name }}</h3>
+    <div class="color-subtext collection-highlight__preview-text rte">{{- block.settings.description -}}</div>
+  </div>
+{%- endcapture -%}
+<!-- @collectionHighlight/split -->
+{{ images_html }}
+<!-- @collectionHighlight/split -->
+{{ texts_html }}
+<!-- @collectionHighlight/split -->
+<li
+  ref="titles[]"
+  data-index="{{ block_index }}"
+  class="collection-highlight__part collection-highlight__part-title collection-highlight__title relative flex items-center"
+  aria-current="{% if block_index == 0 %}true{% else %}false{% endif %}"
+  tabindex="{% if block_index == 0 %}0{% else %}-1{% endif %}"
+  {% if collection.url != blank %}
+    data-link-url="{{ collection.url | escape }}"
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {%- liquid
+    capture title_classes
+      if block.settings.title_preset == 'custom'
+        echo ' custom-typography'
+        if block.settings.title_font_size != ''
+          echo ' custom-font-size'
+        endif
+      endif
+    endcapture
+  -%}
+  {%- capture title_style -%}
+    {%- render 'typography-style',
+      preset: block.settings.title_preset,
+      font_family: block.settings.title_font,
+      font_weight: block.settings.title_font_weight,
+      font_size: block.settings.title_font_size,
+      font_size_mobile: block.settings.title_font_size_mobile,
+      line_height: block.settings.title_line_height
+    -%}
+  {%- endcapture -%}
+  {%- if collection.url != blank -%}
+    <a
+      href="{{ collection.url }}"
+      aria-label="{{ collection_name | escape }}"
+      class="absolute inset-0 z-1"
+      tabindex="-1"
+    ></a>
+  {%- endif -%}
+  <h2
+    class="text-limit-1-line {{ block.settings.title_preset }}{{ title_classes }}"
+    style="{{ title_style }}"
+  >
+    {{- collection_name -}}
+  </h2>
+  {%- if block.settings.image != blank -%}
+    <div class="collection-highlight__title-thumbnail rounded overflow-hidden">
+      {% render 'responsive-image',
+        mode: 'liquid',
+        image: block.settings.image,
+        image_ratio: '1',
+        default_alt: shop.name,
+        widths: '60, 100, 120',
+        media_width_desktop: '60',
+        media_width_mobile: '50'
+      %}
+    </div>
+  {%- endif -%}
+</li>
+{% schema %}
+{
+  "name": "t:categories.collection",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:settings.collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.thumbnail"
+    },
+    {
+      "type": "header",
+      "content": "t:content.collection_title"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.text",
+      "info": "t:info.collection_title"
+    },
+    {
+      "type": "select",
+      "id": "title_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "text-subheading",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.title_preset == 'custom' }}"
+    },
+    {
+      "id": "title_font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.title_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.title_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.title_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "title_line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.title_preset == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.collection_description"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:settings.text",
+      "default": "<p>Collection's description here that provides details about the collection.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:categories.collection",
+      "settings": {
+        "title": "",
+        "title_preset": "custom",
+        "title_font": "var(--font-heading--family)",
+        "title_font_size": 68,
+        "title_font_size_mobile": 38,
+        "title_line_height": "loose",
+        "description": "<p>Collection's description here that provides details about the collection.</p>"
+      },
+      "blocks": [
+        {
+          "type": "_collection-highlight-image-card",
+          "id": "collection-highlight-image-card",
+          "name": "t:names.image_card",
+          "static": true,
+          "settings": {
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "edge_gap": "lg",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-end",
+            "column_gap": 12,
+            "column_gap_mobile": 12,
+            "row_gap": 32,
+            "row_gap_mobile": 24,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 20,
+            "card_label": "",
+            "card_label_text_color": "#ffffff"
+          },
+          "blocks": [
+            {
+              "id": "subheading",
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>New in</p>",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            {
+              "id": "heading",
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Sale Up to 30%All Sweaters</p>",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": 48,
+                "font_size_mobile": 34,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            {
+              "id": "text",
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 24,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            {
+              "id": "button",
+              "type": "button",
+              "static": true,
+              "settings": {
+                "label": "Shop now",
+                "link": "shopify://collections/all",
+                "style": "primary",
+                "size": "large",
+                "icon": "caret-right",
+                "icon_only": false,
+                "icon_style": "solid",
+                "mobile_full_width": true,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

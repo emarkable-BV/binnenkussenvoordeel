@@ -1,0 +1,87 @@
+.menu-drawer {
+  --dialog-content-padding-inline: 1.6rem;
+  --dialog-header-height: 6rem;
+}
+.menu-drawer .dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.menu-drawer .dialog__header {
+  min-height: var(--dialog-header-height);
+  box-shadow: inset 0 -1px rgb(var(--color-border)/var(--color-border-alpha));
+}
+.menu-drawer .dialog__close {
+  width: var(--dialog-header-height);
+  height: 100%;
+  border-inline-start: 1px solid rgb(var(--color-border)/var(--color-border-alpha));
+}
+.menu-drawer .dialog__content {
+  padding-block: 0 2.6rem;
+  padding-inline: 0;
+}
+.menu-drawer__logo {
+  padding: 0.8rem var(--dialog-content-padding-inline);
+}
+.menu-drawer__logo--image {
+  max-width: var(--logo-width-menu-drawer);
+}
+.menu-drawer__logo--image img {
+  width: auto;
+  max-height: calc(var(--dialog-header-height) - 1.6rem);
+}
+.menu-drawer__menu {
+  padding-top: 1.2rem;
+}
+.menu-drawer__item-link {
+  padding-block: 0.4rem;
+  padding-inline: var(--dialog-content-padding-inline);
+}
+.menu-drawer__item-link-arrow::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  aspect-ratio: 1;
+  inset-inline-end: 0;
+  top: 0;
+}
+.menu-drawer__item-link-heading {
+  padding-block: 1rem;
+  min-height: 4.8rem;
+}
+.menu-drawer__item-link-back {
+  min-height: 4.8rem;
+}
+.menu-drawer__submenu {
+  top: 0;
+  inset-inline-start: 100%;
+  background-color: rgb(var(--color-background));
+  transition: inset 0.5s cubic-bezier(0.3, 1, 0.3, 1);
+}
+.menu-drawer__submenu > .v-scrollable {
+  padding-bottom: 3rem;
+}
+.menu-drawer__mega {
+  padding-inline: var(--dialog-content-padding-inline);
+}
+.menu-drawer details.active > .menu-drawer__submenu {
+  inset-inline-start: 0;
+  z-index: 1;
+}
+.menu-drawer .v-scrollable.active {
+  overflow: unset;
+}
+.menu-drawer .accordion {
+  --summary-padding-block: 1.3rem;
+}
+.menu-drawer .accordion .h3 {
+  line-height: 2.4rem;
+}
+.menu-drawer .accordion__summary {
+  padding-inline: var(--dialog-content-padding-inline);
+}
+.menu-drawer__footer {
+  padding-inline: var(--dialog-content-padding-inline);
+}
+.menu-drawer--no-links .menu-drawer__nav {
+  display: contents;
+}

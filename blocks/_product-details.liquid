@@ -1,0 +1,132 @@
+<div class="product-information__details">
+  {% capture children %}
+    {% content_for 'blocks' %}
+  {% endcapture %}
+  {% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes, class: ' sticky-element' %}
+</div>
+{% schema %}
+{
+  "name": "t:names.product_details",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "_product-review-stars"
+    },
+    {
+      "type": "_product-information-group"
+    },
+    {
+      "type": "_breadcrumbs"
+    },
+    {
+      "type": "_product-recommendations"
+    },
+    {
+      "type": "_product-frequently-bought-together"
+    },
+    {
+      "type": "_product-title"
+    },
+    {
+      "type": "_product-price"
+    },
+    {
+      "type": "_variant-picker"
+    },
+    {
+      "type": "_product-badges"
+    },
+    {
+      "type": "_product-inventory"
+    },
+    {
+      "type": "_promotion-alert"
+    },
+    {
+      "type": "_pickup-availability"
+    },
+    {
+      "type": "_buy-buttons"
+    },
+    {
+      "type": "_product-description"
+    },
+    {
+      "type": "_product-share"
+    },
+    {
+      "type": "_product-video-testimonials"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.row_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "t:settings.row_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_details",
+      "blocks": {
+        "product_title": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>{{ closest.product.title }}</h1>"
+          }
+        }
+      },
+      "block_order": ["product_title"]
+    }
+  ]
+}
+{% endschema %}

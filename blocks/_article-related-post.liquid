@@ -1,0 +1,336 @@
+{%- liquid
+  assign columns = 3
+  assign heading = block.settings.heading
+  assign inherit_color_scheme = true
+  assign color_scheme = settings.color_schemes | first
+  assign alignment = block.settings.text_alignment
+  assign show_tags = block.settings.show_tags
+  assign show_author = block.settings.show_author
+  assign show_date = block.settings.show_date
+  assign show_button = block.settings.show_button
+  assign show_excerpt = block.settings.show_excerpt
+
+  assign preset = block.settings.related_heading_size
+  assign font_size = block.settings.font_size
+  assign font_size_mobile = block.settings.font_size_mobile
+  assign font_family = block.settings.font
+  assign font_weight = block.settings.font_weight
+  assign line_height = block.settings.line_height
+
+  assign current_id = article.id
+
+  assign related_posts = ''
+  assign counter = 0
+  for article in blog.articles
+    if article.id == current_id
+      continue
+    endif
+    assign related_posts = related_posts | append: article.id | append: ','
+    assign counter = counter | plus: 1
+    if counter >= 3
+      break
+    endif
+  endfor
+
+  capture text_block_classes
+    if preset == 'custom'
+      echo ' custom-typography'
+      if block.settings.font_size != ''
+        echo ' custom-font-size'
+      endif
+    endif
+    unless preset == 'rte'
+      echo ' rte'
+    endunless
+  endcapture
+-%}
+{%- if counter > 0 -%}
+  <div class="related-posts">
+    <div class="section__header text-center">
+      <h2
+        class="related-posts__title {{ preset }}{{ text_block_classes }}"
+        style="
+          {% render 'typography-style',
+            settings: block.settings,
+            preset: preset,
+            font_size: font_size,
+            font_size_mobile: font_size_mobile,
+            font_family: font_family,
+            font_weight: font_weight,
+            line_height: line_height
+          %}
+        "
+      >
+        {%- if heading != blank -%}
+          {{ heading }}
+        {%- else -%}
+          {{ 'blogs.article.related_posts_title' | t }}
+        {%- endif -%}
+      </h2>
+    </div>
+    <div class="related-posts__wrapper swipe-mobile swipe-mobile--1-cols">
+      <div
+        class="related-posts__items layout-panel-grid gap-style swipe__inner"
+        style="--f-columns-md: {{ columns }};{% render 'gap-style', settings: block.settings %}"
+      >
+        {%- assign shown = 0 -%}
+        {%- capture image_sizes -%}(min-width: 768px) calc( min(100vw, {{ settings.page_width }}px) / {{ columns }} ), 66vw{%- endcapture -%}
+        {%- for article in blog.articles -%}
+          {%- if article.id == current_id or shown >= 3 -%}
+            {%- continue -%}
+          {%- endif -%}
+          <div class="f-column">
+            {%- render 'article-card',
+              article: article,
+              block: block,
+              layout: 'column',
+              show_tags: show_tags,
+              show_date: show_date,
+              show_author: show_author,
+              show_excerpt: show_excerpt,
+              show_button: show_button,
+              inherit_color_scheme: inherit_color_scheme,
+              color_scheme: color_scheme,
+              alignment: alignment,
+              toggle_overlay: false,
+              overlay_color: '',
+              image_ratio: settings.blog_card_aspect_ratio,
+              image_ratio_mobile: '',
+              image_sizes: image_sizes
+            -%}
+          </div>
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:content.related_posts",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.related_posts"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "info": "t:info.leave_blank_to_use_default"
+    },
+    {
+      "type": "select",
+      "id": "related_heading_size",
+      "label": "t:settings.heading_size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.related_heading_size == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.related_heading_size == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.related_heading_size == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.related_heading_size == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.related_heading_size == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "t:content.card_settings"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "center", "label": "t:options.center" },
+        { "value": "right", "label": "t:options.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:settings.show_tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "t:settings.show_date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:settings.show_author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "t:settings.show_excerpt",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "t:settings.show_button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_layout"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

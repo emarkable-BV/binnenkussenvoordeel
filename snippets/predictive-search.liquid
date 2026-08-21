@@ -1,0 +1,419 @@
+{%- liquid
+  assign columns_xxl = 3
+  assign columns_mobile = 2
+  assign column_gap = 10
+  assign column_gap_mobile = 8
+  assign form_style = form_style | default: 'solid'
+
+  assign is_empty_recommendations = true
+  if settings.search_recommendation_keywords != blank or settings.search_recommendation_products != blank
+    assign is_empty_recommendations = false
+  endif
+
+  assign placeholder_text = 'content.search_input_placeholder' | t
+  if form_style == 'transparent'
+    assign placeholder_text = 'content.search_input_placeholder_long' | t
+  endif
+
+  assign form_id = 'PredictiveSearch-' | append: section.id
+  assign search_results_id = 'PredictiveSearchResults-' | append: section.id
+-%}
+
+{%- capture media_sizes -%}
+  {%- capture container_width -%}{% if context == 'drawer' %}(min(100vw, 500px) - 32px){% else %}(min(100vw, 554px) - 60px){% endif %}{%- endcapture -%}
+  (min-width: 768px) calc({{ container_width }} / {{ columns_xxl }}), calc(min(500px, 100vw) * 0.38)
+{%- endcapture -%}
+<predictive-search
+  class="search__form search__form--{{ form_style }}{% if settings.search_predictive_enabled %} search__form--predictive{% endif %} dir-rtl flex flex-col w-full"
+  data-empty-recommendations="{{ is_empty_recommendations }}"
+  data-results-limit="{{ settings.search_number_results_to_show }}"
+  data-context="{{ context }}"
+>
+  <div class="search__header flex dir-ltr">
+    <form
+      class="w-full"
+      action="{{ routes.search_url }}"
+      method="get"
+      role="search"
+      id="{{ form_id }}"
+    >
+      <input type="hidden" name="options[prefix]" value="last">
+      <div class="search__field relative flex items-center w-full">
+        <input
+          ref="searchInput"
+          on:focus="/onFocus"
+          id="SearchInput-{{ section.id }}"
+          class="search__input form-control w-full"
+          type="search"
+          name="q"
+          {% if context == 'page' %}
+            value="{{ search.terms | escape }}"
+          {% endif %}
+          placeholder="{{ placeholder_text | escape }}"
+          {% if settings.search_predictive_enabled %}
+            on:input="/onInputDebounced"
+            role="combobox"
+            aria-expanded="false"
+            aria-owns="{{ search_results_id }}"
+            aria-controls="{{ search_results_id }}"
+            aria-haspopup="listbox"
+            aria-autocomplete="list"
+            autocorrect="off"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+          {% endif %}
+        >
+        <label class="visually-hidden" for="SearchInput-{{ section.id }}">
+          {{- 'content.search_input_label' | t -}}
+        </label>
+        <button
+          ref="clearButton"
+          on:click="/clear"
+          type="reset"
+          class="search__reset button-unstyled btn absolute flex items-center justify-center cursor-pointer"
+        >
+          <span>{{ 'actions.search_clear' | t }}</span>
+        </button>
+        {%- if settings.search_predictive_enabled -%}
+          {% render 'loading-spinner', class: 'search__spinner pointer-events-none absolute flex items-center', attributes: 'ref="spinner"' %}
+        {%- endif -%}
+        {%- if settings.search_predictive_enabled and context != 'drawer' -%}
+          <button
+            on:click="/close"
+            type="button"
+            class="search__close button-unstyled absolute z-1 pointer-events-none flex items-center justify-center cursor-pointer"
+            aria-label="{{ 'actions.close' | t }}"
+          >
+            {%- render 'icon', icon: 'close', size: 'large' -%}
+          </button>
+        {%- endif -%}
+        <button
+          on:click="/onSubmit"
+          type="submit"
+          class="search__submit{% if settings.search_predictive_enabled %} search__submit--predictive{% endif %} button-unstyled absolute flex items-center justify-center cursor-pointer"
+          aria-label="{{ 'content.search' | t }}"
+        >
+          {%- render 'icon', icon: 'search', size: 'large' -%}
+        </button>
+      </div>
+    </form>
+    {%- if context == 'drawer' -%}
+      <button
+        class="dialog__close color-current shrink-0"
+        on:click="#search-drawer/closeDialog"
+        aria-label="{{ 'accessibility.close_dialog' | t }}"
+      >
+        {% render 'icon', icon: 'close', size: 'large' %}
+      </button>
+    {%- endif -%}
+  </div>
+  <div
+    ref="searchContent"
+    class="search__content dir-ltr flex flex-col{% unless color_scheme == blank %} color-{{ color_scheme }}{% endunless %}"
+  >
+    <div class="search__content-inner v-scrollable">
+      {%- unless is_empty_recommendations -%}
+        <div class="search__recommendations flex flex-col gap-6">
+          {%- if settings.search_recommendation_keywords != blank -%}
+            {%- liquid
+              assign keywords = settings.search_recommendation_keywords | split: ','
+            -%}
+            <div class="search__recommendation--keywords flex flex-col gap-3">
+              <h4 class="text-capitalize h6">
+                {{ 'content.search_recommendations_keywords' | t }}
+              </h4>
+              <ul class="flex flex-wrap gap-2 list-unstyled search__list--btn">
+                {%- for keyword in keywords -%}
+                  <li class="flex">
+                    <a
+                      class="btn btn--secondary btn--tag"
+                      href="{{ routes.search_url }}?type=product&options%5Bprefix%5D=last&q={{- keyword | strip -}}"
+                    >
+                      <span class="btn__text">{{- keyword | strip }}</span>
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+
+          {%- if settings.search_recommendation_products != blank -%}
+            {%- liquid
+              assign product_count = settings.search_recommendation_products.count
+              assign is_carousel = false
+              if product_count > columns_xxl
+                assign is_carousel = true
+              endif
+            -%}
+            <div class="search__recommendation--products flex flex-col gap-3">
+              <h4 class="text-capitalize h6">
+                {{- 'content.search_recommendations_products' | t -}}
+              </h4>
+              <carousel-slider
+                class="carousel carousel--grid relative w-full"
+                style="--f-columns-xxl: {{ columns_xxl }};{% render 'gap-style', column_gap: column_gap, column_gap_mobile: column_gap_mobile %}"
+              >
+                <script type="application/json" ref="config">
+                  {
+                    "slidesPerView": {{ columns_xxl }},
+                    "spaceBetween": {{ column_gap }},
+                    "loop": false,
+                    "pagination": false,
+                    "counter": false,
+                    "navigationPosition": {
+                      "enabled": true,
+                      "selector": ".product-card__image"
+                    },
+                    "destroyBelow": 768,
+                    "mousewheel": {
+                      "enabled": true,
+                      "forceToAxis": true,
+                      "thresholdTime": 300,
+                      "thresholdDelta": 10
+                    }
+                  }
+                </script>
+                <div ref="container" class="swiper swipe-mobile swipe-mobile--{{ columns_mobile }}-cols">
+                  <div class="swiper-wrapper swipe__inner">
+                    {%- for product in settings.search_recommendation_products -%}
+                      <div class="swiper-slide">
+                        {%- render 'product-card', product: product, show_swatch: false, media_sizes: media_sizes -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+                {%- if is_carousel -%}
+                  {% render 'carousel-controls',
+                    type: 'absolute',
+                    pagination: false,
+                    counter: false,
+                    navigation: true,
+                    navigation_inside: true,
+                    navigation_size: 'small'
+                  %}
+                {%- endif -%}
+              </carousel-slider>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endunless -%}
+      <div class="search__results">
+        <div
+          id="{{ search_results_id }}"
+          role="listbox"
+          class="flex flex-col gap-6 w-full"
+        >
+          {%- if predictive_search.performed -%}
+            {%- if predictive_search.resources.queries.size > 0
+              or predictive_search.resources.products.size > 0
+              or predictive_search.resources.collections.size > 0
+              or predictive_search.resources.articles.size > 0
+              or predictive_search.resources.pages.size > 0
+            -%}
+              {%- if predictive_search.resources.queries.size > 0 -%}
+                <div class="search__result search__result--queries w-full flex flex-col gap-3">
+                  <h4 class="text-capitalize h6">
+                    {{- 'content.search_results_resource_queries' | t -}}
+                  </h4>
+                  <ul
+                    role="group"
+                    class="search__result-list flex flex-wrap gap-2 list-unstyled search__list--btn"
+                  >
+                    {%- for query in predictive_search.resources.queries -%}
+                      <li
+                        class="search__result-list-item flex"
+                        role="option"
+                        aria-selected="false"
+                      >
+                        <a
+                          class="btn btn--secondary btn--tag"
+                          href="{{ query.url }}"
+                        >
+                          <span class="btn__text">{{- query.text }}</span>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+
+              {%- if predictive_search.resources.products.size > 0 -%}
+                {%- liquid
+                  assign is_carousel = false
+                  if predictive_search.resources.products.size > 3
+                    assign is_carousel = true
+                  endif
+                -%}
+                <div class="search__result search__result--products w-full flex flex-col gap-3">
+                  <h4 class="text-capitalize h6">
+                    {{- 'content.search_results_resource_products' | t -}}
+                  </h4>
+                  <carousel-slider
+                    class="carousel carousel--grid relative w-full"
+                    style="--f-columns-xxl: {{ columns_xxl }};{% render 'gap-style', column_gap: column_gap, column_gap_mobile: column_gap_mobile %}"
+                  >
+                    <script type="application/json" ref="config">
+                      {
+                        "slidesPerView": {{ columns_xxl }},
+                        "spaceBetween": {{ column_gap }},
+                        "loop": false,
+                        "pagination": false,
+                        "counter": false,
+                        "navigationPosition": {
+                          "enabled": true,
+                          "selector": ".product-card__image"
+                        },
+                        "destroyBelow": 768,
+                        "mousewheel": {
+                          "enabled": true,
+                          "forceToAxis": true,
+                          "thresholdTime": 300,
+                          "thresholdDelta": 10
+                        }
+                      }
+                    </script>
+                    <div ref="container" class="swiper swipe-mobile swipe-mobile--{{ columns_mobile }}-cols">
+                      <div class="swiper-wrapper swipe__inner">
+                        {%- for product in predictive_search.resources.products -%}
+                          <div class="swiper-slide">
+                            {%- render 'product-card', product: product, show_swatch: false, media_sizes: media_sizes -%}
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                    {%- if is_carousel -%}
+                      {% render 'carousel-controls',
+                        type: 'absolute',
+                        pagination: false,
+                        counter: false,
+                        navigation: true,
+                        navigation_inside: true,
+                        navigation_size: 'small'
+                      %}
+                    {%- endif -%}
+                  </carousel-slider>
+                </div>
+              {%- endif -%}
+
+              {%- if predictive_search.resources.collections.size > 0 -%}
+                <div class="search__result search__result--collections w-full flex flex-col gap-3">
+                  <h4 class="text-capitalize h6">
+                    {{- 'content.search_results_resource_collections' | t -}}
+                  </h4>
+                  <ul
+                    role="group"
+                    class="search__result-list search__result-list--vertical flex flex-col list-unstyled"
+                  >
+                    {%- for collection in predictive_search.resources.collections -%}
+                      <li
+                        class="search__result-list-item flex"
+                        role="option"
+                        aria-selected="false"
+                      >
+                        <a href="{{ collection.url }}" class="reversed-link color-subtext">
+                          {{ collection.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+
+              {%- if predictive_search.resources.articles.size > 0 -%}
+                <div class="search__result search__result--articles w-full flex flex-col gap-3">
+                  <h4 class="text-capitalize h6">
+                    {{- 'content.search_results_resource_articles' | t -}}
+                  </h4>
+                  <ul
+                    role="group"
+                    class="search__result-list search__result-list--vertical flex flex-col list-unstyled"
+                  >
+                    {%- for article in predictive_search.resources.articles -%}
+                      <li
+                        class="search__result-list-item flex"
+                        role="option"
+                        aria-selected="false"
+                      >
+                        <a href="{{ article.url }}" class="reversed-link color-subtext">
+                          {{ article.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+
+              {%- if predictive_search.resources.pages.size > 0 -%}
+                <div class="search__result search__result--pages w-full flex flex-col gap-3">
+                  <h4 class="text-capitalize h6">
+                    {{- 'content.search_results_resource_pages' | t -}}
+                  </h4>
+                  <ul
+                    role="group"
+                    class="search__result-list search__result-list--vertical flex flex-col list-unstyled"
+                  >
+                    {%- for page in predictive_search.resources.pages -%}
+                      <li
+                        class="search__result-list-item flex"
+                        role="option"
+                        aria-selected="false"
+                      >
+                        <a href="{{ page.url }}" class="reversed-link color-subtext">
+                          {{ page.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+
+              <div class="search__result-view-all">
+                {%- assign search_term = predictive_search.terms | split: 'AND' | last | strip | replace: '%20', ' ' -%}
+                <button
+                  type="submit"
+                  class="btn btn--primary"
+                  form="{{ form_id }}"
+                >
+                  <span class="btn__text">{{ 'actions.view_all_search_results' | t }}</span>
+                </button>
+              </div>
+            {%- else -%}
+              <div class="search__no-results search__no-results--empty-state flex flex-col gap-3 w-full">
+                {%- assign search_term = predictive_search.terms | split: 'AND' | last | strip | replace: '%20', ' ' -%}
+                <h4 class="h6">
+                  {{ 'content.search_results_no_results' | t: terms: search_term }}
+                </h4>
+                <p class="color-subtext">
+                  {{ 'content.search_results_no_results_check_spelling' | t }}
+                </p>
+              </div>
+              {%- if settings.search_recommendation_keywords != blank -%}
+                {%- liquid
+                  assign keywords = settings.search_recommendation_keywords | split: ','
+                -%}
+                <div class="search__no-results search__no-results--keywords flex flex-col gap-3 w-full">
+                  <h4 class="text-capitalize h6">
+                    {{ 'content.search_recommendations_keywords' | t }}
+                  </h4>
+                  <ul class="flex flex-wrap gap-2 list-unstyled search__list--btn">
+                    {%- for keyword in keywords -%}
+                      <li class="flex">
+                        <a
+                          class="btn btn--secondary btn--tag"
+                          href="{{ routes.search_url }}?type=product&options%5Bprefix%5D=last&q={{- keyword | strip -}}"
+                        >
+                          <span class="btn__text">{{- keyword | strip }}</span>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</predictive-search>

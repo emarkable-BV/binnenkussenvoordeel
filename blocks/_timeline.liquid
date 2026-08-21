@@ -1,0 +1,141 @@
+{% liquid
+
+%}
+{% capture style %}
+  --badge-color: {{ block.settings.badge_color }};
+  --badge-background-color: {{ block.settings.badge_background_color }};
+  --content-row-gap: {{ block.settings.content_row_gap | divided_by: 10.0 }}rem;
+{% endcapture %}
+<div
+  class="timeline-block timeline flex items-stretch"
+  style="{{ style | strip | strip_newlines }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="timeline-block__progress" aria-label="Progress"></div>
+  <div class="timeline-block__content flex flex-col items-start">
+    {% if block.settings.badge_text != blank %}
+      <span class="timeline-block__badge badge">{{ block.settings.badge_text }}</span>
+    {% endif %}
+    {% content_for 'blocks' %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.timeline",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "text"
+    }
+  ],
+  "settings": [
+    {
+      "type": "range",
+      "id": "content_row_gap",
+      "label": "t:settings.content_row_gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "t:names.badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "t:settings.color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "badge_background_color",
+      "label": "t:settings.background_color",
+      "default": "#00000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.timeline",
+      "settings": {
+        "content_row_gap": 12,
+        "badge_text": "Week 3",
+        "badge_color": "#000000",
+        "badge_background_color": "#d9ede4"
+      },
+      "blocks": {
+        "text_qfzPUp": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Talk about your brand</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
+        "text_bhxdDj": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "subtext",
+            "text_color_gradient": "",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["text_qfzPUp", "text_bhxdDj"]
+    }
+  ]
+}
+{% endschema %}

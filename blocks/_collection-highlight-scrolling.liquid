@@ -1,0 +1,179 @@
+{%- liquid
+  assign block_index = section.blocks | find_index: 'id', block.id
+  assign collection = block.settings.collection
+  assign collection_name = 'placeholders.collection_title' | t
+  assign product_count = 0
+
+  assign collection_placeholder_index = block_index | plus: 1 | modulo: 6
+  if collection_placeholder_index == 0
+    assign collection_placeholder_index = 6
+  endif
+  assign svg_placeholder = 'collection-' | append: collection_placeholder_index
+
+  if collection != blank
+    assign collection_name = collection.title
+    assign product_count = collection.products.size
+  endif
+  if block.settings.title != blank
+    assign collection_name = block.settings.title
+  endif
+
+  assign collection_image = block.settings.image
+  assign collection_image_mobile = block.settings.image_mobile
+  unless collection_image
+    if collection.image
+      assign collection_image = collection.image
+    else
+      assign collection_image = collection.products.first.featured_media.preview_image
+    endif
+  endunless
+  unless collection_image_mobile
+    assign collection_image_mobile = collection_image
+  endunless
+
+  assign title_line_limit = 'none'
+  assign collection_title_highlight_style = section.settings.collection_title_highlight_style
+  unless collection_title_highlight_style == 'underline'
+    assign title_line_limit = '1-line'
+  endunless
+
+  assign title_preset = section.settings.collection_title_preset
+  assign title_font_size = section.settings.collection_title_font_size
+  assign title_highlight_shape_color = section.settings.collection_title_highlight_shape_color
+  capture title_classes
+    echo title_preset
+    if title_preset == 'custom'
+      echo ' custom-typography'
+      if title_font_size != ''
+        echo ' custom-font-size'
+      endif
+    endif
+  endcapture
+-%}
+{%- capture image_sizes -%}(min-width: 768px){% unless section.settings.container == 'full' and section.settings.content_position == 'outside' %} calc( min(100vw, {{ settings.page_width }}px) / 2 ){% else %} 50vw{% endunless %}, 100vw{%- endcapture -%}
+{%- capture images_html -%}
+  <div 
+    ref="images[]"
+    data-index="{{ block_index }}"
+    class="collection-highlight__part collection-highlight-scrolling__image relative border-style media-mask-clip media-hover--scale"
+    style="{% render 'border-style', border_radius: section.settings.collection_image_border_radius %}"
+  >
+    <a
+      class="block"
+      {% if collection.url != blank %}
+        href="{{ collection.url }}"
+      {% else %}
+        role="link"
+        aria-disabled="true"
+      {% endif %}
+    >
+      {% render 'responsive-image',
+        mode: 'liquid',
+        image: collection_image,
+        image_mobile: collection_image_mobile,
+        sizes: image_sizes,
+        img_class: 'w-full',
+        svg_placeholder: svg_placeholder
+      %}
+      <div class="md:hidden absolute inset-0 content-overlay-style color-{{ section.settings.collection_image_overlay_color_scheme }}"
+      style="{% render 'content-overlay-style', position: 'bottom-left', position_mobile: 'bottom-left' %}">
+        <h2 class="collection-highlight-scrolling__image-heading inline-flex items-start {{ title_classes }}">
+          <span class="collection-highlight-scrolling__image-heading-text">{{ collection_name }}</span>
+          {%- if section.settings.show_product_count -%}
+            <sup class="collection-highlight-scrolling__image-heading-product-count paragraph">{{ product_count }}</sup>
+          {%- endif -%}
+        </h2>
+      </div>
+    </a>
+  </div>
+{%- endcapture -%}
+<!-- @collectionHighlight/split -->
+{{ images_html }}
+<!-- @collectionHighlight/split -->
+<div
+  ref="titles[]"
+  data-index="{{ block_index }}"
+  class="relative focus-visible--inset collection-highlight__part collection-highlight-scrolling__title collection-highlight-scrolling__title--{{ collection_title_highlight_style }}{% if collection_title_highlight_style == 'underline' %} reversed-link reversed-link--no-hover{% endif %}"
+  aria-current="{% if block_index == 0 %}true{% else %}false{% endif %}"
+  tabindex="0"
+  {{ block.shopify_attributes }}
+>
+  {%- if collection.url != blank -%}
+    <a
+      href="{{ collection.url }}"
+      aria-label="{{ collection_name | escape }}"
+      class="absolute inset-0 z-1"
+      tabindex="-1"
+    ></a>
+  {%- endif -%}
+  <h2 class="inline-flex items-start collection-highlight-scrolling__title-heading {{ title_classes }}">
+    <div class="block relative">
+      {%- if collection_title_highlight_style == 'underline' -%}
+        <span class="color-transparent reversed-link__text">
+          <span class="{% if title_line_limit != 'none' %} text-limit-{{ title_line_limit }}{% endif %}">
+            {{ collection_name }}
+          </span>
+        </span>
+        <span class="collection-highlight-scrolling__title-text">{{ collection_name }}</span>
+      {%- else -%}
+        {%- capture collection_name_highlight -%}
+          <em><span class="text-limit-{{ title_line_limit }}">{{ collection_name }}</span></em>
+        {%- endcapture -%}
+        {% render 'highlighted-text',
+          text: collection_name_highlight,
+          style: 'wavy-underline',
+          font_style: 'normal',
+          shape_color: title_highlight_shape_color,
+          use_animate: false,
+          wrap_class: 'color-transparent'
+        %}
+        <span class="collection-highlight-scrolling__title-text">
+          <span class="text-limit-{{ title_line_limit }}">{{ collection_name }}</span>
+        </span>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.show_product_count -%}
+      <sup class="collection-highlight-scrolling__title-product-count paragraph">{{ product_count }}</sup>
+    {%- endif -%}
+  </h2>
+</div>
+{% schema %}
+{
+  "name": "t:categories.collection",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:settings.collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "info": "t:info.collection_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile",
+      "info": "t:info.collection_image"
+    },
+    {
+      "type": "header",
+      "content": "t:content.collection_title"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.text",
+      "info": "t:info.collection_title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:categories.collection"
+    }
+  ]
+}
+{% endschema %}

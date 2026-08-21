@@ -1,0 +1,284 @@
+{%- liquid
+  # Logic to determine which variant URL to use (matching swatch selection logic)
+  assign variant_to_link = product.selected_or_first_available_variant
+
+  assign selected_variant = product.selected_or_first_available_variant
+  assign featured_media = selected_variant.featured_media
+  if selected_variant.featured_media == blank
+    assign featured_media = product.featured_media
+  endif
+  assign featured_image = featured_media
+  assign featured_image_alt = featured_media.alt | default: product.title
+  assign first_media_type = featured_media.media_type
+
+  if first_media_type == 'model' or first_media_type == 'video'
+    assign featured_image = featured_media.preview_image
+  endif
+
+  assign show_second_image_on_hover = show_second_image_on_hover | default: settings.show_second_image_on_hover, allow_false: true
+  assign second_image = ''
+  if show_second_image_on_hover and product.images.size > 1 and product.images[1] != blank
+    assign second_image = product.images[1]
+  endif
+
+  if image_ratio == blank
+    assign image_ratio = settings.pcard_aspect_ratio | default: '1'
+  endif
+  if image_ratio == 'auto'
+    if featured_image != blank
+      assign image_ratio = featured_image.aspect_ratio
+    else
+      assign image_ratio = '1'
+    endif
+  endif
+
+  assign media_width_desktop = media_width_desktop | default: 100
+  assign media_width_mobile = media_width_mobile | default: 80
+
+  assign show_badges = show_badges | default: true, allow_false: true
+
+  assign loading = loading | default: 'lazy'
+  assign fetchpriority = fetchpriority | default: 'auto'
+  assign media_sizes = media_sizes | default: ''
+  assign media_widths = media_widths | default: ''
+
+  assign onboarding = false
+  assign product_title = product.title
+  if product.id == empty or product == blank
+    assign onboarding = true
+    assign product_title = 'placeholders.product_title' | t
+  endif
+-%}
+{%- capture media_sizes -%}{%- if media_width_desktop != media_width_mobile -%}(min-width: 768px) {{ media_width_desktop }}px, {%- endif -%}{{ media_width_mobile }}px{%- endcapture -%}
+{%- capture media_widths -%}{%- if media_width_desktop != media_width_mobile -%}{{ media_width_desktop }}, {{ media_width_desktop | times: 2 }}, {%- endif -%}{{ media_width_mobile }}, {{ media_width_mobile | times: 2 }}{%- endcapture -%}
+<product-card
+  class="block w-full product-card product-card--bought-together"
+  data-product-id="{{ product.id }}"
+>
+  <div
+    class="product-card__wrapper flex items-center"
+    data-product-id="{{ product.id }}"
+  >
+    <div
+      class="product-card__media media-hover--scale{% if second_image != blank %} product-card__media--has-second-image{% endif %} relative media-mask-clip shrink-0"
+      data-variant-sync="media"
+      style="--ratio: {{ image_ratio }};"
+    >
+      <a
+        {% unless onboarding %}
+          href="{{ variant_to_link.url }}"
+        {% else %}
+          role="link"
+        {% endunless %}
+        ref="cardGalleryLink"
+        aria-label="{{ product_title | escape }}"
+        tabindex="-1"
+      >
+        {%- if settings.animations_enabled -%}
+          <motion-component data-motion="zoom-out" class="block">
+        {%- endif -%}
+        {%- if featured_image -%}
+          {% comment %}
+            // Backup when need use video media instead of image
+             {%- unless first_media_type == 'video' or first_media_type == 'external_video' -%}
+             {%- else -%}
+               <div class="media">
+                 {% render 'video',
+                   video: featured_media,
+                   video_autoplay: true,
+                   video_loop: true,
+                   section_id: section.id,
+                   disable_controls: true,
+                   enable_toggle_button: false
+                 %}
+               </div>
+             {%- endunless -%}
+          {% endcomment %}
+          {% render 'responsive-image',
+            mode: 'liquid',
+            sizes: media_sizes,
+            widths: media_widths,
+            image: featured_image,
+            default_alt: featured_image_alt,
+            image_ratio: image_ratio,
+            class: 'product-card__image product-card__image--first',
+            img_class: 'w-full'
+          %}
+
+          {%- if second_image != blank -%}
+            {% render 'responsive-image',
+              mode: 'liquid',
+              sizes: media_sizes,
+              widths: media_widths,
+              image: second_image,
+              image_ratio: image_ratio,
+              class: 'product-card__image product-card__image--second',
+              img_class: 'w-full'
+            %}
+          {%- endif -%}
+        {%- else -%}
+          <div class="media media--placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          </div>
+        {%- endif -%}
+        {%- if settings.animations_enabled -%}
+          </motion-component>
+        {%- endif -%}
+      </a>
+      {%- if show_badges and product != blank -%}
+        <product-badge data-product-id="{{ product.id }}" class="product-card__badges">
+          {% render 'product-badges',
+            product: product,
+            use_variant: false,
+            show_soldout_badge: settings.pcard_show_sold_out_badge,
+            sale_badge_type: settings.pcard_sale_badge_type,
+            show_sale_badge: settings.pcard_show_sale_badge,
+            show_custom_badges: settings.pcard_show_custom_badges,
+            badge_layout: settings.pcard_badge_layout
+          %}
+        </product-badge>
+      {%- endif -%}
+    </div>
+    <div class="product-card__content-wrap flex-grow min-w-0 flex items-center gap-2">
+      <div class="flex flex-col gap-1 flex-grow min-w-0">
+        <div
+          class="product-card__content flex flex-col"
+          data-variant-sync="content"
+        >
+          {% render 'product-card-metas', product: product, show_vendor: show_vendor, show_type: show_type %}
+          {%- if product != blank -%}
+            <a
+              class="product-card__title text-wrap reversed-link"
+              href="{% render 'product-card-variant-url', product: product %}"
+              ref="productTitleLink"
+              aria-label="{{ product_title | escape }}"
+            >
+              <span class="reversed-link__text">{{ product_title }}</span>
+            </a>
+          {%- else -%}
+            <p class="product-card__title text-wrap">
+              <span>{{ product_title }}</span>
+            </p>
+          {%- endif -%}
+          <product-price class="product-card__price">
+            {% render 'price', show_unit_price: true, product_resource: product, use_variant: true %}
+          </product-price>
+        </div>
+        {%- unless onboarding -%}
+          {%- liquid
+            assign product_form_id = 'product-form-' | append: section.id | append: block.id | append: product.id
+            assign number_variants = product.variants | size
+            assign hide_select = false
+            if product.has_only_default_variant or number_variants == 1 and variant_to_link.available == false
+              assign hide_select = true
+            endif
+          -%}
+          {%- form 'product', product, id: product_form_id, class: 'product-card__form flex items-center gap-1', data-type: 'add-to-cart-form' -%}
+            <product-bundle-variant-selector
+              class="select select--outline select--small select--sizing-content{% if hide_select %} hidden{% endif %}"
+              data-product-id="{{ product.id }}"
+              data-product-url="{{ product.url }}"
+              data-section-id="{{ section.id }}"
+            >
+              <select
+                ref="variantSelect"
+                on:change="/onVariantChange"
+                name="id"
+                class="form-control"
+                aria-label="{{ "accessibility.choose_options" }}"
+              >
+                {%- for variant in product.variants -%}
+                  {%- capture option_ids -%}
+                    {%- for option in variant.options -%}
+                      {{- option.id -}}{%- unless forloop.last -%},{%- endunless -%}
+                    {%- endfor -%}
+                  {%- endcapture -%}
+                  <option
+                    {% if variant.id == variant_to_link.id or number_variants == 1 %}
+                      selected="selected"
+                    {% endif %}
+                    {% if variant.available == false %}
+                      disabled="disabled"
+                    {% endif %}
+                    value="{{ variant.id }}"
+                    data-price="{{ variant.price }}"
+                    data-compare-at-price="{{ variant.compare_at_price | default: 0 }}"
+                    data-options-id="{{ option_ids }}"
+                  >
+                    {{ variant.title }}
+                    {%- if variant.available == false %}
+                      - {{ 'products.product.sold_out' | t -}}
+                    {%- endif -%}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </product-bundle-variant-selector>
+            <div class="select select--outline select--small shrink-0">
+              {%- liquid
+                assign maximum_options = 25
+                assign increment = variant_to_link.quantity_rule.increment | default: 1
+                assign quantity_min = variant_to_link.quantity_rule.min | default: 1
+
+                if variant_to_link.quantity_rule.max
+                  assign quantity_max = variant_to_link.quantity_rule.max
+                else
+                  assign quantity_max = maximum_options | minus: 1 | times: increment | plus: quantity_min
+                endif
+              -%}
+              <select
+                name="quantity"
+                class="form-control"
+                data-variant-sync="quantity"
+                aria-label="{{ "accessibility.quantity" }}"
+              >
+                {%- for i in (1..maximum_options) -%}
+                  {%- liquid
+                    assign quantity_value = i | minus: 1 | times: increment | plus: quantity_min
+                    if quantity_value > quantity_max
+                      continue
+                    endif
+                    assign effective_unit = variant_to_link.price
+                    if variant_to_link.quantity_price_breaks.size > 0
+                      assign volume_prices_sorted = variant_to_link.quantity_price_breaks | sort: 'quantity'
+                      for price_break in volume_prices_sorted
+                        if quantity_value >= price_break.minimum_quantity
+                          assign effective_unit = price_break.price
+                        endif
+                      endfor
+                    endif
+                    assign line_price_cents = quantity_value | times: effective_unit
+                    assign line_compare_cents = 0
+                    if variant_to_link.compare_at_price > variant_to_link.price
+                      assign line_compare_cents = quantity_value | times: variant_to_link.compare_at_price
+                    endif
+                  -%}
+                  <option
+                    value="{{ quantity_value }}"
+                    data-line-price="{{ line_price_cents }}"
+                    {% if line_compare_cents > 0 %}
+                      data-compare-line-price="{{ line_compare_cents }}"
+                    {% endif %}
+                  >
+                    {{ quantity_value }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+            {% render 'product-card-volume-popover', product: product, section: section, block: block, show_toggle_text: false, variant_sync: true %}
+          {%- endform -%}
+        {%- endunless -%}
+      </div>
+      <div class="product-card__checkbox flex">
+        <input
+          class="form-control product-bought-together__checkbox"
+          type="checkbox"
+          name="products"
+          value="{{ product.id }}"
+          {% if onboarding %}
+            disabled
+          {% endif %}
+        >
+      </div>
+    </div>
+  </div>
+</product-card>

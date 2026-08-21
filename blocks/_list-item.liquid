@@ -1,0 +1,483 @@
+<li
+  class="list-item-block list-item inline-flex gap-3"
+  {{ block.shopify_attributes }}
+>
+  <div class="list-item__icon inline-flex items-center shrink-0">
+    {%- render 'text', block: block, text: '&nbsp;' -%}
+    {%- render 'icon',
+      icon: block.settings.icon,
+      size: block.settings.icon_size,
+      width: block.settings.icon_width,
+      width_mobile: block.settings.icon_width_mobile
+    %}
+  </div>
+  {%- render 'text', block: block -%}
+</li>
+{% schema %}
+{
+  "name": "t:names.list_item",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.icon"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "caret-left",
+          "label": "t:options.caret_left"
+        },
+        {
+          "value": "caret-right",
+          "label": "t:options.caret_right"
+        },
+        {
+          "value": "caret-down",
+          "label": "t:options.caret_down"
+        },
+        {
+          "value": "arrow-up-left",
+          "label": "t:options.arrow_up_left"
+        },
+        {
+          "value": "arrow-up-left-down",
+          "label": "t:options.arrow_up_left_down"
+        },
+        {
+          "value": "close",
+          "label": "t:options.close"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.plus"
+        },
+        {
+          "value": "minus",
+          "label": "t:options.minus"
+        },
+        {
+          "value": "check",
+          "label": "t:options.check"
+        },
+        {
+          "value": "cart",
+          "label": "t:options.cart"
+        },
+        {
+          "value": "basket",
+          "label": "t:options.basket"
+        },
+        {
+          "value": "shopping-bag",
+          "label": "t:options.shopping_bag"
+        },
+        {
+          "value": "heart-beat",
+          "label": "t:options.heart_beat"
+        },
+        {
+          "value": "baby-carriage",
+          "label": "t:options.baby_carriage"
+        },
+        {
+          "value": "account",
+          "label": "t:options.account"
+        },
+        {
+          "value": "search",
+          "label": "t:options.search"
+        },
+        {
+          "value": "tag",
+          "label": "t:options.tag"
+        },
+        {
+          "value": "chat-teardrop",
+          "label": "t:options.chat_teardrop"
+        },
+        {
+          "value": "credit-card",
+          "label": "t:options.credit_card"
+        },
+        {
+          "value": "barcode",
+          "label": "t:options.barcode"
+        },
+        {
+          "value": "storefront",
+          "label": "t:options.storefront"
+        },
+        {
+          "value": "package",
+          "label": "t:options.package"
+        },
+        {
+          "value": "magic-wand",
+          "label": "t:options.magic_wand"
+        },
+        {
+          "value": "funnel",
+          "label": "t:options.funnel"
+        },
+        {
+          "value": "phone",
+          "label": "t:options.phone"
+        },
+        {
+          "value": "map-pin",
+          "label": "t:options.map_pin"
+        },
+        {
+          "value": "clock",
+          "label": "t:options.clock"
+        },
+        {
+          "value": "lightning",
+          "label": "t:options.lightning"
+        },
+        {
+          "value": "heart",
+          "label": "t:options.heart"
+        },
+        {
+          "value": "gift",
+          "label": "t:options.gift"
+        },
+        {
+          "value": "globe",
+          "label": "t:options.globe"
+        },
+        {
+          "value": "car-simple",
+          "label": "t:options.car_simple"
+        },
+        {
+          "value": "truck",
+          "label": "t:options.truck"
+        },
+        {
+          "value": "paper-plane",
+          "label": "t:options.paper_plane"
+        },
+        {
+          "value": "waves",
+          "label": "t:options.waves"
+        },
+        {
+          "value": "calendar-blank",
+          "label": "t:options.calendar_blank"
+        },
+        {
+          "value": "umbrella",
+          "label": "t:options.umbrella"
+        },
+        {
+          "value": "circle-half",
+          "label": "t:options.circle_half"
+        },
+        {
+          "value": "bell-ringing",
+          "label": "t:options.bell_ringing"
+        },
+        {
+          "value": "tiktok",
+          "label": "t:options.tiktok"
+        },
+        {
+          "value": "instagram",
+          "label": "t:options.instagram"
+        },
+        {
+          "value": "pinterest",
+          "label": "t:options.pinterest"
+        },
+        {
+          "value": "x",
+          "label": "t:options.x"
+        },
+        {
+          "value": "facebook",
+          "label": "t:options.facebook"
+        },
+        {
+          "value": "telegram",
+          "label": "t:options.telegram"
+        },
+        {
+          "value": "whatsapp",
+          "label": "t:options.whatsapp"
+        },
+        {
+          "value": "email",
+          "label": "t:options.email"
+        },
+        {
+          "value": "linkedin",
+          "label": "t:options.linkedin"
+        },
+        {
+          "value": "snapchat",
+          "label": "t:options.snapchat"
+        },
+        {
+          "value": "tumblr",
+          "label": "t:options.tumblr"
+        },
+        {
+          "value": "threads",
+          "label": "t:options.threads"
+        }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "t:settings.icon_size",
+      "options": [
+        {
+          "value": "extra-small",
+          "label": "t:options.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "extra-large",
+          "label": "t:options.extra_large"
+        },
+        {
+          "value": "custom-size",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "label": "t:settings.width",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.icon_size == 'custom-size' }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.icon_size == 'custom-size' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "rte",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "text-subheading",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "rte"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        },
+        {
+          "value": "gradient",
+          "label": "t:options.gradient"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "color_background",
+      "id": "text_color_gradient",
+      "label": "t:settings.gradient_color",
+      "visible_if": "{{ block.settings.text_color == 'gradient' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.list_item"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+{% liquid
+  assign product = block.settings.product
+-%}
+
+{% capture children %}
+  {% content_for 'blocks', closest.product: product %}
+{% endcapture %}
+
+{% render 'product-card', children: children, product: product %}
+{% schema %}
+{
+  "name": "t:names.product_card",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "text"
+    }
+  ],
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_card",
+      "category": "t:categories.product",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

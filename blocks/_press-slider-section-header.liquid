@@ -1,0 +1,209 @@
+{%- if block.blocks.size > 0 -%}
+  {%- liquid
+    assign desktop_position = block.settings.desktop_position
+    assign h_alignment = 'center'
+    if desktop_position == 'top'
+      assign h_alignment = 'left'
+    endif
+  -%}
+  <div
+    class="section-header-block section-header-block--{{ desktop_position }} spacing-style"
+    style="{% render 'spacing-style', settings: block.settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <div
+      class="section-header-block__inner layout-panel-flex layout-panel-flex--column"
+      style=" {% render 'layout-panel-style', type: 'flex', content_direction: 'column', h_alignment: h_alignment, v_alignment: 'flex-start' %}"
+    >
+      {%- content_for 'blocks' -%}
+    </div>
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:names.header",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_position",
+      "label": "t:settings.desktop_position",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:options.top"
+        },
+        {
+          "value": "left",
+          "label": "t:options.left"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.desktop_position == 'top' }}"
+    },
+    {
+      "type": "range",
+      "id": "margin-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.desktop_position == 'left' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.header",
+      "settings": {
+        "desktop_position": "left",
+        "device": "desktop",
+        "padding-block-end": 40,
+        "margin-inline-end": 50,
+        "padding-block-end-mobile": 24
+      },
+      "blocks": {
+        "subheading": {
+          "type": "text",
+          "name": "t:names.subheading",
+          "settings": {
+            "text": "<p>Add a tagline</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "text-subheading",
+            "font": "var(--font-body--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "100%",
+            "text_alignment_mobile": "center",
+            "padding-block-start": 0,
+            "padding-block-end": 20,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          }
+        },
+        "heading": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Talk about your brand</p>",
+            "highlight_style": "wavy-underline",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": 68,
+            "font_size_mobile": 38,
+            "line_height": "loose",
+            "text_color": "text",
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "100%",
+            "text_alignment_mobile": "center",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "width": "100%",
+            "text_alignment": "left",
+            "width_mobile": "100%",
+            "text_alignment_mobile": "center",
+            "padding-block-start": 24,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 83,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["subheading", "heading", "text"]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,271 @@
+{%- liquid
+  assign number = block.settings.number | default: 0
+  assign number_prefix = block.settings.number_prefix | strip
+  assign number_suffix = block.settings.number_suffix | strip
+
+  assign number_format = block.settings.number_format | default: 'comma-period'
+  assign format_parts = number_format | split: '-'
+  assign thousands_separator = format_parts | first | replace: 'comma', ',' | replace: 'period', '.' | replace: 'space', ' '
+  assign decimal_separator = format_parts | last | replace: 'comma', ',' | replace: 'period', '.' | replace: 'space', ' '
+
+  assign text_color = block.settings.text_color
+  assign text_color_gradient = block.settings.text_color_gradient | default: '#000000'
+  assign number_preset = block.settings.type_preset
+  capture number_class
+    echo number_preset
+    if number_preset == 'custom'
+      echo ' custom-typography'
+      if block.settings.font_size != blank
+        echo ' custom-font-size'
+      endif
+    endif
+  endcapture
+-%}
+{%- capture inline_style -%}
+  {%- if text_color == 'gradient' -%}
+    --color-gradient: {{ text_color_gradient }};
+  {%- endif -%}
+  {% render 'typography-style', settings: block.settings %}
+{%- endcapture -%}
+<counter-component
+  data-target="{{ number }}"
+  data-thousands-sep="{{ thousands_separator }}"
+  data-decimal-sep="{{ decimal_separator }}"
+  class="counter__number block relative shrink-0 color-{{ text_color }} {{ number_class }}"
+  style="{{ inline_style | strip | strip_newlines }}"
+  {{ block.shopify_attributes }}
+>
+  <bdi class="counter__number-display absolute text-center">
+    {%- if number_prefix != blank -%}
+      <span class="counter__number-prefix">{{ number_prefix }}</span>
+    {%- endif -%}
+    <span ref="numberDisplay">0</span>
+    {%- if number_suffix != blank -%}
+      <span class="counter__number-suffix">{{ number_suffix }}</span>
+    {%- endif -%}
+  </bdi>
+  <bdi class="counter__number-placeholder opacity-0">
+    {%- if number_prefix != blank -%}
+      <span class="counter__number-prefix">{{ number_prefix }}</span>
+    {%- endif -%}
+    <span ref="numberPlaceholder">{{ number }}</span>
+    {%- if number_suffix != blank -%}
+      <span class="counter__number-suffix">{{ number_suffix }}</span>
+    {%- endif -%}
+  </bdi>
+</counter-component>
+{% schema %}
+{
+  "name": "t:names.number",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "number",
+      "id": "number",
+      "label": "t:settings.number",
+      "default": 75
+    },
+    {
+      "type": "text",
+      "id": "number_prefix",
+      "label": "t:settings.prefix"
+    },
+    {
+      "type": "text",
+      "id": "number_suffix",
+      "label": "t:settings.suffix"
+    },
+    {
+      "type": "select",
+      "id": "number_format",
+      "label": "t:settings.format",
+      "options": [
+        {
+          "value": "comma-period",
+          "label": "t:options.comma_period"
+        },
+        {
+          "value": "space-period",
+          "label": "t:options.space_period"
+        },
+        {
+          "value": "period-comma",
+          "label": "t:options.period_comma"
+        }
+      ],
+      "default": "comma-period"
+    },
+    {
+      "type": "header",
+      "content": "t:content.typography"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-heading--family)",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "default": "",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 53,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 38,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        },
+        {
+          "value": "gradient",
+          "label": "t:options.gradient"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "color_background",
+      "id": "text_color_gradient",
+      "label": "t:settings.gradient_color",
+      "visible_if": "{{ block.settings.text_color == 'gradient' }}"
+    }
+  ]
+}
+{% endschema %}

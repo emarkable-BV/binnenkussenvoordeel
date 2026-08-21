@@ -1,0 +1,214 @@
+{% liquid
+  assign image_width = block.settings.image_width
+  assign image_width_mobile = block.settings.image_width_mobile
+%}
+{%- capture style -%}
+  {% render 'layout-panel-style',
+    type: 'flex',
+    content_direction: 'column',
+    h_alignment: block.settings.horizontal_alignment,
+    h_alignment_mobile: block.settings.horizontal_alignment_mobile
+  %}
+  {% render 'size-style', settings: block.settings %}
+  --image-width: {{ image_width }}px; --image-mobile-width: {{ image_width_mobile }}px;
+{%- endcapture -%}
+{%- capture image_sizes -%}(min-width: 768px) {{ image_width }}px, {{ image_width_mobile }}px{%- endcapture -%}
+{%- capture image_widths -%}{{ image_width_mobile | times: 2 }}, {{ image_width | times: 2 }}{%- endcapture -%}
+<div
+  class="press layout-panel-flex layout-panel-flex--column mobile-column size-style"
+  style="{{ style | strip | strip_newlines }}"
+  {{ block.shopify_attributes }}
+>
+  <!-- blockInner@split -->
+  <div class="press__image">
+    {% render 'responsive-image', mode: 'liquid', image: block.settings.image, default_alt: shop.name, sizes: image_sizes, widths: image_widths %}
+  </div>
+  <!-- blockInner@split -->
+  {% content_for 'block', type: '_simple-text', id: 'static-text', classes: 'press__text' %}
+  {% content_for 'block', type: '_author-info', id: 'static-info', classes: 'press__info flex flex-col gap-y-1' %}
+</div>
+<!-- block@split -->
+{% schema %}
+{
+  "name": "t:names.press",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "t:settings.width",
+      "min": 50,
+      "max": 250,
+      "step": 2,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "label": "t:settings.width_mobile",
+      "min": 50,
+      "max": 250,
+      "step": 2,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment_mobile",
+      "label": "t:settings.alignment_mobile",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "t:names.press",
+      "category": "t:categories.basic",
+      "settings": {
+        "image_width": 148,
+        "image_width_mobile": 198,
+        "horizontal_alignment": "center",
+        "horizontal_alignment_mobile": "center"
+      },
+      "blocks": {
+        "static-text": {
+          "type": "_simple-text",
+          "static": true,
+          "settings": {
+            "text": "<p>You can add detailed text content from various press comments, comprehensive reviews, or extensive customer testimonials here.</p>",
+            "type_preset": "h1",
+            "padding-block-end": 24,
+            "mobile-padding-scale": 100
+          }
+        },
+        "static-info": {
+          "type": "_author-info",
+          "static": true,
+          "settings": {
+            "name": "<p>Author's name</p>",
+            "name_preset": "h5",
+            "icon": "none",
+            "bio": "Customer",
+            "padding-block-start": 12,
+            "mobile-padding-scale": 100
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

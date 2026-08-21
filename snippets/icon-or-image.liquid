@@ -1,0 +1,36 @@
+{%- doc -%}
+  Renders either an SVG icon or an uploaded image based on block settings.
+
+  @param {string} icon - The icon name from block.settings.icon
+  @param {object} [image_upload] - The uploaded image from block.settings.image_upload
+  @param {string} [class_name] - CSS class name for the rendered element
+  @param {number} [width] - The width of the icon from block.settings.width
+  @param {number} [width_mobile] - The width of the icon from block.settings.width_mobile
+  @param {object} [attributes] - Additional HTML attributes to add to the element
+  @param {string} [icon_size] - The size of the icon from block.settings.icon_size
+{%- enddoc -%}
+{% capture attributes %}
+  {{ attributes }}
+  {% if icon_size == 'custom-size' %}
+    style="--icon-custom-size: {{ width | divided_by: 10.0 }}rem; --icon-custom-size-mobile: {{ width_mobile | divided_by: 10.0 }}rem;"
+  {% endif %}
+{% endcapture %}
+{%- if icon != 'none' and image_upload == blank -%}
+  {%- render 'icon', icon: icon, attributes: attributes, size: icon_size -%}
+{%- elsif image_upload != blank -%}
+  {%- liquid
+    assign media_width_desktop = 100
+    assign media_width_mobile = 100
+    if icon_size == 'custom-size'
+      assign media_width_desktop = width
+      assign media_width_mobile = width_mobile
+    endif
+  -%}
+  {%- capture image_widths -%}
+    100, 200, 300, 400, {{ image_upload.width }}
+  {%- endcapture -%}
+  {%- capture image_sizes -%}(min-width: 768px) {{ media_width_desktop }}px, {{ media_width_mobile }}px{%- endcapture -%}
+  <div class="icon icon--{{ icon_size }} icon--image" {{ attributes }}>
+    {{ image_upload | image_url: width: image_upload.width | image_tag: sizes: image_sizes, widths: image_widths, class: class_name }}
+  </div>
+{%- endif -%}

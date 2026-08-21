@@ -1,0 +1,421 @@
+@charset "UTF-8";
+/**
+ * Testimonial Slider CSS Module
+ * A flexible, accessible slider component styles for testimonials, galleries, or any content
+ * 
+ * Usage:
+ * 1. Include this CSS file in theme.liquid
+ * 2. Use the HTML structure: <testimonial-slider> → .slider-wrapper → .slider-container → .slides-track
+ * 3. Initialize automatically via testimonial-slider-element.js
+ * 
+ * Customizable CSS Variables:
+ * --avatar-size: Size of avatar elements (default: 80px)
+ * --item-gap: Gap between items (default: 15px)
+ * --slide-width: Width of active slide content (default: 600px)
+ * --slide-duration: Duration of slide transitions (default: 400ms)
+ * --slide-easing: Easing function for slide transitions (default: cubic-bezier(0.16, 1, 0.3, 1))
+ * --content-duration: Duration of content transitions (default: 300ms)
+ * --content-easing: Easing function for content transitions (default: cubic-bezier(0.4, 0, 0.2, 1))
+ * --height-duration: Duration of height transitions (default: 400ms)
+ * --height-easing: Easing function for height transitions (default: cubic-bezier(0.4, 0, 0.2, 1))
+ * --stagger-delay: Delay between staggered animations (default: 50ms)
+ * --progress-height: Height of progress bar (default: 4px)
+ * --progress-bg: Background color of progress bar (default: #e5e5e5)
+ * --progress-color: Color of progress bar (default: #000)
+ * --progress-radius: Border radius of progress bar (default: 2px)
+ * --progress-max-width: Maximum width of progress bar (default: 200px)
+ * --progress-transition: Transition for progress bar (default: width 0.3s ease)
+ */
+/* ===== SLIDER WRAPPER ===== */
+testimonial-slider {
+  --avatar-size: 100px;
+  --item-gap: 8px;
+  --content-gap: 2.4rem;
+  --thumbnail-mobile-size: 100px;
+  contain: layout;
+  --slide-duration: 600ms;
+  --slide-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --content-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --height-duration: 400ms;
+  --height-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --progress-height: var(--slider-progressbar-height, 0.2rem);
+  --progress-bg: rgb(var(--color-foreground) / 10%);
+  --progress-color: rgb(var(--color-foreground));
+  --progress-radius: 0;
+  --progress-width: var(--slider-progressbar-width, 14rem);
+  --progress-max-width: 200px;
+  --progress-transition: width var(--slide-duration) var(--slide-easing);
+  --slide-active-gap-offset: 5rem;
+  margin: 0 auto;
+  min-height: 0;
+  overflow-x: clip;
+}
+@media screen and (min-width: 640px) {
+  testimonial-slider {
+    --avatar-size: 120px;
+    --item-gap: 10px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  testimonial-slider {
+    --avatar-size: 140px;
+    --item-gap: 10px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  testimonial-slider {
+    --avatar-size: 170px;
+    --item-gap: 10px;
+  }
+}
+
+/* ===== MAIN SLIDER ===== */
+.testimonial-slider__container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: grab;
+  min-height: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ===== THUMBNAILS (MOBILE) ===== */
+.testimonial-slider__thumbnails {
+  display: none;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin-bottom: 2.4rem;
+  padding-inline: var(--page-padding);
+  margin-inline: calc(var(--page-padding) * -1);
+  scroll-padding-inline: var(--page-padding);
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+.testimonial-slider__thumbnails::-webkit-scrollbar {
+  display: none;
+}
+.testimonial-slider__thumbnails .testimonial-slider__slide-avatar {
+  opacity: 1;
+  visibility: visible;
+}
+
+.testimonial-slider__thumbnail {
+  flex-shrink: 0;
+  width: var(--avatar-size);
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+.testimonial-slider__thumbnail--active {
+  opacity: 1;
+}
+.testimonial-slider__thumbnail img {
+  width: var(--thumbnail-mobile-size);
+  height: var(--thumbnail-mobile-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Container state: dragging */
+.testimonial-slider__container--dragging {
+  cursor: grabbing;
+}
+.testimonial-slider__container--dragging * {
+  cursor: grabbing !important;
+  pointer-events: none;
+}
+
+/* Container state: single slide (no interaction) */
+.testimonial-slider__container--single {
+  cursor: default !important;
+}
+.testimonial-slider__container--single * {
+  cursor: default !important;
+}
+
+/* ===== SLIDES TRACK ===== */
+.testimonial-slider__track {
+  display: flex;
+  gap: var(--item-gap);
+  position: relative;
+  align-items: flex-start;
+  user-select: none;
+  min-height: 0;
+  will-change: transform, height;
+  transform: translateZ(0);
+}
+.testimonial-slider__track:not([style*=height]) {
+  height: auto;
+}
+
+/* ===== SLIDE (BASE) ===== */
+.testimonial-slider__slide {
+  flex-shrink: 0;
+  display: flex;
+  width: 100%;
+  max-width: calc(100% - var(--avatar-size) * var(--slides-visible-count, 2) - var(--item-gap) * var(--slides-visible-count, 2));
+  padding: 0;
+  padding-inline-end: var(--slide-active-gap-offset);
+  border-radius: 12px;
+  background: inherit;
+  cursor: default;
+  transform: translateZ(0);
+}
+.testimonial-slider__slide:active {
+  cursor: grabbing;
+}
+
+/* Inactive slides: hide content, collapse width */
+.testimonial-slider__slide--inactive {
+  margin-inline-end: calc(var(--slide-active-content-width, 0px) * -1 - var(--content-gap) - var(--slide-active-gap-offset));
+}
+.testimonial-slider__slide--inactive .testimonial-slider__slide-content {
+  opacity: 0;
+  visibility: hidden;
+  clip-path: inset(0 100% 0 0);
+}
+
+/* ===== SLIDE CONTENT (BASE) ===== */
+.testimonial-slider__slide-content {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path, opacity;
+  transform: translateZ(0);
+}
+
+/* ===== SLIDE INNER CONTENT ===== */
+.testimonial-slider__slide-inner {
+  flex: 1;
+  white-space: normal;
+}
+
+/* ===== SLIDE AVATAR (BASE) ===== */
+.testimonial-slider__slide-avatar {
+  width: var(--avatar-size);
+  flex-shrink: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+  overflow: hidden;
+}
+.testimonial-slider__slide-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Avatar placeholder modifier */
+.testimonial-slider__slide-avatar--placeholder {
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+}
+.testimonial-slider__slide-avatar--placeholder .placeholder-text {
+  font-size: calc(var(--avatar-size) * 0.4);
+  font-weight: bold;
+  color: #999;
+  user-select: none;
+}
+
+/* ===== SLIDE STATES ===== */
+.testimonial-slider__slide--active .testimonial-slider__slide-content {
+  opacity: 1;
+  visibility: visible;
+  clip-path: inset(0 0 0 0);
+}
+.testimonial-slider__slide--active .testimonial-slider__slide-avatar {
+  opacity: 1;
+  visibility: visible;
+}
+
+.testimonial-slider__slide--next .testimonial-slider__slide-avatar {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===== CONTROLS ===== */
+.testimonial-slider__controls-wrapper {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  pointer-events: none;
+  width: calc(100% - var(--avatar-size) * var(--slides-visible-count, 2) - var(--item-gap) * var(--slides-visible-count, 2) - var(--slide-active-gap-offset));
+}
+
+.testimonial-slider__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--slider-controls-gap, 1.2rem);
+  pointer-events: all;
+}
+
+.testimonial-slider__nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--slider-controls-buttons-gap, 0.8rem);
+}
+
+.testimonial-slider__button {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+}
+.testimonial-slider__button::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--carousel-controls-buttons-gap, 0.8rem) / 2 * -1);
+}
+.testimonial-slider__button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ===== PAGINATION (PROGRESS BAR) ===== */
+.testimonial-slider__pagination {
+  flex: 1;
+  width: var(--progress-width);
+  height: var(--progress-height);
+  background: var(--progress-bg);
+  border-radius: var(--progress-radius);
+  overflow: hidden;
+  position: relative;
+}
+
+.testimonial-slider__progress {
+  height: 100%;
+  background: var(--progress-color);
+  width: var(--progress-width, 0%);
+  transition: var(--progress-transition);
+  will-change: width;
+  transform-origin: var(--transform-origin-start) top;
+  transform: translateZ(0);
+}
+
+/* ===== COUNTER ===== */
+.testimonial-slider__counter {
+  white-space: nowrap;
+}
+
+/* ===== ACCESSIBILITY ===== */
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 1023.98px) and (min-width: 768px) {
+  .testimonial-slider__controls-wrapper {
+    padding-inline-start: calc(var(--avatar-size) + var(--content-gap));
+  }
+}
+@media (max-width: 1023.98px) {
+  .testimonial-slider__controls-wrapper {
+    width: 100%;
+    position: static;
+    justify-content: flex-start;
+    margin-block-start: 2.4rem;
+  }
+}
+@media (max-width: 767.98px) {
+  testimonial-slider {
+    --progress-width: 100%;
+    overflow: visible;
+  }
+  .testimonial-slider__thumbnails {
+    display: flex;
+  }
+  .testimonial-slider__container {
+    margin-top: 0;
+  }
+  .testimonial-slider__track {
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .testimonial-slider__slide {
+    --slide-active-gap-offset: 0;
+    width: 100%;
+    min-width: 100%;
+    flex-shrink: 0;
+    margin: 0;
+  }
+  .testimonial-slider__slide--active {
+    width: 100%;
+  }
+  .testimonial-slider__slide .testimonial-slider__slide-avatar {
+    display: none;
+  }
+  .testimonial-slider__slide-content {
+    width: 100%;
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+  .testimonial-slider__slide-inner {
+    width: 100%;
+    padding-left: 0;
+  }
+  .testimonial-slider__controls-wrapper {
+    margin-block-start: 1.6rem;
+  }
+  .testimonial-slider__controls {
+    width: 100%;
+  }
+}
+/* stylelint-disable-next-line media-feature-range-notation */
+@media (min-width: 1536px) {
+  testimonial-slider {
+    --slides-visible-count: 3;
+  }
+}
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-slider__track,
+  .testimonial-slider__slide,
+  .testimonial-slider__slide-content,
+  .testimonial-slider__progress,
+  .testimonial-slider__thumbnail {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* ===== DESKTOP HIDDEN ELEMENTS ===== */
+@media (min-width: 768px) {
+  .testimonial-slider__thumbnails {
+    display: none;
+  }
+}
+testimonial-slider {
+  position: relative;
+}
+testimonial-slider::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  height: var(--avatar-size);
+  inset-inline-end: calc(var(--page-padding) * -1);
+  transform: scaleX(-1);
+  width: calc(var(--page-padding) + var(--avatar-size));
+  background: linear-gradient(to right, rgb(var(--color-background)/100%) var(--page-padding), rgb(var(--color-background)/0%));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+testimonial-slider.is-at-end::after {
+  opacity: 0;
+}

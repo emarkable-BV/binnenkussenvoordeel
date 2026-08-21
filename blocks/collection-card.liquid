@@ -1,0 +1,171 @@
+{%- liquid
+  assign collection = block.settings.collection
+-%}
+<div
+  class="collection-card-block w-full"
+  {{ block.shopify_attributes }}
+>
+  {% render 'collection-card',
+    collection: collection,
+    section: section,
+    layout: block.settings.layout,
+    text_alignment: block.settings.text_alignment,
+    image: block.settings.image,
+    image_ratio: block.settings.image_ratio,
+    image_preload: block.settings.enable_preload_image,
+    show_product_count: block.settings.show_product_count,
+    show_description: block.settings.show_description,
+    description: block.settings.description,
+    title: block.settings.title,
+    title_preset: block.settings.title_preset
+  %}
+</div>
+{% schema %}
+{
+  "name": "t:names.collection_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:names.collection"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:settings.layout",
+      "options": [
+        {
+          "value": "standard",
+          "label": "t:options.standard"
+        },
+        {
+          "value": "circle-thumbnail",
+          "label": "t:options.circle_thumbnail"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ block.settings.layout != 'circle-thumbnail' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "info": "t:info.collection_image"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "inherit", "label": "t:options.use_global_settings" },
+        { "value": "adapt", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" }
+      ],
+      "default": "inherit",
+      "visible_if": "{{ block.settings.layout != 'circle-thumbnail' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.title",
+      "info": "t:info.collection_title"
+    },
+    {
+      "type": "select",
+      "id": "title_preset",
+      "label": "t:settings.title_preset",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h6"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "t:settings.show_product_count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "t:settings.show_description",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:settings.description",
+      "info": "t:info.collection_description",
+      "visible_if": "{{ block.settings.show_description == true }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.advanced"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_preload_image",
+      "label": "t:settings.enable_preload_image",
+      "info": "t:info.enable_preload_image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.collection_card",
+      "category": "t:categories.collection"
+    }
+  ]
+}
+{% endschema %}

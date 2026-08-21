@@ -1,0 +1,124 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign menu_mobile = section.settings.menu_mobile
+  assign logo_drawer = settings.logo_menu_drawer | default: settings.logo_mobile | default: settings.logo
+
+  if menu_mobile == blank
+    assign menu_mobile = menu
+  endif
+-%}
+<dialog-component id="menu-drawer" class="menu-drawer pointer-events-auto">
+  <dialog
+    id="menu-drawer-dialog"
+    ref="dialog"
+    class="dialog dialog--drawer dialog--drawer-left{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}"
+    scroll-lock
+  >
+    <div class="dialog__header menu-drawer__header relative z-1 shrink-0 flex">
+      <div class="menu-drawer__logo flex-grow flex flex-col justify-center">
+        <a
+          href="{{ routes.root_url }}"
+          class="h3 relative flex{% if logo_drawer == blank %} menu-drawer__logo--text{% else %} menu-drawer__logo--image{% endif %}"
+        >
+          {%- if logo_drawer != blank -%}
+            {%- liquid
+              assign logo_width_drawer = settings.logo_width_menu_drawer
+              assign logo_width_drawer_2x = logo_width_drawer | times: 2
+            -%}
+            <img
+              srcset="{{ logo_drawer | image_url: width: logo_width_drawer }} 1x, {{ logo_drawer | image_url: width: logo_width_drawer_2x }} 2x"
+              src="{{ logo_drawer | image_url: width: logo_width_drawer }}"
+              loading="eager"
+              width="{{ logo_drawer.width }}"
+              height="{{ logo_drawer.height }}"
+              alt="{{ logo_drawer.alt | default: shop.name | escape }}"
+              class="logo"
+            >
+          {%- else -%}
+            {{ shop.name }}
+          {%- endif -%}
+        </a>
+      </div>
+      <button
+        class="dialog__close color-current shrink-0 focus-visible--inset"
+        on:click="#menu-drawer/closeDialog"
+        aria-label="{{ 'accessibility.close_dialog' | t }}"
+      >
+        {% render 'icon', icon: 'close', size: 'large' %}
+      </button>
+    </div>
+    <div class="dialog__content flex-grow flex flex-col gap-6 overflow-x-clip relative">
+      <div
+        class="menu-drawer__menus v-scrollable flex flex-col w-full h-full"
+        data-parent
+      >
+        <ul class="menu-drawer__menu list-unstyled flex-grow">
+          {%- for link in menu_mobile.links -%}
+            <li class="menu-drawer__item">
+              {%- liquid
+                assign mega_menu_block = blank
+                assign link_title_handle = link.title | handle
+                for block in blocks
+                  assign menu_title_handle = block.settings.menu_title | handle
+                  if menu_title_handle == link_title_handle
+                    assign mega_menu_block = block
+                    break
+                  endif
+                endfor
+              -%}
+              {%- if link.links != blank or mega_menu_block != blank -%}
+                {%- render 'menu-drawer-details', link: link, block: mega_menu_block -%}
+              {%- else -%}
+                <a
+                  href="{{ link.url }}"
+                  class="menu-drawer__item-link menu-drawer__item-link-heading h3 flex items-center justify-between focus-visible--inset"
+                >
+                  {{- link.title | escape -}}
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div class="menu-drawer__footer flex justify-center flex-col gap-y-6">
+        <div class="flex flex-col gap-3 items-center">
+          {%- if shop.customer_accounts_enabled -%}
+            <shopify-account menu="{{ section.settings.customer_account_menu }}" class="block w-full">
+              {%- if customer -%}
+                <div class="account-button__fallback" aria-label="{{ 'accessibility.account' | t }}"></div>
+              {%- else -%}
+                <div
+                  slot="signed-out-avatar"
+                  aria-hidden="true"
+                  aria-label="{{ 'accessibility.log_in' | t }}"
+                  class="account-button btn btn--primary w-full"
+                >
+                  <span class="btn__text">
+                    {%- liquid
+                      if customer
+                        echo 'content.account_title' | t
+                      else
+                        echo 'actions.account_action' | t
+                      endif
+                    -%}
+                  </span>
+                </div>
+              {%- endif -%}
+            </shopify-account>
+          {%- endif -%}
+          {%- if section.settings.enable_language_selector or section.settings.enable_country_selector -%}
+            {%- render 'dropdown-localization',
+              block_id: section.id,
+              show_country: section.settings.enable_country_selector,
+              show_country_flag: true,
+              show_language: section.settings.enable_language_selector
+            -%}
+          {%- endif -%}
+          {%- if section.settings.enable_social_media_icons -%}
+            {%- render 'social-icons' -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </dialog>
+</dialog-component>

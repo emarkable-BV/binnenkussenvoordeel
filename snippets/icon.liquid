@@ -1,0 +1,19 @@
+{% liquid
+  if size == 'custom-size'
+    assign class = class | append: ' icon--custom-size'
+  endif
+%}
+{%- if icon != 'none' -%}
+  {%- assign file = icon | replace: '_', '-' | prepend: 'icon-' | append: '.svg' -%}
+  <span
+    class="icon icon--{{ icon }}{% if size and size != 'custom-size' %} icon--{{ size }}{% endif %}{% if class %} {{ class }}{% endif %}"
+    {% if style %}
+      style="{{ style }}"
+    {% endif %}
+    {% if attributes %}
+      {{ attributes }}
+    {% endif %}
+  >
+    {{- file | inline_asset_content -}}
+  </span>
+{%- endif -%}

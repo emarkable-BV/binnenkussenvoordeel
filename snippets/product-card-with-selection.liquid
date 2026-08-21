@@ -1,0 +1,284 @@
+{% liquid
+  # Logic to determine which variant URL to use (matching swatch selection logic)
+  assign variant_to_link = product.selected_or_first_available_variant
+
+  assign combined_listing_count = product.options_with_values | map: 'values' | map: 'product_url' | compact | size
+  assign no_swatch_selected = null
+
+  unless combined_listing_count > 0
+    # Simple direct check: which variant owns the featured image?
+    if product.featured_media
+      assign found_variant = false
+
+      for variant in product.variants
+        if variant.featured_media.id == product.featured_media.id
+          assign variant_to_link = variant
+          assign found_variant = true
+          break
+        endif
+      endfor
+
+      # Check if we need to set no_swatch_selected
+      unless found_variant
+        # Featured image is not a variant image
+        # Check if product has swatches
+        for option in product.options_with_values
+          assign swatch_count = option.values | map: 'swatch' | compact | size
+          if swatch_count > 1
+            # Multiple swatches exist but featured image doesn't match any
+            assign no_swatch_selected = true
+            break
+          endif
+        endfor
+      endunless
+    endif
+  endunless
+
+  assign selected_variant = product.selected_or_first_available_variant
+  assign featured_media = selected_variant.featured_media
+  if selected_variant.featured_media == blank
+    assign featured_media = product.featured_media
+  endif
+
+  assign featured_image = featured_media
+  assign first_media_type = featured_media.media_type
+
+  if first_media_type == 'model' or first_media_type == 'video'
+    assign featured_image = featured_media.preview_image
+  endif
+
+  assign show_second_image_on_hover = show_second_image_on_hover | default: settings.show_second_image_on_hover, allow_false: true
+  assign second_image = ''
+  if show_second_image_on_hover and product.images.size > 1 and product.images[1] != blank
+    assign second_image = product.images[1]
+  endif
+
+  if image_ratio == blank
+    assign image_ratio = settings.pcard_aspect_ratio | default: '1'
+  endif
+  if image_ratio == 'auto'
+    if featured_image != blank
+      assign image_ratio = featured_image.aspect_ratio
+    else
+      assign image_ratio = '1'
+    endif
+  endif
+
+  assign pcard_style = settings.pcard_style
+  assign pcard_color_scheme = settings.pcard_color_scheme
+  assign show_badges = show_badges | default: true, allow_false: true
+
+  assign loading = loading | default: 'lazy'
+  assign fetchpriority = fetchpriority | default: 'auto'
+  assign media_sizes = media_sizes | default: ''
+  assign media_widths = media_widths | default: ''
+
+  assign onboarding = false
+  if product.id == empty or product == blank
+    assign onboarding = true
+  endif
+
+  assign title_line_limit = title_line_limit | default: '1-line'
+%}
+<product-card
+  class="block product-card product-card--standard product-card--style-{{ pcard_style }}{% if pcard_style == 'card' %} color-{{ pcard_color_scheme }} overflow-hidden{% endif %}"
+  {% if no_swatch_selected %}
+    data-no-swatch-selected="true"
+  {% endif %}
+>
+  <div
+    class="product-card__wrapper flex flex-col"
+    data-product-id="{{ product.id }}"
+  >
+    <div
+      class="product-card__media media-hover--scale{% if second_image != blank %} product-card__media--has-second-image{% endif %} relative media-mask-clip w-full"
+      style="--ratio: {{ image_ratio }};"
+      data-variant-sync="media"
+    >
+      <a
+        {% unless onboarding %}
+          href="{{ variant_to_link.url }}"
+        {% else %}
+          role="link"
+        {% endunless %}
+        ref="cardGalleryLink"
+        aria-label="{{ product.title | escape }}"
+        tabindex="-1"
+      >
+        {%- if featured_image != blank -%}
+          {% comment %}
+             // Backup when need use video media instead of image
+            {%- unless first_media_type == 'video' or first_media_type == 'external_video' -%}
+            {%- else -%}
+              <div class="media">
+                {% render 'video',
+                  video: featured_media,
+                  video_autoplay: true,
+                  video_loop: true,
+                  section_id: section.id,
+                  disable_controls: true,
+                  enable_toggle_button: false
+                %}
+              </div>
+            {%- endunless -%}
+          {% endcomment %}
+
+          {% render 'responsive-image',
+            mode: 'liquid',
+            sizes: media_sizes,
+            widths: media_widths,
+            image: featured_image,
+            image_ratio: image_ratio,
+            class: 'product-card__image product-card__image--first',
+            img_class: 'w-full'
+          %}
+
+          {%- if second_image != blank -%}
+            {% render 'responsive-image',
+              mode: 'liquid',
+              sizes: media_sizes,
+              widths: media_widths,
+              image: second_image,
+              image_ratio: image_ratio,
+              class: 'product-card__image product-card__image--second',
+              img_class: 'w-full'
+            %}
+          {%- endif -%}
+        {%- else -%}
+          <div class="media media--placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          </div>
+        {%- endif -%}
+      </a>
+      {%- if show_badges and product != blank -%}
+        <product-badge
+          data-product-id="{{ product.id }}"
+          class="product-card__badges"
+        >
+          {% render 'product-badges',
+            product: product,
+            show_soldout_badge: settings.pcard_show_sold_out_badge,
+            sale_badge_type: settings.pcard_sale_badge_type,
+            show_sale_badge: settings.pcard_show_sale_badge,
+            show_custom_badges: settings.pcard_show_custom_badges,
+            badge_layout: settings.pcard_badge_layout
+          %}
+        </product-badge>
+      {%- endif -%}
+    </div>
+    <div
+      class="product-card__content-wrap w-full flex flex-col gap-2 text-left md:text-{{ settings.pcard_content_alignment | replace: 'flex-start', "left" | replace: 'flex-end', 'right' }}"
+      style="--content-alignment: {{ settings.pcard_content_alignment }};"
+    >
+      <div
+        class="product-card__content flex flex-col"
+        data-variant-sync="content"
+      >
+        {% render 'product-card-metas', product: product, show_vendor: show_vendor, show_type: show_type %}
+        {%- if product != blank -%}
+          <a
+            class="product-card__title reversed-link text-limit-{{ title_line_limit }}"
+            href="{% render 'product-card-variant-url', product: product %}"
+            ref="productTitleLink"
+            aria-label="{{ product.title | escape }}"
+            tabindex="-1"
+          >
+            <span class="reversed-link__text">{{ product.title }}</span>
+          </a>
+        {%- else -%}
+          <p class="product-card__title text-limit-{{ title_line_limit }}">
+            <span>{{ 'placeholders.product_title' | t }}</span>
+          </p>
+        {%- endif -%}
+        <product-price class="product-card__price">
+          {% render 'price', show_unit_price: true, product_resource: product %}
+        </product-price>
+        {% render 'product-card-volume-popover', product: product, section: section, block: block %}
+      </div>
+      {%- unless onboarding -%}
+        {%- liquid
+          assign number_variants = product.variants | size
+          assign hide_select = false
+          if product.has_only_default_variant or number_variants == 1 and selected_variant.available == false
+            assign hide_select = true
+          endif
+        -%}
+        <product-bundle-selection
+          class="product-card__form flex flex-col md:flex-row gap-x-1 gap-y-2"
+          data-product-id="{{ product.id }}"
+          data-product-url="{{ product.url }}"
+          data-section-id="{{ section.id }}"
+        >
+          {%- if product.quantity_price_breaks_configured? -%}
+            {%- assign cart_qty = cart | item_count_for_variant: variant_to_link.id -%}
+            <div class="product-card__quantity hidden">
+              {% render 'quantity-selector',
+                section: section,
+                block: block,
+                product: product,
+                variant: variant_to_link,
+                in_cart_quantity: cart_qty,
+                min: variant_to_link.quantity_rule.min,
+                starting_quantity: variant_to_link.quantity_rule.min
+              %}
+            </div>
+          {%- endif -%}
+          <div class="select w-full{% if hide_select %} hidden{% endif %}">
+            <select
+              ref="variantSelect"
+              on:change="/handleVariantChange"
+              name="id"
+              class="form-control w-full"
+              aria-label="{{ "accessibility.choose_options" }}"
+            >
+              {%- for variant in product.variants -%}
+                {%- capture option_ids -%}
+                  {%- for option in variant.options -%}
+                    {{- option.id -}}{%- unless forloop.last -%},{%- endunless -%}
+                  {%- endfor -%}
+                {%- endcapture -%}
+                <option
+                  {% if variant.id == selected_variant.id or number_variants == 1 %}
+                    selected="selected"
+                  {% endif %}
+                  {% if variant.available == false %}
+                    disabled="disabled"
+                  {% endif %}
+                  value="{{ variant.id }}"
+                  data-price="{{ variant.price }}"
+                  data-options-id="{{ option_ids }}"
+                >
+                  {{ variant.title }}
+                  {%- if variant.available == false %}
+                    - {{ 'products.product.sold_out' | t -}}
+                  {%- endif -%}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+          <div class="product-form__buttons flex items-center flex-grow">
+            <button
+              on:click="/handleAddToBundle"
+              ref="addToBundleButton"
+              type="submit"
+              name="add"
+              class="product-form__submit btn btn--primary w-full"
+              {% if selected_variant.available == false %}
+                disabled
+              {% endif %}
+            >
+              <span class="btn__text">
+                {%- if selected_variant.available -%}
+                  {{ 'products.product.add_to_cart_short' | t }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </span>
+              {% render 'loading-spinner' %}
+            </button>
+          </div>
+        </product-bundle-selection>
+      {%- endunless -%}
+    </div>
+  </div>
+</product-card>

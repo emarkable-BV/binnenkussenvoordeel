@@ -1,0 +1,75 @@
+{%- comment -%}
+  Intended for blocks and sections that provide values for all the referenced settings.
+
+  <div class="spacing-style" style="{%  render 'spacing-style', settings: section.settings %}">
+
+   Accepts:
+      settings: {block.settings || section.settings}
+      use_padding_inline: {boolean}: Whether render padding inline vars
+      apply_padding_inline_mobile: {boolean}: Whether apply padding inline mobile vars
+      suffix: {string}
+      scale_min {number}: Value above which spacing scaling will be applied. Default: 48
+{%- endcomment -%}
+{%- liquid
+  assign properties = 'padding,margin' | split: ','
+  assign directions = 'block,inline' | split: ','
+  assign edges = ',start,end' | split: ','
+  assign min = scale_min | default: 48
+  assign use_padding_inline = use_padding_inline | default: true, allow_false: true
+  assign apply_padding_inline_mobile = apply_padding_inline_mobile | default: true, allow_false: true
+
+  assign mobile_scale = settings['mobile-padding-scale'] | default: 100 | divided_by: 100.0
+-%}
+{%- capture variables -%}
+  {%- for property in properties -%}
+    {%- for direction in directions -%}
+      {%- liquid
+        if use_padding_inline == false and property == 'padding' and direction == 'inline'
+          continue
+        endif
+      -%}
+      {%- for edge in edges -%}
+        {%-liquid
+          assign name = property | append: '-' | append: direction
+
+          if edge != blank
+            assign name = name | append: '-' | append: edge
+          endif
+
+          assign setting_id = name
+
+          if suffix != blank
+            assign setting_id = setting_id | append: '-' | append: suffix
+          endif
+
+          assign desktop_value_in_px = settings[setting_id]
+        -%}
+        {%- if desktop_value_in_px != blank -%}
+          {%- liquid
+            assign mobile_setting_id = setting_id | append: '-' | append: 'mobile'
+            assign mobile_value_in_px = settings[mobile_setting_id]
+
+            if apply_padding_inline_mobile == false and property == 'padding' and direction == 'inline'
+              assign mobile_value_in_px = blank
+            endif
+
+            if mobile_value_in_px == blank
+              assign mobile_value_in_px = desktop_value_in_px
+
+              if settings['mobile-padding-scale'] != blank and settings['mobile-padding-scale'] != 0
+                assign mobile_scale = settings['mobile-padding-scale'] | divided_by: 100.0
+                assign mobile_value_in_px = mobile_value_in_px | times: mobile_scale
+              endif
+
+              if mobile_value_in_px > min
+                assign mobile_value_in_px = min
+              endif
+            endif
+          -%}
+          {%- render 'clamp-calculate-style', property_name: name, min_value: mobile_value_in_px, max_value: desktop_value_in_px, max_breakpoint: 1455, scale_min: scale_min -%}{% comment %}1440px + scrollbar width{% endcomment %}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{{- variables | strip | strip_newlines -}}

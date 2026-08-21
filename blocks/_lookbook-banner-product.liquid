@@ -1,0 +1,137 @@
+{%- liquid
+  assign block_index = section.blocks | find_index: 'id', block.id
+  assign product = block.settings.product
+
+  assign featured_media = product.featured_media
+  assign featured_image = featured_media
+  assign featured_image_alt = featured_media.alt | default: product.title
+  assign first_media_type = featured_media.media_type
+  if first_media_type == 'model' or first_media_type == 'video'
+    assign featured_image = featured_media.preview_image
+  endif
+
+  assign product_title_line_limit = product_title_line_limit | default: 'none'
+  assign product_title = product.title
+  if product == blank
+    assign product_title = 'placeholders.product_title' | t
+  endif
+-%}
+{%- capture hotspot_style -%}
+  --offset-top: {{ block.settings.offset_top }}%;
+  --offset-left: {{ block.settings.offset_left }}%;
+  --offset-top-mobile: {{ block.settings.offset_top_mobile }}%;
+  --offset-left-mobile: {{ block.settings.offset_left_mobile }}%;
+{%- endcapture -%}
+<div
+  class="lookbook-banner__hotspot hotspot-icon hotspot__element absolute inline-flex items-center justify-center"
+  data-index="{{ block_index }}"
+  style="{{ hotspot_style | strip | strip_newlines }}"
+  ref="hotspots[]"
+  tabindex="0"
+  {{ block.shopify_attributes }}
+>
+  <div class="hotspot-icon__dot inline-flex items-center justify-center"></div>
+  <div
+    class="hotspot-icon__product absolute cursor-auto opacity-0 visibility-hidden"
+    ref="hotspotCard"
+  >
+    <div class="hotspot-icon__product-wrapper inline-flex flex flex-col gap-3 color-{{ block.settings.color_scheme }}">
+      <div class="hotspot-icon__product-media media-mask-clip">
+        {% render 'responsive-image',
+          mode: 'liquid',
+          image: featured_image,
+          default_alt: featured_image_alt,
+          image_ratio: '1/1',
+          media_width_desktop: '150px',
+          media_width_mobile: '120px',
+          widths: '120, 150, 240, 300',
+          svg_placeholder: 'product-1'
+        %}
+      </div>
+      <div class="hotspot-icon__product-info flex flex-col gap-1">
+        {%- if product != blank -%}
+          <a
+            class="hotspot-icon__product-title text-wrap text-limit-{{ product_title_line_limit }} reversed-link"
+            href="{% render 'product-card-variant-url', product: product %}"
+            aria-label="{{ product_title | escape }}"
+          >
+            <span class="reversed-link__text">{{ product_title }}</span>
+          </a>
+        {%- else -%}
+          <p class="hotspot-icon__product-title text-wrap text-limit-{{ product_title_line_limit }}">{{ product_title }}</p>
+        {%- endif -%}
+        <product-price class="hotspot-icon__product-price">
+          {% render 'price', show_unit_price: true, product_resource: product, use_variant: false %}
+        </product-price>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.product",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "range",
+      "id": "offset_top",
+      "label": "t:settings.offset_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_left",
+      "label": "t:settings.offset_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_top_mobile",
+      "label": "t:settings.offset_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_left_mobile",
+      "label": "t:settings.offset_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product"
+    }
+  ]
+}
+{% endschema %}

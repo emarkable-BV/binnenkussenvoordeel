@@ -1,0 +1,167 @@
+{%- liquid
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign in_stock = true
+
+  if target.available == false
+    assign in_stock = false
+  endif
+
+  if show_soldout_badge == null
+    assign show_soldout_badge = true
+  endif
+
+  if show_sale_badge == null
+    assign show_sale_badge = true
+  endif
+
+  if show_custom_badges == null
+    assign show_custom_badges = true
+  endif
+
+  assign badge_layout = badge_layout | default: 'horizontal'
+  assign badge_count = 0
+
+  if in_stock
+    assign compare_at_price = target.compare_at_price
+    assign price = target.price | default: 1999
+
+    if compare_at_price > price and show_sale_badge
+      assign badge_count = badge_count | plus: 1
+    endif
+
+    if show_custom_badges
+      assign new_tags_list = settings.new_badge_tags | newline_to_br | strip_newlines | split: '<br />'
+      assign hot_tags_list = settings.hot_badge_tags | newline_to_br | strip_newlines | split: '<br />'
+      assign popular_tags_list = settings.popular_badge_tags | newline_to_br | strip_newlines | split: '<br />'
+
+      for tag in product.tags
+        assign tag_handle = tag | handle
+        assign badge_type = ''
+
+        for item in new_tags_list
+          assign item_handle = item | handle
+          if tag_handle == item_handle
+            assign badge_type = 'new'
+            break
+          endif
+        endfor
+
+        if badge_type == ''
+          for item in hot_tags_list
+            assign item_handle = item | handle
+            if tag_handle == item_handle
+              assign badge_type = 'hot'
+              break
+            endif
+          endfor
+        endif
+
+        if badge_type == ''
+          for item in popular_tags_list
+            assign item_handle = item | handle
+            if tag_handle == item_handle
+              assign badge_type = 'popular'
+              break
+            endif
+          endfor
+        endif
+
+        if badge_type != ''
+          assign badge_count = badge_count | plus: 1
+        endif
+      endfor
+    endif
+  else
+    if show_soldout_badge
+      assign badge_count = badge_count | plus: 1
+    endif
+  endif
+-%}
+<div
+  ref="badgesContainer"
+  class="product-badges product-badges--{{ badge_layout }}{% if badge_count == 0 %} product-badges--empty{% endif %}"
+>
+  {%- if in_stock -%}
+    {%- liquid
+      assign compare_at_price = target.compare_at_price
+      assign price = target.price | default: 1999
+
+      assign on_sale = false
+      if compare_at_price > price
+        assign on_sale = true
+      endif
+
+      assign new_tags_list = settings.new_badge_tags | newline_to_br | strip_newlines | split: '<br />'
+      assign hot_tags_list = settings.hot_badge_tags | newline_to_br | strip_newlines | split: '<br />'
+      assign popular_tags_list = settings.popular_badge_tags | newline_to_br | strip_newlines | split: '<br />'
+    -%}
+    {%- if on_sale and show_sale_badge -%}
+      {% liquid
+        assign sale_badge = ''
+        assign amount = 0
+
+        case sale_badge_type
+          when 'percentage'
+            if compare_at_price > price
+              assign amount = compare_at_price | minus: price | times: 100 | divided_by: compare_at_price | append: '%'
+            endif
+            assign sale_badge = 'products.product.save_price_html' | t: amount: amount
+          when 'fixed_amount'
+            if compare_at_price > price
+              assign amount = compare_at_price | minus: price | money
+            endif
+            assign sale_badge = 'products.product.save_price_html' | t: amount: amount
+          else
+            assign sale_badge = 'products.product.on_sale' | t
+        endcase
+      %}
+      <span class="badge badge--sale">{{ sale_badge }}</span>
+    {%- endif -%}
+    {% if show_custom_badges %}
+      {%- for tag in product.tags -%}
+        {%- liquid
+          assign tag_handle = tag | handle
+          assign badge_type = ''
+
+          for item in new_tags_list
+            assign item_handle = item | handle
+            if tag_handle == item_handle
+              assign badge_type = 'new'
+              break
+            endif
+          endfor
+
+          for item in hot_tags_list
+            assign item_handle = item | handle
+            if tag_handle == item_handle
+              assign badge_type = 'hot'
+              break
+            endif
+          endfor
+
+          for item in popular_tags_list
+            assign item_handle = item | handle
+            if tag_handle == item_handle
+              assign badge_type = 'popular'
+              break
+            endif
+          endfor
+
+          if badge_type == blank
+            continue
+          endif
+        -%}
+        <span class="badge badge--{{ badge_type }}">{{ tag }}</span>
+      {%- endfor -%}
+    {% endif %}
+  {%- else -%}
+    {%- if show_soldout_badge and show_soldout_badge -%}
+      <span class="badge badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+    {%- endif -%}
+  {%- endif -%}
+</div>

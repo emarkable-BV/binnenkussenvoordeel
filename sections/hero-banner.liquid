@@ -1,0 +1,398 @@
+{%- liquid
+  assign container = section.settings.container
+  assign height = section.settings.height
+  assign height_mobile = section.settings.height_mobile
+  assign edge_gap = section.settings.edge_gap
+  assign content_position = section.settings.content_position
+  assign color_scheme = section.settings.color_scheme
+
+  assign classes = 'section__container inherit-color-scheme section-grid section-grid--' | append: container
+  assign classes_wrapper = 'section__wrapper section-grid border-style overflow-hidden color-' | append: color_scheme | append: ' edge-gap--' | append: edge_gap | append: ' media--' | append: height
+
+  if height_mobile == 'adapt'
+    assign classes_wrapper = classes_wrapper | append: ' media-mobile--adapt'
+  endif
+
+  if container == 'full'
+    assign classes_wrapper = classes_wrapper | append: ' hero-banner--content-' | append: content_position
+  endif
+-%}
+
+<div
+  id="section-{{ section.id }}"
+  class="hero-banner spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="{{ classes | strip_newlines }}">
+    <div
+      class="{{ classes_wrapper | strip_newlines }}"
+      {% if container == 'fixed' %}
+        style="{% render 'border-style', settings: section.settings %}"
+      {% endif %}
+    >
+      <div
+        class="hero-banner__media col-span-full row-span-full relative overflow-hidden z-0"
+      >
+        {% content_for 'block', type: '_hero-banner-media', id: 'hero-banner-media' %}
+      </div>
+      <div class="hero-banner__body flex flex-col col-span-full row-span-full">
+        <div class="hero-banner__wrapper section-grid flex-1">
+          {% content_for 'block', type: '_hero-banner-content', id: 'hero-banner-content' %}
+        </div>
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.hero_banner",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/eIDWDKN)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "fixed", "label": "t:options.fixed" }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:settings.height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.adapt_to_image"
+        },
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "edge_gap",
+      "label": "t:settings.padding",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.small"
+        },
+        {
+          "value": "md",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.large"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.extra_large"
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "options": [
+        {
+          "value": "inside",
+          "label": "t:options.inside"
+        },
+        {
+          "value": "outside",
+          "label": "t:options.outside"
+        }
+      ],
+      "default": "inside",
+      "label": "t:settings.content_position",
+      "visible_if": "{{ section.settings.container == 'full' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_settings",
+      "visible_if": "{{ section.settings.height != 'adapt' }}"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "t:settings.height",
+      "options": [
+        { "value": "auto", "label": "t:options.auto" },
+        { "value": "adapt", "label": "t:options.adapt_to_image" }
+      ],
+      "default": "auto",
+      "visible_if": "{{ section.settings.height != 'adapt' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "visible_if": "{{ section.settings.container == 'fixed' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:options.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:options.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_hero-banner-marquee"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.hero_banner_marquee",
+      "category": "t:categories.banners",
+      "blocks": {
+        "hero-banner-content": {
+          "type": "_hero-banner-content",
+          "static": true,
+          "blocks": {
+            "text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Subheading</p>",
+                "type_preset": "text-subheading",
+                "animation_type": "fade-up",
+                "animation_delay": 100
+              }
+            },
+            "spacer_1": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 20,
+                "gap_mobile": 16
+              }
+            },
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>Hero banner</h2>",
+                "type_preset": "h1",
+                "animation_type": "fade-up",
+                "animation_delay": 200
+              }
+            },
+            "spacer_2": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 32,
+                "gap_mobile": 24
+              }
+            },
+            "button": {
+              "type": "button",
+              "settings": {
+                "label": "Button label",
+                "link": "shopify://collections/all",
+                "style": "primary",
+                "size": "large",
+                "icon": "caret-right",
+                "icon_style": "solid",
+                "animation_type": "fade-up",
+                "animation_delay": 300
+              }
+            }
+          },
+          "block_order": ["text", "spacer_1", "heading", "spacer_2", "button"]
+        },
+        "hero-banner-marquee": {
+          "type": "_hero-banner-marquee",
+          "settings": {
+            "marquee_postion": "top",
+            "angle": 5,
+            "padding-block-start": 16,
+            "padding-block-end": 16
+          },
+          "blocks": {
+            "item_1": {
+              "type": "text",
+              "settings": {
+                "text": "<p>WELCOME TO OUR STORE</p>",
+                "type_preset": "h3"
+              }
+            },
+            "item_2": {
+              "type": "text",
+              "settings": {
+                "text": "<p>WELCOME TO OUR STORE</p>",
+                "type_preset": "h3"
+              }
+            }
+          },
+          "block_order": ["item_1", "item_2"]
+        }
+      },
+      "block_order": ["hero-banner-marquee"]
+    },
+    {
+      "name": "t:names.hero_banner",
+      "category": "t:categories.banners",
+      "blocks": {
+        "hero-banner-content": {
+          "type": "_hero-banner-content",
+          "static": true,
+          "blocks": {
+            "text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Subheading</p>",
+                "type_preset": "text-subheading",
+                "animation_type": "fade-up",
+                "animation_delay": 100
+              }
+            },
+            "spacer_1": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 20,
+                "gap_mobile": 16
+              }
+            },
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>Hero banner</h2>",
+                "type_preset": "h1",
+                "animation_type": "fade-up",
+                "animation_delay": 200
+              }
+            },
+            "spacer_2": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 32,
+                "gap_mobile": 24
+              }
+            },
+            "button": {
+              "type": "button",
+              "settings": {
+                "label": "Button label",
+                "link": "shopify://collections/all",
+                "style": "primary",
+                "size": "large",
+                "icon": "caret-right",
+                "icon_style": "solid",
+                "animation_type": "fade-up",
+                "animation_delay": 300
+              }
+            }
+          },
+          "block_order": ["text", "spacer_1", "heading", "spacer_2", "button"]
+        }
+      },
+      "block_order": []
+    }
+  ]
+}
+{% endschema %}

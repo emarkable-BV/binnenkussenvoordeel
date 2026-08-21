@@ -1,0 +1,164 @@
+{% doc %}
+  Renders a single article card.
+
+  @param {object} article - The blog article object.
+  @param {object} block - Shopify block.
+  @param {string} layout - Layout style: 'overlay', 'row', 'column'
+  @param {boolean} show_tags - Show article tags
+  @param {boolean} show_date - Show publish date
+  @param {boolean} show_author - Show author
+  @param {boolean} show_excerpt - Show excerpt
+  @param {boolean} show_button - Show "Read more" button
+  @param {boolean} inherit_color_scheme - Determines whether the card inherits its color scheme from the parent section or uses its own.
+  @param {string} color_scheme - Defines the card’s color theme (e.g., scheme-1, scheme-2), applied if not inherited.
+  @param {string} alignment - Controls text alignment within the card (e.g., left, center, right).
+  @param {boolean} toggle_overlay - image overlay
+  @param {string} overlay_color - image overlay color
+  @param {string} image_ratio
+  @param {string} image_ratio_mobile
+  @param {string} [image_sizes] - Image size for article media
+
+  @example
+  {%- render 'article-card',
+    article: article,
+    layout: 'column',
+    show_tags: true,
+    show_date: true,
+    show_author: true,
+    show_button: false,
+    inherit_color_scheme: true,
+    color_scheme: 'scheme-1',
+    alignment: 'left'
+  -%}
+{% enddoc %}
+
+{%- liquid
+  assign classes = 'article-card relative z-0 w-full h-full overflow-hidden article-card--' | append: layout
+
+  if layout == 'overlay' and inherit_color_scheme == false
+    assign classes = classes | append: ' color-' | append: color_scheme
+  endif
+
+  assign classes_media = 'article-card__media media-mask-clip relative z-0'
+  assign classes_content = 'article-card__content flex flex-col flex-1 z-1 edge-gap'
+  if layout != 'overlay'
+    assign classes = classes | append: ' article-card--content-outside flex flex-col gap-y-4 md:gap-y-5'
+    assign classes_media = classes_media | append: ' border-style media-hover--scale'
+
+    if layout == 'row'
+      assign classes = classes | append: ' md:flex-row gap-x-6'
+      assign classes_media = classes_media | append: ' shrink-0'
+      assign classes_content = classes_content | append: ' md:justify-center'
+    endif
+  else
+    assign classes = classes | append: ' grid' | append: ' edge-gap--md border-style media-hover--scale'
+    assign classes_media = classes_media | append: ' col-span-full row-span-full'
+    assign classes_content = classes_content | append: ' justify-end col-span-full row-span-full'
+  endif
+-%}
+
+<div
+  class="{{ classes }}"
+  {% if layout == 'overlay' %}
+    style="{% render 'border-style', border_radius: settings.blog_card_media_radius %}"
+  {% endif %}
+  {% if block %}
+    {{ block.shopify_attributes }}
+  {% endif %}
+>
+  <a
+    class="{{ classes_media }} focus-visible--absolute"
+    {% if layout != 'overlay' %}
+      style="{% render 'border-style', border_radius: settings.blog_card_media_radius %}"
+    {% endif %}
+    {% if article %}
+      href="{{ article.url }}"
+    {% else %}
+      role="link" aria-disabled="true"
+    {% endif %}
+  >
+    {% render 'responsive-image',
+      mode: 'liquid',
+      image: article.image,
+      image_ratio: image_ratio,
+      image_ratio_mobile: image_ratio_mobile,
+      sizes: image_sizes
+    %}
+    {%- if toggle_overlay -%}
+      <div
+        class="overlay overlay--solid absolute inset-0 pointer-events-none"
+        style="--overlay-layer: var(--layer-flat);--overlay-color: {{ overlay_color.rgb }};--overlay-color-alpha: {{ overlay_color.alpha }};"
+      ></div>
+    {%- endif -%}
+    {%- if show_tags and article.tags.size > 0 -%}
+      <div class="article-card__tags absolute inset-0 z-1 text-left">
+        <span class="badge">{{ article.tags.first }}</span>
+      </div>
+    {%- endif -%}
+  </a>
+  <div class="{{ classes_content }}">
+    <div class="article-card__content-inner flex flex-col{% if layout == 'overlay' %} gap-3{% else %} gap-2{% endif %} text-{{ alignment }}">
+      <h3 class="article-card__title{% if layout != 'overlay' %} h4{% else %} h1{% endif %}">
+        {%- if article -%}
+          <a
+            class="block reversed-link relative focus-visible--absolute"
+            href="{{ article.url }}"
+            style="--focus-radius: 0.4rem;"
+          >
+            <span class="reversed-link__text">{{ article.title }}</span>
+          </a>
+        {%- else -%}
+          {{ 'blogs.article.title' | t }}
+        {%- endif -%}
+      </h3>
+
+      {% if show_date or show_author %}
+        <div class="article-card__metas{% if layout != 'overlay'%} color-subtext{% endif %} flex justify-{{ alignment | replace: 'left', 'start' | replace: 'right', 'end' }} gap-2">
+          {% if show_date %}
+            <span class="article-card__meta article-card__date">
+              {% if article %}
+                {{ article.published_at | time_tag: format: 'abbreviated_date' }}
+              {% else %}
+                {{ 'blogs.article.article_date' | t }}
+              {% endif %}
+            </span>
+          {% endif %}
+          {% if show_date and show_author %}
+            <span class="article-card__separator rounded no-empty"></span>
+          {% endif %}
+          {% if show_author %}
+            <span class="article-card__meta article-card__author">
+              {% if article %}
+                {{ article.author }}
+              {% else %}
+                {{ 'blogs.article.article_author' | t }}
+              {% endif %}
+            </span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if show_excerpt and article.excerpt.size > 0 or article.content.size > 0 %}
+        <p class="article-card__excerpt text-limit-2-lines color-subtext">
+          {%- if article.excerpt.size > 0 -%}
+            {{ article.excerpt | strip_html }}
+          {%- else -%}
+            {{ article.content | strip_html }}
+          {%- endif -%}
+        </p>
+      {% endif %}
+
+      {% if show_button %}
+        <div class="article-card__button">
+          <a
+            href="{{ article.url | default: '#' }}"
+            class="btn__text reversed-link inline-flex items-center gap-1"
+          >
+            {{- 'blogs.article.article_button_label' | t -}}
+            {% render 'icon', icon: 'caret-right' %}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

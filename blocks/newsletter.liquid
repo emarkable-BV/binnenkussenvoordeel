@@ -1,0 +1,140 @@
+{%- liquid
+  assign block_class = ''
+  assign block_class = block_class | append: ' items-' | append: block.settings.text_align | replace: 'left', 'start'
+-%}
+<div
+  class="newsletter size-style flex flex-col{{ block_class }} text-{{ block.settings.text_align }}"
+  {{ block.shopify_attributes }}
+  style="{% render 'size-style', settings: block.settings %}"
+>
+  <div class="newsletter-form__wrapper flex flex-col gap-4 w-full">
+    {% render 'newsletter-form', block_id: section.id, design: 'design-1' %}
+    {%- if block.settings.newsletter_term != blank -%}
+      <div class="rte text-body-sm color-{{ block.settings.newsletter_term_text_color }}">
+        {{ block.settings.newsletter_term }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.newsletter",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "t:settings.text_align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:content.terms_and_policy"
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_term",
+      "label": "t:settings.text",
+      "default": "<p>By subscribing you agree to the <a href='#'>Terms of Use</a> & <a href='#'>Privacy Policy.</a></p>"
+    },
+    {
+      "type": "select",
+      "id": "newsletter_term_text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.newsletter",
+      "category": "t:categories.forms"
+    }
+  ]
+}
+{% endschema %}

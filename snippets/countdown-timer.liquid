@@ -1,0 +1,126 @@
+{%- doc -%}
+  Renders countdown timer
+
+  @param {object} [block] - Shopify block
+  @param {string} id - Uniqud id
+  @param {string} type - Type of countdown, Accepts: evergreen, fixed_time
+  @param {string} style - Timer style
+  @param {string} [duration] - Duration to repeat countdown. Required for type: evergreen
+  @param {string} [time] - Due date to stop countdown. Required for type: fixed_time
+  @param {string} [number_preset] - Text size of timer number
+  @param {string} [number_font] - Number font family
+  @param {string} [number_font_weight] - Number font weight
+  @param {number} [number_font_size] - Text size of timer number in px
+  @param {number} [number_font_size_mobile] - Text size of timer number on mobile in px
+  @param {string} [show_text] - Show timer text
+  @param {boolean} [inherit_color_scheme] - Inherit text & background from section/block
+  @param {object} [number_color] - Text color for numbers
+  @param {object} [number_background_color] - Background color for numbers
+  @param {number} [column_gap] - Gap value in px
+  @param {number} [column_gap_mobile] - Gap value on mobile in px
+{%- enddoc -%}
+<script src="{{ 'countdown-timer.js' | asset_url }}" type="module"></script>
+{%- liquid
+  assign inherit_color_scheme = inherit_color_scheme | default: true, allow_false: true
+  assign number_preset = number_preset | default: 'h3'
+
+  assign show_text = show_text | default: false, allow_false: true
+
+  assign type = type | default: 'evergreen'
+  assign duration = duration | default: 'every_month'
+
+  assign item_classes = 'countdown-timer__block relative inline-flex flex-col items-center justify-center gap-1 ' | append: number_preset
+  assign number_classes = 'countdown-timer__number relative flex items-center justify-center text-center'
+  assign number_inner_classes = 'countdown-timer__number-inner flex items-center justify-center text-center'
+  assign text_classes = 'countdown-timer__text block color-subtext font-body'
+  assign separator_classes = 'countdown-timer__separator absolute flex items-center'
+
+  if number_preset == 'custom'
+    assign item_classes = item_classes | append: ' custom-typography'
+
+    if number_font_size != ''
+      assign item_classes = item_classes | append: ' custom-font-size'
+    endif
+  endif
+-%}
+{%- capture timer_inline_style -%}
+  {% render 'clamp-calculate-style', property_name: 'item-gap-x', min_value: column_gap_mobile, max_value: column_gap %}
+  {%- unless inherit_color_scheme -%}
+    {%- if number_color != blank -%}
+    --number-color: {{ number_color.rgb }};
+    {%- endif -%}
+    {%- if number_background_color != blank -%}
+    --number-background: {{ number_background_color.rgb }}; 
+    {%- endif -%}
+  {%- endunless -%} 
+{%- endcapture -%}
+{%- capture number_inline_style -%}
+  {% render 'typography-style',
+    preset: number_preset,
+    font_family: number_font,
+    font_weight: number_font_weight,
+    font_size: number_font_size,
+    font_size_mobile:number_font_size_mobile
+  %}
+{%- endcapture -%}
+<countdown-timer
+  id="countdown-timer-{{ id }}"
+  class="flex no-js-hidden countdown-timer countdown-timer--{{ style }}"
+  data-type="{{ type }}"
+  data-duration="{{ duration }}"
+  data-due-date="{{ time }}"
+  style="{{ timer_inline_style | strip | strip_newlines }}"
+  {% if block != blank %}
+    {{ block.shopify_attributes }}
+  {% endif %}
+>
+  <div class="countdown-timer__inner inline-flex items-center justify-center flex-wrap">
+    <div
+      class="{{ item_classes}}"
+      style="{{ number_inline_style | strip | strip_newlines }}"
+    >
+      <div class="{{ number_classes }}">
+        <span class="{{ number_inner_classes }}" ref="day">00</span>
+        <span class="{{ separator_classes }}"></span>
+      </div>
+      {%- if show_text -%}
+        <span class="{{ text_classes }}">{{ 'content.timer.days' | t }}</span>
+      {%- endif -%}
+    </div>
+    <div
+      class="{{ item_classes}}"
+      style="{{ number_inline_style | strip | strip_newlines }}"
+    >
+      <div class="{{ number_classes }}">
+        <span class="{{ number_inner_classes }}" ref="hour">00</span>
+        <span class="{{ separator_classes }}"></span>
+      </div>
+      {%- if show_text -%}
+        <span class="{{ text_classes }}">{{ 'content.timer.hours' | t }}</span>
+      {%- endif -%}
+    </div>
+    <div
+      class="{{ item_classes}}"
+      style="{{ number_inline_style | strip | strip_newlines }}"
+    >
+      <div class="{{ number_classes }}">
+        <span class="{{ number_inner_classes }}" ref="minute">00</span>
+        <span class="{{ separator_classes }}"></span>
+      </div>
+      {%- if show_text -%}
+        <span class="{{ text_classes }}">{{ 'content.timer.minutes' | t }}</span>
+      {%- endif -%}
+    </div>
+    <div
+      class="{{ item_classes}}"
+      style="{{ number_inline_style | strip | strip_newlines }}"
+    >
+      <div class="{{ number_classes }}">
+        <span class="{{ number_inner_classes }}" ref="second">00</span>
+      </div>
+      {%- if show_text -%}
+        <span class="{{ text_classes }}">{{ 'content.timer.seconds' | t }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</countdown-timer>

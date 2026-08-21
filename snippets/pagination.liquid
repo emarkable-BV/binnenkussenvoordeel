@@ -1,0 +1,78 @@
+{%- if paginate.parts.size > 0 -%}
+  <nav
+    class="pagination{% unless type == 'number' %} text-center{% endunless %}"
+    role="navigation"
+    aria-label="{{ 'actions.pagination.label' | t }}"
+  >
+    {%- if type == 'infinite' or type == 'load-more' -%}
+      {%- if paginate.next -%}
+        <button
+          class="btn btn--primary inline-flex items-center justify-center"
+          action="{{ shop.url }}{{ paginate.next.url }}"
+          type="{{ type }}"
+          ref="{{ ref }}"
+        >
+          <span class="btn__text">{{ 'actions.pagination.show_more' | t }}</span>
+          {%- render 'loading-spinner' -%}
+        </button>
+      {%- endif -%}
+    {%- else -%}
+      <ul
+        class="pagination__list list-unstyled flex items-center flex-wrap justify-center"
+        role="list"
+      >
+        {%- if paginate.previous -%}
+          <li class="reversed-link">
+            <a
+              href="{{ paginate.previous.url }}{{ anchor }}"
+              class="pagination__item pagination__item--previous pagination__item-arrow motion-reduce"
+            >
+              {% render 'icon', icon: 'caret-left', size: 'small' %}
+              <span class="reversed-link__text">{{ 'actions.pagination.previous' | t }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          <li>
+            {%- if part.is_link -%}
+              <a
+                href="{{ part.url }}{{ anchor }}"
+                class="pagination__item reversed-link"
+                aria-label="{{ 'actions.pagination.page' | t: number: part.title }}"
+              >
+                <span class="reversed-link__text">{{- part.title -}}</span>
+              </a>
+            {%- else -%}
+              {%- if part.title == paginate.current_page -%}
+                <a
+                  role="link"
+                  aria-disabled="true"
+                  class="pagination__item pagination__item--current background-2"
+                  aria-current="page"
+                  aria-label="{{ 'actions.pagination.page' | t: number: part.title }}"
+                >
+                  {{- part.title -}}
+                </a>
+              {%- else -%}
+                <span class="pagination__item">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <li class="reversed-link">
+            <a
+              href="{{ paginate.next.url }}{{ anchor }}"
+              class="pagination__item pagination__item--next pagination__item-arrow motion-reduce"
+            >
+              <span class="reversed-link__text">{{ 'actions.pagination.next' | t }}</span>
+              {% render 'icon', icon: 'caret-right', size: 'small' %}
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

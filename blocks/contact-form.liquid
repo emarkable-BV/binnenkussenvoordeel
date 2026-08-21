@@ -1,0 +1,267 @@
+{%- liquid
+  assign form_id = 'ContactForm-' | append: block.id
+-%}
+<div
+  class="contact-form size-style"
+  style="{% render 'size-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  {% comment %} Contact Form {% endcomment %}
+  {%- form 'contact', id: form_id, class: 'w-full' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="form-status-list" role="status">
+        <h3
+          class="form-message alert alert--success h6 flex gap-2"
+          tabindex="-1"
+          autofocus
+        >
+          {% render 'icon', icon: 'check', size: 'small', class: 'shrink-0' %}
+          {{- 'blocks.contact_form.post_success' | t -}}
+        </h3>
+      </div>
+    {%- elsif form.errors -%}
+      <div class="form-error alert alert--error">
+        <h3
+          class="form-message form-message--error h6 flex gap-2"
+          role="alert"
+          tabindex="-1"
+          autofocus
+        >
+          {% render 'icon', icon: 'warning', size: 'small', class: 'shrink-0' %}
+          {{- 'blocks.contact_form.error_heading' | t -}}
+        </h3>
+
+        <ul role="list">
+          <li>
+            <a href="#ContactForm-email" class="reversed-link">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {% comment %} form fields {% endcomment %}
+    <div
+      class="contact__fields layout-panel-grid gap-style"
+      style="{% render 'layout-panel-style', type: 'grid', columns_md: '2' %}{% render 'gap-style', settings: block.settings %}"
+    >
+      <div class="form-field form-field--name">
+        <label class="form-label" for="ContactForm-name-{{ section.id }}">
+          {{- 'blocks.contact_form.name' | t -}}
+        </label>
+        <input
+          class="form-control w-full"
+          autocomplete="name"
+          type="text"
+          id="ContactForm-name-{{ section.id }}"
+          name="contact[{{ 'blocks.contact_form.name' | t }}]"
+          value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+        >
+      </div>
+      <div class="form-field form-field--email">
+        <label class="form-label" for="ContactForm-email-{{ section.id }}">
+          {{- 'blocks.contact_form.email' | t -}}
+          <span aria-hidden="true">*</span>
+        </label>
+        <input
+          autocomplete="email"
+          type="email"
+          id="ContactForm-email-{{ section.id }}"
+          class="form-control w-full"
+          name="contact[email]"
+          spellcheck="false"
+          autocapitalize="off"
+          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          required
+          {% if form.errors contains 'email' %}
+            aria-invalid="true"
+            aria-describedby="ContactForm-email-error-{{ section.id }}"
+          {% endif %}
+        >
+        {%- if form.errors contains 'email' -%}
+          <span
+            class="form-message form-message--small form-message--error flex gap-2"
+            id="ContactForm-email-error-{{ section.id }}"
+          >
+            {% render 'icon', icon: 'warning', class: 'shrink-0' %}
+            {{- form.errors.translated_fields.email | capitalize }}
+            {{ form.errors.messages.email -}}
+          </span>
+        {%- endif -%}
+      </div>
+
+      {% comment %} Blocks custom field {% endcomment %}
+      {% content_for 'blocks' %}
+
+      {% comment %} form-body {% endcomment %}
+      <div class="form-field form-field--full form-field--body">
+        <label class="form-label" for="ContactForm-body-{{ section.id }}">
+          {{- 'blocks.contact_form.your_message' | t -}}
+        </label>
+        <textarea
+          rows="5"
+          id="ContactForm-body-{{ section.id }}"
+          class="form-control form-control--textarea w-full"
+          name="contact[{{ 'blocks.contact_form.your_message' | t }}]"
+          placeholder=""
+        >
+          {{- form.body -}}
+        </textarea>
+      </div>
+
+      {% comment %} button submit {% endcomment %}
+      <div class="contact__button form-footer text-center form-field--full">
+        <button type="submit" class="btn btn--primary btn--large btn--icon-solid">
+          <span class="btn__text">{{ 'blocks.contact_form.send_message' | t }}</span>
+          <span class="btn__icon">
+            <span class="btn__icon-text">{{ 'blocks.contact_form.send_message' | t }}</span>
+            <span class="btn__icon-icon">
+              {% render 'icon', icon: 'caret-right' %}
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  {%- endform -%}
+</div>
+{% schema %}
+{
+  "name": "t:names.contact_form",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_settings"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_custom-field"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.contact_form",
+      "blocks": [
+        {
+          "type": "_custom-field",
+          "settings": {
+            "field_type": "phone",
+            "heading": "Phone Number"
+          }
+        },
+        {
+          "type": "_custom-field",
+          "settings": {
+            "field_type": "text",
+            "heading": "Order Number"
+          }
+        },
+        {
+          "type": "_custom-field",
+          "settings": {
+            "field_type": "select",
+            "heading": "Country",
+            "select_options": "Austria,Viet Nam,Japan",
+            "full_width": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

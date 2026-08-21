@@ -1,0 +1,98 @@
+<!-- @title -->
+<td class="h6">{{ block.settings.title }}</td>
+<!-- @title -->
+<tr>
+  {%- for i in (1..10) -%}
+    {%- liquid
+      assign checkbox_key = 'checkbox-' | append: i
+      assign checkbox = block.settings[checkbox_key]
+      if checkbox == true
+        assign icon_name = 'check-circle'
+      else
+        assign icon_name = 'circle'
+      endif
+    -%}
+    <!-- @row:{{ i }} -->
+    <td class="td-checkbox">{% render 'icon', icon: icon_name, size: 'extra-extra-large', class: 'shrink-0' %}</td>
+    <!-- @row:end -->
+  {%- endfor -%}
+</tr>
+{% schema %}
+{
+  "name": "t:names.comparison_column",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.title",
+      "default": "Title"
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-1",
+      "label": "t:settings.checkbox_1",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-2",
+      "label": "t:settings.checkbox_2",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-3",
+      "label": "t:settings.checkbox_3",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-4",
+      "label": "t:settings.checkbox_4",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-5",
+      "label": "t:settings.checkbox_5",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-6",
+      "label": "t:settings.checkbox_6",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-7",
+      "label": "t:settings.checkbox_7",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-8",
+      "label": "t:settings.checkbox_8",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-9",
+      "label": "t:settings.checkbox_9",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "checkbox-10",
+      "label": "t:settings.checkbox_10",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.comparison_column"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,283 @@
+<!-- @imageCard/split -->
+{%- if block.settings.type == 'evergreen' or block.settings.time != blank -%}
+  {% render 'countdown-timer',
+    block: block,
+    id: block.id,
+    type: block.settings.type,
+    duration: block.settings.duration,
+    time: block.settings.time,
+    style: block.settings.style,
+    show_text: block.settings.show_text,
+    column_gap: block.settings.column_gap,
+    column_gap_mobile: block.settings.column_gap_mobile,
+    number_preset: block.settings.number_preset,
+    number_font: block.settings.number_font,
+    number_font_weight: block.settings.number_font_weight,
+    number_font_size: block.settings.number_font_size,
+    number_font_size_mobile: block.settings.number_font_size_mobile,
+    inherit_color_scheme: block.settings.inherit_color_scheme,
+    number_color: block.settings.number_color,
+    number_background_color: block.settings.number_background_color
+  %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:names.countdown_timer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "type",
+      "label": "t:settings.type",
+      "options": [
+        {
+          "value": "evergreen",
+          "label": "t:options.evergreen"
+        },
+        {
+          "value": "fixed_time",
+          "label": "t:options.fixed_time"
+        }
+      ],
+      "default": "evergreen"
+    },
+    {
+      "type": "select",
+      "id": "duration",
+      "label": "t:settings.duration",
+      "options": [
+        {
+          "value": "every_2_hrs",
+          "label": "t:options.every_2_hours"
+        },
+        {
+          "value": "every_6_hrs",
+          "label": "t:options.every_6_hours"
+        },
+        {
+          "value": "every_12_hrs",
+          "label": "t:options.every_12_hours"
+        },
+        {
+          "value": "every_day",
+          "label": "t:options.every_day"
+        },
+        {
+          "value": "every_week",
+          "label": "t:options.every_week"
+        },
+        {
+          "value": "every_month",
+          "label": "t:options.every_month"
+        }
+      ],
+      "default": "every_month",
+      "visible_if": "{{ block.settings.type == 'evergreen' }}"
+    },
+    {
+      "type": "text",
+      "id": "time",
+      "label": "t:settings.ends_time",
+      "info": "t:content.ends_time_1",
+      "default": "2026/08/20 03:45 PM",
+      "visible_if": "{{ block.settings.type == 'fixed_time' }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.ends_time_2",
+      "visible_if": "{{ block.settings.type == 'fixed_time' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text",
+      "label": "t:settings.show_text",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "standard",
+          "label": "t:options.standard"
+        },
+        {
+          "value": "card",
+          "label": "t:options.card"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "t:content.numbers"
+    },
+    {
+      "type": "select",
+      "id": "number_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "number_font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.number_preset == 'custom' }}"
+    },
+    {
+      "id": "number_font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.number_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "number_font_size",
+      "label": "t:settings.font_size",
+      "default": 68,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.number_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "number_font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 38,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.number_preset == 'custom' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "t:settings.color",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "color",
+      "id": "number_background_color",
+      "label": "t:settings.background_color",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false and block.settings.style == 'card' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.mobile_settings"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.countdown_timer",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

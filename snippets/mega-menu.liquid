@@ -1,0 +1,383 @@
+{%- liquid
+  assign menu_columns = block.settings.menu_columns
+  assign promotions_width = block.settings.promotions_width
+  assign has_banners = false
+  assign has_rich_content = false
+
+  case block.type
+    when 'banner'
+      assign banners = block.settings.image_1 | append: ',' | append: block.settings.image_2 | append: ',' | append: block.settings.image_3 | append: ',' | append: block.settings.image_4
+
+      unless banners == ',,,'
+        assign has_banners = true
+        assign mega_menu_css_class = 'mega-menu--rich'
+      endunless
+
+    when 'text-with-banners'
+      assign banners = block.settings.image_1 | append: ',' | append: block.settings.image_2 | append: ',' | append: block.settings.image_3 | append: ',' | append: block.settings.image_4
+
+      unless banners == ',,,'
+        assign has_banners = true
+      endunless
+
+      if block.settings.column_heading != blank or block.settings.column_text != blank
+        assign has_rich_content = true
+      endif
+
+      if has_banners or has_rich_content
+        assign mega_menu_css_class = 'mega-menu--rich mega-menu--reverse-column'
+        assign mega_menu_wrapper_class = 'flex-row-reverse'
+      endif
+
+    when 'sidebar'
+      if block.settings.layout == 'with-banner' and block.settings.image != blank
+        assign has_banners = true
+      elsif block.settings.layout == 'with-products' and block.settings.product_list != blank
+        assign has_banners = true
+      endif
+  endcase
+
+  if link.links != blank
+    assign mega_menu_css_class = mega_menu_css_class | append: ' mega-menu--with-links'
+  else
+    assign mega_menu_css_class = mega_menu_css_class | append: ' mega-menu--no-links'
+  endif
+-%}
+<details
+  id="Mega-menu-item-{{ block.id }}"
+  is="details-mega"
+  trigger="{{ section.settings.menu_trigger }}"
+  level="top"
+  style="--menu-columns: {{ menu_columns }}; --promotions-width: {{ promotions_width }}%;"
+  {{ block.shopify_attributes }}
+>
+  <summary data-link="{{ link.url }}">
+    <span class="menu__item flex items-center relative">
+      {{- link.title | escape -}}
+      {%- render 'icon', icon: 'caret-down', size: 'extra-small' -%}
+    </span>
+  </summary>
+  <div class="mega-menu mega-menu--{{ block.type }}{% if mega_menu_css_class != blank %} {{ mega_menu_css_class }}{% endif %} flex flex-col">
+    <div class="mega-menu__container v-scrollable{% unless settings.dialog_color_scheme_inherit %} color-{{ settings.dialog_color_scheme }}{% endunless %}">
+      <div class="page-width mega-menu__wrapper flex flex-wrap {{ mega_menu_wrapper_class }}">
+        {%- if block.type != 'sidebar' -%}
+          {%- if link.links != blank -%}
+            <div class="mega-menu__list">
+              {%- if block.type == 'text-with-banners' -%}
+                <div class="mega-menu__column">
+                  <ul class="mega-menu__item-child list-unstyled color-subtext">
+                    {%- for childlink in link.links -%}
+                      <li>
+                        <a
+                          class="block mega-menu__link text-decoration-none reversed-link color-current"
+                          href="{{ childlink.url }}"
+                        >
+                          <span class="reversed-link__text">
+                            {{- childlink.title | escape -}}
+                          </span>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- else -%}
+                {%- for i in (1..menu_columns) -%}
+                  {%- assign column_index = forloop.index0 -%}
+                  <div class="mega-menu__column flex flex-col gap-6">
+                    {%- for childlink in link.links -%}
+                      {%- liquid
+                        assign item_index = forloop.index0
+                        assign current_column = item_index | modulo: menu_columns
+                      -%}
+                      {%- if current_column == column_index -%}
+                        <div class="mega-menu__item">
+                          <a
+                            href="{{ childlink.url }}"
+                            class="mega-menu__link mega-menu__link--top block h5 text-decoration-none color-current"
+                          >
+                            {{- childlink.title | escape -}}
+                          </a>
+                          {%- if childlink.links != blank -%}
+                            <ul class="mega-menu__item-child list-unstyled color-subtext">
+                              {%- for grandchildlink in childlink.links -%}
+                                <li>
+                                  <a
+                                    class="block mega-menu__link text-decoration-none reversed-link color-current"
+                                    href="{{ grandchildlink.url }}"
+                                  >
+                                    <span class="reversed-link__text">
+                                      {{- grandchildlink.title | escape -}}
+                                    </span>
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          {%- if link.links != blank -%}
+            <menu-sidebar
+              class="block menu-sidebar flex-grow relative mega-menu__item"
+              style="{% render 'clamp-calculate-style', property_name: 'toggle-width', min_value: 180, max_value: 240, min_breakpoint: 1024, max_breakpoint: 1455 %}"
+            >
+              {%- for childlink in link.links -%}
+                <details class="menu-sidebar__item" open>
+                  <summary
+                    class="menu-sidebar__toggle flex items-center justify-between reversed-link{% if forloop.first %} is-visible{% endif %}"
+                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                    data-link-url="{{ childlink.url }}"
+                  >
+                    <h6 class="h4">
+                      <span class="reversed-link__text">{{ childlink.title | escape }}</span>
+                    </h6>
+                  </summary>
+                  <div class="menu-sidebar__content">
+                    <div class="menu-sidebar__content-inner flex items-start">
+                      {%- if childlink.links != blank -%}
+                        <ul
+                          class="menu-sidebar__collections list-unstyled layout-panel-grid gap-style flex-grow"
+                          style="--f-columns-lg: {{ menu_columns }}; --f-column-gap: 3rem; --f-row-gap: 1.2rem;"
+                        >
+                          {%- for grandchildlink in childlink.links -%}
+                            {%- liquid
+                              assign is_collection_link = false
+                              assign default_alt = shop.name
+                              if grandchildlink.type == 'collection_link' and block.settings.show_collection_image
+                                assign is_collection_link = true
+                                assign collection_object = grandchildlink.object
+                                assign collection_image = collection_object.featured_image
+                                assign default_alt = collection_object.title
+                              endif
+
+                              if collection_object.metafields.foxtheme.collection_megamenu_image.value
+                                assign collection_image = collection_object.metafields.foxtheme.collection_megamenu_image.value
+                              endif
+
+                              if block.settings.show_image_of_first_product
+                                assign collection_image = collections[grandchildlink.object.handle].all_products.first.featured_image
+                              endif
+
+                              assign image_ratio = block.settings.image_ratio
+                              if image_ratio == 'adapt'
+                                assign image_ratio = collection_image.aspect_ratio
+                              endif
+                            -%}
+                            <li>
+                              <a
+                                href="{{ grandchildlink.url }}"
+                                class="flex items-start gap-3 reversed-link text-decoration-none color-current relative focus-visible--absolute"
+                              >
+                                {%- if is_collection_link and collection_image != blank -%}
+                                  <div class="menu-sidebar__collection-image media-mask-clip shrink-0">
+                                    {% render 'responsive-image',
+                                      mode: 'liquid',
+                                      image: collection_image,
+                                      image_ratio: image_ratio,
+                                      default_alt: default_alt,
+                                      sizes: '50px',
+                                      widths: '50, 100'
+                                    %}
+                                  </div>
+                                {%- endif -%}
+                                <div class="menu-sidebar__collection-text self-center min-w-0 text-wrap text-limit-2-lines">
+                                  <span class="reversed-link__text">
+                                    {{- grandchildlink.title | escape -}}
+                                  </span>
+                                </div>
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </details>
+              {%- endfor -%}
+            </menu-sidebar>
+          {%- endif -%}
+          {%- render 'mega-menu-sidebar', block: block -%}
+        {%- endif -%}
+        {%- case block.type -%}
+          {%- when 'banner' -%}
+            {%- if has_banners -%}
+              <div class="mega-menu__promotions">
+                {%- liquid
+                  assign columns_desktop = block.settings.columns_desktop
+                  assign columns_mobile = block.settings.columns_mobile | times: 1
+                -%}
+                {% capture inline_style %}
+                  {% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile, columns_xxl: columns_desktop %}
+                  {% render 'gap-style', column_gap: 30, column_gap_mobile: 12, row_gap: 30, row_gap_mobile: 12 %}
+                {% endcapture %}
+                <div
+                  class="layout-panel-grid gap-style"
+                  style="{{ inline_style }}"
+                >
+                  {%- for i in (1..4) -%}
+                    {%- liquid
+                      assign image = 'image_' | append: i
+                      assign image_mobile = 'image_mobile_' | append: i
+                      assign image_overlay_opacity = 'image_overlay_opacity_' | append: i
+                      assign heading = 'heading_' | append: i
+                      assign heading_preset = 'heading_size_' | append: i
+                      assign heading_font_size = 'heading_font_size_' | append: i
+                      assign heading_font_size_mobile = 'heading_font_size_mobile_' | append: i
+                      assign subheading = 'subheading_' | append: i
+                      assign badge = 'badge_' | append: i
+                      assign button_label = 'button_label_' | append: i
+                      assign button_link = 'button_link_' | append: i
+                      assign button_style = 'button_style_' | append: i
+                      assign button_size = 'button_size_' | append: i
+                      assign button_icon = 'button_icon_' | append: i
+                      assign button_icon_style = 'button_icon_style_' | append: i
+
+                      assign image = block.settings[image]
+                      assign image_mobile = block.settings[image_mobile]
+                      assign image_overlay_opacity = block.settings[image_overlay_opacity]
+                      assign heading = block.settings[heading]
+                      assign heading_preset = block.settings[heading_preset]
+                      assign heading_font_size = block.settings[heading_font_size]
+                      assign heading_font_size_mobile = block.settings[heading_font_size_mobile]
+                      assign subheading = block.settings[subheading]
+                      assign badge = block.settings[badge]
+                      assign button_label = block.settings[button_label]
+                      assign button_link = block.settings[button_link]
+                      assign button_style = block.settings[button_style]
+                      assign button_size = block.settings[button_size]
+                      assign button_icon = block.settings[button_icon]
+                      assign button_icon_style = block.settings[button_icon_style]
+
+                      if image == blank
+                        continue
+                      endif
+                    -%}
+                    <div class="f-column">
+                      {% render 'mega-menu-banner',
+                        banner_design: block.settings.banner_design,
+                        color_scheme: block.settings.color_scheme,
+                        image: image,
+                        image_mobile: image_mobile,
+                        image_overlay_opacity: image_overlay_opacity,
+                        heading: heading,
+                        heading_preset: heading_preset,
+                        heading_font_size: heading_font_size,
+                        heading_font_size_mobile: heading_font_size_mobile,
+                        subheading: subheading,
+                        badge: badge,
+                        button_label: button_label,
+                        button_link: button_link,
+                        button_style: button_style,
+                        button_size: button_size,
+                        button_icon: button_icon,
+                        button_icon_style: button_icon_style
+                      %}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- when 'text-with-banners' -%}
+            {%- if has_banners or has_rich_content -%}
+              <div class="mega-menu__promotions flex">
+                {%- if has_rich_content -%}
+                  <div
+                    class="mega-menu__promotions-text flex flex-col gap-4 shrink-0"
+                    style="{{ inline_style }}"
+                  >
+                    {%- if block.settings.column_heading -%}
+                      {% render 'text', fallback_text: block.settings.column_heading, preset: block.settings.column_heading_size %}
+                    {%- endif -%}
+                    {%- if block.settings.column_text -%}
+                      {% render 'text', fallback_text: block.settings.column_text, preset: 'rte', text_color: 'subtext' %}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if has_banners -%}
+                  {%- liquid
+                    assign columns_desktop = block.settings.columns_desktop
+                    assign columns_mobile = block.settings.columns_mobile | times: 1
+                  -%}
+                  {% capture inline_style %}
+                    {% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile, columns_xxl: columns_desktop %}
+                    {% render 'gap-style', column_gap: 30, column_gap_mobile: 12, row_gap: 30, row_gap_mobile: 12 %}
+                  {% endcapture %}
+                  <div
+                    class="mega-menu__promotions-banners flex-grow layout-panel-grid gap-style"
+                    style="{{ inline_style }}"
+                  >
+                    {%- for i in (1..4) -%}
+                      {%- liquid
+                        assign image = 'image_' | append: i
+                        assign image_mobile = 'image_mobile_' | append: i
+                        assign image_overlay_opacity = 'image_overlay_opacity_' | append: i
+                        assign heading = 'heading_' | append: i
+                        assign heading_preset = 'heading_size_' | append: i
+                        assign heading_font_size = 'heading_font_size_' | append: i
+                        assign heading_font_size_mobile = 'heading_font_size_mobile_' | append: i
+                        assign subheading = 'subheading_' | append: i
+                        assign badge = 'badge_' | append: i
+                        assign button_label = 'button_label_' | append: i
+                        assign button_link = 'button_link_' | append: i
+                        assign button_style = 'button_style_' | append: i
+                        assign button_size = 'button_size_' | append: i
+                        assign button_icon = 'button_icon_' | append: i
+                        assign button_icon_style = 'button_icon_style_' | append: i
+
+                        assign image = block.settings[image]
+                        assign image_mobile = block.settings[image_mobile]
+                        assign image_overlay_opacity = block.settings[image_overlay_opacity]
+                        assign heading = block.settings[heading]
+                        assign heading_preset = block.settings[heading_preset]
+                        assign heading_font_size = block.settings[heading_font_size]
+                        assign heading_font_size_mobile = block.settings[heading_font_size_mobile]
+                        assign subheading = block.settings[subheading]
+                        assign badge = block.settings[badge]
+                        assign button_label = block.settings[button_label]
+                        assign button_link = block.settings[button_link]
+                        assign button_style = block.settings[button_style]
+                        assign button_size = block.settings[button_size]
+                        assign button_icon = block.settings[button_icon]
+                        assign button_icon_style = block.settings[button_icon_style]
+
+                        if image == blank
+                          continue
+                        endif
+                      -%}
+                      <div class="f-column">
+                        {% render 'mega-menu-banner',
+                          banner_design: block.settings.banner_design,
+                          color_scheme: block.settings.color_scheme,
+                          image: image,
+                          image_mobile: image_mobile,
+                          image_overlay_opacity: image_overlay_opacity,
+                          heading: heading,
+                          heading_preset: heading_preset,
+                          heading_font_size: heading_font_size,
+                          heading_font_size_mobile: heading_font_size_mobile,
+                          subheading: subheading,
+                          badge: badge,
+                          button_label: button_label,
+                          button_link: button_link,
+                          button_style: button_style,
+                          button_size: button_size,
+                          button_icon: button_icon,
+                          button_icon_style: button_icon_style
+                        %}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+        {%- endcase -%}
+      </div>
+    </div>
+  </div>
+</details>

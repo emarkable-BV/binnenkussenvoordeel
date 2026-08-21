@@ -1,0 +1,150 @@
+{%- liquid
+  assign offset_x = block.settings.offset_x
+  assign offset_y = block.settings.offset_y
+-%}
+{%- capture inline_style -%}
+  --top: {{ offset_y }}%;
+  --left: {{ offset_x }}%;
+  --width: {{ block.settings.width }}px;
+{%- endcapture -%}
+<div
+  class="layered-image layered-image--{{ block.settings.loop_animation }}"
+  style="{{ inline_style | strip | strip_newlines }}"
+  {{ block.shopify_attributes }}
+>
+  <div
+    class="layered-image__inner border-style"
+    style="{% render 'border-style', settings: block.settings %}"
+  >
+    {% render 'responsive-image', mode: 'js', image: block.settings.image, image_mobile: block.settings.image_mobile, default_alt: shop.name %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "t:settings.width",
+      "step": 10,
+      "min": 100,
+      "max": 300,
+      "default": 200,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "offset_y",
+      "label": "t:settings.offset_top",
+      "step": 2,
+      "min": -10,
+      "max": 100,
+      "default": 10,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "offset_x",
+      "label": "t:settings.offset_left",
+      "step": 2,
+      "min": -10,
+      "max": 100,
+      "default": 10,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "t:content.borders"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.animation"
+    },
+    {
+      "type": "select",
+      "id": "loop_animation",
+      "label": "t:settings.loop_animation",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "move-y",
+          "label": "t:options.float_up"
+        },
+        {
+          "value": "move-y-reverse",
+          "label": "t:options.float_down"
+        }
+      ],
+      "default": "none"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.image"
+    }
+  ]
+}
+{% endschema %}

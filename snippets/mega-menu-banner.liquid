@@ -1,0 +1,148 @@
+{%- doc -%}
+  Renders a mega menu banner.
+
+  @param {string} banner_design - Accepts: 1 (Button bottom), 2 (Top badge), 3 (Content below image)
+  @param {image} image - The image to show on desktop
+  @param {image} image_mobile - The image to show on mobile
+  @param {number} image_overlay_opacity - Controls overlay alpha. Accepts: 1 => 100
+  @param {object} [color_scheme] - Color scheme, leave blank to inherit color scheme from parent
+  @param {string} [heading] - Heading text to display
+  @param {string} [heading_preset] - Type preset for heading
+  @param {string} [heading_font_size] - Custom font size for heading
+  @param {string} [heading_font_size_mobile] - Custom font size for heading on mobile
+  @param {string} [subheading] - Subheading text to display
+  @param {string} [badge] - Badge text to display
+  @param {string} [button_label] - Button label
+  @param {string} [button_link] - Button link
+  @param {string} [button_style] - Button style
+  @param {string} [button_size] - Button size
+  @param {string} [button_icon] - Button icon
+  @param {string} [button_icon_style] - Button icon style
+{%- enddoc -%}
+{%- capture image_html -%}
+  {% render 'responsive-image',
+    mode: 'js',
+    image: image,
+    image_mobile: image_mobile,
+    default_alt: shop.name,
+  %}
+{%- endcapture -%}
+
+{%- capture overlay_html -%}
+  {%- if image_overlay_opacity > 0 -%}
+    {%- capture overlay_color -%}rgb(0 0 0 / {{ image_overlay_opacity | divided_by: 100.0 }}){%- endcapture -%}
+    {% render 'overlay', overlay_color: overlay_color %}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture subheading_html -%}
+  {%- if subheading != blank -%}
+    {%- render 'text', fallback_text: subheading, preset: 'text-subheading' %}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture heading_html -%}
+  {%- render 'text',
+    fallback_text: heading,
+    preset: heading_preset,
+    font_size: heading_font_size,
+    font_size_mobile: heading_font_size_mobile,
+    font_family: 'var(--font-heading--family)',
+    line_height: 'normal'
+  %}  
+{%- endcapture -%}
+
+{%- case banner_design -%}
+  {%- when '1' -%}
+    {%- capture button_html -%}
+      {% render 'button',
+        label: button_label,
+        link: button_link,
+        style: button_style,
+        size: button_size,
+        icon: button_icon,
+        icon_style: button_icon_style
+      %}
+    {%- endcapture -%}
+    {% render 'image-card',
+      mode: 'static',
+      card_link: button_link,
+      image: image_html,
+      overlay: overlay_html,
+      subheading: subheading_html,
+      heading: heading_html,
+      button: button_html,
+      color_scheme: color_scheme,
+      edge_gap: 'md',
+      content_direction: 'column',
+      v_alignment: 'space-between',
+      h_alignment: 'flex-start',
+      column_gap: 32,
+      column_gap_mobile: 32,
+      border_radius: 20
+    %}
+  {%- when '2' -%}
+    {%- capture button_html -%}
+      {% render 'button',
+        label: button_label,
+        link: button_link,
+        style: button_style,
+        size: button_size,
+        icon: button_icon,
+        icon_style: button_icon_style,
+        icon_only: true
+      %}
+    {%- endcapture -%}
+    {% render 'image-card',
+      mode: 'static',
+      card_link: button_link,
+      image: image_html,
+      overlay: overlay_html,
+      subheading: subheading_html,
+      heading: heading_html,
+      button: button_html,
+      card_label: badge,
+      color_scheme: color_scheme,
+      edge_gap: 'sm',
+      content_direction: 'row',
+      v_alignment: 'flex-end',
+      h_alignment: 'space-between',
+      column_gap: 24,
+      column_gap_mobile: 24,
+      border_radius: 20
+    %}
+  {%- when '3' -%}
+    {%- capture button_html -%}
+      {% render 'button',
+        label: button_label,
+        link: button_link,
+        style: button_style,
+        size: button_size,
+        icon: button_icon,
+        icon_style: button_icon_style,
+        icon_only: true,
+      %}
+    {%- endcapture -%}
+    {% render 'image-card',
+      mode: 'static',
+      card_link: button_link,
+      image: image_html,
+      overlay: overlay_html,
+      subheading: subheading_html,
+      heading: heading_html,
+      button: button_html,
+      card_label: badge,
+      show_content_below: true,
+      edge_gap: 'none',
+      content_direction: 'row',
+      v_alignment: 'center',
+      h_alignment: 'space-between',
+      column_gap: 8,
+      column_gap_mobile: 8,
+      row_gap: 12,
+      row_gap_mobile: 12,
+      gap: 12,
+      gap_mobile: 12,
+      border_radius: 20
+    %}
+{%- endcase -%}

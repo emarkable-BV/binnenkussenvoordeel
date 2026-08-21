@@ -1,0 +1,383 @@
+{% liquid
+  assign preset = section.settings.type_preset
+  capture heading_classes
+    if preset == 'custom'
+      echo ' custom-typography '
+      if section.settings.font_size != ''
+        echo ' custom-font-size '
+      endif
+    elsif preset == 'paragraph'
+      echo ' rte '
+    endif
+  endcapture
+%}
+{%- capture heading_styles -%}
+  {% render 'typography-style', settings: section.settings %}
+{%- endcapture -%}
+
+<div
+  class="customer register-section section spacing-style color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width">
+    <h1
+      tabindex="-1"
+      class="text-center {{ preset }} {{ heading_classes }}"
+      style="{{ heading_styles | strip | strip_newlines }}"
+    >
+      {{ 'customer.register.title' | t }}
+    </h1>
+    {%- form 'create_customer', class: 'flex flex-col' -%}
+      {%- if form.errors -%}
+        <div class="form-error alert alert--error border-style">
+          <h2 class="form-message form-message--error h6 m-0 gap-2" tabindex="-1" autofocus>
+            {% render 'icon', icon: 'warning', size: 'medium', class: 'shrink-0' %}
+            {{ 'customer.messages.error_heading' | t }}
+          </h2>
+          <ul class="list-unstyled">
+            {%- for field in form.errors -%}
+              <li>
+                {%- if field == 'form' -%}
+                  {{ form.errors.messages[field] }}
+                {%- else -%}
+                  <a href="#RegisterForm-{{ field }}">
+                    {{ form.errors.translated_fields[field] | capitalize }}
+                    {{ form.errors.messages[field] }}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="form-field">
+        <label for="RegisterForm-FirstName" class="form-label">
+          {{ 'customer.register.first_name' | t }}
+        </label>
+        <input
+          type="text"
+          name="customer[first_name]"
+          id="RegisterForm-FirstName"
+          {% if form.first_name %}
+            value="{{ form.first_name }}"
+          {% endif %}
+          autocomplete="given-name"
+          placeholder="{{ 'customer.register.first_name' | t }}"
+          class="form-control w-full"
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="RegisterForm-LastName" class="form-label">
+          {{ 'customer.register.last_name' | t }}
+        </label>
+        <input
+          type="text"
+          name="customer[last_name]"
+          id="RegisterForm-LastName"
+          {% if form.last_name %}
+            value="{{ form.last_name }}"
+          {% endif %}
+          autocomplete="family-name"
+          placeholder="{{ 'customer.register.last_name' | t }}"
+          class="form-control w-full"
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="RegisterForm-email" class="form-label">
+          {{ 'customer.register.email' | t }}
+        </label>
+        <input
+          required
+          type="email"
+          name="customer[email]"
+          id="RegisterForm-email"
+          {% if form.email %}
+            value="{{ form.email }}"
+          {% endif %}
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="email"
+          aria-required="true"
+          {% if form.errors contains 'email' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-email-error"
+          {% endif %}
+          placeholder="{{ 'customer.register.email' | t }}"
+          class="form-control w-full"
+        >
+        {%- if form.errors contains 'email' -%}
+          <span
+            id="RegisterForm-email-error"
+            class="form-message form-message--small form-message--error gap-2"
+          >
+            {% render 'icon', icon: 'warning', class: 'shrink-0' %}
+            {{ form.errors.translated_fields.email | capitalize }}
+            {{ form.errors.messages.email }}.
+          </span>
+        {%- endif -%}
+      </div>
+
+      <div class="form-field">
+        <label for="RegisterForm-password" class="form-label">
+          {{ 'customer.register.password' | t }}
+        </label>
+        <input
+          required
+          type="password"
+          name="customer[password]"
+          id="RegisterForm-password"
+          aria-required="true"
+          {% if form.errors contains 'password' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-password-error"
+          {% endif %}
+          placeholder="{{ 'customer.register.password' | t }}"
+          class="form-control w-full"
+        >
+        {%- if form.errors contains 'password' -%}
+          <span
+            id="RegisterForm-password-error"
+            class="form-message form-message--small form-message--error gap-2"
+          >
+            {% render 'icon', icon: 'warning', class: 'shrink-0' %}
+            {{ form.errors.translated_fields.password | capitalize }}
+            {{ form.errors.messages.password }}.
+          </span>
+        {%- endif -%}
+      </div>
+
+      <button class="btn btn--primary w-full">
+        <span class="btn__text">{{ 'customer.register.submit' | t }}</span>
+      </button>
+
+      <a
+        href="{{ routes.account_login_url }}"
+        class="block button-unstyled link link--underline self-center"
+      >
+        {{ 'customer.login_page.sign_in' | t }}
+      </a>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.main_register",
+  "settings": [
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.heading_size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,109 @@
+{%- if settings.share_on_facebook
+  or settings.share_on_pinterest
+  or settings.share_on_x
+  or settings.share_on_telegram
+  or settings.share_on_whatsapp
+  or settings.share_on_email
+-%}
+  <div class="social-sharing flex items-center gap-3">
+    <p>{{ share_label }}</p>
+    <ul class="social-sharing__list list-unstyled flex-wrap flex gap-4">
+      {%- if settings.share_on_facebook -%}
+        <li class="flex items-center">
+          <a
+            target="_blank"
+            rel="noopener"
+            href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}"
+            title="{{ 'content.share_on_facebook' | t | escape }}"
+            class="flex items-center social-sharing__item"
+            data-tooltip="{{ 'content.share_on_facebook' | t | escape }}"
+            data-tooltip-position="top"
+          >
+            {% render 'icon', icon: 'facebook', size: 'extra-large' %}
+            <span class="visually-hidden">{{ 'content.share_on_facebook' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+      {%- if settings.share_on_pinterest -%}
+        <li class="flex items-center">
+          <a
+            target="_blank"
+            rel="noopener"
+            href="https://www.pinterest.com/pin/create/button/?url={{ share_url }}&amp;media={{ share_image | image_url: width: 1024, height: 1024 }}&amp;description={{ share_title | url_param_escape }}"
+            title="{{ 'content.share_on_pinterest' | t | escape }}"
+            class="flex items-center social-sharing__item"
+            data-tooltip="{{ 'content.share_on_pinterest' | t | escape }}"
+            data-tooltip-position="top"
+          >
+            {% render 'icon', icon: 'pinterest', size: 'extra-large' %}
+            <span class="visually-hidden">{{ 'content.share_on_pinterest' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+      {%- if settings.share_on_x -%}
+        <li class="flex items-center">
+          <a
+            target="_blank"
+            rel="noopener"
+            href="//twitter.com/intent/tweet?text={{ share_title | url_param_escape }}&amp;url={{ share_url }}"
+            title="{{ 'content.share_on_x' | t | escape }}"
+            class="flex items-center social-sharing__item"
+            data-tooltip="{{ 'content.share_on_x' | t | escape }}"
+            data-tooltip-position="top"
+          >
+            {% render 'icon', icon: 'x', size: 'extra-large' %}
+            <span class="visually-hidden">{{ 'content.share_on_x' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+      {%- if settings.share_on_telegram -%}
+        <li class="flex items-center">
+          <a
+            target="_blank"
+            rel="noopener"
+            href="//telegram.me/share/url?url={{ share_url }}&amp;media={{ share_image | image_url: width: 1024, height: 1024 }}"
+            title="{{ 'content.share_on_telegram' | t | escape }}"
+            class="flex items-center social-sharing__item"
+            data-tooltip="{{ 'content.share_on_telegram' | t | escape }}"
+            data-tooltip-position="top"
+          >
+            {% render 'icon', icon: 'telegram', size: 'extra-large' %}
+            <span class="visually-hidden">{{ 'content.share_on_telegram' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+      {%- if settings.share_on_whatsapp -%}
+        <li class="flex items-center">
+          <a
+            target="_blank"
+            rel="noopener"
+            href="//web.whatsapp.com/send?text={{ share_url }}"
+            title="{{ 'content.share_on_whatsapp' | t | escape }}"
+            class="flex items-center social-sharing__item"
+            data-tooltip="{{ 'content.share_on_whatsapp' | t | escape }}"
+            data-tooltip-position="top"
+          >
+            {% render 'icon', icon: 'whatsapp', size: 'extra-large' %}
+            <span class="visually-hidden">{{ 'content.share_on_whatsapp' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+      {%- if settings.share_on_email -%}
+        <li class="flex items-center">
+          <a
+            target="_blank"
+            rel="noopener"
+            href="mailto:?&subject={{ share_title | url_param_escape }}&body={{ share_url }}"
+            title="{{ 'content.share_on_email' | t | escape }}"
+            class="flex items-center social-sharing__item"
+            data-tooltip="{{ 'content.share_on_email' | t | escape }}"
+            data-tooltip-position="top"
+          >
+            {% render 'icon', icon: 'email', size: 'extra-large' %}
+            <span class="visually-hidden">{{ 'content.share_on_email' | t }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+{%- endif -%}

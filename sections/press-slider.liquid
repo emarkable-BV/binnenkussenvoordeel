@@ -1,0 +1,588 @@
+{%- liquid
+  assign container = section.settings.container
+  assign use_padding_inline = false
+  if container == 'full'
+    assign use_padding_inline = true
+  endif
+
+  capture section_header
+    content_for 'block', type: '_press-slider-section-header', id: 'press-slider-section-header'
+  endcapture
+
+  capture blocks
+    content_for 'blocks'
+  endcapture
+
+  assign parts = blocks | strip | split: '<!-- @press/split -->'
+  assign thumbnails_html = ''
+  assign slides_html = ''
+
+  for item in parts
+    assign mod = forloop.index0 | modulo: 2
+    if mod == 0
+      assign slides_html = slides_html | append: item
+    elsif mod == 1
+      assign thumbnails_html = thumbnails_html | append: item
+    endif
+  endfor
+
+  assign content_alignment = section.settings.content_alignment
+  assign content_alignment_mobile = section.settings.content_alignment_mobile
+  assign thumbnails_gap = 52
+-%}
+{%- capture section_style -%}
+  {% render 'border-style', settings: section.settings %}
+  {% render 'spacing-style', settings: section.settings, use_padding_inline: use_padding_inline %}
+  --page-width-custom: {{ section.settings.container_custom_width | divided_by: 10.0 }}rem;
+{%- endcapture -%}
+<div
+  class="section press-slider-section press-slider press-slider--{{ content_alignment }} press-slider--mobile-{{ content_alignment_mobile }} border-style spacing-style color-{{ section.settings.color_scheme }}"
+  style="{{ section_style | strip_newlines | strip }}"
+>
+  <div class="{% unless container == 'full' %}page-width page-width--{{ container }}{% endunless %}">
+    <div class="page-width__inner flex flex-col">
+      {{ section_header }}
+      <carousel-slider
+        class="carousel min-w-0 flex-grow flex flex-col gap-6 md:gap-7"
+        data-section-id="{{ section.id }}"
+        style="--thumbnails-gap: {{ thumbnails_gap }}px;"
+      >
+        <script type="application/json" ref="config">
+          {
+            "shopifyBlocks": true,
+            "slidesPerView": 1,
+            "spaceBetween": 30,
+            "loop": false,
+            "autoplay": false,
+            "counter": false,
+            "thumbnails": {
+              "enabled": true,
+              "slidesPerView": "auto",
+              "spaceBetween": {% if content_alignment == 'left' %}{{ thumbnails_gap }}{% else %}0{%endif %}
+            },
+            "mousewheel": {
+              "enabled": true,
+              "forceToAxis": true,
+              "thresholdTime": 300,
+              "thresholdDelta": 10
+            }
+          }
+        </script>
+        <div
+          class="press-slider__main carousel--grid relative w-full"
+          style="{% render 'gap-style', column_gap: 30, column_gap_mobile: 30 %};--f-columns-xxl: 1; --f-columns-mobile: 1;"
+        >
+          <div class="swiper" ref="container">
+            <div class="swiper-wrapper">
+              {{ slides_html }}
+            </div>
+          </div>
+        </div>
+        <div class="press-slider__thumbnails w-full flex justify-{{ section.settings.content_alignment }}">
+          <div
+            ref="thumbnails"
+            class="carousel--grid carousel--view-auto max-w-full"
+            {% if content_alignment == 'left' %}
+              style="{% render 'gap-style', column_gap: 52, column_gap_mobile: 30 %}"
+            {% endif %}
+          >
+            <div class="swiper carousel__thumbnails-swiper">
+              <div class="swiper-wrapper">
+                {{ thumbnails_html }}
+              </div>
+            </div>
+          </div>
+        </div>
+        {%- if section.blocks.size > 1 -%}
+          {% render 'carousel-controls', ref: 'controls', type: 'relative', pagination: false, counter: false %}
+        {%- endif -%}
+      </carousel-slider>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:names.press",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  },
+  "blocks": [
+    {
+      "type": "_press-slide"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Read How-to](https://go.foxecom.com/rJi7UpZ)"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "fixed", "label": "t:options.fixed" },
+        { "value": "custom", "label": "t:options.custom" }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "range",
+      "id": "container_custom_width",
+      "min": 500,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "t:settings.custom_width",
+      "default": 1110,
+      "visible_if": "{{ section.settings.container == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.carousel_settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "center", "label": "t:options.center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "label": "t:settings.alignment_mobile",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "center", "label": "t:options.center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "visible_if": "{{ section.settings.device == 'desktop' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "visible_if": "{{ section.settings.device == 'desktop' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start-mobile",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.device == 'mobile' and section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end-mobile",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.device == 'mobile' and section.settings.container == 'full' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.press",
+      "category": "t:categories.storytelling",
+      "blocks": {
+        "press-slider-section-header": {
+          "type": "_press-slider-section-header",
+          "static": true,
+          "settings": {
+            "desktop_position": "left",
+            "device": "desktop",
+            "padding-block-end": 40,
+            "margin-inline-end": 50,
+            "padding-block-end-mobile": 24
+          },
+          "blocks": {
+            "subheading": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Share your brand’s press coverage</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            }
+          },
+          "block_order": ["subheading"]
+        },
+        "press_1": {
+          "type": "_press-slide",
+          "name": "t:names.press",
+          "settings": {
+            "image_width": 140,
+            "image_width_mobile": 150
+          },
+          "blocks": {
+            "static-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>You can add detailed text content from various press comments, comprehensive reviews, or extensive customer testimonials here.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            "static-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "",
+                "name_preset": "h5",
+                "icon": "none",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100
+              }
+            }
+          },
+          "block_order": []
+        },
+        "press_2": {
+          "type": "_press-slide",
+          "name": "t:names.press",
+          "settings": {
+            "image_width": 140,
+            "image_width_mobile": 150
+          },
+          "blocks": {
+            "static-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>You can add detailed text content from various press comments, comprehensive reviews, or extensive customer testimonials here.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            "static-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "",
+                "name_preset": "h5",
+                "icon": "none",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100
+              }
+            }
+          },
+          "block_order": []
+        },
+        "press_3": {
+          "type": "_press-slide",
+          "name": "t:names.press",
+          "settings": {
+            "image_width": 140,
+            "image_width_mobile": 150
+          },
+          "blocks": {
+            "static-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>You can add detailed text content from various press comments, comprehensive reviews, or extensive customer testimonials here.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            "static-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "",
+                "name_preset": "h5",
+                "icon": "none",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100
+              }
+            }
+          },
+          "block_order": []
+        },
+        "press_4": {
+          "type": "_press-slide",
+          "name": "t:names.press",
+          "settings": {
+            "image_width": 140,
+            "image_width_mobile": 150
+          },
+          "blocks": {
+            "static-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>You can add detailed text content from various press comments, comprehensive reviews, or extensive customer testimonials here.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            },
+            "static-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "",
+                "name_preset": "h5",
+                "icon": "none",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 100
+              }
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": ["press_1", "press_2", "press_3", "press_4"]
+    }
+  ]
+}
+{% endschema %}

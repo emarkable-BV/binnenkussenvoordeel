@@ -1,0 +1,69 @@
+{{ 'template-article.css' | asset_url | stylesheet_tag }}
+
+<article
+  id="section-{{ section.id }}"
+  class="article spacing-style color-{{ section.settings.color_scheme }} block"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  itemscope
+  itemtype="http://schema.org/BlogPosting"
+>
+  <div
+    class="section__container article__main section-grid section-grid--fixed"
+    style="{%  render 'clamp-calculate-style', property_name: 'article-main-row-gap' min_value: 48, max_value: 100 %}"
+  >
+    <div class="article__main-info article--width">
+      <div class="article__wrapper">
+        {% content_for 'block', type: '_article-title', id: 'article-title' %}
+        {% content_for 'block', type: '_article-image', id: 'article-image' %}
+        {% content_for 'block', type: '_article-content', id: 'article-content' %}
+
+        <div class="article__footer">
+          {% content_for 'block', type: '_article-social-sharing', id: 'article-social-sharing' %}
+          {% content_for 'block', type: '_article-navigation', id: 'article-navigation' %}
+        </div>
+      </div>
+    </div>
+    {% content_for 'block', type: '_article-related-post', id: 'article-related-post' %}
+    {% content_for 'block', type: '_article-comments', id: 'article-comments' %}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "t:names.main_article",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100
+    }
+  ]
+}
+{% endschema %}

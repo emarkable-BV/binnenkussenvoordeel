@@ -1,0 +1,293 @@
+{% liquid
+  assign rounded_image = block.settings.rounded_image
+%}
+{%- capture style -%}
+  {% render 'border-style', settings: block.settings %}
+{%- endcapture -%}
+
+<div class="image-with-badges relative w-full" {{ block.shopify_attributes }}>
+  <div
+    class="image-with-badges__media{% if rounded_image %} rounded{% else %} border-style media-mask-clip{% endif %}"
+    style="{{ style | strip | strip_newlines }}"
+  >
+    {% render 'responsive-image',
+      mode: 'js',
+      image: block.settings.image,
+      image_mobile: block.settings.image_mobile,
+      image_ratio: block.settings.image_ratio,
+      image_ratio_mobile: block.settings.image_ratio_mobile,
+      default_alt: shop.name
+    %}
+  </div>
+  {% content_for 'blocks' %}
+</div>
+{% schema %}
+{
+  "name": "t:names.image_with_badges",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "t:settings.aspect_ratio_mobile",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "1/1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4/5",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "3/4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "16/9",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "4/3",
+          "label": "t:options.landscape_4_3"
+        },
+        {
+          "value": "21/9",
+          "label": "t:options.landscape_21_9"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "header",
+      "content": "t:content.borders"
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded_image",
+      "label": "t:settings.rounded_image",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "t:settings.borders",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ block.settings.rounded_image == false }}"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "t:settings.border_width",
+      "default": 1,
+      "visible_if": "{{ block.settings.rounded_image == false and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:settings.border_opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.rounded_image == false and block.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.rounded_image == false }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_badge"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.image_with_badges_circle",
+      "category": "t:categories.banners",
+      "settings": {
+        "image_ratio": "1/1",
+        "image_ratio_mobile": "1/1",
+        "rounded_image": true
+      },
+      "blocks": [
+        {
+          "type": "_badge",
+          "name": "t:names.badge",
+          "settings": {
+            "shape": "none",
+            "background_color": "#BDE6EE",
+            "border_radius": 32,
+            "rotate": 20,
+            "width": 104,
+            "width_mobile": 80,
+            "offset_left": 6,
+            "offset_top": 10,
+            "offset_left_mobile": 6,
+            "offset_top_mobile": 10,
+            "text": "Wow",
+            "type_preset": "h5"
+          }
+        },
+        {
+          "type": "_badge",
+          "name": "t:names.badge",
+          "settings": {
+            "shape": "circle",
+            "background_color": "#FFC8C8",
+            "rotate": -24,
+            "width": 110,
+            "width_mobile": 90,
+            "offset_left": 82,
+            "offset_top": 64,
+            "offset_left_mobile": 74,
+            "offset_top_mobile": 64,
+            "text": "Playful",
+            "type_preset": "h5"
+          }
+        }
+      ]
+    },
+    {
+      "name": "t:names.image_with_badges_rectangle",
+      "category": "t:categories.banners",
+      "settings": {
+        "image_ratio": "4/3",
+        "image_ratio_mobile": "4/3",
+        "border_radius": 20
+      },
+      "blocks": [
+        {
+          "type": "_badge",
+          "name": "t:names.badge",
+          "settings": {
+            "shape": "none",
+            "background_color": "#F9C0A9",
+            "border_radius": 20,
+            "rotate": 20,
+            "width": 104,
+            "width_mobile": 80,
+            "offset_left": 92,
+            "offset_top": 24,
+            "offset_left_mobile": 82,
+            "offset_top_mobile": 24,
+            "text": "Wow",
+            "type_preset": "h5"
+          }
+        },
+        {
+          "type": "_badge",
+          "name": "t:names.badge",
+          "settings": {
+            "shape": "circle",
+            "background_color": "#DCF4F3",
+            "rotate": -24,
+            "width": 110,
+            "width_mobile": 90,
+            "offset_left": -6,
+            "offset_top": 20,
+            "offset_left_mobile": -6,
+            "offset_top_mobile": 20,
+            "text": "Playful",
+            "type_preset": "h5"
+          }
+        },
+        {
+          "type": "_badge",
+          "name": "t:names.badge",
+          "settings": {
+            "shape": "multi-point-star",
+            "background_color": "#EFEE5E",
+            "rotate": -24,
+            "width": 130,
+            "width_mobile": 68,
+            "offset_left": 46,
+            "offset_top": 88,
+            "offset_left_mobile": 40,
+            "offset_top_mobile": 82,
+            "text": "Treats",
+            "type_preset": "h5"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

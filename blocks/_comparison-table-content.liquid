@@ -1,0 +1,136 @@
+{%- capture table_class -%}
+  {%- if block.blocks.size < 3 -%}
+    quick-comparison-table--few-cols
+  {%- else -%}
+    quick-comparison-table--many-cols
+  {%- endif -%}
+{%- endcapture -%}
+<table
+  class="quick-comparison-table text-subtext {{ table_class }}"
+  {{ block.shopify_attributes }}
+>
+  {% liquid
+    capture blocks
+      content_for 'blocks'
+    endcapture
+
+    assign block_sections = blocks | split: '<!-- @title -->'
+    assign block_sections = block_sections | slice: 1, block_sections.size
+  %}
+  {% comment %} Row with Title content {% endcomment %}
+  <tr>
+    <td class="td-label"></td>
+    {%- liquid
+      assign title_cells = ''
+      for section in block_sections
+        assign title_cell = section | split: '<!-- @row:' | first | strip
+        if title_cell contains '<td'
+          assign title_cells = title_cells | append: title_cell
+        endif
+      endfor
+    -%}
+    {{- title_cells | strip -}}
+  </tr>
+  {% comment %} Dynamic Feature Rows {% endcomment %}
+  {% for i in (1..10) %}
+    {%- liquid
+      assign title_key = 'title-' | append: i
+      assign heading = block.settings[title_key]
+      assign has_content = false
+      if heading != blank
+        assign has_content = true
+      endif
+    -%}
+    {% if has_content %}
+      <tr>
+        {% comment %} Heading Column {% endcomment %}
+        <td class="td-label">
+          {% if heading != blank %}
+            {{ heading }}
+          {% endif %}
+        </td>
+        {%- liquid
+          assign row_cells = ''
+          for section in block_sections
+            assign row_start = '<!-- @row:' | append: i | append: ' -->'
+            assign parts = section | split: row_start
+            if parts.size > 1
+              assign cell_part = parts[1] | split: '<!-- @row:end -->' | first
+              assign row_cells = row_cells | append: cell_part
+            endif
+          endfor
+        -%}
+        {{ row_cells }}
+      </tr>
+    {% endif %}
+  {% endfor %}
+</table>
+
+{% schema %}
+{
+  "name": "t:names.comparison_content",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_comparison-col"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title-1",
+      "label": "t:settings.title_1"
+    },
+    {
+      "type": "text",
+      "id": "title-2",
+      "label": "t:settings.title_2"
+    },
+    {
+      "type": "text",
+      "id": "title-3",
+      "label": "t:settings.title_3"
+    },
+    {
+      "type": "text",
+      "id": "title-4",
+      "label": "t:settings.title_4"
+    },
+    {
+      "type": "text",
+      "id": "title-5",
+      "label": "t:settings.title_5"
+    },
+    {
+      "type": "text",
+      "id": "title-6",
+      "label": "t:settings.title_6"
+    },
+    {
+      "type": "text",
+      "id": "title-7",
+      "label": "t:settings.title_7"
+    },
+    {
+      "type": "text",
+      "id": "title-8",
+      "label": "t:settings.title_8"
+    },
+    {
+      "type": "text",
+      "id": "title-9",
+      "label": "t:settings.title_9"
+    },
+    {
+      "type": "text",
+      "id": "title-10",
+      "label": "t:settings.title_10"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.comparison_content"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+{% doc %}
+  Renders styles for positioning content overlay within a slide.
+
+  @param {string} [position] - position of content overlay (e.g., 'top-left', 'middle-center', 'bottom-right')
+  @param {string} [position_mobile] - position of content overlay on mobile devices (e.g., 'top-left', 'middle-center', 'bottom-right').
+  @param {string} [vertical_alignment] - vertical alignment of content overlay (e.g., 'flex-start', 'center', 'flex-end'). Overrides the vertical part of `position` if provided.
+  @param {string} [horizontal_alignment] - horizontal alignment of content overlay (e.g., 'flex-start', 'center', 'flex-end'). Overrides the horizontal part of `position` if provided.
+  @param {string} [vertical_alignment_mobile] - vertical alignment of content overlay on mobile devices (e.g., 'flex-start', 'center', 'flex-end'). Overrides the vertical part of `position_mobile` if provided.
+  @param {string} [horizontal_alignment_mobile] - horizontal alignment of content overlay on mobile devices (e.g., 'flex-start', 'center', 'flex-end'). Overrides the horizontal part of `position_mobile` if provided.
+{% enddoc %}
+{%- liquid
+  assign position_arr = position | split: '-'
+  if vertical_alignment == null
+    assign vertical_alignment = position_arr.first | replace: 'top', 'flex-start' | replace: 'bottom', 'flex-end' | replace: 'middle', 'center'
+  endif
+  if horizontal_alignment == null
+    assign horizontal_alignment = position_arr.last | replace: 'left', 'flex-start' | replace: 'right', 'flex-end'
+  endif
+
+  assign position_mobile_arr = position_mobile | split: '-'
+  if vertical_alignment_mobile == null
+    assign vertical_alignment_mobile = position_mobile_arr.first | replace: 'top', 'flex-start' | replace: 'bottom', 'flex-end' | replace: 'middle', 'center'
+  endif
+  if horizontal_alignment_mobile == null
+    assign horizontal_alignment_mobile = position_mobile_arr.last | replace: 'left', 'flex-start' | replace: 'right', 'flex-end'
+  endif
+-%}
+{%- capture style -%}
+--h-alignment: {{ horizontal_alignment }}; 
+--h-alignment-mobile: {{ horizontal_alignment_mobile }}; 
+--v-alignment: {{ vertical_alignment }}; 
+--v-alignment-mobile: {{ vertical_alignment_mobile }}; 
+{%- endcapture -%}
+{{- style | strip | strip_newlines -}}

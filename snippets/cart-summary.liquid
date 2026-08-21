@@ -1,0 +1,151 @@
+{% liquid
+  assign context = context | default: 'drawer'
+  assign class = 'cart-summary'
+  assign class_inner = 'cart-summary__inner flex flex-col gap-5 xl:gap-6'
+  assign class_addons = 'cart-summary__addons'
+
+  if context == 'drawer'
+    assign class = class | append: ' cart-drawer-summary'
+    assign class_inner = class_inner | append: ' cart-drawer-summary__inner color-' | append: section.settings.summary_color_scheme
+    assign class_addons = class_addons | append: ' cart-drawer-summary__addons flex flex-wrap justify-end text-left'
+
+    if section.settings.summary_show_seperator_line
+      assign class_inner = class_inner | append: ' show-seperator-line'
+    endif
+  endif
+%}
+
+<div class="{{ class }}">
+  <div class="{{ class_inner }}">
+    <div class="cart-summary__original-totals flex flex-col gap-1">
+      {%- if cart.cart_level_discount_applications.size > 0 -%}
+        <span class="cart__original-total flex justify-between gap-2">
+          <span class="cart__original-total-label">{{ 'content.cart_subtotal' | t }}</span>
+          <span class="cart__original-total-value color-subtext">
+            {{- cart.original_total_price | money -}}
+          </span>
+        </span>
+        <div class="cart__summary-discounts">
+          <ul
+            class="list-unstyled flex flex-col gap-1"
+            role="list"
+            aria-label="{{ 'content.discounts' | t }}"
+          >
+            {%- for discount in cart.cart_level_discount_applications -%}
+              <li class="w-full flex justify-between gap-2 cart__discount">
+                <span class="cart__discount-label flex items-center gap-1{% if context == 'cart-page' %} discount{% endif %}">
+                  {% render 'icon', icon: 'tag', size: 'small' %}
+                  <span>{{ discount.title | escape }}</span>
+                </span>
+                <span class="cart__discount-value color-subtext">-{{ discount.total_allocated_amount | money -}}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+    {%- liquid
+      if settings.show_currency_code
+        assign total_price = cart.total_price | money_with_currency
+      else
+        assign total_price = cart.total_price | money
+      endif
+    -%}
+    {%- liquid
+      if settings.show_currency_code
+        assign total_price = cart.total_price | money_with_currency
+      else
+        assign total_price = cart.total_price | money
+      endif
+    -%}
+    <div class="flex gap-6">
+      <span
+        class="cart-summary__total flex flex-col gap-1 xl:gap-2"
+        role="status"
+      >
+        <span class="cart-summary__total-label">
+          {{- 'content.cart_estimated_total' | t -}}
+        </span>
+        <span
+          ref="cartTotal"
+          value="{{ total_price | strip_html }}"
+          class="cart-summary__total-value h3"
+          {% comment %} Used by payment_terms web component {% endcomment %}
+          data-cart-subtotal
+        >
+          <span class="price">{{ total_price }}</span>
+        </span>
+      </span>
+
+      <div class="text-right flex-1 flex flex-col gap-2">
+        {% if context == 'drawer' %}
+          {%- liquid
+            unless section.settings.cart_addons_inherit_color_scheme
+              assign color_scheme = section.settings.cart_addons_color_scheme
+            else
+              unless settings.dialog_color_scheme_inherit
+                assign color_scheme = settings.dialog_color_scheme
+              else
+                assign color_scheme = settings.color_schemes | first
+              endunless
+            endunless
+
+            assign gift_summary_addon = false
+            if settings.gift_wrap_product != blank
+              assign gift_wrap_product = all_products[settings.gift_wrap_product]
+              if gift_wrap_product != blank and gift_wrap_product.selected_or_first_available_variant != blank
+                assign gift_summary_addon = true
+              endif
+            endif
+          -%}
+          {% if settings.show_add_discount_code or settings.show_cart_note or settings.show_caculate_shipping_rate or gift_summary_addon %}
+            <div class="{{ class_addons }}">
+              {% if gift_summary_addon %}
+                {% render 'cart-gift-wrapping-drawer', color_scheme: color_scheme %}
+              {% endif %}
+              {% if settings.show_add_discount_code %}
+                {% render 'cart-discount-drawer', section_id: section.id, color_scheme: color_scheme %}
+              {% endif %}
+              {% if settings.show_cart_note %}
+                {% render 'cart-note-drawer', color_scheme: color_scheme %}
+              {% endif %}
+              {% if settings.show_caculate_shipping_rate %}
+                {% render 'cart-shipping-drawer', color_scheme: color_scheme %}
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endif %}
+        <div class="cart-summary__tax-note">
+          {% render 'tax-info', has_discounts_enabled: settings.show_add_discount_code %}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-3">
+      <div class="flex gap-2">
+        {% if context == 'drawer' %}
+          <a class="flex-1 btn btn--outline btn--outline-bold" href="{{ routes.cart_url }}">
+            <span class="btn__text">{{ 'actions.view_cart' | t }}</span>
+          </a>
+        {% endif %}
+        <button
+          type="submit"
+          id="checkout"
+          class="cart-summary__checkout-button btn btn--primary flex-1"
+          name="checkout"
+          {% if cart == empty %}
+            disabled
+          {% endif %}
+          form="cart-form"
+        >
+          <span class="btn__text">{{ 'content.checkout' | t }}</span>
+        </button>
+      </div>
+
+      {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons %}
+        <div class="additional-checkout-buttons additional-checkout-buttons--vertical">
+          {{ content_for_additional_checkout_buttons }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

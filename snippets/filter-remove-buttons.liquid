@@ -1,0 +1,87 @@
+{%- doc -%}
+  Renders filter remove buttons.
+
+  Accepts:
+
+  @param {object} filters - The filters to render
+  @param {string} results_url - The results URL
+{%- enddoc -%}
+
+<div class="facets-remove flex flex-wrap items-center gap-2">
+  {% assign count = 0 %}
+  {%- for filter in filters -%}
+    {% if filter.type == 'price_range' and filter.min_value.value != null or filter.max_value.value != null %}
+      {%- liquid
+        assign is_active = true
+        assign count = count | plus: 1
+      -%}
+      <facet-remove-component
+        class="btn btn--secondary btn--small"
+        data-url="{{ filter.url_to_remove }}"
+        tabindex="0"
+        role="button"
+        on:click="/removeFilter?form="
+        on:keydown="/removeFilter?form="
+      >
+        <span class="btn__text">
+          {%- if filter.min_value.value != null and filter.max_value.value != null %}
+            {{- filter.min_value.value | money -}}
+            –
+            {{- filter.max_value.value | money -}}
+          {%- elsif filter.min_value.value != null -%}
+            {{ filter.min_value.value | money }}–{{ filter.range_max | money }}
+          {%- elsif filter.max_value.value != null -%}
+            {{- 0 | money -}}
+            –
+            {{- filter.max_value.value | money -}}
+          {%- endif -%}
+        </span>
+        {% render 'icon', icon: 'close', size: 'small' %}
+        <span class="visually-hidden">{{ 'actions.remove' | t }}</span>
+      </facet-remove-component>
+    {% else %}
+      {%- for value in filter.active_values -%}
+        {%- liquid
+          assign is_active = true
+          assign count = count | plus: 1
+        -%}
+        <facet-remove-component
+          class="btn btn--secondary btn--small"
+          data-url="{{ value.url_to_remove }}"
+          tabindex="0"
+          role="button"
+          on:click="/removeFilter?form="
+          on:keydown="/removeFilter?form="
+        >
+          <span class="btn__text flex items-center gap-2">
+            {% if value.swatch %}
+              {% render 'swatch', swatch: value.swatch %}
+            {% endif %}
+            {{ value.label | escape }}
+          </span>
+
+          {% render 'icon', icon: 'close', size: 'small' %}
+          <span class="visually-hidden">{{ 'actions.remove' | t }}</span>
+        </facet-remove-component>
+      {%- endfor -%}
+    {% endif %}
+  {%- endfor -%}
+  {% if is_active %}
+    <facet-remove-component
+      data-url="{{ results_url }}"
+    >
+      <button
+        type="button"
+        class="button-unstyled facets__clear-all-link link link--underline facets__clear-all{% if is_active %} active{% endif %}"
+        ref="clearButton"
+        on:click="/removeFilter?form="
+        on:keydown="/removeFilter?form="
+      >
+        {{- 'actions.clear_all' | t -}}
+      </button>
+    </facet-remove-component>
+  {% endif %}
+  {% if count > 0 %}
+    <span class="facets-remove__count color-subtext visually-hidden">{{ count }}</span>
+  {% endif %}
+</div>

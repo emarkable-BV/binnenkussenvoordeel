@@ -1,0 +1,358 @@
+{%- liquid
+  assign is_read_more = false
+  assign wrap_tag = 'div'
+  if block.settings.line_limit != 'none'
+    assign is_read_more = true
+    assign wrap_tag = 'read-more'
+  endif
+-%}
+{%- capture children -%}
+  {% render 'text', block: block %}
+{%- endcapture -%}
+<{{ wrap_tag }}
+  class="read-more flex flex-col items-start gap-3"
+  {%- if is_read_more -%}
+    data-toggle-class="text-limit-{{ block.settings.line_limit }}"
+    data-show-text="{{ 'content.view_more' | t }}"
+    data-hide-text="{{ 'content.view_less' | t }}"
+  {% endif %}
+  {{ block.shopify_attributes }}
+>
+  {%- if is_read_more -%}
+    <div
+      class="read-more__content relative"
+      ref="readMoreContent"
+    >
+      {{ children }}
+    </div>
+    <button
+      ref="readMoreButton"
+      on:click="/onToggleClick"
+      class="read-more__toggle no-js-hidden btn btn--medium btn--{{ block.settings.button_style }}"
+    >
+      <span ref="readMoreButtonText" class="btn__text">{{ 'content.view_more' | t }}</span>
+    </button>
+  {%- else -%}
+    {{ children }}
+  {%- endif -%}
+</{{ wrap_tag }}>
+
+{% schema %}
+{
+  "name": "t:names.collapsible_text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "t:html_defaults.share_information_about_your"
+    },
+    {
+      "type": "header",
+      "content": "t:content.typography"
+    },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        {
+          "value": "rte",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "text-subheading",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "rte"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "id": "font_weight",
+      "type": "select",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.inherit"
+        },
+        {
+          "value": "300",
+          "label": "t:options.light"
+        },
+        {
+          "value": "400",
+          "label": "t:options.regular"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "t:options.semi_bold"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        },
+        {
+          "value": "800",
+          "label": "t:options.extra_bold"
+        },
+        {
+          "value": "900",
+          "label": "t:options.black"
+        }
+      ],
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:settings.font_size",
+      "default": 15,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 15,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal",
+      "visible_if": "{{ block.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "subtext",
+          "label": "t:options.subtext"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "header",
+      "content": "t:content.collapsible_settings"
+    },
+    {
+      "type": "select",
+      "id": "line_limit",
+      "label": "t:settings.text_line_limit",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.no_limit"
+        },
+        {
+          "value": "1-line",
+          "label": "t:options.1_line"
+        },
+        {
+          "value": "2-lines",
+          "label": "t:options.2_lines"
+        },
+        {
+          "value": "3-lines",
+          "label": "t:options.3_lines"
+        },
+        {
+          "value": "4-lines",
+          "label": "t:options.4_lines"
+        },
+        {
+          "value": "5-lines",
+          "label": "t:options.5_lines"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "t:settings.button_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.secondary"
+        },
+        {
+          "value": "white",
+          "label": "t:options.white"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.outline"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-scale",
+      "label": "t:settings.mobile_scale",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.collapsible_text",
+      "category": "t:categories.basic",
+      "settings": {
+        "text": "<p>Take this opportunity to share meaningful details about your brand and the story behind it. Let your customers know what drives your business forward—whether it’s a passion for quality, innovation, sustainability, or craftsmanship. Talk about the values you hold dear, the inspiration behind your products, and the people or ideas that make your brand unique.</p><p>You can use this section to highlight a signature product that defines your collection, describe the creative process that brings your vision to life, or offer a behind-the-scenes look at how your items are made. It’s also an ideal place to share updates about upcoming launches, special promotions, or community initiatives that reflect your mission.</p><p>By giving visitors an authentic glimpse into your brand’s world, you help them connect with more than just your products—you invite them to become part of your story. This kind of transparency and warmth builds trust, strengthens engagement, and leaves a lasting impression that turns first-time visitors into loyal customers.</p>",
+        "type_preset": "rte",
+        "font": "var(--font-body--family)",
+        "font_size": 15,
+        "font_size_mobile": 15,
+        "line_height": "normal",
+        "text_color": "text",
+        "line_limit": "4-lines",
+        "button_style": "primary",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "mobile-padding-scale": 80
+      }
+    }
+  ]
+}
+{% endschema %}

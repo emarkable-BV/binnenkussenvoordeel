@@ -1,0 +1,295 @@
+{%- liquid
+  assign products = section.settings.product_list | reject: 'id', product.id
+-%}
+{% if products != blank or request.design_mode %}
+  {%- liquid
+    assign product_count = products | size
+    assign products_per_page = section.settings.products_per_page
+    assign is_carousel = false
+
+    if products == blank
+      assign product_count = products_per_page | times: 2
+    endif
+
+    assign number_of_slides = product_count
+    if products_per_page > 1
+      assign number_of_slides = product_count | plus: 0.0 | divided_by: products_per_page | ceil
+    endif
+
+    if number_of_slides > 1
+      assign is_carousel = true
+    endif
+
+    capture section_header
+      content_for 'block', type: '_section-header-vertical', id: 'section-header-vertical'
+    endcapture
+  -%}
+  <div
+    class="product-combine spacing-style color-{{ section.settings.color_scheme }}"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <div class="page-width">
+      <div class="product-combine__wrapper flex flex-col md:flex-row md:items-center">
+        <div class="product-combine__main-item w-full">
+          {% render 'product-card',
+            product: product,
+            is_current_product: true,
+            show_swatch: false,
+            show_quick_view: false,
+            show_quick_view_mobile: false,
+            show_quick_add: false,
+            show_quick_add_mobile: false,
+            show_second_image_on_hover: false,
+            show_badges: section.settings.pcard_show_badges,
+            show_vendor: section.settings.pcard_show_vendor,
+            show_type: section.settings.pcard_show_type
+          %}
+        </div>
+        <div class="product-combine__combine-items w-full">
+          {{ section_header }}
+          <carousel-slider class="carousel w-full">
+            <script type="application/json" ref="config">
+              {
+                "loop": false,
+                "slidesPerView": 1,
+                "spaceBetween": 30,
+                "pagination": { "type": "progressbar" },
+                "counter": true
+              }
+            </script>
+            <div ref="container" class="swiper">
+              <div class="swiper-wrapper" role="list">
+                {%- if products_per_page > 1 -%}
+                  {%- assign continue = 0 -%}
+                  {%- for i in (1..number_of_slides) -%}
+                    <div class="swiper-slide" role="listitem" tabindex="-1">
+                      <ul
+                        class="list-unstyled flex flex-col gap-4 md:gap-6"
+                        role="list"
+                      >
+                        {%- if products != blank -%}
+                          {%- for combine_product in products limit: products_per_page offset: continue -%}
+                            <li>
+                              {% render 'product-card-horizontal',
+                                product: combine_product,
+                                show_badges: section.settings.pcard_show_badges,
+                                show_vendor: section.settings.pcard_show_vendor,
+                                show_type: section.settings.pcard_show_type
+                              %}
+                            </li>
+                          {%- endfor -%}
+                        {%- else -%}
+                          {%- for i in (1..products_per_page) -%}
+                            <li>
+                              {% render 'product-card-horizontal', product: blank %}
+                            </li>
+                          {%- endfor -%}
+                        {%- endif -%}
+                      </ul>
+                    </div>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- if products != blank -%}
+                    {%- for combine_product in products -%}
+                      <div class="swiper-slide" role="listitem" tabindex="-1">
+                        {% render 'product-card-horizontal',
+                          product: combine_product,
+                          show_badges: section.settings.pcard_show_badges,
+                          show_vendor: section.settings.pcard_show_vendor,
+                          show_type: section.settings.pcard_show_type
+                        %}
+                      </div>
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- for i in (1..product_count) -%}
+                      <div class="swiper-slide" role="listitem" tabindex="-1">
+                        {% render 'product-card-horizontal', product: blank %}
+                      </div>
+                    {%- endfor -%}
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+            {%- if is_carousel -%}
+              {%- render 'carousel-controls', counter: true, pagination: true, pagination_class: 'carousel__pagination--progressbar-short' -%}
+            {%- endif -%}
+          </carousel-slider>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:names.products_combine",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "t:settings.products"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "t:settings.products_per_page",
+      "default": 2,
+      "min": 1,
+      "max": 3,
+      "step": 1
+    },
+    {
+      "type": "header",
+      "content": "t:content.product_cards"
+    },
+    {
+      "type": "checkbox",
+      "id": "pcard_show_badges",
+      "label": "t:settings.show_badges",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "pcard_show_vendor",
+      "label": "t:settings.show_product_vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "pcard_show_type",
+      "label": "t:settings.show_product_type",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:settings.devices",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start-mobile",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end-mobile",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.device == 'mobile' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.products_combine",
+      "category": "t:categories.products",
+      "settings": {
+        "product_list": [],
+        "products_per_page": 2,
+        "color_scheme": "",
+        "device": "desktop",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48
+      },
+      "blocks": {
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "blocks": {
+            "heading": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Products Combine</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              }
+            }
+          },
+          "block_order": ["heading"]
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

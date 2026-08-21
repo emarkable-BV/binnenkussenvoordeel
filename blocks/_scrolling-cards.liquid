@@ -1,0 +1,45 @@
+{%- if block.blocks.size > 0 -%}
+  {%- liquid
+    assign swipe_on_mobile = true
+    assign columns_mobile = 1
+
+    if block.blocks.size <= columns_mobile
+      assign swipe_on_mobile = false
+    endif
+  -%}
+  {%- capture inline_style -%}
+    {% render 'layout-panel-style', type: 'grid', columns_mobile: columns_mobile, columns_xxl: columns_mobile %}
+    {% render 'gap-style', column_gap: 8, column_gap_mobile: 8, row_gap: 8, row_gap_mobile: 8 %}
+  {%- endcapture -%}
+  <div
+    class="block-scrolling-cards{% if swipe_on_mobile %} swipe-mobile swipe-mobile--{{ columns_mobile }}-cols{% endif %}"
+    {{ block.shopify_attributes }}
+    ref="scrollEl"
+  >
+    <div
+      class="layout-panel-grid gap-style{% if swipe_on_mobile %} swipe__inner{% endif %}"
+      style="{{ inline_style | strip | strip_newlines }}"
+    >
+      {%- for block in block.blocks -%}
+        <div
+          class="scrolling-cards__card f-column"
+          ref="cards[]"
+        >
+          {% render block %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:names.scrolling_cards",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "product-overlay-card"
+    }
+  ],
+  "settings": []
+}
+{% endschema %}

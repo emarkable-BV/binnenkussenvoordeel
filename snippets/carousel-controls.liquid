@@ -1,0 +1,170 @@
+{% doc %}
+  @param {string} [type] - Carousel control type (default: 'group'). Accepted values: group, relative, absolute.
+  @param {string} [type_mobile] - Type for mobile viewport
+  @param {string} [type_desktop] - Type for desktop viewport
+  @param {string} [class] - Custom class to define in addition to this block classes
+  @param {string} [ref] - The ref of the controls
+  @param {boolean} [pagination] - Whether to show the pagination (default: true)
+  @param {boolean} [pagination_mobile] - Pagination for mobile
+  @param {boolean} [pagination_desktop] - Pagination for desktop
+  @param {string} [pagination_class] - Custom class to define in addition to pagination element
+  @param {boolean} [navigation] - Whether to show the navigation (default: true)
+  @param {boolean} [navigation_mobile] - Navigation for mobile
+  @param {boolean} [navigation_desktop] - Navigation for desktop
+  @param {boolean} [counter] - Whether to show the counter (default: true)
+  @param {boolean} [counter_mobile] - Counter for mobile
+  @param {boolean} [counter_desktop] - Counter for desktop
+  @param {string} [navigation_size] - The size of the navigation (default: 'medium'). Accepted values: small, medium
+  @param {boolean} [navigation_inside] - Whether to show navigation inside (default: false)
+  @param {string} [mobile_class] - Custom class to define in addition to mobile controls element
+  @param {string} [desktop_class] - Custom class to define in addition to desktop controls element
+{% enddoc %}
+
+{% liquid
+  # Detect responsive mode
+  assign is_responsive = false
+  if type_mobile != blank or type_desktop != blank or counter_mobile != blank or counter_desktop != blank or pagination_mobile != blank or pagination_desktop != blank or navigation_mobile != blank or navigation_desktop != blank
+    assign is_responsive = true
+  endif
+
+  # Mobile values (fallback to base)
+  assign mobile_type = type_mobile | default: type | default: 'group'
+  assign mobile_counter = counter_mobile | default: counter, allow_false: true
+  assign mobile_pagination = pagination_mobile | default: pagination, allow_false: true
+  assign mobile_navigation = navigation_mobile | default: navigation, allow_false: true
+
+  # Desktop values (fallback to base)
+  assign desktop_type = type_desktop | default: type | default: 'group'
+  assign desktop_counter = counter_desktop | default: counter, allow_false: true
+  assign desktop_pagination = pagination_desktop | default: pagination, allow_false: true
+  assign desktop_navigation = navigation_desktop | default: navigation, allow_false: true
+
+  # Button classes
+  assign mobile_button_classes = 'button-unstyled'
+  unless mobile_type == 'group'
+    assign mobile_button_classes = 'btn btn--outline btn--icon-only'
+  endunless
+
+  assign desktop_button_classes = 'button-unstyled'
+  unless desktop_type == 'group'
+    assign desktop_button_classes = 'btn btn--outline btn--icon-only'
+  endunless
+
+  assign navigation_size = navigation_size | default: 'medium'
+%}
+
+{% if is_responsive %}
+  <div
+    class="carousel__controls carousel__controls--{{ mobile_type }}{% if navigation_inside %} carousel__controls--inside{% endif %} md:hidden{% if class != blank %} {{ class }}{% endif %}{% if mobile_class != blank %} {{ mobile_class }}{% endif %}"
+    data-controls-breakpoint="mobile"
+    {% if ref != blank %}
+      ref="{{ ref }}"
+    {% endif %}
+  >
+    {% if mobile_counter %}
+      <div class="carousel__counter shrink-0" data-ref="counter" aria-live="polite"></div>
+    {% endif %}
+    {% if mobile_pagination %}
+      <div
+        data-ref="pagination"
+        class="swiper-pagination carousel__pagination carousel__pagination--progressbar{% if pagination_class != blank %} {{ pagination_class }}{% endif %}"
+      ></div>
+    {% endif %}
+    {% if mobile_navigation %}
+      <div class="carousel__controls-buttons carousel__controls-buttons--{{ navigation_size }}">
+        <button
+          data-ref="prev"
+          class="swiper-button-prev carousel__button carousel__button--prev {{ mobile_button_classes }}"
+          aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+        >
+          {% render 'icon', icon: 'caret-left', class: 'carousel__button-icon' %}
+        </button>
+        <button
+          data-ref="next"
+          class="swiper-button-next carousel__button carousel__button--next {{ mobile_button_classes }}"
+          aria-label="{{ 'accessibility.slideshow_next' | t }}"
+        >
+          {% render 'icon', icon: 'caret-right', class: 'carousel__button-icon' %}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+
+  <div
+    class="carousel__controls carousel__controls--{{ desktop_type }}{% if navigation_inside %} carousel__controls--inside{% endif %} hidden md:flex{% if class != blank %} {{ class }}{% endif %}{% if desktop_class != blank %} {{ desktop_class }}{% endif %}"
+    data-controls-breakpoint="desktop"
+  >
+    {% if desktop_counter %}
+      <div class="carousel__counter shrink-0" data-ref="counter" aria-live="polite"></div>
+    {% endif %}
+    {% if desktop_pagination %}
+      <div
+        data-ref="pagination"
+        class="swiper-pagination carousel__pagination carousel__pagination--progressbar{% if pagination_class != blank %} {{ pagination_class }}{% endif %}"
+      ></div>
+    {% endif %}
+    {% if desktop_navigation %}
+      <div class="carousel__controls-buttons carousel__controls-buttons--{{ navigation_size }}">
+        <button
+          data-ref="prev"
+          class="swiper-button-prev carousel__button carousel__button--prev {{ desktop_button_classes }}"
+          aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+        >
+          {% render 'icon', icon: 'caret-left', class: 'carousel__button-icon' %}
+        </button>
+        <button
+          data-ref="next"
+          class="swiper-button-next carousel__button carousel__button--next {{ desktop_button_classes }}"
+          aria-label="{{ 'accessibility.slideshow_next' | t }}"
+        >
+          {% render 'icon', icon: 'caret-right', class: 'carousel__button-icon' %}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+{% else %}
+  {% liquid
+    assign base_type = type | default: 'group'
+    assign base_counter = counter | default: true, allow_false: true
+    assign base_pagination = pagination | default: true, allow_false: true
+    assign base_navigation = navigation | default: true, allow_false: true
+    assign base_button_classes = 'button-unstyled'
+    unless base_type == 'group'
+      assign base_button_classes = 'btn btn--outline btn--icon-only'
+    endunless
+  %}
+  <div
+    class="carousel__controls carousel__controls--{{ base_type }}{% if navigation_inside %} carousel__controls--inside{% endif %}{% if class != blank %} {{ class }}{% endif %}"
+    {% if ref != blank %}
+      ref="{{ ref }}"
+    {% endif %}
+  >
+    {% if base_counter %}
+      <div class="carousel__counter shrink-0" ref="counter" aria-live="polite"></div>
+    {% endif %}
+    {% if base_pagination %}
+      <div
+        ref="pagination"
+        class="swiper-pagination carousel__pagination carousel__pagination--progressbar{% if pagination_class != blank %} {{ pagination_class }}{% endif %}"
+      ></div>
+    {% endif %}
+    {% if base_navigation %}
+      <div class="carousel__controls-buttons carousel__controls-buttons--{{ navigation_size }}">
+        <button
+          ref="prev"
+          class="swiper-button-prev carousel__button carousel__button--prev {{ base_button_classes }}"
+          aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+        >
+          {% render 'icon', icon: 'caret-left', class: 'carousel__button-icon' %}
+        </button>
+        <button
+          ref="next"
+          class="swiper-button-next carousel__button carousel__button--next {{ base_button_classes }}"
+          aria-label="{{ 'accessibility.slideshow_next' | t }}"
+        >
+          {% render 'icon', icon: 'caret-right', class: 'carousel__button-icon' %}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

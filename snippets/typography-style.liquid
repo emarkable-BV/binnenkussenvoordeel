@@ -1,0 +1,65 @@
+{% doc %}
+  @param {object} [settings] - Section/block settings
+  @param {string} [preset] - fallback for settings.type_preset
+  @param {number} [font_size] - fallback for settings.font_size
+  @param {number} [font_size_mobile] - fallback for settings.font_size_mobile
+  @param {string} [font_family] - fallback for settings.font
+  @param {string} [font_weight] - fallback for settings.font_weight
+  @param {string} [line_height] - fallback for settings.line_height
+  @param {string} [font_type] - font type
+{% enddoc %}
+
+{%- liquid
+  assign preset = preset | default: settings.type_preset
+  assign font_size = font_size | default: settings.font_size
+  assign font_size_mobile = font_size_mobile | default: settings.font_size_mobile
+  assign font_family = font_family | default: settings.font
+  assign font_weight = font_weight | default: settings.font_weight
+  assign line_height = line_height | default: settings.line_height
+-%}
+
+{%- capture variables -%}
+  {%- if preset == 'custom' -%}
+    {%- liquid 
+      unless font_type
+        comment
+          When choosing to customize the font, picking a specific font size
+          determines the type of text block.
+        endcomment
+        if font_size != ''
+          assign font_size_value = font_size | divided_by: 10.0
+
+          if font_size_value > 4.8
+            assign font_type = 'display'
+          elsif font_size_value > 1.5
+            assign font_type = 'heading'
+          else
+            assign font_type = 'body'
+          endif
+        endif
+      endunless
+    -%}
+    {%- if font_size != blank and font_size_mobile != blank -%}
+      {%- render 'clamp-calculate-style',
+        property_name: 'font-size',
+        min_value: font_size_mobile,
+        max_value: font_size,
+      -%}
+    {%- endif -%}
+    --font-family: {{ font_family }};
+    {%- if font_weight != blank -%}
+      --font-weight: {{ font_weight }};
+    {%- else -%}
+      --font-weight: {{ font_family | replace: 'family', 'weight' }};
+    {%- endif -%}
+    {%- if preset == 'custom' and font_size == blank -%}
+      --line-height--display: var(--line-height--display-{{ line_height }});
+      --line-height--heading: var(--line-height--heading-{{ line_height }});
+      --line-height--subheading: var(--line-height--subheading-{{ line_height }});
+      --line-height--body: var(--line-height--body-{{ line_height }});
+    {%- else -%}
+      --line-height: var(--line-height--{{ font_type }}-{{ line_height }});
+    {%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+{{- variables | strip | strip_newlines -}}
