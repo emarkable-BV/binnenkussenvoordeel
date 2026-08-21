@@ -177,6 +177,7 @@
               "type": "contact-card",
               "name": "t:names.contact_card",
               "settings": {
+                "image": "shopify://shop_images/contact.png",
                 "inherit_color_scheme": true,
                 "color_scheme": "",
                 "border": "solid",
