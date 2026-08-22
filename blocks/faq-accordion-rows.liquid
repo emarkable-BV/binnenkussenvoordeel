@@ -1,0 +1,99 @@
+{%- doc -%}
+  Renders one accordion row per metaobject referenced by a
+  list.metaobject_reference metafield (e.g. custom.faq), using the
+  metaobject's "vraag" field as the row title and "antwoord" as the
+  expandable content. Meant to live inside an "accordion" block,
+  alongside (or instead of) manually added _accordion-row blocks.
+  Works on both product and collection templates via the "resource" setting.
+{%- enddoc -%}
+
+{%- liquid
+  case block.settings.resource
+    when 'product'
+      assign faq_resource = closest.product
+    else
+      assign faq_resource = closest.collection
+  endcase
+
+  assign metafield_ref = block.settings.metafield | split: '.'
+  assign mf_namespace = metafield_ref[0]
+  assign mf_key = metafield_ref[1]
+  assign faqs = faq_resource.metafields[mf_namespace][mf_key].value
+-%}
+{%- if faqs != blank -%}
+  <div class="faq-accordion-rows" {{ block.shopify_attributes }}>
+    {%- for faq in faqs -%}
+      {%- liquid
+        assign is_first = false
+        if forloop.first and block.settings.open_first_row_by_default
+          assign is_first = true
+        endif
+      -%}
+      <details
+        ref="item[]"
+        class="accordion__details{% if is_first %} is-open{% endif %}"
+        {% if is_first %}
+          open
+        {% endif %}
+      >
+        <summary ref="summary[]" class="accordion__summary flex" on:click="/onSummaryClick">
+          <h4 class="accordion__summary-text">{{ faq.vraag }}</h4>
+          {% render 'icon', icon: 'caret-down', class: 'flex shrink-0 accordion__summary-arrow icon--caret' %}
+          {% render 'icon', icon: 'plus', class: 'flex shrink-0 accordion__summary-arrow' %}
+        </summary>
+        <div ref="content[]" class="accordion__content">
+          <div class="accordion__inner">
+            {{ faq.antwoord | metafield_tag }}
+          </div>
+        </div>
+      </details>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .faq-accordion-rows .accordion__summary {
+    /* the shared accordion CSS only removes top padding from the first
+       accordion__row on the page; since every FAQ row here shares a single
+       accordion__row wrapper, that rule would otherwise strip the padding
+       from every row instead of just the first, so it's reasserted here. */
+    padding-block-start: var(--summary-padding-block, 2rem) !important;
+  }
+
+  .faq-accordion-rows .accordion__summary-text {
+    font-size: var(--font-size--h6);
+    margin: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ accordion-rijen",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "resource",
+      "label": "Bron",
+      "options": [
+        { "value": "collection", "label": "Collectie" },
+        { "value": "product", "label": "Product" }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "text",
+      "id": "metafield",
+      "label": "Metafield (namespace.key)",
+      "default": "custom.faq",
+      "info": "list.metaobject_reference metafield met FAQ-metaobjecten (velden 'vraag' en 'antwoord')"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_row_by_default",
+      "label": "Eerste vraag standaard openklappen",
+      "default": false
+    }
+  ]
+}
+{% endschema %}
