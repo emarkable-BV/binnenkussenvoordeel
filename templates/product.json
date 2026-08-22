@@ -810,8 +810,8 @@
                 "content_row_gap": 2,
                 "style": "standard",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "none",
+                "color_scheme": "scheme-2",
+                "border": "solid",
                 "border_width": 1,
                 "border_opacity": 10,
                 "border_radius": 10
@@ -839,8 +839,8 @@
                 "content_row_gap": 2,
                 "style": "standard",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "none",
+                "color_scheme": "scheme-2",
+                "border": "solid",
                 "border_width": 1,
                 "border_opacity": 10,
                 "border_radius": 10
@@ -868,8 +868,8 @@
                 "content_row_gap": 2,
                 "style": "standard",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "none",
+                "color_scheme": "scheme-2",
+                "border": "solid",
                 "border_width": 1,
                 "border_opacity": 10,
                 "border_radius": 10
@@ -897,8 +897,8 @@
                 "content_row_gap": 2,
                 "style": "standard",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "none",
+                "color_scheme": "scheme-2",
+                "border": "solid",
                 "border_width": 1,
                 "border_opacity": 10,
                 "border_radius": 10
