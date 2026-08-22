@@ -17,7 +17,7 @@
         "text_LPzFMd": {
           "type": "text",
           "settings": {
-            "text": "<p>Special Offer: 20% code pet20! <a href=\"/collections/all\" title=\"All products\">Shop Now</a></p>",
+            "text": "<p>Voor <strong>16:00</strong> besteld, morgen in huis</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
