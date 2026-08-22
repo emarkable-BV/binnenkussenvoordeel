@@ -1,0 +1,79 @@
+{%- doc -%}
+  Renders a two-column specifications table from a list metafield.
+  Each metafield list item must be formatted as "kenmerk;waarde".
+{%- enddoc -%}
+
+{%- liquid
+  assign metafield_ref = block.settings.metafield | split: '.'
+  assign mf_namespace = metafield_ref[0]
+  assign mf_key = metafield_ref[1]
+  assign spec_items = closest.product.metafields[mf_namespace][mf_key].value
+-%}
+{%- if spec_items != blank -%}
+  <div class="specifications-table" {{ block.shopify_attributes }}>
+    {%- for item in spec_items -%}
+      {%- assign spec_parts = item | split: ';' -%}
+      {%- assign spec_label = spec_parts[0] | strip -%}
+      {%- assign spec_value = spec_parts[1] | strip -%}
+      {%- if spec_label != blank and spec_value != blank -%}
+        <div class="specifications-table__row">
+          <span class="specifications-table__label">{{ spec_label }}</span>
+          <span class="specifications-table__value">{{ spec_value }}</span>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .specifications-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .specifications-table__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.6rem;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid rgb(var(--color-border) / var(--color-border-alpha));
+  }
+
+  .specifications-table__row:first-child {
+    padding-block-start: 0;
+  }
+
+  .specifications-table__row:last-child {
+    border-bottom: none;
+    padding-block-end: 0;
+  }
+
+  .specifications-table__label {
+    font-weight: 600;
+    flex: 0 1 auto;
+  }
+
+  .specifications-table__value {
+    color: var(--color-foreground-secondary);
+    text-align: right;
+    flex: 0 1 auto;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Specificatietabel",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "metafield",
+      "label": "Metafield (namespace.key)",
+      "default": "custom.specificaties",
+      "info": "Lijst-metafield met regels in de vorm 'kenmerk;waarde'"
+    }
+  ]
+}
+{% endschema %}
