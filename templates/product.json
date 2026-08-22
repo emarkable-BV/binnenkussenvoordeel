@@ -703,7 +703,7 @@
                     "text_JNT7ew": {
                       "type": "text",
                       "settings": {
-                        "text": "{{ closest.product.metafields.custom.specificaties | metafield_tag }}",
+                        "text": "<p>{{ closest.product.metafields.custom.specificaties | metafield_text }}</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
