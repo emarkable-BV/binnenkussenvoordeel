@@ -262,6 +262,7 @@
     "contact_heading": "Heading",
     "contact_phone": "Phone number",
     "contact_email": "Email address",
+    "contact_chat_link": "Chat link",
     "color": "Color",
     "type": "Type",
     "delay": "Delay (ms)",

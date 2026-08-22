@@ -1966,6 +1966,11 @@
         "type": "text",
         "id": "contact_email",
         "label": "t:settings.contact_email"
+      },
+      {
+        "type": "url",
+        "id": "contact_chat_link",
+        "label": "t:settings.contact_chat_link"
       }
     ]
   }
