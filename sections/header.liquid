@@ -68,6 +68,9 @@
 
     <div class="header__icons header__icons--right flex justify-end">
       <div class="header__buttons flex items-center justify-center">
+        <header-review-widget class="header__review-widget" hidden>
+          <etrusted-widget data-etrusted-widget-id="wdg-555d2440-e023-4418-866a-3a627bc929e4"></etrusted-widget>
+        </header-review-widget>
         <button
           on:click="#search-drawer/showDialog"
           class="search-drawer-button flex items-center justify-center button-unstyled cursor-pointer"
@@ -118,6 +121,16 @@
   class="fixed-overlay"
 ></div>
 {%- render 'menu-drawer', section: section, blocks: section.blocks -%}
+<script src="{{ 'header-review-widget.js' | asset_url }}" type="module"></script>
+{% stylesheet %}
+  .header__review-widget {
+    align-items: center;
+    margin-inline-end: 0.4rem;
+  }
+  .header__review-widget:not([hidden]) {
+    display: flex;
+  }
+{% endstylesheet %}
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",

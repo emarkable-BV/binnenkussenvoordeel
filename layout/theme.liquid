@@ -42,6 +42,9 @@
       {{ 'rtl.css' | asset_url | stylesheet_tag: preload: true }}
     {%- endif -%}
 
+    {%- comment -%} eTrusted review widget bootstrap {%- endcomment -%}
+    <script src="https://integrations.etrusted.com/applications/widget.js/v2" defer async></script>
+
     {{ content_for_header }}
   </head>
   <body
