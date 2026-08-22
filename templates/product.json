@@ -595,6 +595,7 @@
                   "settings": {
                     "text": "Productdetails",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -643,6 +644,7 @@
                   "settings": {
                     "text": "Wasvoorschriften",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -689,8 +691,9 @@
                 "accordion_row_eMehRb": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Materiaal",
+                    "text": "Specificaties",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -700,7 +703,7 @@
                     "text_JNT7ew": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>{{ closest.product.metafields.custom.materiaal.value }}</p>",
+                        "text": "{{ closest.product.metafields.custom.specificaties | metafield_tag }}",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1370,6 +1373,7 @@
                     "text": "Polyester",
                     "open_row_by_default": true,
                     "sync_image": "shopify://shop_images/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png",
+                    "link": "",
                     "icon": "none",
                     "image_upload": "shopify://shop_images/polyester-wit.svg",
                     "icon_size": "extra-large",
@@ -1419,6 +1423,7 @@
                     "text": "Memory foam",
                     "open_row_by_default": false,
                     "sync_image": "shopify://shop_images/4cdb7db8-88fc-4285-ad8d-3d4c34166f19-2026-08-21.png",
+                    "link": "",
                     "icon": "none",
                     "image_upload": "shopify://shop_images/memory-foam-wit.svg",
                     "icon_size": "extra-large",
@@ -1468,6 +1473,7 @@
                     "text": "Veren & dons",
                     "open_row_by_default": false,
                     "sync_image": "shopify://shop_images/3d2b46af-e629-4645-bf62-01de77b5f24a-2026-08-21.png",
+                    "link": "",
                     "icon": "none",
                     "image_upload": "shopify://shop_images/veer-wit.svg",
                     "icon_size": "extra-large",
