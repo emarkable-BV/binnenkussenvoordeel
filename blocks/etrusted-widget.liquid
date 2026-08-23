@@ -10,6 +10,19 @@
   {%- endif -%}
 </div>
 
+{% stylesheet %}
+  .etrusted-widget-block {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .etrusted-widget-block etrusted-widget {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "eTrusted widget",
