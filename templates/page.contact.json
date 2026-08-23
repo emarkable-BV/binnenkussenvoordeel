@@ -146,7 +146,7 @@
             "custom_field_8WeCm7": {
               "type": "_custom-field",
               "settings": {
-                "field_type": "select",
+                "field_type": "text",
                 "heading": "Bedrijfsnaam (optioneel)",
                 "placeholder": "",
                 "required": false,
