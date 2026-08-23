@@ -586,7 +586,7 @@
                     "text_e3Pznx": {
                       "type": "text",
                       "settings": {
-                        "text": "<p></p><ol><li>Retourmelding binnen 14 dagen na ontvangst via e-mail naar de klantenservice (geen reactie op de aanmelding zelf). </li><li>Product onbeschadigd en in originele staat/verpakking terugsturen. </li><li>Retouradres: Gek op kussens!, Nijverheidsstraat 3, 6905 DL Zevenaar.</li><li> Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Terugbetaling binnen 14 dagen na ontvangst en controle, via de originele betaalmethode. Let op: producten mogen vanwege hygiëne alleen retour als ze ongedragen en ongewassen zijn.</li></ol>",
+                        "text": "<ol><li>Meld je retour binnen 14 dagen na ontvangst aan via e-mail bij onze klantenservice (je ontvangt hier geen reactie op).</li><li>Stuur het product onbeschadigd en in originele staat/verpakking terug.</li><li>Retouradres: Binnenkussenvoordeel, Nijverheidstraat 3, 6905 DL Zevenaar.</li><li>Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Na ontvangst en controle betalen we het aankoopbedrag binnen 14 dagen terug via de originele betaalmethode.</li></ol><p>Let op: binnenkussens vallen onder non-food en kunnen om hygiënische redenen alleen retour als ze ongebruikt en in originele staat zijn.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -622,7 +622,7 @@
                 "accordion_row_QJYLVd": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Defect of verkeerd product?",
+                    "text": "Defect of verkeerd product ontvangen?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
@@ -634,7 +634,7 @@
                     "text_NAC8xf": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Zo snel mogelijk contact opnemen met bestelnummer, probleembeschrijving en indien mogelijk een foto. Er volgt kosteloos een vervangend product of passende oplossing; retourkosten worden vergoed als het een fout van de webshop betreft.</p>",
+                        "text": "<p>Neem zo snel mogelijk contact op met je bestelnummer, een duidelijke omschrijving en indien mogelijk een foto. Je ontvangt kosteloos een vervangend product of een passende oplossing, en de retourkosten worden vergoed als het aan onze kant is misgegaan.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -682,7 +682,7 @@
                     "text_LrmkU8": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Ja, mits het product ongedragen, ongewassen en in originele staat is, en de ruil binnen 14 dagen na ontvangst is aangemeld. Ruilwens mailen, product terugsturen, gewenste product opnieuw bestellen (sneller dan wachten op het retourproces), na controle wordt het geld teruggestort. Verzendkosten voor het terugsturen zijn voor eigen rekening, nieuwe verzendkosten kunnen van toepassing zijn.</p>",
+                        "text": "<p>Ja, mits het ongebruikt en in originele staat is en je de ruil binnen 14 dagen na ontvangst meldt. Stuur het product terug en bestel gelijk het juiste product opnieuw, dat gaat sneller dan wachten op het retourproces. Na controle van het geretourneerde product storten we het bedrag terug. Verzendkosten voor het terugsturen zijn voor eigen rekening, voor het nieuwe product kunnen opnieuw verzendkosten gelden.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -718,7 +718,7 @@
                 "accordion_row_TGBynw": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Volumekorting en retourneren",
+                    "text": "Wat gebeurt er met retour bij volumekorting?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
@@ -730,7 +730,7 @@
                     "text_wwdB9i": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Bij retour van een deel van een volumekorting-bestelling wordt de stukprijs herberekend op basis van het aantal gehouden artikelen. Voorbeeld: 4 stuks besteld à €4,95 (totaal €19,80), 2 stuks geretourneerd, stukprijs voor de gehouden 2 stuks is dan €7,50, terugbetaling €19,80 - €15,00 = €4,80.</p>",
+                        "text": "<p>Retourneer je een deel van een bestelling met volumekorting, dan wordt de stukprijs herberekend op basis van het aantal dat je houdt. Voorbeeld: je bestelt 4 binnenkussens à €4,95 (totaal €19,80) en retourneert er 2. De stukprijs voor de 2 die je houdt is dan €7,50, je krijgt €19,80 - €15,00 = €4,80 terug.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -766,7 +766,7 @@
                 "accordion_row_9FiNBT": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Kortingsactie en retourneren",
+                    "text": "Wat gebeurt er met retour bij een kortingsactie?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
