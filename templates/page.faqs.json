@@ -976,7 +976,7 @@
         "tab_NVaytT": {
           "type": "_tab",
           "settings": {
-            "text": "Orders & Shipping"
+            "text": "Verzenden"
           },
           "blocks": {
             "group_WECDan": {
@@ -1022,7 +1022,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Orders & Shipping</p>",
+                    "text": "<p>Verzenden</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -1084,7 +1084,7 @@
                 "accordion_row_aiVT7f": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Can I modify or cancel my order after placing it?",
+                    "text": "Wat zijn de verzendkosten?",
                     "open_row_by_default": true,
                     "link": "",
                     "icon": "none",
@@ -1096,7 +1096,7 @@
                     "text_kPc8YV": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>1. Before the Order Is Processed</strong></p><ul><li>If the order is <strong>still pending</strong> or <strong>not yet processed</strong>, most stores allow you to <strong>modify or cancel</strong> it.</li><li>You usually need to do this <strong>within a few hours</strong> after placing the order.</li><li>Actions you can take may include:<br/>- Changing the shipping address<br/>- Updating the payment method<br/>- Adding or removing items<br/></li></ul><p><strong>2. After the Order Is Processed</strong></p><ul><li>Once the order is <strong>processed, packed, or shipped</strong>, modifications are often <strong>not possible</strong>.</li><li>You might be able to <strong>request a cancellation</strong>, but it may be treated as a <strong>return</strong> once delivered.<br/></li></ul><p><strong>3. Customized or Made-to-Order Products</strong></p><ul><li>If your order is <strong>personalized or custom-made</strong>, cancellations or modifications may <strong>not be allowed</strong> once production has started.<br/></li></ul><p><strong>4. How to Cancel or Modify</strong></p><ul><li><strong>Check your confirmation email</strong> for a link or instructions.</li><li><strong>Log in to your account</strong> on the store’s website to see if there’s a “Modify” or “Cancel” option.</li><li><strong>Contact customer service immediately</strong> with your order number—they can tell you what’s possible.</li></ul>",
+                        "text": "<p>Binnen Nederland is verzending gratis vanaf €24,95. Voor orders hieronder kost verzending €2,95. </p><p>België & Duitsland: €5,95 per bestelling, boven €30 geen verzendkosten. Andere landen: prijs op aanvraag via het contactformulier, afhankelijk van land en gewicht.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1132,7 +1132,7 @@
                 "accordion_row_YEMwWz": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "How long does shipping usually take?",
+                    "text": "Ik heb mijn adres verkeerd ingevoerd, wat nu?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
@@ -1144,7 +1144,7 @@
                     "text_BJ3pK3": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Standard shipping typically takes <strong>3–7 business days</strong>, while express shipping arrives within <strong>1–3 business days</strong>. Delivery times may vary slightly depending on your location and seasonal demand, especially during holidays when kids’ clothing orders increase.</p>",
+                        "text": "<p>Zo snel mogelijk contact opnemen met bestelnummer en het juiste adres. Zodra de bestelling is verwerkt en verzonden kan het adres meestal niet meer aangepast worden, al kan er soms via de vervoerder nog omgeleid worden.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1176,11 +1176,256 @@
                   "block_order": [
                     "text_BJ3pK3"
                   ]
+                },
+                "accordion_row_PRBh8E": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wat gebeurt er als ik mijn pakket niet op tijd ophaal bij het PostNL-pakketpunt?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_Rrxz4W": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Wordt het pakket niet binnen de bewaartermijn (meestal 7 dagen) opgehaald, dan stuurt PostNL het automatisch retour naar de webshop.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_Rrxz4W"
+                  ]
+                },
+                "accordion_row_NxYdNE": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Moet ik verzendkosten betalen als mijn pakket retour komt door niet-ophalen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_yXzKhC": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Ja, ondanks gratis verzending bij de eerste zending worden bij niet-ophalen alsnog de verzendkosten van de heenzending én de retourkosten van PostNL in rekening gebracht, deze worden verrekend met het terug te betalen bedrag. Opnieuw laten versturen kan, de kosten daarvoor zijn dan voor de klant.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_yXzKhC"
+                  ]
+                },
+                "accordion_row_MMTDpJ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Waarom brengen jullie kosten in rekening?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_qBhVND": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Omdat PostNL zowel zend- als retourkosten in rekening brengt bij de webshop, ook als een pakket niet wordt opgehaald.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_qBhVND"
+                  ]
+                },
+                "accordion_row_XCqh4K": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wanneer wordt mijn bestelling bezorgd?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_TPh9JP": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België en Duitsland: levering binnen 1-3 werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_TPh9JP"
+                  ]
+                },
+                "accordion_row_BX43NR": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wanneer wordt mijn bestelling bezorgd?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_QcDMrC": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België en Duitsland: levering binnen 1-3 werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_QcDMrC"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_aiVT7f",
-                "accordion_row_YEMwWz"
+                "accordion_row_YEMwWz",
+                "accordion_row_PRBh8E",
+                "accordion_row_NxYdNE",
+                "accordion_row_MMTDpJ",
+                "accordion_row_XCqh4K",
+                "accordion_row_BX43NR"
               ]
             }
           },
