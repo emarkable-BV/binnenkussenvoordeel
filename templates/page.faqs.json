@@ -721,7 +721,7 @@
                 "accordion_row_aCPLfH": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "How can I check the status of my order?",
+                    "text": "Hoe kan ik retourneren?",
                     "open_row_by_default": true,
                     "link": "",
                     "icon": "none",
@@ -733,7 +733,7 @@
                     "text_e3Pznx": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>Hoe kan ik retourneren?</strong></p><ol><li>Retourmelding binnen 14 dagen na ontvangst via e-mail naar de klantenservice (geen reactie op de aanmelding zelf). </li><li>Product onbeschadigd en in originele staat/verpakking terugsturen. </li><li>Retouradres: Gek op kussens!, Nijverheidsstraat 3, 6905 DL Zevenaar.</li><li> Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Terugbetaling binnen 14 dagen na ontvangst en controle, via de originele betaalmethode. Let op: producten mogen vanwege hygiëne alleen retour als ze ongedragen en ongewassen zijn.</li></ol>",
+                        "text": "<p></p><ol><li>Retourmelding binnen 14 dagen na ontvangst via e-mail naar de klantenservice (geen reactie op de aanmelding zelf). </li><li>Product onbeschadigd en in originele staat/verpakking terugsturen. </li><li>Retouradres: Gek op kussens!, Nijverheidsstraat 3, 6905 DL Zevenaar.</li><li> Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Terugbetaling binnen 14 dagen na ontvangst en controle, via de originele betaalmethode. Let op: producten mogen vanwege hygiëne alleen retour als ze ongedragen en ongewassen zijn.</li></ol>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
