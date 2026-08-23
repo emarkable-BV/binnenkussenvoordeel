@@ -3171,47 +3171,262 @@
         "padding-block-end-mobile": 35
       }
     },
-    "custom_section_review_widget": {
-      "type": "custom-section",
+    "testimonials_Nkf84f": {
+      "type": "testimonials",
       "blocks": {
-        "etrusted_widget_review": {
-          "type": "etrusted-widget",
+        "testimonial_NQ7JNU": {
+          "type": "testimonial",
           "settings": {
-            "widget_id": "wdg-31be60db-ea13-4cf2-a0d1-455f7d07a31d"
+            "design": "inline",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "image_away_from_edge": false,
+            "enable_image_stretch": true,
+            "image_border_radius": 0,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border_radius": 20
           },
-          "blocks": {}
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "Mooie kussens, top verzending",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_qiUiaM": {
+          "type": "testimonial",
+          "settings": {
+            "design": "inline",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "image_away_from_edge": false,
+            "enable_image_stretch": true,
+            "image_border_radius": 0,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "Mooie kussens, top verzending",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "testimonial_geiKNi": {
+          "type": "testimonial",
+          "settings": {
+            "design": "inline",
+            "show_image": false,
+            "image_ratio": "adapt",
+            "image_ratio_mobile": "adapt",
+            "image_away_from_edge": false,
+            "enable_image_stretch": true,
+            "image_border_radius": 0,
+            "product": "",
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-1",
+            "border_radius": 20
+          },
+          "blocks": {
+            "static-testimonial-text": {
+              "type": "_simple-text",
+              "static": true,
+              "settings": {
+                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "padding-block-start": 0,
+                "padding-block-end": 12,
+                "mobile-padding-scale": 100,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "static-testimonial-info": {
+              "type": "_author-info",
+              "static": true,
+              "settings": {
+                "image_width": 80,
+                "image_width_mobile": 60,
+                "name": "Mooie kussens, top verzending",
+                "name_preset": "h6",
+                "icon": "check-circle",
+                "bio": "",
+                "bio_text_color": "subtext",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 80
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        },
+        "section-header-vertical": {
+          "type": "_section-header-vertical",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "device": "desktop",
+            "padding-block-end": 40,
+            "padding-block-end-mobile": 24
+          },
+          "blocks": {
+            "text_zbREAL": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Reviews</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "100%",
+                "text_alignment": "left",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "fade-up",
+                "animation_delay": 50
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_zbREAL"
+          ]
         }
       },
       "block_order": [
-        "etrusted_widget_review"
+        "testimonial_NQ7JNU",
+        "testimonial_qiUiaM",
+        "testimonial_geiKNi"
       ],
-      "name": "eTrusted widget",
+      "name": "t:names.testimonials_carousel",
       "settings": {
-        "container": "page-width",
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "center",
-        "horizontal_alignment_flex_direction_column": "center",
-        "column_gap": 0,
-        "row_gap": 0,
-        "column_gap_mobile": 0,
-        "row_gap_mobile": 0,
-        "use_color_scheme_in_container": false,
+        "container": "fixed",
+        "type": "carousel",
+        "slides_per_view": "columns",
+        "columns": 2,
+        "column_gap": 8,
+        "row_gap": 30,
+        "enable_swipe_on_mobile": true,
+        "swipe_custom_width_column": false,
+        "swipe_column_width": 76,
+        "columns_mobile": "1",
+        "column_gap_mobile": 8,
+        "row_gap_mobile": 24,
         "color_scheme": "scheme-2",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "device": "desktop",
+        "device": "mobile",
         "padding-block-start": 50,
         "padding-block-end": 50,
-        "padding-inline-start": 15,
-        "padding-inline-end": 15,
         "padding-block-start-mobile": 48,
-        "padding-block-end-mobile": 48,
-        "padding-inline-start-mobile": 16,
-        "padding-inline-end-mobile": 16
+        "padding-block-end-mobile": 48
       }
     },
     "custom_section_D4G6Vq": {
@@ -4328,7 +4543,7 @@
           "type": "collapsible-text",
           "name": "t:names.collapsible_text",
           "settings": {
-            "text": "<p>Take this opportunity to share meaningful details about your brand and the story behind it. Let your customers know what drives your business forward—whether it’s a passion for quality, innovation, sustainability, or craftsmanship. Talk about the values you hold dear, the inspiration behind your products, and the people or ideas that make your brand unique.</p><p>You can use this section to highlight a signature product that defines your collection, describe the creative process that brings your vision to life, or offer a behind-the-scenes look at how your items are made. It’s also an ideal place to share updates about upcoming launches, special promotions, or community initiatives that reflect your mission.</p><p>By giving visitors an authentic glimpse into your brand’s world, you help them connect with more than just your products—you invite them to become part of your story. This kind of transparency and warmth builds trust, strengthens engagement, and leaves a lasting impression that turns first-time visitors into loyal customers.</p>",
+            "text": "<h1>Binnenkussens in elke maat, vulling en kwaliteit</h1><p>Op zoek naar het perfecte binnenkussen? Bij Binnenkussenvoordeel ben je aan het juiste adres. Waar andere webshops binnenkussens als bijzaak verkopen naast hun kussenhoezen, draait bij ons alles om die ene vulling die jouw kussen pas echt af maakt. Van luchtig en betaalbaar tot luxueus en vormvast: wij helpen je het binnenkussen te kiezen dat precies bij jouw kussenhoes, bank of interieur past.</p><h2>Het binnenkussen dat past bij elke kussenhoes</h2><p>Heb je al de perfecte kussenhoes in huis, maar mist je kussen nog body en volume? Dan zoek je bij ons verder. Onze binnenkussens zijn geschikt voor vrijwel elke hoes, ongeacht waar je die vandaan hebt. Twijfel je over de juiste maat? Kies dezelfde maat als je hoes voor een strak, verzorgd resultaat, of ga een maatje groter voor een volle, luxe uitstraling zoals je die vaak in het buitenland ziet. Beide opties werken uitstekend, het is puur een kwestie van smaak.</p><h2>Kies de vulling die bij jou past</h2><p>Niet elk binnenkussen is hetzelfde, en dat is precies waar wij het verschil maken. Twijfel je tussen <a href=\"https://www.binnenkussenvoordeel.nl/polyester/\">polyester</a>, <a href=\"https://www.binnenkussenvoordeel.nl/dons-veren/\">dons en veren</a> of <a href=\"https://www.binnenkussenvoordeel.nl/memory-foam/\">memory foam</a>? Onze polyester binnenkussens zijn licht, hypoallergeen en de betaalbare basis voor elk sierkussen. Ga je voor meer luxe, dan bieden onze dons en veren binnenkussens, gevuld met Nederlandse eendenveren, een vol en zacht resultaat dat zich telkens weer herstelt na opschudden. Zoek je juist extra comfort en ondersteuning? Dan is een memory foam binnenkussen, met een mix van traagschuim en polyester vezel, de perfecte keuze voor op de bank of in je stoel.</p><h2>Altijd de juiste maat binnenkussen</h2><p>Van compact tot extra groot, bij ons vind je <a href=\"https://www.binnenkussenvoordeel.nl/formaat/\">binnenkussens in elk formaat</a>. Denk aan de populaire maten 45x45 cm en 30x50 cm, maar ook 40x40, 50x50 en 60x60 cm horen bij ons standaard assortiment. Zo vind je altijd een binnenkussen dat naadloos aansluit op de kussenhoes die je al in huis hebt.</p><h2>Kwaliteit die je voelt</h2><p>Een goed binnenkussen herken je niet aan de buitenkant, maar aan hoe het aanvoelt en hoe lang het meegaat. Onze vullingen zijn zacht, veerkrachtig en behouden hun vorm, zodat je kussens er ook na maanden gebruik nog vol en verzorgd uitzien. Schud je binnenkussen af en toe eens goed op, dan blijft het jarenlang zijn werk doen.</p><h2>Specialist in binnenkussens</h2><p>Twijfel je nog tussen materialen of maten, of heb je een vraag over jouw specifieke situatie? Wij zijn specialist in binnenkussens en denken graag met je mee. Neem contact op via <a href=\"mailto:info@binnenkussenvoordeel.nl\">info@binnenkussenvoordeel.nl</a>, en geef jouw sierkussen de vulling die het verdient met Binnenkussenvoordeel!</p>",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
             "font_weight": "",
@@ -4388,7 +4603,7 @@
     "custom_section_iamhD8",
     "custom_section_LHKRWz",
     "products_bundle_KL7Fiw",
-    "custom_section_review_widget",
+    "testimonials_Nkf84f",
     "custom_section_D4G6Vq",
     "custom_section_xr4UUt",
     "custom_section_CcX8jH"
