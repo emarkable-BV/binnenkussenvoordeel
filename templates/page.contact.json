@@ -267,7 +267,7 @@
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
                     "highlight_text_color": "",
-                    "type_preset": "h5",
+                    "type_preset": "h3",
                     "font": "var(--font-body--family)",
                     "font_weight": "",
                     "font_size": 15,
