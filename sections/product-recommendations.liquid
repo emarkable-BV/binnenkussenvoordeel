@@ -79,7 +79,7 @@
   --card-placeholder-radius: {{ settings.pcard_media_radius | divided_by: 10 }}rem;
 {%- endcapture -%}
 
-<div id="product-bundles" aria-hidden="true"></div>
+<div id="product-bundles" aria-hidden="true" style="position: relative; top: -50px;"></div>
 <div
   id="section-{{ section.id }}"
   class="section product-recommendations product-recommendations--{{ layout_type }} spacing-style border-style color-{{ section.settings.color_scheme }}"
