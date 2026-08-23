@@ -308,7 +308,7 @@
                   "type": "_accordion-row",
                   "settings": {
                     "text": "Ik heb alleen een kussenhoes gekregen, waar is het binnenkussen?",
-                    "open_row_by_default": true,
+                    "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
@@ -356,7 +356,7 @@
                   "type": "_accordion-row",
                   "settings": {
                     "text": "Wat is het verschil tussen sierkussen en kussenhoes?",
-                    "open_row_by_default": true,
+                    "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
@@ -404,7 +404,7 @@
                   "type": "_accordion-row",
                   "settings": {
                     "text": "Wat is het verschil tussen sierkussen en kussenhoes?",
-                    "open_row_by_default": true,
+                    "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
@@ -452,7 +452,7 @@
                   "type": "_accordion-row",
                   "settings": {
                     "text": "Wat voor binnenkussen moet ik hebben?",
-                    "open_row_by_default": true,
+                    "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
