@@ -352,102 +352,6 @@
                     "text_U8eTXC"
                   ]
                 },
-                "accordion_row_WWxUyr": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "text": "Wat is het verschil tussen sierkussen en kussenhoes?",
-                    "open_row_by_default": false,
-                    "link": "",
-                    "icon": "none",
-                    "icon_size": "extra-large",
-                    "width": 24,
-                    "width_mobile": 24
-                  },
-                  "blocks": {
-                    "text_kktTYg": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Een sierkussen is een compleet kussen dat bestaat uit een binnenvulling én een hoes, direct te gebruiken. Een kussenhoes is alléén de buitenhoes, zonder binnenvulling, handig als je al een binnenkussen hebt of gewoon een andere look wilt.</p>",
-                        "highlight_style": "none",
-                        "highlight_font_style": "italic",
-                        "highlight_shape_color": "",
-                        "highlight_text_color": "",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_weight": "",
-                        "font_size": 15,
-                        "font_size_mobile": 15,
-                        "line_height": "normal",
-                        "text_color": "subtext",
-                        "text_color_gradient": "",
-                        "disable_line_break_mobile": false,
-                        "width": "fit-content",
-                        "text_alignment": "left",
-                        "width_mobile": "fit-content",
-                        "text_alignment_mobile": "left",
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0,
-                        "mobile-padding-scale": 80,
-                        "animation_type": "none",
-                        "animation_delay": 250
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_kktTYg"
-                  ]
-                },
-                "accordion_row_heaYPP": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "text": "Wat is het verschil tussen sierkussen en kussenhoes?",
-                    "open_row_by_default": false,
-                    "link": "",
-                    "icon": "none",
-                    "icon_size": "extra-large",
-                    "width": 24,
-                    "width_mobile": 24
-                  },
-                  "blocks": {
-                    "text_zPYRwj": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Een sierkussen is een compleet kussen dat bestaat uit een binnenvulling én een hoes, direct te gebruiken. Een kussenhoes is alléén de buitenhoes, zonder binnenvulling, handig als je al een binnenkussen hebt of gewoon een andere look wilt.</p>",
-                        "highlight_style": "none",
-                        "highlight_font_style": "italic",
-                        "highlight_shape_color": "",
-                        "highlight_text_color": "",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_weight": "",
-                        "font_size": 15,
-                        "font_size_mobile": 15,
-                        "line_height": "normal",
-                        "text_color": "subtext",
-                        "text_color_gradient": "",
-                        "disable_line_break_mobile": false,
-                        "width": "fit-content",
-                        "text_alignment": "left",
-                        "width_mobile": "fit-content",
-                        "text_alignment_mobile": "left",
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0,
-                        "mobile-padding-scale": 80,
-                        "animation_type": "none",
-                        "animation_delay": 250
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_zPYRwj"
-                  ]
-                },
                 "accordion_row_rQbbwV": {
                   "type": "_accordion-row",
                   "settings": {
@@ -693,8 +597,6 @@
                 "accordion_row_XjVwJq",
                 "accordion_row_36nwRD",
                 "accordion_row_zHRzJ9",
-                "accordion_row_WWxUyr",
-                "accordion_row_heaYPP",
                 "accordion_row_rQbbwV",
                 "accordion_row_6E7qUP",
                 "accordion_row_77rcUf",
@@ -711,7 +613,7 @@
         "tab_tqfBxL": {
           "type": "_tab",
           "settings": {
-            "text": "Track Order"
+            "text": "Retourneren"
           },
           "blocks": {
             "group_kznQhm": {
@@ -757,7 +659,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Track Order</p>",
+                    "text": "<p>Retourneren</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -831,7 +733,7 @@
                     "text_e3Pznx": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>1. Check Your Email</strong></p><ul><li>Most stores send a <strong>confirmation email</strong> when your order is placed.</li><li>They often follow up with a <strong>shipping or tracking email</strong> once your order is on its way.</li><li>Look for a <strong>tracking number</strong> or a link to check the order status online.</li></ul><p><strong>2. Log In to Your Account</strong></p><ul><li>If you created an account on the store’s website, log in and go to <strong>“My Orders”</strong> or <strong>“Order History”</strong>.</li><li>You should see the <strong>current status</strong> (e.g., “Processing,” “Shipped,” “Delivered”) and sometimes the <strong>estimated delivery date</strong>.<br/></li></ul><p><strong>3. Use the Tracking Number</strong></p><ul><li>Once your order has shipped, you can usually track it via the <strong>carrier’s website</strong> (like FedEx, UPS, DHL, USPS).</li><li>Enter the tracking number to see <strong>real-time updates</strong> on location and expected delivery.<br/></li></ul><p><strong>4. Contact Customer Service</strong></p><ul><li>If you can’t find information online or via email, reach out to the <strong>store’s customer service</strong>.</li><li>Provide your <strong>order number</strong> and <strong>email</strong> to get updates on your order.</li></ul>",
+                        "text": "<p><strong>Hoe kan ik retourneren?</strong></p><ol><li>Retourmelding binnen 14 dagen na ontvangst via e-mail naar de klantenservice (geen reactie op de aanmelding zelf). </li><li>Product onbeschadigd en in originele staat/verpakking terugsturen. </li><li>Retouradres: Gek op kussens!, Nijverheidsstraat 3, 6905 DL Zevenaar.</li><li> Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Terugbetaling binnen 14 dagen na ontvangst en controle, via de originele betaalmethode. Let op: producten mogen vanwege hygiëne alleen retour als ze ongedragen en ongewassen zijn.</li></ol>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -867,7 +769,7 @@
                 "accordion_row_QJYLVd": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "What should I do if my tracking hasn’t updated?",
+                    "text": "Defect of verkeerd product?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
@@ -879,7 +781,7 @@
                     "text_NAC8xf": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Tracking updates may take 24–48 hours to appear, especially during busy seasons. If the status remains unchanged for more than 3 days, feel free to contact our support team—we’ll help you check the progress of your package and ensure it’s on the way to you.</p>",
+                        "text": "<p>Zo snel mogelijk contact opnemen met bestelnummer, probleembeschrijving en indien mogelijk een foto. Er volgt kosteloos een vervangend product of passende oplossing; retourkosten worden vergoed als het een fout van de webshop betreft.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -911,11 +813,158 @@
                   "block_order": [
                     "text_NAC8xf"
                   ]
+                },
+                "accordion_row_QPraVi": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Kan ik een product ruilen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_LrmkU8": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Ja, mits het product ongedragen, ongewassen en in originele staat is, en de ruil binnen 14 dagen na ontvangst is aangemeld. Ruilwens mailen, product terugsturen, gewenste product opnieuw bestellen (sneller dan wachten op het retourproces), na controle wordt het geld teruggestort. Verzendkosten voor het terugsturen zijn voor eigen rekening, nieuwe verzendkosten kunnen van toepassing zijn.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_LrmkU8"
+                  ]
+                },
+                "accordion_row_TGBynw": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Volumekorting en retourneren",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_wwdB9i": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Bij retour van een deel van een volumekorting-bestelling wordt de stukprijs herberekend op basis van het aantal gehouden artikelen. Voorbeeld: 4 stuks besteld à €4,95 (totaal €19,80), 2 stuks geretourneerd, stukprijs voor de gehouden 2 stuks is dan €7,50, terugbetaling €19,80 - €15,00 = €4,80.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_wwdB9i"
+                  ]
+                },
+                "accordion_row_9FiNBT": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Kortingsactie en retourneren",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_kTRTza": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Bij een kortingsactie (bijv. 2+1 gratis) geldt: retourneer je een actie-item, dan betaal je voor de behouden producten de reguliere prijs, dit wordt verrekend met het totaalbedrag.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_kTRTza"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_aCPLfH",
-                "accordion_row_QJYLVd"
+                "accordion_row_QJYLVd",
+                "accordion_row_QPraVi",
+                "accordion_row_TGBynw",
+                "accordion_row_9FiNBT"
               ]
             }
           },
