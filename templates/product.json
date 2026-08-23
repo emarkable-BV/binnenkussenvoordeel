@@ -227,7 +227,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Shop onze voordeelbundels",
-                "link": "#shopify-section-template--29402397245773__product_recommendations_cGQqzw",
+                "link": "#product-bundles",
                 "style": "outline",
                 "size": "large",
                 "icon": "none",
