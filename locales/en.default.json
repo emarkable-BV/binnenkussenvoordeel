@@ -1,5 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "accessibility": {
+    "call_phone_number": "Call {{ phone }}",
+    "email_address": "Email {{ email }}",
     "account": "Open account menu",
     "log_in": "Login",
     "cart": "Cart",
@@ -302,6 +313,10 @@
     "limit_message": "You can only add a maximum of {{ maximum }} products in the bundle.",
     "duplicate_message": "This product is already in the bundle.",
     "current_item": "Current item",
+    "view_all": "View all",
+    "pcard_in_stock": "Direct beschikbaar",
+    "pcard_out_of_stock": "Niet beschikbaar",
+    "accordion_row_link_label": "Bekijk meer",
     "timer": {
       "days": "days",
       "hours": "hours",

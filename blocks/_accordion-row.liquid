@@ -4,6 +4,9 @@
   {% if block.settings.open_row_by_default %}
     open
   {% endif %}
+  {%- if block.settings.sync_image != blank %}
+    data-sync-image="{{ block.settings.sync_image | image_url: width: 1200 }}"
+  {%- endif %}
   {{ block.shopify_attributes }}
 >
   <summary ref="summary[]" class="accordion__summary flex" on:click="/onSummaryClick">
@@ -27,6 +30,11 @@
   <div ref="content[]" class="accordion__content">
     <div class="accordion__inner">
       {% content_for 'blocks' %}
+      {%- if block.settings.link != blank -%}
+        <a href="{{ block.settings.link }}" class="accordion-row__link btn btn--plain btn--medium">
+          {{ 'content.accordion_row_link_label' | t }}
+        </a>
+      {%- endif -%}
     </div>
   </div>
 </details>
@@ -45,6 +53,25 @@
       "id": "open_row_by_default",
       "label": "t:settings.open_row_by_default",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "sync_image",
+      "label": "t:settings.sync_image",
+      "info": "t:info.sync_image"
+    },
+    {
+      "type": "header",
+      "content": "t:content.link"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link"
     },
     {
       "type": "header",
@@ -332,6 +359,9 @@
     },
     {
       "type": "@theme"
+    },
+    {
+      "type": "_specifications-table"
     }
   ],
   "presets": [

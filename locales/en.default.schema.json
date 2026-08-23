@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "categories": {
     "banners": "Banners",
@@ -211,6 +220,7 @@
     "desktop_content_width": "Desktop content width",
     "desktop_columns": "Columns",
     "mobile_full_width": "Enable full wide on mobile",
+    "custom_class": "CSS class",
     "button_mobile_full_width": "Enable button full wide on mobile",
     "mobile_columns": "Mobile columns",
     "enable_swipe_on_mobile": "Enable swipe on mobile",
@@ -222,6 +232,7 @@
     "row_gap_mobile": "Row gap mobile",
     "custom_columns": "Custom columns",
     "open_row_by_default": "Open row by default",
+    "sync_image": "Synced image",
     "open_behavior": "Open behavior",
     "heading_preset": "Heading preset",
     "title_preset": "Title preset",
@@ -248,6 +259,10 @@
     "share_on_whatsapp": "Share on WhatsApp",
     "share_on_email": "Share by Email",
     "show_currency_code": "Show currency code",
+    "contact_heading": "Heading",
+    "contact_phone": "Phone number",
+    "contact_email": "Email address",
+    "contact_chat_link": "Chat link",
     "color": "Color",
     "type": "Type",
     "delay": "Delay (ms)",
@@ -317,6 +332,7 @@
     "product_count": "Product count",
     "post_count": "Post count",
     "media_overlay": "Media overlay",
+    "sync_accordion_image": "Sync with accordion",
     "overlay_color": "Overlay color",
     "extend_media_to_screen_edge": "Extend media to screen edge",
     "media_position": "Media position",
@@ -531,6 +547,8 @@
     "product_badges": "Product badges",
     "social_media": "Social media",
     "prices": "Prices",
+    "contact_block": "Contact block",
+    "contact_card": "Contact card",
     "lookbook": "Lookbook",
     "lookbook_card": "Lookbook card",
     "lookbook_carousel": "Lookbook carousel",
@@ -692,6 +710,9 @@
     "image_card_badge": "Image card with badge"
   },
   "content": {
+    "link": "Link",
+    "menu": "Menu",
+    "contact_block_info": "This information is used by the Contact card block, which can be added anywhere in the theme editor.",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
     "size_chart_custom": "Use product metafield \"foxtheme.size_chart\" (type: page_reference) to show different size charts per product. [Add metafield](/admin/metafields/product)",
     "size_chart": "Size chart",
@@ -829,6 +850,10 @@
     "progress_bar": "Progress bar"
   },
   "info": {
+    "custom_class": "Optional CSS class for custom styling of this specific button.",
+    "announcement_menu": "Shown subtly on the right, aligned with the announcement text. Hidden on mobile.",
+    "sync_image": "When this row is placed inside an image-sync accordion section, opening it will display this image.",
+    "sync_accordion_image": "When enabled, this image updates automatically when a row with a synced image is opened in an accordion elsewhere in this section.",
     "enable_gift_wrap_per_product": "When disabled, customers add one gift wrapping fee for the whole cart. When enabled, they can choose gift wrapping per product line in the cart (each line gets its own fee).",
     "gift_wrap_sync_quantity": "When enabled, gift wrap quantity matches the product quantity. When disabled, gift wrap quantity is always 1.",
     "column_order": "Controls the display order of this column on mobile E.g: -9 to show first, 9 to show last.",
@@ -1065,6 +1090,7 @@
     "zoom_out": "Zoom out",
     "percentage": "Percentage",
     "fixed_amount": "Fixed amount",
+    "price_tag": "Price tag",
     "circle": "Circle",
     "logo_left": "Logo left",
     "logo_center": "Logo center",

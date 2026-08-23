@@ -107,6 +107,35 @@
   {%- endcapture -%}
 
   {%- capture list_items -%}
+    {%- if block.settings.banner_image != blank -%}
+      <div class="f-column tab-banner{% if type == 'carousel' %} swiper-slide{% endif %}">
+        <div class="tab-banner__inner relative overflow-hidden">
+          {% render 'responsive-image',
+            mode: 'liquid',
+            image: block.settings.banner_image,
+            image_ratio: '1',
+            sizes: media_sizes,
+            default_alt: block.settings.banner_title,
+            class: 'tab-banner__media',
+            img_class: 'w-full'
+          %}
+          <div class="tab-banner__top absolute flex flex-col items-start gap-2">
+            {%- if tab_title != blank -%}
+              <span class="badge badge--subtle">{{ tab_title }}</span>
+            {%- endif -%}
+            {%- if block.settings.banner_title != blank -%}
+              <h3 class="tab-banner__heading h3">{{ block.settings.banner_title }}</h3>
+            {%- endif -%}
+          </div>
+          {%- if collection != blank -%}
+            <a href="{{ collection.url }}" class="tab-banner__view-all btn btn--plain btn--medium btn--icon absolute">
+              <span class="btn__text">{{ 'content.view_all' | t }}</span>
+              {% render 'icon', icon: 'caret-right', size: 'small' %}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
     {% if collection != blank and shop.products_count != 0 %}
       {% paginate collection.products by limit %}
         {% for product in collection.products limit: limit %}
@@ -145,6 +174,7 @@
             <script type="application/json" ref="config">
               {
                 "slidesPerView": {{ columns_xxl }},
+                "slidesPerGroup": 1,
                 "spaceBetween": {{ column_gap }},
                 "loop": false,
                 "autoplay": false,
@@ -154,22 +184,26 @@
                 "mousewheel": {
                   "enabled": true,
                   "forceToAxis": true,
-                  "thresholdTime": 300,
-                  "thresholdDelta": 10
+                  "thresholdTime": 50,
+                  "thresholdDelta": 3
                 },
                 "destroyBelow": 768,
                 "breakpoints": {
                   "768": {
-                    "slidesPerView": {{ columns_md }}
+                    "slidesPerView": {{ columns_md }},
+                    "slidesPerGroup": 1
                   },
                   "1024": {
-                    "slidesPerView": {{ columns_lg }}
+                    "slidesPerView": {{ columns_lg }},
+                    "slidesPerGroup": 1
                   },
                   "1200": {
-                    "slidesPerView": {{ columns_xl }}
+                    "slidesPerView": {{ columns_xl }},
+                    "slidesPerGroup": 1
                   },
                   "1440": {
-                    "slidesPerView": {{ columns_xxl }}
+                    "slidesPerView": {{ columns_xxl }},
+                    "slidesPerGroup": 1
                   }
                 }
               }
@@ -761,6 +795,20 @@
           "id": "title",
           "label": "t:settings.collection_title",
           "info": "t:info.collection_title"
+        },
+        {
+          "type": "header",
+          "content": "t:content.banner"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "text",
+          "id": "banner_title",
+          "label": "t:settings.title"
         }
       ]
     }

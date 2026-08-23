@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "breadcrumbs": {
@@ -16,7 +25,85 @@
     "main": {
       "type": "main-page",
       "blocks": {
-        "page_title": {
+        "group_faq_intro_row": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-start",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "column_gap": 40,
+            "row_gap": 24,
+            "enable_sticky_desktop": false,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": false,
+            "swipe_custom_width_column": false,
+            "swipe_column_width": 76,
+            "columns_mobile": 1,
+            "column_gap_mobile": 24,
+            "row_gap_mobile": 24,
+            "device": "desktop",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 0,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0
+          },
+          "blocks": {
+            "group_faq_intro_text": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 0,
+                "row_gap": 0,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 1,
+                "column_gap_mobile": 0,
+                "row_gap_mobile": 0,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 0,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "page_title": {
           "type": "_page-title",
           "name": "t:names.page_title",
           "settings": {
@@ -40,9 +127,42 @@
           },
           "blocks": {}
         },
+        "text_EfbiXB": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Bij Binnenkussenvoordeel draait alles om één ding: het perfecte binnenkussen. Of je nu twijfelt tussen polyester, dons of memory foam, wilt weten welke maat het beste past, of een vraag hebt over je bestelling, hieronder vind je de antwoorden. Staat je vraag er niet tussen? Neem gerust contact met ons op, we denken graag met je mee.</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 18,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
         "page_content": {
           "type": "_page-content",
           "name": "t:names.page_content",
+          "disabled": true,
           "settings": {
             "type_preset": "rte",
             "font_size": 15,
@@ -63,10 +183,37 @@
           },
           "blocks": {}
         }
+              },
+              "block_order": [
+                "page_title",
+                "text_EfbiXB",
+                "page_content"
+              ]
+            },
+            "contact_card_faqs": {
+              "type": "contact-card",
+              "name": "t:names.contact_card",
+              "settings": {
+                "image": "shopify://shop_images/contact.png",
+                "card_width": 420,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 12
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "group_faq_intro_text",
+            "contact_card_faqs"
+          ]
+        }
       },
       "block_order": [
-        "page_title",
-        "page_content"
+        "group_faq_intro_row"
       ],
       "settings": {
         "container": "fixed",
@@ -77,7 +224,7 @@
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
-        "device": "mobile",
+        "device": "desktop",
         "padding-block-start": 36,
         "padding-block-end": 40,
         "padding-inline-start": 15,
@@ -94,7 +241,7 @@
         "tab_AWbdRY": {
           "type": "_tab",
           "settings": {
-            "text": "Secure Payment"
+            "text": "Assortiment"
           },
           "blocks": {
             "group_GkKfGe": {
@@ -119,6 +266,10 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
                 "column_gap_mobile": 0,
                 "row_gap_mobile": 0,
                 "device": "mobile",
@@ -136,7 +287,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Secure Payment</p>",
+                    "text": "<p>Assortiment</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -198,8 +349,9 @@
                 "accordion_row_XjVwJq": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "How long does it take to process an order?",
+                    "text": "Wat is het verschil tussen polyester, dons/veren en memory foam binnenkussens?",
                     "open_row_by_default": true,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -209,7 +361,7 @@
                     "text_JQLGHr": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>1. Standard Online Orders</strong></p><ul><li>When you place an order, the first step is <strong>payment confirmation</strong>. This usually happens instantly with credit/debit cards or e-wallets. Bank transfers can take <strong>1–2 business days</strong>.<br/></li><li>Next is <strong>packing and preparation for shipment</strong>. Depending on the store size and order volume, this usually takes <strong>1–3 business days</strong>.<br/></li><li>Overall, standard orders are typically processed within <strong>2–5 business days</strong> before shipping.</li></ul><p><strong>2. Special or Customized Orders</strong></p><ul><li>For personalized items, made-to-order products, or electronics that require assembly, processing takes longer due to <strong>production or quality checks</strong>.</li><li>These orders usually take <strong>5–10 days</strong> to be ready for shipment.</li></ul><p><strong>3. International Orders</strong></p><ul><li>Besides internal processing, international shipments go through <strong>customs clearance</strong> and other import/export procedures.</li><li>Internal processing may be similar to standard orders, but total delivery time can range from <strong>7–21 days or longer</strong>, depending on the destination country and shipping service.</li></ul><p><strong>In summary:</strong></p><ul><li>Standard orders: <strong>2–5 days</strong></li><li>Customized orders: <strong>5–10 days</strong></li><li>International orders: <strong>7–21 days or longer</strong></li></ul>",
+                        "text": "<p><strong>Polyester:</strong> licht, veerkrachtig en hypoallergeen, wasbaar en de meest betaalbare keuze. Behoudt zijn vorm goed.</p><p><strong>Dons/veren:</strong> gevuld met Nederlandse eendenveren in een 100% katoenen tijk. Volumineuzer en steviger dan polyester, waardoor je kussen mooi vol oogt en zich na opschudden weer herstelt.</p><p><strong>Memory foam:</strong> een mix van circa 70% traagschuim en 30% polyester vezel. Vormt zich naar je lichaam of hoes, stevig en extra comfortabel.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -245,8 +397,9 @@
                 "accordion_row_36nwRD": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Do you ship internationally?",
+                    "text": "Welke maat binnenkussen moet ik kiezen bij mijn kussenhoes?",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -256,7 +409,7 @@
                     "text_8cBwnj": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Yes, we ship to most countries worldwide. Shipping times and rates vary by location, and all available options will be shown at checkout.</p>",
+                        "text": "<p>In Nederland kiezen de meeste mensen voor dezelfde maat binnenkussen als hun kussenhoes, bijvoorbeeld een binnenkussen van 45x45 cm bij een hoes van 45x45 cm. Wil je een extra volle, luxe uitstraling? Dan kun je er ook voor kiezen een maat groter te nemen (bijvoorbeeld 50x50 cm bij een hoes van 45x45 cm), dit zie je vooral in het buitenland. Beide opties zijn goed, het is puur een kwestie van smaak.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -288,11 +441,158 @@
                   "block_order": [
                     "text_8cBwnj"
                   ]
+                },
+                "accordion_row_zHRzJ9": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Mijn polyester binnenkussen is gecomprimeerd geleverd, wat moet ik doen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_U8eTXC": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Dat is normaal. Polyester binnenkussens worden vacuüm verpakt verzonden. Na het openen heeft het kussen 24 tot 48 uur nodig om zich weer te vullen met lucht en zijn volledige vorm terug te krijgen. Schud het kussen om dit proces te versnellen.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_U8eTXC"
+                  ]
+                },
+                "accordion_row_rQbbwV": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Het gewicht van mijn binnenkussen wijkt iets af, hoe kan dit?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_gQgJ7i": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Bij natuurlijke vullingen zoals dons en veren kunnen kleine gewichtsverschillen voorkomen, dit hoort bij het productieproces. Wijkt het gewicht sterk af van de specificaties, neem dan contact op met foto's en je bestelnummer, dan kijken we met je mee.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_gQgJ7i"
+                  ]
+                },
+                "accordion_row_6E7qUP": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Kan ik mijn binnenkussen wassen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_q8HLtQ": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Dat hangt van de vulling af:</p><ul><li><strong>Polyester:</strong> niet wassen, bleken of strijken, wel drogen op lage temperatuur.</li><li><strong>Dons/veren:</strong> niet wassen, bleken of strijken.</li><li><strong>Memory foam:</strong> niet wassen, regelmatig luchten volstaat.</li></ul><p>Schud je binnenkussen af en toe op, dat houdt de vulling luchtig en verlengt de levensduur.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_q8HLtQ"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_XjVwJq",
-                "accordion_row_36nwRD"
+                "accordion_row_36nwRD",
+                "accordion_row_zHRzJ9",
+                "accordion_row_rQbbwV",
+                "accordion_row_6E7qUP"
               ]
             }
           },
@@ -304,7 +604,7 @@
         "tab_tqfBxL": {
           "type": "_tab",
           "settings": {
-            "text": "Track Order"
+            "text": "Retourneren"
           },
           "blocks": {
             "group_kznQhm": {
@@ -329,6 +629,10 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
                 "column_gap_mobile": 0,
                 "row_gap_mobile": 0,
                 "device": "mobile",
@@ -346,7 +650,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Track Order</p>",
+                    "text": "<p>Retourneren</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -408,8 +712,9 @@
                 "accordion_row_aCPLfH": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "How can I check the status of my order?",
+                    "text": "Hoe kan ik retourneren?",
                     "open_row_by_default": true,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -419,7 +724,7 @@
                     "text_e3Pznx": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>1. Check Your Email</strong></p><ul><li>Most stores send a <strong>confirmation email</strong> when your order is placed.</li><li>They often follow up with a <strong>shipping or tracking email</strong> once your order is on its way.</li><li>Look for a <strong>tracking number</strong> or a link to check the order status online.</li></ul><p><strong>2. Log In to Your Account</strong></p><ul><li>If you created an account on the store’s website, log in and go to <strong>“My Orders”</strong> or <strong>“Order History”</strong>.</li><li>You should see the <strong>current status</strong> (e.g., “Processing,” “Shipped,” “Delivered”) and sometimes the <strong>estimated delivery date</strong>.<br/></li></ul><p><strong>3. Use the Tracking Number</strong></p><ul><li>Once your order has shipped, you can usually track it via the <strong>carrier’s website</strong> (like FedEx, UPS, DHL, USPS).</li><li>Enter the tracking number to see <strong>real-time updates</strong> on location and expected delivery.<br/></li></ul><p><strong>4. Contact Customer Service</strong></p><ul><li>If you can’t find information online or via email, reach out to the <strong>store’s customer service</strong>.</li><li>Provide your <strong>order number</strong> and <strong>email</strong> to get updates on your order.</li></ul>",
+                        "text": "<ol><li>Meld je retour binnen 14 dagen na ontvangst aan via e-mail bij onze klantenservice (je ontvangt hier geen reactie op).</li><li>Stuur het product onbeschadigd en in originele staat/verpakking terug.</li><li>Retouradres: Binnenkussenvoordeel, Nijverheidstraat 3, 6905 DL Zevenaar.</li><li>Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Na ontvangst en controle betalen we het aankoopbedrag binnen 14 dagen terug via de originele betaalmethode.</li></ol><p>Let op: binnenkussens vallen onder non-food en kunnen om hygiënische redenen alleen retour als ze ongebruikt en in originele staat zijn.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -455,8 +760,9 @@
                 "accordion_row_QJYLVd": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "What should I do if my tracking hasn’t updated?",
+                    "text": "Defect of verkeerd product ontvangen?",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -466,7 +772,7 @@
                     "text_NAC8xf": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Tracking updates may take 24–48 hours to appear, especially during busy seasons. If the status remains unchanged for more than 3 days, feel free to contact our support team—we’ll help you check the progress of your package and ensure it’s on the way to you.</p>",
+                        "text": "<p>Neem zo snel mogelijk contact op met je bestelnummer, een duidelijke omschrijving en indien mogelijk een foto. Je ontvangt kosteloos een vervangend product of een passende oplossing, en de retourkosten worden vergoed als het aan onze kant is misgegaan.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -498,11 +804,158 @@
                   "block_order": [
                     "text_NAC8xf"
                   ]
+                },
+                "accordion_row_QPraVi": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Kan ik een product ruilen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_LrmkU8": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Ja, mits het ongebruikt en in originele staat is en je de ruil binnen 14 dagen na ontvangst meldt. Stuur het product terug en bestel gelijk het juiste product opnieuw, dat gaat sneller dan wachten op het retourproces. Na controle van het geretourneerde product storten we het bedrag terug. Verzendkosten voor het terugsturen zijn voor eigen rekening, voor het nieuwe product kunnen opnieuw verzendkosten gelden.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_LrmkU8"
+                  ]
+                },
+                "accordion_row_TGBynw": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wat gebeurt er met retour bij volumekorting?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_wwdB9i": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Retourneer je een deel van een bestelling met volumekorting, dan wordt de stukprijs herberekend op basis van het aantal dat je houdt. Voorbeeld: je bestelt 4 binnenkussens à €4,95 (totaal €19,80) en retourneert er 2. De stukprijs voor de 2 die je houdt is dan €7,50, je krijgt €19,80 - €15,00 = €4,80 terug.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_wwdB9i"
+                  ]
+                },
+                "accordion_row_9FiNBT": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wat gebeurt er met retour bij een kortingsactie?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_kTRTza": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Bij een kortingsactie (bijv. 2+1 gratis) geldt: retourneer je een actie-item, dan betaal je voor de behouden producten de reguliere prijs, dit wordt verrekend met het totaalbedrag.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_kTRTza"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_aCPLfH",
-                "accordion_row_QJYLVd"
+                "accordion_row_QJYLVd",
+                "accordion_row_QPraVi",
+                "accordion_row_TGBynw",
+                "accordion_row_9FiNBT"
               ]
             }
           },
@@ -514,7 +967,7 @@
         "tab_NVaytT": {
           "type": "_tab",
           "settings": {
-            "text": "Orders & Shipping"
+            "text": "Verzenden"
           },
           "blocks": {
             "group_WECDan": {
@@ -539,6 +992,10 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
                 "column_gap_mobile": 0,
                 "row_gap_mobile": 0,
                 "device": "desktop",
@@ -556,7 +1013,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Orders & Shipping</p>",
+                    "text": "<p>Verzenden</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -618,8 +1075,9 @@
                 "accordion_row_aiVT7f": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Can I modify or cancel my order after placing it?",
+                    "text": "Wat zijn de verzendkosten?",
                     "open_row_by_default": true,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -629,7 +1087,7 @@
                     "text_kPc8YV": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>1. Before the Order Is Processed</strong></p><ul><li>If the order is <strong>still pending</strong> or <strong>not yet processed</strong>, most stores allow you to <strong>modify or cancel</strong> it.</li><li>You usually need to do this <strong>within a few hours</strong> after placing the order.</li><li>Actions you can take may include:<br/>- Changing the shipping address<br/>- Updating the payment method<br/>- Adding or removing items<br/></li></ul><p><strong>2. After the Order Is Processed</strong></p><ul><li>Once the order is <strong>processed, packed, or shipped</strong>, modifications are often <strong>not possible</strong>.</li><li>You might be able to <strong>request a cancellation</strong>, but it may be treated as a <strong>return</strong> once delivered.<br/></li></ul><p><strong>3. Customized or Made-to-Order Products</strong></p><ul><li>If your order is <strong>personalized or custom-made</strong>, cancellations or modifications may <strong>not be allowed</strong> once production has started.<br/></li></ul><p><strong>4. How to Cancel or Modify</strong></p><ul><li><strong>Check your confirmation email</strong> for a link or instructions.</li><li><strong>Log in to your account</strong> on the store’s website to see if there’s a “Modify” or “Cancel” option.</li><li><strong>Contact customer service immediately</strong> with your order number—they can tell you what’s possible.</li></ul>",
+                        "text": "<p>Binnen Nederland is verzending gratis vanaf €24,95. Voor orders hieronder kost verzending €2,95. </p><p>België & Duitsland: €5,95 per bestelling, boven €30 geen verzendkosten. Andere landen: prijs op aanvraag via het contactformulier, afhankelijk van land en gewicht.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -665,8 +1123,9 @@
                 "accordion_row_YEMwWz": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "How long does shipping usually take?",
+                    "text": "Ik heb mijn adres verkeerd ingevoerd, wat nu?",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -676,7 +1135,7 @@
                     "text_BJ3pK3": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Standard shipping typically takes <strong>3–7 business days</strong>, while express shipping arrives within <strong>1–3 business days</strong>. Delivery times may vary slightly depending on your location and seasonal demand, especially during holidays when kids’ clothing orders increase.</p>",
+                        "text": "<p>Zo snel mogelijk contact opnemen met bestelnummer en het juiste adres. Zodra de bestelling is verwerkt en verzonden kan het adres meestal niet meer aangepast worden, al kan er soms via de vervoerder nog omgeleid worden.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -708,11 +1167,256 @@
                   "block_order": [
                     "text_BJ3pK3"
                   ]
+                },
+                "accordion_row_PRBh8E": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wat gebeurt er als ik mijn pakket niet op tijd ophaal bij het PostNL-pakketpunt?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_Rrxz4W": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Wordt het pakket niet binnen de bewaartermijn (meestal 7 dagen) opgehaald, dan stuurt PostNL het automatisch retour naar de webshop.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_Rrxz4W"
+                  ]
+                },
+                "accordion_row_NxYdNE": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Moet ik verzendkosten betalen als mijn pakket retour komt door niet-ophalen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_yXzKhC": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Ja, ondanks gratis verzending bij de eerste zending worden bij niet-ophalen alsnog de verzendkosten van de heenzending én de retourkosten van PostNL in rekening gebracht, deze worden verrekend met het terug te betalen bedrag. Opnieuw laten versturen kan, de kosten daarvoor zijn dan voor de klant.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_yXzKhC"
+                  ]
+                },
+                "accordion_row_MMTDpJ": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Waarom brengen jullie kosten in rekening?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_qBhVND": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Omdat PostNL zowel zend- als retourkosten in rekening brengt bij de webshop, ook als een pakket niet wordt opgehaald.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_qBhVND"
+                  ]
+                },
+                "accordion_row_XCqh4K": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wanneer wordt mijn bestelling bezorgd?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_TPh9JP": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België en Duitsland: levering binnen 1-3 werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_TPh9JP"
+                  ]
+                },
+                "accordion_row_BX43NR": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wanneer wordt mijn bestelling bezorgd?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_QcDMrC": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België en Duitsland: levering binnen 1-3 werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_QcDMrC"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_aiVT7f",
-                "accordion_row_YEMwWz"
+                "accordion_row_YEMwWz",
+                "accordion_row_PRBh8E",
+                "accordion_row_NxYdNE",
+                "accordion_row_MMTDpJ",
+                "accordion_row_XCqh4K",
+                "accordion_row_BX43NR"
               ]
             }
           },
@@ -724,7 +1428,7 @@
         "tab_KXKTcG": {
           "type": "_tab",
           "settings": {
-            "text": "Payment & Store Credit"
+            "text": "Betalen"
           },
           "blocks": {
             "group_EJkMkN": {
@@ -749,6 +1453,10 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
                 "column_gap_mobile": 0,
                 "row_gap_mobile": 0,
                 "device": "desktop",
@@ -766,7 +1474,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Payment & Store Credit</p>",
+                    "text": "<p>Betalen</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -828,8 +1536,9 @@
                 "accordion_row_NXdtqa": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "How does Store Credit work?",
+                    "text": "Welke betaalmethoden accepteren jullie?",
                     "open_row_by_default": true,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -839,7 +1548,7 @@
                     "text_xGgAJX": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>1. What Store Credit Is</strong></p><ul><li>Store credit is a <strong>prepaid balance issued by a store</strong> that you can use to pay for future purchases.</li><li>It’s usually given as a <strong>refund</strong> when you return an item, or as a <strong>gift from the store</strong>.</li><li>Store credit is <strong>not the same as cash</strong>, but it acts like money within that store or platform.<br/></li></ul><p><strong>2. How to Use Store Credit</strong></p><ul><li>At checkout, select <strong>“Store Credit”</strong> as a payment option.</li><li>The order total will be deducted from your store credit balance.</li><li>If your order exceeds your store credit, you can pay the remaining balance with <strong>another payment method</strong> (card, digital wallet, etc.).</li><li>Some stores allow you to <strong>combine store credit with promo codes or discounts</strong>, but check the store’s rules.<br/></li></ul><p><strong>3. How Store Credit Is Issued</strong></p><ul><li><strong>Returned items</strong>: If you return a product, the store may offer store credit instead of a cash refund.</li><li><strong>Promotional offers</strong>: Sometimes stores give store credit as part of a promotion, loyalty reward, or gift card redemption.</li><li><strong>Cancelled orders</strong>: If your order is canceled after payment, some stores issue store credit instead of refunding the original payment method.</li></ul>",
+                        "text": "<p>iDEAL (Nederlandse klanten), Bancontact (Belgische klanten), creditcard (Visa, Mastercard, American Express), PayPal, en Klarna (achteraf betalen). Alle betalingen verlopen via een beveiligde verbinding.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -875,8 +1584,9 @@
                 "accordion_row_KqhjHQ": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "What payment methods do you accept?",
+                    "text": "Kan ik mijn bestelling nog wijzigen en/of annuleren?",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -886,7 +1596,7 @@
                     "text_nDAPcM": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We accept all major credit cards, PayPal, Apple Pay, and popular digital wallets, making checkout fast and secure. All payments are encrypted to ensure a safe shopping experience for parents.</p>",
+                        "text": "<p>Alleen zolang de bestelling nog niet verwerkt of verzonden is. Zo snel mogelijk contact opnemen met bestelnummer en gewenste wijziging. Na verzending is wijzigen/annuleren niet meer mogelijk, retourneren volgens het retourbeleid kan dan nog wel.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -918,11 +1628,158 @@
                   "block_order": [
                     "text_nDAPcM"
                   ]
+                },
+                "accordion_row_ehWnMc": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Ik heb een kortingscode/cadeaubon, hoe kan ik die gebruiken?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_qhhptQ": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Producten in het winkelmandje plaatsen, naar de checkout gaan, code invullen bij \"Kortingscode\" of \"Couponcode\" en op \"Toepassen\" klikken. Codes zijn vaak tijdgebonden of eenmalig geldig, en meestal is er per bestelling maar één code te gebruiken.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_qhhptQ"
+                  ]
+                },
+                "accordion_row_tFrpA7": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Ik heb de kortingscode niet gebruikt, kunnen jullie deze verrekenen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_VjcrDQ": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Nee, na het plaatsen van de bestelling kan een code niet meer alsnog toegepast of achteraf verrekend worden.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_VjcrDQ"
+                  ]
+                },
+                "accordion_row_chHP4F": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Welke regels gelden er voor de sale?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_inBeJH": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Korting kan niet met terugwerkende kracht worden verrekend als een product later in de sale komt. Kortingscodes zijn niet geldig op sale-items. Op = op, sale-producten komen niet terug in de collectie.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_inBeJH"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_NXdtqa",
-                "accordion_row_KqhjHQ"
+                "accordion_row_KqhjHQ",
+                "accordion_row_ehWnMc",
+                "accordion_row_tFrpA7",
+                "accordion_row_chHP4F"
               ]
             }
           },
@@ -935,7 +1792,7 @@
           "type": "_tab",
           "name": "t:names.tab",
           "settings": {
-            "text": "Returns & Refunds"
+            "text": "Zakelijk"
           },
           "blocks": {
             "group_qB9Dcj": {
@@ -960,6 +1817,10 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
                 "column_gap_mobile": 0,
                 "row_gap_mobile": 0,
                 "device": "desktop",
@@ -977,7 +1838,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Returns & Refunds</p>",
+                    "text": "<p>Zakelijk</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -1039,8 +1900,9 @@
                 "accordion_row_mhNYg3": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "What is your returns and refunds policy? ",
+                    "text": "Hoe bestel ik zakelijk?",
                     "open_row_by_default": true,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -1050,7 +1912,7 @@
                     "text_arWXXn": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We want you to love your purchase! If you’re not completely satisfied, you can return your item within 30 days of receiving it. Simply ensure the product is unused, in its original condition, and includes all packaging.</p><p>Once we receive your return, we’ll process your refund within 5-7 business days. Refunds will be credited back to your original payment method. For more details on how to start a return, visit our Returns page or contact our support team—we’re here to help! Shop confidently knowing we’ve got you covered.</p>",
+                        "text": "<p>Zakelijk bestellen kan gewoon via onze reguliere webshop, het assortiment is online te bekijken en direct te bestellen. Gaat het om een grote oplage, dan kun je ook een gerichte offerte bij ons aanvragen, dan stemmen we prijs en levering af op jouw aantallen.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1086,8 +1948,9 @@
                 "accordion_row_3aWziD": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "How does Store Credit work?",
+                    "text": "Hoe kan ik mijn zakelijke bestelling betalen?",
                     "open_row_by_default": false,
+                    "link": "",
                     "icon": "none",
                     "icon_size": "extra-large",
                     "width": 24,
@@ -1097,7 +1960,7 @@
                     "text_pkcV6i": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Store Credit can be used on any kids’ clothing item and never expires. You can apply it at checkout just like a discount code. If your credit doesn’t cover the full amount, you can pay the remaining balance with any of our accepted payment methods.</p>",
+                        "text": "<p>Met iDEAL, Afterpay, Bancontact of PayPal, eenvoudig te kiezen bij de bestelling.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1129,228 +1992,115 @@
                   "block_order": [
                     "text_pkcV6i"
                   ]
+                },
+                "accordion_row_bpTaXD": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Krijg ik een factuur met BTW?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_aVM6He": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Ja, BTW staat vermeld op de factuur bij de orderbevestiging. Het eigen BTW-nummer kan op verzoek via de klantenservice worden toegevoegd.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_aVM6He"
+                  ]
+                },
+                "accordion_row_4GfRdn": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "text": "Wanneer kan ik een offerte aanvragen?",
+                    "open_row_by_default": false,
+                    "link": "",
+                    "icon": "none",
+                    "icon_size": "extra-large",
+                    "width": 24,
+                    "width_mobile": 24
+                  },
+                  "blocks": {
+                    "text_AnJPy3": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Bij een grote oplage kussenhoezen of binnenkussens is een offerte op te vragen bij de klantenservice.</p>",
+                        "highlight_style": "none",
+                        "highlight_font_style": "italic",
+                        "highlight_shape_color": "",
+                        "highlight_text_color": "",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_weight": "",
+                        "font_size": 15,
+                        "font_size_mobile": 15,
+                        "line_height": "normal",
+                        "text_color": "subtext",
+                        "text_color_gradient": "",
+                        "disable_line_break_mobile": false,
+                        "width": "fit-content",
+                        "text_alignment": "left",
+                        "width_mobile": "fit-content",
+                        "text_alignment_mobile": "left",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "mobile-padding-scale": 80,
+                        "animation_type": "none",
+                        "animation_delay": 250
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_AnJPy3"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_mhNYg3",
-                "accordion_row_3aWziD"
+                "accordion_row_3aWziD",
+                "accordion_row_bpTaXD",
+                "accordion_row_4GfRdn"
               ]
             }
           },
           "block_order": [
             "group_qB9Dcj",
             "accordion_XHrdak"
-          ]
-        },
-        "tab_KCj7NQ": {
-          "type": "_tab",
-          "name": "t:names.tab",
-          "settings": {
-            "text": "Account Info"
-          },
-          "blocks": {
-            "group_BxUkJ9": {
-              "type": "group",
-              "name": "t:names.section_header_vertical",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "column_gap": 0,
-                "row_gap": 0,
-                "enable_sticky_desktop": false,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "column_gap_mobile": 0,
-                "row_gap_mobile": 0,
-                "device": "desktop",
-                "padding-block-start": 0,
-                "padding-block-end": 24,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "padding-block-start-mobile": 0,
-                "padding-block-end-mobile": 20,
-                "padding-inline-start-mobile": 0,
-                "padding-inline-end-mobile": 0
-              },
-              "blocks": {
-                "text_Xj49tJ": {
-                  "type": "text",
-                  "name": "t:names.heading",
-                  "settings": {
-                    "text": "<p>Account Info</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "h2",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "text",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "fit-content",
-                    "text_alignment": "left",
-                    "width_mobile": "fit-content",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_Xj49tJ"
-              ]
-            },
-            "accordion_keJtML": {
-              "type": "accordion",
-              "name": "t:names.accordion",
-              "settings": {
-                "open_behavior": "multiple",
-                "type_preset": "h5",
-                "style": "standard",
-                "card_color_scheme": "",
-                "icon_arrow": "caret",
-                "icon_style": "solid",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "accordion_row_rqeYB4": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "text": "Do I need an account to place an order?",
-                    "open_row_by_default": true,
-                    "icon": "none",
-                    "icon_size": "extra-large",
-                    "width": 24,
-                    "width_mobile": 24
-                  },
-                  "blocks": {
-                    "text_jFFJUy": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>No, you can check out as a guest.<br/>However, creating an account allows you to track orders, manage returns, save your shipping details, and access Store Credit or rewards more easily.</p>",
-                        "highlight_style": "none",
-                        "highlight_font_style": "italic",
-                        "highlight_shape_color": "",
-                        "highlight_text_color": "",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_weight": "",
-                        "font_size": 15,
-                        "font_size_mobile": 15,
-                        "line_height": "normal",
-                        "text_color": "subtext",
-                        "text_color_gradient": "",
-                        "disable_line_break_mobile": false,
-                        "width": "fit-content",
-                        "text_alignment": "left",
-                        "width_mobile": "fit-content",
-                        "text_alignment_mobile": "left",
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0,
-                        "mobile-padding-scale": 80,
-                        "animation_type": "none",
-                        "animation_delay": 250
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_jFFJUy"
-                  ]
-                },
-                "accordion_row_cypV8q": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "text": "How do I update my account details?",
-                    "open_row_by_default": false,
-                    "icon": "none",
-                    "icon_size": "extra-large",
-                    "width": 24,
-                    "width_mobile": 24
-                  },
-                  "blocks": {
-                    "text_QikY7G": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>You can update your name, email, password, or saved addresses by logging into your account dashboard.<br/>All changes are saved immediately and used for your future orders.</p>",
-                        "highlight_style": "none",
-                        "highlight_font_style": "italic",
-                        "highlight_shape_color": "",
-                        "highlight_text_color": "",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_weight": "",
-                        "font_size": 15,
-                        "font_size_mobile": 15,
-                        "line_height": "normal",
-                        "text_color": "subtext",
-                        "text_color_gradient": "",
-                        "disable_line_break_mobile": false,
-                        "width": "fit-content",
-                        "text_alignment": "left",
-                        "width_mobile": "fit-content",
-                        "text_alignment_mobile": "left",
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0,
-                        "mobile-padding-scale": 80,
-                        "animation_type": "none",
-                        "animation_delay": 250
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_QikY7G"
-                  ]
-                }
-              },
-              "block_order": [
-                "accordion_row_rqeYB4",
-                "accordion_row_cypV8q"
-              ]
-            }
-          },
-          "block_order": [
-            "group_BxUkJ9",
-            "accordion_keJtML"
           ]
         }
       },
@@ -1359,8 +2109,7 @@
         "tab_tqfBxL",
         "tab_NVaytT",
         "tab_KXKTcG",
-        "tab_WiGkLL",
-        "tab_KCj7NQ"
+        "tab_WiGkLL"
       ],
       "name": "t:names.tabs_faqs",
       "settings": {

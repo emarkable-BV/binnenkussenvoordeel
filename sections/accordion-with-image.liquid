@@ -1,0 +1,194 @@
+{%- liquid
+  assign use_padding_inline = true
+  if section.settings.container == 'fixed'
+    assign use_padding_inline = false
+  endif
+-%}
+{% capture section_style %}
+  {% render 'spacing-style', settings: section.settings, use_padding_inline: use_padding_inline %}
+{% endcapture %}
+<div
+  id="section-{{ section.id }}"
+  class="section spacing-style color-{{ section.settings.color_scheme }}"
+  style="{{ section_style | strip_newlines | strip }}"
+>
+  <div class="section__container section-grid section-grid--{{ section.settings.container }}">
+    <accordion-image-sync class="accordion-image flex flex-col md:flex-row gap-8 md:gap-12">
+      <div class="accordion-image__media relative overflow-hidden flex-1">
+        {%- if section.settings.default_image != blank -%}
+          <img
+            ref="displayImage"
+            class="accordion-image__img absolute inset-0 w-full h-full"
+            src="{{ section.settings.default_image | image_url: width: 1200 }}"
+            width="{{ section.settings.default_image.width }}"
+            height="{{ section.settings.default_image.height }}"
+            alt="{{ section.settings.default_image.alt | escape }}"
+            loading="lazy"
+          >
+        {%- else -%}
+          <img
+            ref="displayImage"
+            class="accordion-image__img absolute inset-0 w-full h-full"
+            width="1200"
+            height="900"
+            alt=""
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+      <div class="accordion-image__list flex-1 w-full min-w-0">
+        {%- if section.settings.heading != blank -%}
+          <div class="accordion-image__heading">
+            {% render 'text',
+              fallback_text: section.settings.heading,
+              preset: 'h2',
+              animation_type: section.settings.animation_type,
+              animation_delay: section.settings.animation_delay
+            %}
+          </div>
+        {%- endif -%}
+        {% content_for 'blocks' %}
+      </div>
+    </accordion-image-sync>
+  </div>
+</div>
+<script src="{{ 'accordion-image-sync.js' | asset_url }}" type="module"></script>
+
+{% schema %}
+{
+  "name": "Accordion with image",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container",
+      "label": "t:settings.container",
+      "options": [
+        { "value": "full", "label": "t:options.full" },
+        { "value": "fixed", "label": "t:options.fixed" }
+      ],
+      "default": "fixed"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "<p>Heading</p>"
+    },
+    {
+      "type": "header",
+      "content": "t:content.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "default_image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.container == 'full' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.container == 'full' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion with image",
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "open_behavior": "single"
+          },
+          "blocks": [
+            {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Row 1",
+                "open_row_by_default": true
+              },
+              "blocks": [
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Add a description for this row.</p>"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Row 2"
+              },
+              "blocks": [
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Add a description for this row.</p>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

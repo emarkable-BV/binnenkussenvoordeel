@@ -61,6 +61,19 @@
     assign onboarding = true
     assign product_title = 'placeholders.product_title' | t
   endif
+
+  assign materiaal = product.metafields.custom.materiaal.value
+  assign formaat = product.metafields.custom.formaat.value
+  assign voordeelset = product.metafields.custom.voordeelset.value
+  assign has_custom_labels = false
+  if materiaal != blank or formaat != blank
+    assign has_custom_labels = true
+  endif
+
+  assign show_product_badges = false
+  if show_badges and product != blank
+    assign show_product_badges = true
+  endif
 %}
 {%- capture card_style -%}
   {%- if has_quick_add -%}
@@ -173,19 +186,49 @@
           <span class="badge badge--current">{{ 'content.current_item' | t }}</span>
         </div>
       {%- else -%}
-        {% if show_badges and product != blank %}
-          <product-badge data-product-id="{{ product.id }}" class="product-card__badges">
+        {%- if show_product_badges or has_custom_labels or voordeelset != blank -%}
+          <div class="product-card__badges flex flex-col items-start gap-1">
+            {%- if voordeelset != blank -%}
+              <span class="badge badge--popular">{{ voordeelset }} stuks</span>
+            {%- endif -%}
+            {% if show_product_badges %}
+              <product-badge data-product-id="{{ product.id }}">
+                {% render 'product-badges',
+                  product: product,
+                  use_variant: false,
+                  show_soldout_badge: settings.pcard_show_sold_out_badge,
+                  sale_badge_type: settings.pcard_sale_badge_type,
+                  show_sale_badge: false,
+                  show_custom_badges: settings.pcard_show_custom_badges,
+                  badge_layout: settings.pcard_badge_layout
+                %}
+              </product-badge>
+            {% endif %}
+            {%- if has_custom_labels -%}
+              <div class="product-card__custom-labels flex flex-col items-start gap-1">
+                {%- if materiaal != blank -%}
+                  <span class="badge badge--subtle">{{ materiaal }}</span>
+                {%- endif -%}
+                {%- if formaat != blank -%}
+                  <span class="badge badge--subtle">{{ formaat }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if show_product_badges and settings.pcard_show_sale_badge -%}
+          <product-badge data-product-id="{{ product.id }}" class="product-card__badges product-card__badges--sale">
             {% render 'product-badges',
               product: product,
               use_variant: false,
-              show_soldout_badge: settings.pcard_show_sold_out_badge,
+              show_soldout_badge: false,
               sale_badge_type: settings.pcard_sale_badge_type,
-              show_sale_badge: settings.pcard_show_sale_badge,
-              show_custom_badges: settings.pcard_show_custom_badges,
+              show_sale_badge: true,
+              show_custom_badges: false,
               badge_layout: settings.pcard_badge_layout
             %}
           </product-badge>
-        {% endif %}
+        {%- endif -%}
       {%- endif -%}
       {%- if has_quick_view or has_quick_add -%}
         <div class="product-card__actions flex flex-col items-end justify-end gap-1 absolute pointer-events-none">
@@ -237,6 +280,18 @@
         <product-price class="product-card__price">
           {% render 'price', show_unit_price: true, product_resource: product, use_variant: false %}
         </product-price>
+
+        {%- if product != blank -%}
+          <div class="product-card__stock flex items-center gap-1">
+            {%- if variant_to_link.available -%}
+              <span class="product-card__stock-dot product-card__stock-dot--in-stock"></span>
+              <span class="product-card__stock-text">{{ 'content.pcard_in_stock' | t }}</span>
+            {%- else -%}
+              <span class="product-card__stock-dot product-card__stock-dot--out-of-stock"></span>
+              <span class="product-card__stock-text">{{ 'content.pcard_out_of_stock' | t }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
 
         {%- if show_swatch -%}
           {% liquid

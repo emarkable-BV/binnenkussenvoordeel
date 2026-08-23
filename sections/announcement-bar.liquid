@@ -12,8 +12,8 @@
   class="announcement-bar color-{{ section.settings.color_scheme }} spacing-style"
   style="{{ inline_style | strip | strip_newlines }}"
 >
-  <div class="page-width flex justify-center">
-    <carousel-slider class="announcement-bar__wrapper carousel relative w-full">
+  <div class="page-width flex items-center{% if section.settings.menu != blank %} justify-between gap-4{% else %} justify-center{% endif %}">
+    <carousel-slider class="announcement-bar__wrapper carousel relative{% if section.settings.menu != blank %} flex-1 min-w-0{% else %} w-full{% endif %}">
       <script type="application/json" ref="config">
         {
           "loop": {% if is_carousel %}true{% else %}false{% endif %},
@@ -32,7 +32,7 @@
       <div ref="container" class="swiper">
         <div class="swiper-wrapper">
           {%- for block in section.blocks -%}
-            <div class="swiper-slide flex flex-col items-center text-center announcement__content">
+            <div class="swiper-slide flex flex-col {% if section.settings.menu != blank %}items-start text-left{% else %}items-center text-center{% endif %} announcement__content">
               {% render block %}
             </div>
           {%- endfor -%}
@@ -59,6 +59,13 @@
         </div>
       {%- endif -%}
     </carousel-slider>
+    {%- if section.settings.menu != blank -%}
+      <nav class="announcement-bar__menu hidden md:flex items-center gap-6 shrink-0" aria-label="{{ section.settings.menu.title | escape }}">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}" class="announcement-bar__menu-link link">{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
   </div>
 </div>
 
@@ -95,6 +102,16 @@
       "step": 1,
       "default": 5,
       "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "t:content.menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:settings.menu",
+      "info": "t:info.announcement_menu"
     },
     {
       "type": "header",

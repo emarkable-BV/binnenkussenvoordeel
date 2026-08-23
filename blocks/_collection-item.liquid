@@ -1,4 +1,5 @@
 {%- liquid
+  assign page_collection_title = collection.title
   assign collection = block.settings.collection
   assign title_line_limit = block.settings.line_limit
 
@@ -6,6 +7,21 @@
   unless collection_name != blank
     if collection != blank
       assign collection_name = collection.title
+      if page_collection_title != blank
+        assign name_parts = collection.title | split: ' - '
+        if name_parts.size == 2
+          assign part_a = name_parts[0] | strip
+          assign part_b = name_parts[1] | strip
+          if page_collection_title contains part_a or part_a contains page_collection_title
+            assign collection_name = part_b
+          elsif page_collection_title contains part_b or part_b contains page_collection_title
+            assign collection_name = part_a
+          endif
+        endif
+      endif
+      if collection_name == blank
+        assign collection_name = collection.title
+      endif
     else
       assign collection_name = 'placeholders.collection_title' | t
     endif

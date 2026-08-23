@@ -1,1 +1,325 @@
-{"type":"footer","name":"t:names.footer","sections":{"footer":{"type":"footer","blocks":{"footer_column_HTDjmW":{"type":"_footer-column","name":"t:names.column","settings":{"width":46,"heading":"","heading_size":"h5","open_default":false,"enable_divider":false},"blocks":{"group_NVnD6r":{"type":"group","name":"t:names.group","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","horizontal_alignment_flex_direction_column":"flex-start","column_gap":12,"row_gap":24,"enable_sticky_desktop":false,"width":"custom","custom_width":70,"width_mobile":"fill","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"enable_swipe_on_mobile":false,"swipe_custom_width_column":false,"swipe_column_width":76,"columns_mobile":2,"column_gap_mobile":12,"row_gap_mobile":24,"device":"desktop","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"padding-block-start-mobile":0,"padding-block-end-mobile":0,"padding-inline-start-mobile":0,"padding-inline-end-mobile":0},"blocks":{"image_NVFjwA":{"type":"image","name":"t:names.image","settings":{"image":"shopify:\/\/shop_images\/b-diapositief.svg","link":"","image_ratio":"adapt","image_ratio_mobile":"adapt","width":"custom","custom_width":16,"width_mobile":"custom","custom_width_mobile":13,"rounded":false,"border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80},"blocks":{}},"text_ayB3w3":{"type":"text","name":"t:names.heading","settings":{"text":"<p>Waar comfort en maatwerk samenkomen<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"h3","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["image_NVFjwA","text_ayB3w3"]}},"block_order":["group_NVnD6r"]},"footer_column_6qKBdj":{"type":"_footer-column","name":"t:names.column","settings":{"width":18,"heading":"Categorieën","heading_size":"h5","open_default":false,"enable_divider":true},"blocks":{"footer_menu_fLEPht":{"type":"_footer-menu","name":"t:names.menu","settings":{"menu":"main-menu"},"blocks":{}}},"block_order":["footer_menu_fLEPht"]},"footer_column_TggKmp":{"type":"_footer-column","name":"t:names.column","settings":{"width":18,"heading":"Collection","heading_size":"h5","open_default":false,"enable_divider":true},"blocks":{"footer_menu_bNUmwj":{"type":"_footer-menu","name":"t:names.menu","settings":{"menu":"footer"},"blocks":{}}},"block_order":["footer_menu_bNUmwj"]},"footer_column_B4ErBg":{"type":"_footer-column","name":"t:names.column","settings":{"width":18,"heading":"Get Help","heading_size":"h5","open_default":false,"enable_divider":true},"blocks":{"text_4Qw6Wx":{"type":"text","name":"t:names.text","settings":{"text":"<p>3772 Village View Drive, Immokalee, Florida<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}},"text_hth3Gf":{"type":"text","name":"t:names.text","settings":{"text":"<p>littlepebble@gmail.com<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":12,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}},"text_tzUfwi":{"type":"text","name":"t:names.text","settings":{"text":"<p>+1 888-234-1234 (tool-free)<\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"subtext","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":12,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_4Qw6Wx","text_hth3Gf","text_tzUfwi"]}},"block_order":["footer_column_HTDjmW","footer_column_6qKBdj","footer_column_TggKmp","footer_column_B4ErBg"],"settings":{"menu":"","enable_follow_on_shop":true,"enable_social_media_icons":true,"enable_language_selector":true,"enable_country_selector":true,"enable_payment_icons":true,"color_scheme":"scheme-inverse","border":"none","border_width":1,"border_opacity":100,"border_radius":20,"device":"desktop","padding-block-start":60,"padding-block-start-mobile":40}}},"order":["footer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:names.footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer_column_HTDjmW": {
+          "type": "_footer-column",
+          "name": "t:names.column",
+          "settings": {
+            "width": 46,
+            "heading": "",
+            "heading_size": "h5",
+            "open_default": false,
+            "enable_divider": false
+          },
+          "blocks": {
+            "group_NVnD6r": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 12,
+                "row_gap": 24,
+                "enable_sticky_desktop": false,
+                "width": "custom",
+                "custom_width": 70,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
+                "column_gap_mobile": 12,
+                "row_gap_mobile": 24,
+                "device": "desktop",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 0,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "image_NVFjwA": {
+                  "type": "image",
+                  "name": "t:names.image",
+                  "settings": {
+                    "image": "shopify://shop_images/b-diapositief.svg",
+                    "link": "",
+                    "image_ratio": "adapt",
+                    "image_ratio_mobile": "adapt",
+                    "width": "custom",
+                    "custom_width": 16,
+                    "width_mobile": "custom",
+                    "custom_width_mobile": 13,
+                    "rounded": false,
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80
+                  },
+                  "blocks": {}
+                },
+                "text_ayB3w3": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>Waar comfort en maatwerk samenkomen</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "text",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "image_NVFjwA",
+                "text_ayB3w3"
+              ]
+            }
+          },
+          "block_order": [
+            "group_NVnD6r"
+          ]
+        },
+        "footer_column_6qKBdj": {
+          "type": "_footer-column",
+          "name": "t:names.column",
+          "settings": {
+            "width": 18,
+            "heading": "Collecties",
+            "heading_size": "h5",
+            "open_default": false,
+            "enable_divider": true
+          },
+          "blocks": {
+            "footer_menu_fLEPht": {
+              "type": "_footer-menu",
+              "name": "t:names.menu",
+              "settings": {
+                "menu": "customer-account-main-menu"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "footer_menu_fLEPht"
+          ]
+        },
+        "footer_column_TggKmp": {
+          "type": "_footer-column",
+          "name": "t:names.column",
+          "settings": {
+            "width": 18,
+            "heading": "Klantenservice",
+            "heading_size": "h5",
+            "open_default": false,
+            "enable_divider": true
+          },
+          "blocks": {
+            "footer_menu_bNUmwj": {
+              "type": "_footer-menu",
+              "name": "t:names.menu",
+              "settings": {
+                "menu": "footer"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "footer_menu_bNUmwj"
+          ]
+        },
+        "footer_column_B4ErBg": {
+          "type": "_footer-column",
+          "name": "t:names.column",
+          "settings": {
+            "width": 18,
+            "heading": "Hulp nodig?",
+            "heading_size": "h5",
+            "open_default": false,
+            "enable_divider": true
+          },
+          "blocks": {
+            "text_4Qw6Wx": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Nijverheidsstraat 3, <br/>6905 DL Zevenaar</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_hth3Gf": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Info@binnenkussenvoordeel.nl</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_tzUfwi": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p><a href=\"tel:085-0608226\">085-0608226</a></p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_4Qw6Wx",
+            "text_hth3Gf",
+            "text_tzUfwi"
+          ]
+        }
+      },
+      "block_order": [
+        "footer_column_HTDjmW",
+        "footer_column_6qKBdj",
+        "footer_column_TggKmp",
+        "footer_column_B4ErBg"
+      ],
+      "settings": {
+        "menu": "beleid",
+        "enable_follow_on_shop": true,
+        "enable_social_media_icons": true,
+        "enable_language_selector": true,
+        "enable_country_selector": true,
+        "enable_payment_icons": true,
+        "color_scheme": "scheme-inverse",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 20,
+        "device": "desktop",
+        "padding-block-start": 60,
+        "padding-block-start-mobile": 40
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

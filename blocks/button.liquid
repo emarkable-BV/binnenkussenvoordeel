@@ -8,7 +8,8 @@
   icon_only: block.settings.icon_only,
   mobile_full_width: block.settings.mobile_full_width,
   animation_type: block.settings.animation_type,
-  animation_delay: block.settings.animation_delay
+  animation_delay: block.settings.animation_delay,
+  extra_class: block.settings.custom_class
 %}
 {% schema %}
 {
@@ -325,6 +326,12 @@
       "label": "t:settings.mobile_full_width",
       "default": false,
       "visible_if": "{{ block.settings.icon_only == false }}"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "t:settings.custom_class",
+      "info": "t:info.custom_class"
     },
     {
       "type": "header",

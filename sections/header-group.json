@@ -1,1 +1,90 @@
-{"type":"header","name":"t:names.header","sections":{"announcement_bar_zQJhGi":{"type":"announcement-bar","blocks":{"text_LPzFMd":{"type":"text","settings":{"text":"<p>Special Offer: 20% code pet20! <a href=\"\/collections\/all\" title=\"All products\">Shop Now<\/a><\/p>","highlight_style":"none","highlight_font_style":"italic","highlight_shape_color":"","highlight_text_color":"","type_preset":"rte","font":"var(--font-body--family)","font_weight":"","font_size":15,"font_size_mobile":15,"line_height":"normal","text_color":"text","text_color_gradient":"","disable_line_break_mobile":false,"width":"fit-content","text_alignment":"left","width_mobile":"fit-content","text_alignment_mobile":"left","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0,"mobile-padding-scale":80,"animation_type":"none","animation_delay":250},"blocks":{}}},"block_order":["text_LPzFMd"],"name":"t:names.announcement_bar","settings":{"content_width":100,"autoplay":true,"autoplay_speed":5,"color_scheme":"scheme-3","padding-block-start":8,"padding-block-end":8}},"header":{"type":"header","settings":{"menu":"main-menu","menu_mobile":"","header_layout":"logo-left","menu_trigger":"hover","sticky_header":"always","enable_search_form":true,"search_form_style":"transparent","customer_account_menu":"customer-account-main-menu","enable_social_media_icons":true,"enable_language_selector":true,"enable_country_selector":true,"color_scheme":"","show_sperator_line":true,"hide_sperator_line_for_templates":"index\npage.about","enable_dividers":false,"padding-block-start":16,"padding-block-end":16}}},"order":["announcement_bar_zQJhGi","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "t:names.header",
+  "sections": {
+    "announcement_bar_zQJhGi": {
+      "type": "announcement-bar",
+      "blocks": {
+        "text_LPzFMd": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Voor <strong>16:00</strong> besteld, morgen in huis</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_LPzFMd"
+      ],
+      "name": "t:names.announcement_bar",
+      "settings": {
+        "content_width": 100,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "menu": "secundair-menu",
+        "color_scheme": "scheme-3",
+        "padding-block-start": 8,
+        "padding-block-end": 8
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "menu_mobile": "",
+        "header_layout": "logo-left",
+        "menu_trigger": "hover",
+        "sticky_header": "always",
+        "enable_search_form": true,
+        "search_form_style": "transparent",
+        "customer_account_menu": "customer-account-main-menu",
+        "enable_social_media_icons": true,
+        "enable_language_selector": true,
+        "enable_country_selector": true,
+        "color_scheme": "",
+        "show_sperator_line": true,
+        "hide_sperator_line_for_templates": "index\npage.about",
+        "enable_dividers": false,
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    }
+  },
+  "order": [
+    "announcement_bar_zQJhGi",
+    "header"
+  ]
+}

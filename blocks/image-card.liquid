@@ -34,6 +34,11 @@
     assign loading = 'eager'
     assign fetchpriority = 'high'
   endif
+
+  assign sync_image_ref = ''
+  if block.settings.sync_accordion_image
+    assign sync_image_ref = 'displayImage'
+  endif
 %}
 
 {% capture card_image %}
@@ -51,7 +56,8 @@
       image_ratio_mobile: block.settings.image_ratio_mobile,
       default_alt: shop.name,
       loading: loading,
-      fetchpriority: fetchpriority
+      fetchpriority: fetchpriority,
+      ref: sync_image_ref
     %}
     {%- if block.settings.toggle_overlay -%}
       {% render 'overlay', overlay_color: block.settings.overlay_color %}
@@ -136,6 +142,13 @@
       "type": "checkbox",
       "id": "toggle_overlay",
       "label": "t:settings.media_overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "sync_accordion_image",
+      "label": "t:settings.sync_accordion_image",
+      "info": "t:info.sync_accordion_image",
+      "default": false
     },
     {
       "type": "color",
