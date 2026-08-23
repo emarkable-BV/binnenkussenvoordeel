@@ -117,7 +117,7 @@
               "type": "_custom-field",
               "name": "Custom field",
               "settings": {
-                "field_type": "text",
+                "field_type": "phone",
                 "heading": "Telefoonnummer",
                 "placeholder": "",
                 "required": true,
