@@ -5,12 +5,13 @@
   assign image = block.settings.image
   assign image_size = block.settings.image_size | default: 100
   assign image_size_px = image_size | append: 'px'
+  assign card_width = block.settings.card_width | default: 320
 
   assign phone_href = phone | remove: ' ' | remove: '-'
 -%}
 <div
   class="contact-card border-style flex items-center{% unless block.settings.inherit_color_scheme %} color-{{ block.settings.color_scheme }}{% endunless %}"
-  style="{% render 'border-style', settings: block.settings %}"
+  style="{% render 'border-style', settings: block.settings %} --contact-card-min-width: {{ card_width }}px;"
   {{ block.shopify_attributes }}
 >
   {%- if image != blank -%}
@@ -67,7 +68,7 @@
   padding: 1rem 2rem 1rem 1rem;
   gap: 1.6rem;
   width: fit-content;
-  min-width: 32rem;
+  min-width: var(--contact-card-min-width, 32rem);
 }
 .contact-card__image {
   width: var(--contact-card-image-size, 10rem);
@@ -119,6 +120,16 @@
       "step": 4,
       "unit": "px",
       "default": 100
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Breedte",
+      "min": 240,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 320
     },
     {
       "type": "checkbox",

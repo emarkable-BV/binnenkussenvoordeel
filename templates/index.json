@@ -3171,262 +3171,47 @@
         "padding-block-end-mobile": 35
       }
     },
-    "testimonials_Nkf84f": {
-      "type": "testimonials",
+    "custom_section_review_widget": {
+      "type": "custom-section",
       "blocks": {
-        "testimonial_NQ7JNU": {
-          "type": "testimonial",
+        "etrusted_widget_review": {
+          "type": "etrusted-widget",
           "settings": {
-            "design": "inline",
-            "show_image": false,
-            "image_ratio": "adapt",
-            "image_ratio_mobile": "adapt",
-            "image_away_from_edge": false,
-            "enable_image_stretch": true,
-            "image_border_radius": 0,
-            "product": "",
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-1",
-            "border_radius": 20
+            "widget_id": "wdg-31be60db-ea13-4cf2-a0d1-455f7d07a31d"
           },
-          "blocks": {
-            "static-testimonial-text": {
-              "type": "_simple-text",
-              "static": true,
-              "settings": {
-                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
-                "highlight_style": "none",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_weight": "",
-                "font_size": 15,
-                "font_size_mobile": 15,
-                "line_height": "normal",
-                "text_color": "text",
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "mobile-padding-scale": 100,
-                "animation_type": "none",
-                "animation_delay": 250
-              },
-              "blocks": {}
-            },
-            "static-testimonial-info": {
-              "type": "_author-info",
-              "static": true,
-              "settings": {
-                "image_width": 80,
-                "image_width_mobile": 60,
-                "name": "Mooie kussens, top verzending",
-                "name_preset": "h6",
-                "icon": "check-circle",
-                "bio": "",
-                "bio_text_color": "subtext",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "mobile-padding-scale": 80
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        },
-        "testimonial_qiUiaM": {
-          "type": "testimonial",
-          "settings": {
-            "design": "inline",
-            "show_image": false,
-            "image_ratio": "adapt",
-            "image_ratio_mobile": "adapt",
-            "image_away_from_edge": false,
-            "enable_image_stretch": true,
-            "image_border_radius": 0,
-            "product": "",
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-1",
-            "border_radius": 20
-          },
-          "blocks": {
-            "static-testimonial-text": {
-              "type": "_simple-text",
-              "static": true,
-              "settings": {
-                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
-                "highlight_style": "none",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_weight": "",
-                "font_size": 15,
-                "font_size_mobile": 15,
-                "line_height": "normal",
-                "text_color": "text",
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "mobile-padding-scale": 100,
-                "animation_type": "none",
-                "animation_delay": 250
-              },
-              "blocks": {}
-            },
-            "static-testimonial-info": {
-              "type": "_author-info",
-              "static": true,
-              "settings": {
-                "image_width": 80,
-                "image_width_mobile": 60,
-                "name": "Mooie kussens, top verzending",
-                "name_preset": "h6",
-                "icon": "check-circle",
-                "bio": "",
-                "bio_text_color": "subtext",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "mobile-padding-scale": 80
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        },
-        "testimonial_geiKNi": {
-          "type": "testimonial",
-          "settings": {
-            "design": "inline",
-            "show_image": false,
-            "image_ratio": "adapt",
-            "image_ratio_mobile": "adapt",
-            "image_away_from_edge": false,
-            "enable_image_stretch": true,
-            "image_border_radius": 0,
-            "product": "",
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-1",
-            "border_radius": 20
-          },
-          "blocks": {
-            "static-testimonial-text": {
-              "type": "_simple-text",
-              "static": true,
-              "settings": {
-                "text": "<p>Mooie kwaliteit, niet duur en keurige verzending (goede communicatie en snel). De kussens staan top!</p>",
-                "highlight_style": "none",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_weight": "",
-                "font_size": 15,
-                "font_size_mobile": 15,
-                "line_height": "normal",
-                "text_color": "text",
-                "padding-block-start": 0,
-                "padding-block-end": 12,
-                "mobile-padding-scale": 100,
-                "animation_type": "none",
-                "animation_delay": 250
-              },
-              "blocks": {}
-            },
-            "static-testimonial-info": {
-              "type": "_author-info",
-              "static": true,
-              "settings": {
-                "image_width": 80,
-                "image_width_mobile": 60,
-                "name": "Mooie kussens, top verzending",
-                "name_preset": "h6",
-                "icon": "check-circle",
-                "bio": "",
-                "bio_text_color": "subtext",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "mobile-padding-scale": 80
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        },
-        "section-header-vertical": {
-          "type": "_section-header-vertical",
-          "static": true,
-          "settings": {
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "device": "desktop",
-            "padding-block-end": 40,
-            "padding-block-end-mobile": 24
-          },
-          "blocks": {
-            "text_zbREAL": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>Reviews</p>",
-                "highlight_style": "none",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_weight": "",
-                "font_size": 15,
-                "font_size_mobile": 15,
-                "line_height": "normal",
-                "text_color": "text",
-                "text_color_gradient": "",
-                "disable_line_break_mobile": false,
-                "width": "100%",
-                "text_alignment": "left",
-                "width_mobile": "100%",
-                "text_alignment_mobile": "center",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "mobile-padding-scale": 80,
-                "animation_type": "fade-up",
-                "animation_delay": 50
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_zbREAL"
-          ]
+          "blocks": {}
         }
       },
       "block_order": [
-        "testimonial_NQ7JNU",
-        "testimonial_qiUiaM",
-        "testimonial_geiKNi"
+        "etrusted_widget_review"
       ],
-      "name": "t:names.testimonials_carousel",
+      "name": "eTrusted widget",
       "settings": {
-        "container": "fixed",
-        "type": "carousel",
-        "slides_per_view": "columns",
-        "columns": 2,
-        "column_gap": 8,
-        "row_gap": 30,
-        "enable_swipe_on_mobile": true,
-        "swipe_custom_width_column": false,
-        "swipe_column_width": 76,
-        "columns_mobile": "1",
-        "column_gap_mobile": 8,
-        "row_gap_mobile": 24,
+        "container": "page-width",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "center",
+        "column_gap": 0,
+        "row_gap": 0,
+        "column_gap_mobile": 0,
+        "row_gap_mobile": 0,
+        "use_color_scheme_in_container": false,
         "color_scheme": "scheme-2",
-        "device": "mobile",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
         "padding-block-start": 50,
         "padding-block-end": 50,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
         "padding-block-start-mobile": 48,
-        "padding-block-end-mobile": 48
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16
       }
     },
     "custom_section_D4G6Vq": {
@@ -4603,7 +4388,7 @@
     "custom_section_iamhD8",
     "custom_section_LHKRWz",
     "products_bundle_KL7Fiw",
-    "testimonials_Nkf84f",
+    "custom_section_review_widget",
     "custom_section_D4G6Vq",
     "custom_section_xr4UUt",
     "custom_section_CcX8jH"

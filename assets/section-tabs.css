@@ -8,12 +8,12 @@
 }
 
 .section-tabs .tabs__button[aria-selected=true] {
-  color: rgb(var(--color-primary-button-text));
+  color: #fff;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .section-tabs .tabs__button:hover {
-    color: rgb(var(--color-primary-button-text));
+    color: #fdf8f4;
   }
 }
 @media (min-width: 768px) {
@@ -21,7 +21,15 @@
     color: rgb(var(--color-foreground));
     background: transparent;
   }
+  .section-tabs .tabs--vertical .tabs__button[aria-selected=true] {
+    color: #fff;
+  }
   .section-tabs .tabs--vertical .tabs__button::before {
     background: rgb(var(--color-secondary-button-background));
+  }
+}
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .section-tabs .tabs--vertical .tabs__button:hover {
+    color: #fdf8f4;
   }
 }
