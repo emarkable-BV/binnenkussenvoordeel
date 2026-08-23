@@ -258,35 +258,28 @@
                 "padding-inline-end-mobile": 0
               },
               "blocks": {
-                "text_BY6EHY": {
-                  "type": "text",
-                  "name": "t:names.heading",
+                "image_F7fw7h": {
+                  "type": "image",
+                  "name": "t:names.image",
                   "settings": {
-                    "text": "<p>Binnenkussenvoordeel</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "text",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "fit-content",
-                    "text_alignment": "left",
-                    "width_mobile": "fit-content",
-                    "text_alignment_mobile": "left",
+                    "image": "shopify://shop_images/logo-fullcolour.svg",
+                    "link": "",
+                    "image_ratio": "adapt",
+                    "image_ratio_mobile": "adapt",
+                    "width": "custom",
+                    "custom_width": 77,
+                    "width_mobile": "fill",
+                    "custom_width_mobile": 100,
+                    "rounded": false,
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
                     "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
+                    "mobile-padding-scale": 80
                   },
                   "blocks": {}
                 },
@@ -324,7 +317,7 @@
                 }
               },
               "block_order": [
-                "text_BY6EHY",
+                "image_F7fw7h",
                 "text_WjdEzb"
               ]
             },
