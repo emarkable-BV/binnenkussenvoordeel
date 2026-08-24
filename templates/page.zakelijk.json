@@ -1993,6 +1993,360 @@
         "padding-inline-start-mobile": 20,
         "padding-inline-end-mobile": 20
       }
+    },
+    "custom_section_AzBktY": {
+      "type": "custom-section",
+      "blocks": {
+        "contact_form_3dUrnt": {
+          "type": "contact-form",
+          "name": "Contact form",
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "column_gap": 24,
+            "row_gap": 20,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "row_gap_mobile": 20
+          },
+          "blocks": {
+            "custom_field_Ryrgdj": {
+              "type": "_custom-field",
+              "name": "Custom field",
+              "settings": {
+                "field_type": "phone",
+                "heading": "Telefoonnummer",
+                "placeholder": "",
+                "required": true,
+                "full_width": false,
+                "checkbox_checked_value": "Yes",
+                "checkbox_uncheck_value": "No",
+                "select_options": ""
+              },
+              "blocks": {}
+            },
+            "custom_field_i73X9A": {
+              "type": "_custom-field",
+              "name": "Custom field",
+              "settings": {
+                "field_type": "text",
+                "heading": "Order nummer (optioneel)",
+                "placeholder": "",
+                "required": false,
+                "full_width": false,
+                "checkbox_checked_value": "Yes",
+                "checkbox_uncheck_value": "No",
+                "select_options": ""
+              },
+              "blocks": {}
+            },
+            "custom_field_Bzj8DD": {
+              "type": "_custom-field",
+              "settings": {
+                "field_type": "text",
+                "heading": "Bedrijfsnaam (optioneel)",
+                "placeholder": "",
+                "required": false,
+                "full_width": true,
+                "checkbox_checked_value": "Yes",
+                "checkbox_uncheck_value": "No",
+                "select_options": "Austria,Viet Nam,Japan"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "custom_field_Ryrgdj",
+            "custom_field_i73X9A",
+            "custom_field_Bzj8DD"
+          ]
+        },
+        "divider_DgnCtD": {
+          "type": "divider",
+          "name": "t:names.divider",
+          "settings": {
+            "thickness": 1,
+            "width_percent": 100,
+            "disable_on_desktop": false,
+            "disable_on_mobile": false,
+            "device": "mobile",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 0
+          },
+          "blocks": {}
+        },
+        "group_dq8KAT": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "column_gap": 12,
+            "row_gap": 32,
+            "enable_sticky_desktop": false,
+            "width": "custom",
+            "custom_width": 40,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": false,
+            "swipe_custom_width_column": false,
+            "swipe_column_width": 76,
+            "columns_mobile": 2,
+            "column_gap_mobile": 12,
+            "row_gap_mobile": 20,
+            "device": "desktop",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 0,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0
+          },
+          "blocks": {
+            "group_6xaAiR": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "column_gap": 12,
+                "row_gap": 12,
+                "enable_sticky_desktop": false,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "enable_swipe_on_mobile": false,
+                "swipe_custom_width_column": false,
+                "swipe_column_width": 76,
+                "columns_mobile": 2,
+                "column_gap_mobile": 12,
+                "row_gap_mobile": 12,
+                "device": "mobile",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "padding-block-start-mobile": 0,
+                "padding-block-end-mobile": 4,
+                "padding-inline-start-mobile": 0,
+                "padding-inline-end-mobile": 0
+              },
+              "blocks": {
+                "image_DWF8x6": {
+                  "type": "image",
+                  "name": "t:names.image",
+                  "settings": {
+                    "image": "shopify://shop_images/logo-fullcolour.svg",
+                    "link": "",
+                    "image_ratio": "adapt",
+                    "image_ratio_mobile": "adapt",
+                    "width": "custom",
+                    "custom_width": 77,
+                    "width_mobile": "custom",
+                    "custom_width_mobile": 48,
+                    "rounded": false,
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80
+                  },
+                  "blocks": {}
+                },
+                "text_TymWXx": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>De beste kwaliteit binnenkussens voor jouw (zakelijke) project.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "fit-content",
+                    "text_alignment": "left",
+                    "width_mobile": "fit-content",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "image_DWF8x6",
+                "text_TymWXx"
+              ]
+            },
+            "icon_box_AYfeN6": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_card",
+              "settings": {
+                "direction": "horizontal",
+                "text_align": "left",
+                "icon": "map-pin",
+                "icon_image_upload": "shopify://shop_images/locatie.svg",
+                "icon_spacing": 12,
+                "icon_size": "custom-size",
+                "icon_width": 16,
+                "icon_width_mobile": 24,
+                "heading": "Locatie",
+                "heading_preset": "h6",
+                "text": "<p>Nijverheidsstraat 3, <br/>6905 DL Zevenaar</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 4,
+                "style": "standard",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_eNbjDm": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_card",
+              "settings": {
+                "direction": "horizontal",
+                "text_align": "left",
+                "icon": "phone",
+                "icon_image_upload": "shopify://shop_images/telefoon.svg",
+                "icon_spacing": 12,
+                "icon_size": "custom-size",
+                "icon_width": 18,
+                "icon_width_mobile": 24,
+                "heading": "Bel ons",
+                "heading_preset": "h6",
+                "text": "<p>085-0608226</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 4,
+                "style": "standard",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            },
+            "icon_box_NdXRVp": {
+              "type": "icon-box",
+              "name": "t:names.icon_box_card",
+              "settings": {
+                "direction": "horizontal",
+                "text_align": "left",
+                "icon": "email",
+                "icon_image_upload": "shopify://shop_images/mail.svg",
+                "icon_spacing": 12,
+                "icon_size": "custom-size",
+                "icon_width": 20,
+                "icon_width_mobile": 28,
+                "heading": "Klantenservice",
+                "heading_preset": "h6",
+                "text": "<p>Info@binnenkussenvoordeel.nl</p>",
+                "text_color": "subtext",
+                "link": "",
+                "show_link_icon": true,
+                "content_row_gap": 4,
+                "style": "standard",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 10
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "group_6xaAiR",
+            "icon_box_AYfeN6",
+            "icon_box_eNbjDm",
+            "icon_box_NdXRVp"
+          ]
+        }
+      },
+      "block_order": [
+        "contact_form_3dUrnt",
+        "divider_DgnCtD",
+        "group_dq8KAT"
+      ],
+      "name": "t:names.contact_form",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "flex-start",
+        "horizontal_alignment_flex_direction_column": "center",
+        "column_gap": 50,
+        "row_gap": 12,
+        "column_gap_mobile": 12,
+        "row_gap_mobile": 40,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-6",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "mobile",
+        "padding-block-start": 0,
+        "padding-block-end": 74,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 42,
+        "padding-inline-start-mobile": 0,
+        "padding-inline-end-mobile": 0
+      }
     }
   },
   "order": [
@@ -2005,6 +2359,7 @@
     "custom_section_xezadK",
     "testimonials_RHcRJ3",
     "custom_section_DC4tiY",
-    "custom_section_Lxm88h"
+    "custom_section_Lxm88h",
+    "custom_section_AzBktY"
   ]
 }
