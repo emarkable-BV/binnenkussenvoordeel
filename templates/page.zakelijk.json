@@ -85,6 +85,169 @@
         "padding-inline-end-mobile": 0
       }
     },
+    "hero_banner_L8YxwK": {
+      "type": "hero-banner",
+      "blocks": {
+        "hero-banner-media": {
+          "type": "_hero-banner-media",
+          "static": true,
+          "settings": {
+            "enable_parallax": false,
+            "parallax_direction": "vertical",
+            "parallax_intensity": 0.5,
+            "type": "image",
+            "image": "{{ page.metafields.custom.herobanner.value }}",
+            "toggle_overlay": false,
+            "overlay_color": "#00000033"
+          },
+          "blocks": {}
+        },
+        "hero-banner-content": {
+          "type": "_hero-banner-content",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "position": "middle-left",
+            "width": "fit-content",
+            "custom_width": 100,
+            "horizontal_alignment_flex_direction_column_mobile": "center",
+            "position_mobile": "middle",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "enable_transparent": true,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {
+            "text_cwGnmk": {
+              "type": "text",
+              "settings": {
+                "text": "<p><strong>Wij zijn er ook voor jou zakelijke project</strong></p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "text-subheading",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "fade-up",
+                "animation_delay": 100
+              },
+              "blocks": {}
+            },
+            "spacer_8Yb98M": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 20,
+                "gap_mobile": 16
+              },
+              "blocks": {}
+            },
+            "text_9cXzhV": {
+              "type": "text",
+              "settings": {
+                "text": "<p>{{ page.title }}</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h1",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "fade-up",
+                "animation_delay": 200
+              },
+              "blocks": {}
+            },
+            "spacer_6rfE6r": {
+              "type": "_spacer",
+              "settings": {
+                "gap": 32,
+                "gap_mobile": 24
+              },
+              "blocks": {}
+            },
+            "button_py4nXg": {
+              "type": "button",
+              "settings": {
+                "label": "Vraag direct een offerte aan",
+                "link": "shopify://collections/all",
+                "style": "primary",
+                "size": "large",
+                "icon": "caret-down",
+                "icon_only": false,
+                "icon_style": "solid",
+                "mobile_full_width": false,
+                "custom_class": "",
+                "animation_type": "fade-up",
+                "animation_delay": 300
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_cwGnmk",
+            "spacer_8Yb98M",
+            "text_9cXzhV",
+            "spacer_6rfE6r",
+            "button_py4nXg"
+          ]
+        }
+      },
+      "name": "t:names.hero_banner",
+      "settings": {
+        "container": "fixed",
+        "height": "medium",
+        "edge_gap": "md",
+        "content_position": "inside",
+        "height_mobile": "auto",
+        "color_scheme": "",
+        "border_radius": 20,
+        "device": "desktop",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "padding-block-start-mobile": 0,
+        "padding-block-end-mobile": 0
+      }
+    },
     "custom_section_qdwxFr": {
       "type": "custom-section",
       "blocks": {
@@ -255,6 +418,7 @@
         "text_yiLNMy",
         "group_NhMrwm"
       ],
+      "disabled": true,
       "name": "t:names.rich_text",
       "settings": {
         "container": "page-width--full",
@@ -312,11 +476,11 @@
             "column_gap_mobile": 13,
             "row_gap_mobile": 12,
             "device": "mobile",
-            "padding-block-start": 0,
+            "padding-block-start": 42,
             "padding-block-end": 42,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
-            "padding-block-start-mobile": 0,
+            "padding-block-start-mobile": 16,
             "padding-block-end-mobile": 16,
             "padding-inline-start-mobile": 0,
             "padding-inline-end-mobile": 0,
@@ -3036,6 +3200,7 @@
   },
   "order": [
     "main",
+    "hero_banner_L8YxwK",
     "custom_section_qdwxFr",
     "custom_section_AFje3x",
     "custom_section_wbrbwy",
