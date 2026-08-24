@@ -92,9 +92,9 @@
           "type": "_hero-banner-media",
           "static": true,
           "settings": {
-            "enable_parallax": false,
+            "enable_parallax": true,
             "parallax_direction": "vertical",
-            "parallax_intensity": 0.5,
+            "parallax_intensity": 0.7,
             "type": "image",
             "image": "{{ page.metafields.custom.herobanner.value }}",
             "toggle_overlay": false,
