@@ -1997,6 +1997,38 @@
     "custom_section_AzBktY": {
       "type": "custom-section",
       "blocks": {
+        "text_96WNDH": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Vraag een vrijblijvende offerte aan</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
         "contact_form_3dUrnt": {
           "type": "contact-form",
           "name": "Contact form",
@@ -2030,7 +2062,7 @@
               "name": "Custom field",
               "settings": {
                 "field_type": "text",
-                "heading": "Order nummer (optioneel)",
+                "heading": "KVK nummer*",
                 "placeholder": "",
                 "required": false,
                 "full_width": false,
@@ -2315,6 +2347,7 @@
         }
       },
       "block_order": [
+        "text_96WNDH",
         "contact_form_3dUrnt",
         "divider_DgnCtD",
         "group_dq8KAT"
@@ -2338,11 +2371,11 @@
         "border_opacity": 100,
         "border_radius": 0,
         "device": "mobile",
-        "padding-block-start": 0,
+        "padding-block-start": 74,
         "padding-block-end": 74,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
-        "padding-block-start-mobile": 0,
+        "padding-block-start-mobile": 42,
         "padding-block-end-mobile": 42,
         "padding-inline-start-mobile": 0,
         "padding-inline-end-mobile": 0
