@@ -1624,10 +1624,10 @@
         "padding-inline-end-mobile": 0
       }
     },
-    "custom_section_K6qmec": {
+    "custom_section_VqMHyC": {
       "type": "custom-section",
       "blocks": {
-        "group_rPMGRz": {
+        "group_TajKxF": {
           "type": "group",
           "name": "t:names.section_header_vertical",
           "settings": {
@@ -1666,7 +1666,7 @@
             "padding-inline-end-mobile": 0
           },
           "blocks": {
-            "text_LGkHiQ": {
+            "text_ybeq6z": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -1698,7 +1698,7 @@
               },
               "blocks": {}
             },
-            "text_TmcRKc": {
+            "text_UVWcBa": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
@@ -1730,7 +1730,7 @@
               },
               "blocks": {}
             },
-            "button_D7XU8W": {
+            "button_zJTcWC": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
@@ -1750,12 +1750,12 @@
             }
           },
           "block_order": [
-            "text_LGkHiQ",
-            "text_TmcRKc",
-            "button_D7XU8W"
+            "text_ybeq6z",
+            "text_UVWcBa",
+            "button_zJTcWC"
           ]
         },
-        "grid_UFrFLK": {
+        "grid_kRHii6": {
           "type": "grid",
           "name": "t:names.grid",
           "settings": {
@@ -1791,14 +1791,14 @@
             "custom_columns": ""
           },
           "blocks": {
-            "image_card_6Pzjqi": {
+            "image_card_ErNNYJ": {
               "type": "image-card",
               "name": "t:names.image_card",
               "settings": {
                 "show_content_below": false,
                 "gap": 20,
                 "gap_mobile": 20,
-                "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
+                "image": "shopify://shop_images/hotels.jpg",
                 "toggle_overlay": true,
                 "sync_accordion_image": false,
                 "overlay_color": "#00000026",
@@ -1935,17 +1935,17 @@
               },
               "block_order": []
             },
-            "image_card_X3AxHH": {
+            "image_card_r6478C": {
               "type": "image-card",
               "name": "t:names.image_card",
               "settings": {
                 "show_content_below": false,
                 "gap": 20,
                 "gap_mobile": 20,
-                "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
+                "image": "shopify://shop_images/a416fe57-be7c-4f29-92e9-3cdfd34fbd4e-2026-08-24.png",
                 "toggle_overlay": true,
                 "sync_accordion_image": false,
-                "overlay_color": "#00000026",
+                "overlay_color": "#00000040",
                 "image_ratio": "4/5",
                 "image_ratio_mobile": "1/1",
                 "image_border": "none",
@@ -2079,14 +2079,14 @@
               },
               "block_order": []
             },
-            "image_card_YE4Kyk": {
+            "image_card_tdBJqT": {
               "type": "image-card",
               "name": "t:names.image_card",
               "settings": {
                 "show_content_below": false,
                 "gap": 20,
                 "gap_mobile": 20,
-                "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
+                "image": "shopify://shop_images/horeca.jpg",
                 "toggle_overlay": true,
                 "sync_accordion_image": false,
                 "overlay_color": "#00000026",
@@ -2223,7 +2223,7 @@
               },
               "block_order": []
             },
-            "collection_card_fBk6mz": {
+            "collection_card_YzEFkT": {
               "type": "collection-card",
               "name": "t:names.collection_card",
               "disabled": true,
@@ -2241,7 +2241,7 @@
               },
               "blocks": {}
             },
-            "collection_card_YcbDhW": {
+            "collection_card_iMf8hP": {
               "type": "collection-card",
               "name": "t:names.collection_card",
               "disabled": true,
@@ -2259,7 +2259,7 @@
               },
               "blocks": {}
             },
-            "collection_card_hmtQxz": {
+            "collection_card_4Teeqh": {
               "type": "collection-card",
               "name": "t:names.collection_card",
               "disabled": true,
@@ -2277,7 +2277,7 @@
               },
               "blocks": {}
             },
-            "collection_card_Gn3d4Q": {
+            "collection_card_TJUqVH": {
               "type": "collection-card",
               "name": "t:names.collection_card",
               "disabled": true,
@@ -2295,7 +2295,7 @@
               },
               "blocks": {}
             },
-            "collection_card_b3C96n": {
+            "collection_card_RU7tgW": {
               "type": "collection-card",
               "name": "t:names.collection_card",
               "disabled": true,
@@ -2315,20 +2315,20 @@
             }
           },
           "block_order": [
-            "image_card_6Pzjqi",
-            "image_card_X3AxHH",
-            "image_card_YE4Kyk",
-            "collection_card_fBk6mz",
-            "collection_card_YcbDhW",
-            "collection_card_hmtQxz",
-            "collection_card_Gn3d4Q",
-            "collection_card_b3C96n"
+            "image_card_ErNNYJ",
+            "image_card_r6478C",
+            "image_card_tdBJqT",
+            "collection_card_YzEFkT",
+            "collection_card_iMf8hP",
+            "collection_card_4Teeqh",
+            "collection_card_TJUqVH",
+            "collection_card_RU7tgW"
           ]
         }
       },
       "block_order": [
-        "group_rPMGRz",
-        "grid_UFrFLK"
+        "group_TajKxF",
+        "grid_kRHii6"
       ],
       "name": "t:names.collection_list_circle_thumbnail",
       "settings": {
@@ -2997,7 +2997,7 @@
     "custom_section_wbrbwy",
     "custom_section_UXMtD8",
     "custom_section_xezadK",
-    "custom_section_K6qmec",
+    "custom_section_VqMHyC",
     "testimonials_RHcRJ3",
     "custom_section_Lxm88h"
   ]
