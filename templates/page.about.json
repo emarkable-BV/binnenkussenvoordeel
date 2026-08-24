@@ -132,7 +132,7 @@
             "type_preset": "custom",
             "font": "var(--font-heading--family)",
             "font_weight": "600",
-            "font_size": 64,
+            "font_size": 47,
             "font_size_mobile": 31,
             "line_height": "normal",
             "text_color": "text",

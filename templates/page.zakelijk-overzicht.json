@@ -77,6 +77,7 @@
         "page_title",
         "page_content"
       ],
+      "disabled": true,
       "settings": {
         "container": "custom",
         "container_custom_width": 830,
@@ -96,10 +97,112 @@
         "padding-inline-start-mobile": 16,
         "padding-inline-end-mobile": 16
       }
+    },
+    "custom_section_kXYcDt": {
+      "type": "custom-section",
+      "blocks": {
+        "text_4XaiXW": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Binnenkussens nodig voor uw bedrijf?</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h5",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "subtext",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 10,
+            "padding-inline-start": 100,
+            "padding-inline-end": 100,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
+        "text_wJjD7J": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Selecteer uw branche</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_weight": "600",
+            "font_size": 47,
+            "font_size_mobile": 31,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 100,
+            "padding-inline-end": 100,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_4XaiXW",
+        "text_wJjD7J"
+      ],
+      "name": "t:names.rich_text",
+      "settings": {
+        "container": "page-width--full",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "center",
+        "column_gap": 44,
+        "row_gap": 0,
+        "column_gap_mobile": 12,
+        "row_gap_mobile": 12,
+        "use_color_scheme_in_container": true,
+        "color_scheme": "scheme-1",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 20,
+        "device": "desktop",
+        "padding-block-start": 34,
+        "padding-block-end": 34,
+        "padding-inline-start": 100,
+        "padding-inline-end": 100,
+        "padding-block-start-mobile": 32,
+        "padding-block-end-mobile": 32,
+        "padding-inline-start-mobile": 20,
+        "padding-inline-end-mobile": 20
+      }
     }
   },
   "order": [
     "breadcrumbs",
-    "main"
+    "main",
+    "custom_section_kXYcDt"
   ]
 }
