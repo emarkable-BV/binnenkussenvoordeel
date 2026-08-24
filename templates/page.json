@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "breadcrumbs": {
@@ -28,6 +37,10 @@
             "font_size_mobile": 15,
             "line_height": "normal",
             "text_color": "text",
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "mobile-padding-scale": 80,
@@ -65,7 +78,8 @@
         "page_content"
       ],
       "settings": {
-        "container": "fixed",
+        "container": "custom",
+        "container_custom_width": 830,
         "use_color_scheme_in_container": false,
         "color_scheme": "",
         "border": "none",
