@@ -718,6 +718,24 @@
                 "accordion_row_YYawgT",
                 "accordion_row_eMehRb"
               ]
+            },
+            "button_CRj9xn": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Kussenhoezen bijbestellen?",
+                "link": "https://www.gekopkussens.nl/",
+                "style": "plain",
+                "size": "medium",
+                "icon": "caret-right",
+                "icon_only": false,
+                "icon_style": "default",
+                "mobile_full_width": false,
+                "custom_class": "",
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -730,7 +748,8 @@
             "group_YDc8KE",
             "pickup_availability_CgeNxU",
             "product_video_testimonials_a37eGn",
-            "accordion_U9n4kg"
+            "accordion_U9n4kg",
+            "button_CRj9xn"
           ]
         }
       },

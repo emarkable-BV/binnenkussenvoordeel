@@ -2595,6 +2595,7 @@
         "testimonial_a3nXr3",
         "testimonial_HnW7qn"
       ],
+      "disabled": true,
       "name": "t:names.testimonials_carousel",
       "settings": {
         "container": "fixed",
@@ -2615,6 +2616,49 @@
         "padding-block-end": 64,
         "padding-block-start-mobile": 48,
         "padding-block-end-mobile": 48
+      }
+    },
+    "custom_section_DC4tiY": {
+      "type": "custom-section",
+      "blocks": {
+        "etrusted_widget_MYFQnH": {
+          "type": "etrusted-widget",
+          "settings": {
+            "widget_id": "wdg-31be60db-ea13-4cf2-a0d1-455f7d07a31d"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "etrusted_widget_MYFQnH"
+      ],
+      "name": "eTrusted widget",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "center",
+        "column_gap": 0,
+        "row_gap": 0,
+        "column_gap_mobile": 0,
+        "row_gap_mobile": 0,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-2",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "mobile",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
+        "padding-block-start-mobile": 32,
+        "padding-block-end-mobile": 32,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16
       }
     },
     "custom_section_Lxm88h": {
@@ -2999,6 +3043,7 @@
     "custom_section_xezadK",
     "custom_section_VqMHyC",
     "testimonials_RHcRJ3",
+    "custom_section_DC4tiY",
     "custom_section_Lxm88h"
   ]
 }
