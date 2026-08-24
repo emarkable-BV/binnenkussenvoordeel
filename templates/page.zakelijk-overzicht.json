@@ -1712,6 +1712,82 @@
         "padding-block-start-mobile": 48,
         "padding-block-end-mobile": 48
       }
+    },
+    "custom_section_XBbXzE": {
+      "type": "custom-section",
+      "blocks": {
+        "text_c8BTDk": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Hoe klanten ons beoordelen</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
+        "etrusted_widget_4htzUL": {
+          "type": "etrusted-widget",
+          "settings": {
+            "widget_id": "wdg-31be60db-ea13-4cf2-a0d1-455f7d07a31d"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_c8BTDk",
+        "etrusted_widget_4htzUL"
+      ],
+      "name": "eTrusted widget",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 0,
+        "row_gap": 10,
+        "column_gap_mobile": 0,
+        "row_gap_mobile": 0,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-1",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "padding-inline-start": 15,
+        "padding-inline-end": 15,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 16,
+        "padding-inline-end-mobile": 16
+      }
     }
   },
   "order": [
@@ -1720,6 +1796,7 @@
     "custom_section_kXYcDt",
     "testimonials_CR7YHN",
     "flex_carousel_e3JcpM",
-    "flex_carousel_W8tPxh"
+    "flex_carousel_W8tPxh",
+    "custom_section_XBbXzE"
   ]
 }
