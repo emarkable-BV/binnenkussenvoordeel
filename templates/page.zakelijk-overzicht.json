@@ -142,7 +142,7 @@
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
             "highlight_text_color": "",
-            "type_preset": "custom",
+            "type_preset": "h1",
             "font": "var(--font-heading--family)",
             "font_weight": "600",
             "font_size": 47,
@@ -747,7 +747,7 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "Meer informatie",
+                "label": "Offerte aanvragen",
                 "link": "shopify://pages/zakelijk",
                 "style": "primary",
                 "size": "medium",
@@ -891,7 +891,7 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "Meer informatie",
+                "label": "Offerte aanvragen",
                 "link": "shopify://pages/zakelijk",
                 "style": "primary",
                 "size": "medium",
@@ -1035,7 +1035,7 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "Meer informatie",
+                "label": "Offerte aanvragen",
                 "link": "shopify://pages/zakelijk",
                 "style": "primary",
                 "size": "medium",
@@ -1295,7 +1295,7 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "Meer informatie",
+                "label": "Offerte aanvragen",
                 "link": "shopify://pages/zakelijk",
                 "style": "primary",
                 "size": "medium",
@@ -1439,7 +1439,7 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "Meer informatie",
+                "label": "Offerte aanvragen",
                 "link": "shopify://pages/zakelijk",
                 "style": "primary",
                 "size": "medium",
@@ -1583,7 +1583,7 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "Meer informatie",
+                "label": "Offerte aanvragen",
                 "link": "shopify://pages/zakelijk",
                 "style": "primary",
                 "size": "medium",
