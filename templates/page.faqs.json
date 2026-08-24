@@ -226,18 +226,18 @@
         "container": "fixed",
         "container_custom_width": 880,
         "use_color_scheme_in_container": false,
-        "color_scheme": "",
+        "color_scheme": "scheme-2",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
-        "device": "desktop",
-        "padding-block-start": 36,
-        "padding-block-end": 40,
+        "device": "mobile",
+        "padding-block-start": 64,
+        "padding-block-end": 64,
         "padding-inline-start": 15,
         "padding-inline-end": 15,
-        "padding-block-start-mobile": 20,
-        "padding-block-end-mobile": 24,
+        "padding-block-start-mobile": 32,
+        "padding-block-end-mobile": 32,
         "padding-inline-start-mobile": 16,
         "padding-inline-end-mobile": 16
       }
@@ -2126,7 +2126,7 @@
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
-        "padding-block-start": 0,
+        "padding-block-start": 32,
         "padding-block-end": 100
       }
     }
