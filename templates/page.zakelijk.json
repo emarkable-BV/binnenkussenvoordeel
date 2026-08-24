@@ -239,7 +239,7 @@
         "edge_gap": "md",
         "content_position": "inside",
         "height_mobile": "auto",
-        "color_scheme": "",
+        "color_scheme": "scheme-inverse",
         "border_radius": 20,
         "device": "desktop",
         "padding-block-start": 0,
