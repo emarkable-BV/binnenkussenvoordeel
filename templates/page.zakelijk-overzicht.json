@@ -915,7 +915,7 @@
             "show_content_below": true,
             "gap": 19,
             "gap_mobile": 16,
-            "image": "shopify://shop_images/hotels.jpg",
+            "image": "shopify://shop_images/horeca.jpg",
             "toggle_overlay": false,
             "sync_accordion_image": false,
             "overlay_color": "#00000026",
@@ -1165,21 +1165,22 @@
         "padding-block-end-mobile": 48
       }
     },
-    "flex_carousel_bgrcQA": {
+    "flex_carousel_W8tPxh": {
       "type": "flex-carousel",
       "blocks": {
-        "image_card_kXMDYb": {
+        "image_card_8QPkWY": {
           "type": "image-card",
           "name": "t:names.image_card",
           "settings": {
             "show_content_below": true,
-            "gap": 20,
+            "gap": 19,
             "gap_mobile": 16,
+            "image": "shopify://shop_images/hotels.jpg",
             "toggle_overlay": false,
             "sync_accordion_image": false,
             "overlay_color": "#00000026",
-            "image_ratio": "adapt",
-            "image_ratio_mobile": "adapt",
+            "image_ratio": "4/3",
+            "image_ratio_mobile": "4/3",
             "image_border": "none",
             "image_border_width": 1,
             "image_border_opacity": 100,
@@ -1195,7 +1196,7 @@
             "vertical_alignment_flex_direction_column": "flex-end",
             "column_gap": 12,
             "column_gap_mobile": 12,
-            "row_gap": 32,
+            "row_gap": 12,
             "row_gap_mobile": 24,
             "width": "custom",
             "custom_width": 30,
@@ -1208,7 +1209,7 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "card_label": "Exclusive",
+            "card_label": "Hotels",
             "card_label_text_color": "#ffffff",
             "card_label_in_content": false,
             "enable_preload_image": false
@@ -1217,6 +1218,7 @@
             "subheading": {
               "type": "_simple-text",
               "name": "t:names.subheading",
+              "disabled": true,
               "static": true,
               "settings": {
                 "text": "",
@@ -1244,12 +1246,12 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p>Talk about your brand</p>",
+                "text": "<p>Binnenkussens voor hotels</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
                 "highlight_text_color": "",
-                "type_preset": "h3",
+                "type_preset": "h4",
                 "font": "var(--font-heading--family)",
                 "font_weight": "",
                 "font_size": 48,
@@ -1266,6 +1268,7 @@
             },
             "text": {
               "type": "_simple-text",
+              "disabled": true,
               "static": true,
               "settings": {
                 "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
@@ -1292,11 +1295,11 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "",
-                "link": "",
-                "style": "secondary",
+                "label": "Meer informatie",
+                "link": "shopify://pages/zakelijk",
+                "style": "primary",
                 "size": "medium",
-                "icon": "none",
+                "icon": "caret-right",
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
@@ -1309,18 +1312,19 @@
           },
           "block_order": []
         },
-        "image_card_q3cfGH": {
+        "image_card_jHGtNm": {
           "type": "image-card",
           "name": "t:names.image_card",
           "settings": {
             "show_content_below": true,
-            "gap": 20,
+            "gap": 19,
             "gap_mobile": 16,
+            "image": "shopify://shop_images/a416fe57-be7c-4f29-92e9-3cdfd34fbd4e-2026-08-24.png",
             "toggle_overlay": false,
             "sync_accordion_image": false,
             "overlay_color": "#00000026",
-            "image_ratio": "adapt",
-            "image_ratio_mobile": "adapt",
+            "image_ratio": "4/3",
+            "image_ratio_mobile": "4/3",
             "image_border": "none",
             "image_border_width": 1,
             "image_border_opacity": 100,
@@ -1336,10 +1340,10 @@
             "vertical_alignment_flex_direction_column": "flex-end",
             "column_gap": 12,
             "column_gap_mobile": 12,
-            "row_gap": 32,
+            "row_gap": 12,
             "row_gap_mobile": 24,
             "width": "custom",
-            "custom_width": 39,
+            "custom_width": 30,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "enable_full_height": false,
@@ -1349,7 +1353,7 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "card_label": "Exclusive",
+            "card_label": "Boten",
             "card_label_text_color": "#ffffff",
             "card_label_in_content": false,
             "enable_preload_image": false
@@ -1358,6 +1362,7 @@
             "subheading": {
               "type": "_simple-text",
               "name": "t:names.subheading",
+              "disabled": true,
               "static": true,
               "settings": {
                 "text": "",
@@ -1385,12 +1390,12 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p>Talk about your brand</p>",
+                "text": "<p>Binnenkussens voor boten</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
                 "highlight_text_color": "",
-                "type_preset": "h3",
+                "type_preset": "h4",
                 "font": "var(--font-heading--family)",
                 "font_weight": "",
                 "font_size": 48,
@@ -1407,6 +1412,7 @@
             },
             "text": {
               "type": "_simple-text",
+              "disabled": true,
               "static": true,
               "settings": {
                 "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
@@ -1433,11 +1439,11 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "",
-                "link": "",
-                "style": "secondary",
+                "label": "Meer informatie",
+                "link": "shopify://pages/zakelijk",
+                "style": "primary",
                 "size": "medium",
-                "icon": "none",
+                "icon": "caret-right",
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
@@ -1450,18 +1456,19 @@
           },
           "block_order": []
         },
-        "image_card_zc7zhD": {
+        "image_card_MUaEhR": {
           "type": "image-card",
           "name": "t:names.image_card",
           "settings": {
             "show_content_below": true,
-            "gap": 20,
+            "gap": 19,
             "gap_mobile": 16,
+            "image": "shopify://shop_images/horeca.jpg",
             "toggle_overlay": false,
             "sync_accordion_image": false,
             "overlay_color": "#00000026",
-            "image_ratio": "adapt",
-            "image_ratio_mobile": "adapt",
+            "image_ratio": "4/3",
+            "image_ratio_mobile": "4/3",
             "image_border": "none",
             "image_border_width": 1,
             "image_border_opacity": 100,
@@ -1477,10 +1484,10 @@
             "vertical_alignment_flex_direction_column": "flex-end",
             "column_gap": 12,
             "column_gap_mobile": 12,
-            "row_gap": 32,
+            "row_gap": 12,
             "row_gap_mobile": 24,
             "width": "custom",
-            "custom_width": 21,
+            "custom_width": 30,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "enable_full_height": false,
@@ -1490,7 +1497,7 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "card_label": "Exclusive",
+            "card_label": "Horeca",
             "card_label_text_color": "#ffffff",
             "card_label_in_content": false,
             "enable_preload_image": false
@@ -1499,6 +1506,7 @@
             "subheading": {
               "type": "_simple-text",
               "name": "t:names.subheading",
+              "disabled": true,
               "static": true,
               "settings": {
                 "text": "",
@@ -1526,12 +1534,12 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p>Talk about your brand</p>",
+                "text": "<p>Binnenkussens voor horeca</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
                 "highlight_text_color": "",
-                "type_preset": "h3",
+                "type_preset": "h4",
                 "font": "var(--font-heading--family)",
                 "font_weight": "",
                 "font_size": 48,
@@ -1548,6 +1556,7 @@
             },
             "text": {
               "type": "_simple-text",
+              "disabled": true,
               "static": true,
               "settings": {
                 "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
@@ -1574,11 +1583,11 @@
               "type": "button",
               "static": true,
               "settings": {
-                "label": "",
-                "link": "",
-                "style": "secondary",
+                "label": "Meer informatie",
+                "link": "shopify://pages/zakelijk",
+                "style": "primary",
                 "size": "medium",
-                "icon": "none",
+                "icon": "caret-right",
                 "icon_only": false,
                 "icon_style": "solid",
                 "mobile_full_width": false,
@@ -1602,7 +1611,7 @@
             "padding-block-end-mobile": 24
           },
           "blocks": {
-            "text_UWMbFU": {
+            "text_pAiFEj": {
               "type": "text",
               "name": "t:names.subheading",
               "settings": {
@@ -1634,7 +1643,7 @@
               },
               "blocks": {}
             },
-            "text_HrVpJF": {
+            "text_NABwX7": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -1668,15 +1677,15 @@
             }
           },
           "block_order": [
-            "text_UWMbFU",
-            "text_HrVpJF"
+            "text_pAiFEj",
+            "text_NABwX7"
           ]
         }
       },
       "block_order": [
-        "image_card_kXMDYb",
-        "image_card_q3cfGH",
-        "image_card_zc7zhD"
+        "image_card_8QPkWY",
+        "image_card_jHGtNm",
+        "image_card_MUaEhR"
       ],
       "name": "t:names.flex_carousel_image_cards_auto",
       "settings": {
@@ -1711,6 +1720,6 @@
     "custom_section_kXYcDt",
     "testimonials_CR7YHN",
     "flex_carousel_e3JcpM",
-    "flex_carousel_bgrcQA"
+    "flex_carousel_W8tPxh"
   ]
 }
