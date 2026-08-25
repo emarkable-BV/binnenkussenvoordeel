@@ -335,11 +335,11 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "package",
-                        "image_upload": "shopify://shop_images/doos.svg",
                         "icon_size": "custom-size",
-                        "width": 16,
-                        "width_mobile": 14,
+                        "width": 22,
+                        "width_mobile": 20,
                         "link": "",
+                        "color": "#0a9b61",
                         "round_shape": false
                       },
                       "blocks": {}

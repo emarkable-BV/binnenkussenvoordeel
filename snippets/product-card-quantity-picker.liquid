@@ -1,6 +1,8 @@
 {%- doc -%}
   Renders small clickable "stuks" pills for a product card, linking to the
   sibling quantity-variant products (e.g. 1 / 2 / 4 / 6 / 10 stuks).
+  Truncates to whatever fits on one line (matching the card's width) and
+  shows a "+N" pill linking to the first hidden variant.
 
   @param {object} product - The product to look up the quantity family for.
 
@@ -14,15 +16,11 @@
 {%- assign pairs = pairs | strip -%}
 {%- if pairs != blank -%}
   {%- assign entries = pairs | split: ';' -%}
-  <div class="product-card-quantity-picker product-card-quantity-picker--{{ product.id }} flex flex-wrap gap-1">
-    {%- for entry in entries limit: 4 -%}
+  <product-card-quantity-picker class="product-card-quantity-picker product-card-quantity-picker--{{ product.id }} flex gap-1">
+    {%- for entry in entries -%}
       {%- assign entry_parts = entry | split: '|' -%}
       {%- assign qty = entry_parts[0] -%}
       {%- assign sibling = all_products[entry_parts[1]] -%}
-      {%- assign extra_class = '' -%}
-      {%- if forloop.index == 4 -%}
-        {%- assign extra_class = ' product-card-quantity-picker__option--desktop-only' -%}
-      {%- endif -%}
       {%- if sibling != blank -%}
         {%- if qty == '1' -%}
           {%- assign qty_label = '1 stuk' -%}
@@ -30,48 +28,38 @@
           {%- assign qty_label = qty | append: ' stuks' -%}
         {%- endif -%}
         {%- if sibling.handle == product.handle -%}
-          <span class="product-card-quantity-picker__option product-card-quantity-picker__option--active{{ extra_class }}" aria-current="true">{{ qty_label }}</span>
+          <span class="product-card-quantity-picker__option product-card-quantity-picker__option--active" data-option data-url="{{ sibling.url }}" aria-current="true">{{ qty_label }}</span>
         {%- else -%}
-          <a href="{{ sibling.url }}" class="product-card-quantity-picker__option{{ extra_class }}" onclick="event.stopPropagation();">{{ qty_label }}</a>
+          <a href="{{ sibling.url }}" class="product-card-quantity-picker__option" data-option data-url="{{ sibling.url }}" onclick="event.stopPropagation();">{{ qty_label }}</a>
         {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
-    {%- if entries.size > 4 -%}
-      {%- assign extra_count = entries.size | minus: 4 -%}
-      {%- assign next_entry_parts = entries[4] | split: '|' -%}
-      {%- assign next_sibling = all_products[next_entry_parts[1]] -%}
-      {%- if next_sibling != blank -%}
-        <a href="{{ next_sibling.url }}" class="product-card-quantity-picker__option product-card-quantity-picker__option--more product-card-quantity-picker__option--desktop-only" onclick="event.stopPropagation();">+{{ extra_count }}</a>
-      {%- else -%}
-        <span class="product-card-quantity-picker__option product-card-quantity-picker__option--more product-card-quantity-picker__option--desktop-only">+{{ extra_count }}</span>
-      {%- endif -%}
-    {%- endif -%}
-    {%- if entries.size > 3 -%}
-      {%- assign extra_count_mobile = entries.size | minus: 3 -%}
-      {%- assign next_entry_parts_mobile = entries[3] | split: '|' -%}
-      {%- assign next_sibling_mobile = all_products[next_entry_parts_mobile[1]] -%}
-      {%- if next_sibling_mobile != blank -%}
-        <a href="{{ next_sibling_mobile.url }}" class="product-card-quantity-picker__option product-card-quantity-picker__option--more product-card-quantity-picker__option--mobile-only" onclick="event.stopPropagation();">+{{ extra_count_mobile }}</a>
-      {%- else -%}
-        <span class="product-card-quantity-picker__option product-card-quantity-picker__option--more product-card-quantity-picker__option--mobile-only">+{{ extra_count_mobile }}</span>
-      {%- endif -%}
-    {%- endif -%}
-  </div>
+    <a href="#" class="product-card-quantity-picker__option product-card-quantity-picker__option--more" data-more hidden onclick="event.stopPropagation();"></a>
+  </product-card-quantity-picker>
+  <script src="{{ 'product-card-quantity-picker.js' | asset_url }}" type="module"></script>
   <style>
     .product-card-quantity-picker--{{ product.id }} {
       position: relative;
       z-index: 2;
+      width: 80%;
       margin-block-end: 4px;
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
+
+    .product-card-quantity-picker--{{ product.id }} .product-card-quantity-picker__option[hidden] {
+      display: none;
     }
 
     .product-card-quantity-picker--{{ product.id }} .product-card-quantity-picker__option {
       display: inline-flex;
+      flex-shrink: 0;
       align-items: center;
       justify-content: center;
-      padding: 3px 8px;
+      padding: 5px 11px;
       border-radius: 4px;
       border: 1px solid rgb(var(--color-border) / 0.3);
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       line-height: 1.4;
       text-decoration: none;
       color: rgb(var(--color-foreground));
@@ -97,20 +85,6 @@
     .product-card-quantity-picker--{{ product.id }} .product-card-quantity-picker__option--more {
       border-style: dashed;
       color: rgb(var(--color-foreground) / 0.6);
-    }
-
-    .product-card-quantity-picker--{{ product.id }} .product-card-quantity-picker__option--mobile-only {
-      display: none;
-    }
-
-    @media screen and (max-width: 749px) {
-      .product-card-quantity-picker--{{ product.id }} .product-card-quantity-picker__option--desktop-only {
-        display: none;
-      }
-
-      .product-card-quantity-picker--{{ product.id }} .product-card-quantity-picker__option--mobile-only {
-        display: inline-flex;
-      }
     }
   </style>
 {%- endif -%}
