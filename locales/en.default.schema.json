@@ -446,6 +446,8 @@
   },
   "names": {
     "feature_card": "Feature card",
+    "bundle_quantity_picker": "Bundle quantity picker",
+    "price_per_piece_note": "Price per piece note",
     "404": "404 page",
     "page_title": "Page title",
     "page_content": "Page content",

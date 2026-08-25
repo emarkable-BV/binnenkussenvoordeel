@@ -27,7 +27,16 @@ class ShippingCutoffMessage extends HTMLElement {
     if (now >= windowStart && now < cutoff) {
       const remainingMs = cutoff - now;
       const countdown = this.formatCountdown(remainingMs);
-      this.textEl.textContent = this.countdownTemplate.replace("[countdown]", countdown);
+      const [before, after] = this.countdownTemplate.split("[countdown]");
+
+      this.textEl.textContent = "";
+      this.textEl.append(before ?? "");
+
+      const strong = document.createElement("strong");
+      strong.textContent = countdown;
+      this.textEl.append(strong);
+
+      this.textEl.append(after ?? "");
     } else {
       this.textEl.textContent = this.staticText;
     }

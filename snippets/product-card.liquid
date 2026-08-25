@@ -263,6 +263,7 @@
       <div class="product-card__content--wrapper flex flex-col text-{{ settings.pcard_content_alignment | replace: 'flex-start', "left" | replace: 'flex-end', 'right' }}">
         {% render 'product-card-metas', product: product, show_vendor: show_vendor, show_type: show_type %}
         {%- if product != blank -%}
+          {% render 'product-card-quantity-picker', product: product %}
           <a
             class="product-card__title text-wrap reversed-link"
             href="{% render 'product-card-variant-url', product: product %}"

@@ -1,0 +1,183 @@
+{% liquid
+  assign current_sku = product.selected_or_first_available_variant.sku
+%}
+{%- capture pairs -%}{% render 'bundle-quantity-family', sku: current_sku %}{%- endcapture -%}
+{%- assign pairs = pairs | strip -%}
+{%- if pairs != blank -%}
+  <div class="bundle-quantity-picker bundle-quantity-picker--{{ block.id }}" {{ block.shopify_attributes }}>
+    {%- if block.settings.label != blank -%}
+      <span class="bundle-quantity-picker__label h6">{{ block.settings.label }}</span>
+    {%- endif -%}
+    <div class="bundle-quantity-picker__options">
+      {%- assign entries = pairs | split: ';' -%}
+      {%- assign base_price = 0 -%}
+      {%- for entry in entries -%}
+        {%- assign entry_parts = entry | split: '|' -%}
+        {%- if entry_parts[0] == '1' -%}
+          {%- assign base_price = all_products[entry_parts[1]].price -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- for entry in entries -%}
+        {%- assign entry_parts = entry | split: '|' -%}
+        {%- assign qty = entry_parts[0] -%}
+        {%- assign sibling = all_products[entry_parts[1]] -%}
+        {%- if sibling != blank -%}
+          {%- if qty == '1' -%}
+            {%- assign qty_label = '1 stuk' -%}
+          {%- else -%}
+            {%- assign qty_label = qty | append: ' stuks' -%}
+          {%- endif -%}
+          {%- assign qty_num = qty | plus: 0 -%}
+          {%- assign per_piece_price = sibling.price | times: 1.0 | divided_by: qty_num | round: 0 | money -%}
+          {%- assign discount_pct = 0 -%}
+          {%- if base_price > 0 -%}
+            {%- assign per_piece_cents = sibling.price | times: 1.0 | divided_by: qty_num -%}
+            {%- assign discount_pct = base_price | minus: per_piece_cents | times: 100.0 | divided_by: base_price | round: 0 -%}
+          {%- endif -%}
+          {%- if sibling.handle == product.handle -%}
+            <span class="bundle-quantity-picker__option bundle-quantity-picker__option--active{% if qty == '4' %} bundle-quantity-picker__option--tagged{% endif %}" aria-current="true">
+              {%- if qty == '4' -%}
+                <span class="bundle-quantity-picker__tag badge badge--popular">Meest gekozen</span>
+              {%- endif -%}
+              <span class="bundle-quantity-picker__option-text">
+                <span class="bundle-quantity-picker__option-qty">{{ qty_label }}</span>
+                <span class="bundle-quantity-picker__option-price">{{ per_piece_price }} p/s</span>
+              </span>
+              {%- if discount_pct > 0 -%}
+                <span class="bundle-quantity-picker__badge badge badge--sale">-{{ discount_pct }}%</span>
+              {%- endif -%}
+            </span>
+          {%- else -%}
+            <a href="{{ sibling.url }}" class="bundle-quantity-picker__option{% if qty == '4' %} bundle-quantity-picker__option--tagged{% endif %}">
+              {%- if qty == '4' -%}
+                <span class="bundle-quantity-picker__tag badge badge--popular">Meest gekozen</span>
+              {%- endif -%}
+              <span class="bundle-quantity-picker__option-text">
+                <span class="bundle-quantity-picker__option-qty">{{ qty_label }}</span>
+                <span class="bundle-quantity-picker__option-price">{{ per_piece_price }} p/s</span>
+              </span>
+              {%- if discount_pct > 0 -%}
+                <span class="bundle-quantity-picker__badge badge badge--sale">-{{ discount_pct }}%</span>
+              {%- endif -%}
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <style>
+    .bundle-quantity-picker--{{ block.id }} {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__option {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 150px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 1px solid rgb(var(--color-border) / 0.3);
+      background-color: #fff;
+      line-height: 1;
+      text-decoration: none;
+      color: rgb(var(--color-foreground));
+      transition: border-color var(--animation-duration--medium, 240ms) var(--animation-easing--smooth, ease),
+        background-color var(--animation-duration--medium, 240ms) var(--animation-easing--smooth, ease),
+        color var(--animation-duration--medium, 240ms) var(--animation-easing--smooth, ease);
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__option--tagged {
+      border-top-right-radius: 0;
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__option-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 2px;
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__option-qty {
+      font-size: 1.6rem;
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__option-price {
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__badge {
+      flex-shrink: 0;
+      width: 44px;
+      height: 30px;
+      margin-right: -8px;
+      padding: 0;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      line-height: 1;
+      background-color: rgb(var(--color-background));
+      color: rgb(var(--color-sale-badge-background));
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__tag {
+      position: absolute;
+      bottom: 100%;
+      right: -1px;
+      padding: 0.4rem 1.2rem;
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+      white-space: nowrap;
+      border-radius: 8px 8px 0 0;
+      background-color: #ab85bc;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .bundle-quantity-picker--{{ block.id }} a.bundle-quantity-picker__option:hover {
+        border-color: rgb(var(--color-popular-badge-background));
+        background-color: rgb(var(--color-popular-badge-background) / 0.08);
+      }
+    }
+
+    .bundle-quantity-picker--{{ block.id }} .bundle-quantity-picker__option--active {
+      background-color: rgb(var(--color-popular-badge-background));
+      border-color: rgb(var(--color-popular-badge-background));
+      color: rgb(var(--color-popular-badge-text));
+      font-weight: 600;
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:names.bundle_quantity_picker",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "Aantal stuks"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.bundle_quantity_picker",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

@@ -2276,6 +2276,12 @@ button:disabled,
   text-decoration: line-through;
   color: rgb(255 255 255/70%);
 }
+.badge--price-tag--regular {
+  background: #fff;
+}
+.badge--price-tag--regular .badge--price-tag__now {
+  color: rgb(var(--color-sale-badge-background));
+}
 @media (max-width: 400px) {
   .badge--price-tag {
     flex-direction: column-reverse;

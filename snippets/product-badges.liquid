@@ -32,6 +32,8 @@
 
     if compare_at_price > price and show_sale_badge
       assign badge_count = badge_count | plus: 1
+    elsif show_sale_badge and sale_badge_type == 'price_tag'
+      assign badge_count = badge_count | plus: 1
     endif
 
     if show_custom_badges
@@ -133,6 +135,15 @@
         %}
         <span class="badge badge--sale">{{ sale_badge }}</span>
       {%- endif -%}
+    {%- elsif show_sale_badge and sale_badge_type == 'price_tag' -%}
+      {%- liquid
+        assign price_major = price | divided_by: 100
+        assign price_minor = price | modulo: 100
+        assign price_minor = price_minor | prepend: '00' | slice: -2, 2
+      -%}
+      <span class="badge badge--price-tag badge--price-tag--regular">
+        <span class="badge--price-tag__now">{{ price_major }}<span class="badge--price-tag__separator">,</span><span class="badge--price-tag__minor">{{ price_minor }}</span></span>
+      </span>
     {%- endif -%}
     {% if show_custom_badges %}
       {%- for tag in product.tags -%}
