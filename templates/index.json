@@ -486,27 +486,33 @@
           "settings": {
             "heading": "Polyester",
             "link": "shopify://collections/frontpage",
-            "image": "shopify://shop_images/Polyester.png",
-            "background_color": "#fdf8f4"
-          }
+            "link_label": "Bekijken",
+            "image": "shopify://shop_images/polyester_25c54e96-15ae-48e0-a9d0-e5bc75d5a2fc.png",
+            "background_color": "#FFE9D9"
+          },
+          "blocks": {}
         },
         "feature_card_UWbYHV": {
           "type": "feature-card",
           "settings": {
             "heading": "Memory foam",
             "link": "shopify://collections/memory-foam",
-            "image": "shopify://shop_images/Memory_foam.png",
-            "background_color": "#fdf8f4"
-          }
+            "link_label": "Bekijken",
+            "image": "shopify://shop_images/memory-foam_ea5d03fb-82ae-4116-9908-29da5491d871.png",
+            "background_color": "#FFE9D9"
+          },
+          "blocks": {}
         },
         "feature_card_BEfajN": {
           "type": "feature-card",
           "settings": {
             "heading": "Veer & dons",
             "link": "shopify://collections/veer-dons",
-            "image": "shopify://shop_images/Dons_en_veer.png",
-            "background_color": "#fdf8f4"
-          }
+            "link_label": "Bekijken",
+            "image": "shopify://shop_images/veren-dons.png",
+            "background_color": "#FFE9D9"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
