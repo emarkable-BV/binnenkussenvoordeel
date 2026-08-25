@@ -11,6 +11,9 @@
   {% if block.settings.link %}
     href="{{ block.settings.link }}"
   {% endif %}
+  {% if block.settings.color != blank %}
+    style="color: {{ block.settings.color }};"
+  {% endif %}
   {{ block.shopify_attributes }}
 >
   {% render 'icon-or-image',
@@ -305,8 +308,13 @@
     },
     {
       "type": "header",
-      "content": "t:content.appearance",
-      "visible_if": "{{ block.settings.image_upload != blank }}"
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:settings.color",
+      "visible_if": "{{ block.settings.image_upload == blank }}"
     },
     {
       "type": "checkbox",
