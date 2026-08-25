@@ -908,7 +908,7 @@
       "subheading_size_scale": 100,
       "subheading_text_transform": "uppercase",
       "heading_size_scale_mobile": 100,
-      "pcard_title_size_scale": 106,
+      "pcard_title_size_scale": 116,
       "pcard_price_font": "heading",
       "pcard_badge_font_weight": "500",
       "pcard_badge_text_transform": "capitalize",

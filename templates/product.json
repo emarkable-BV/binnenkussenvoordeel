@@ -187,6 +187,16 @@
               },
               "blocks": {}
             },
+            "price_per_piece_note_hJ4kLm": {
+              "type": "price-per-piece-note",
+              "settings": {}
+            },
+            "bundle_quantity_picker_pQr7sT": {
+              "type": "bundle-quantity-picker",
+              "settings": {
+                "label": ""
+              }
+            },
             "buy_buttons_MWJW8a": {
               "type": "_buy-buttons",
               "name": "t:names.buy_buttons",
@@ -341,7 +351,7 @@
                         "cutoff_hour": 16,
                         "cutoff_minute": 0,
                         "window_start_hour": 3,
-                        "countdown_text": "binnen [countdown] besteld, morgen in huis.",
+                        "countdown_text": "Binnen [countdown] besteld, morgen in huis.",
                         "static_text": "Voor 16:00 uur besteld, morgen in huis"
                       },
                       "blocks": {}
@@ -745,6 +755,8 @@
             "product_information_group_zx4NRb",
             "variant_picker_NYNfW9",
             "product_price_kYhqcf",
+            "price_per_piece_note_hJ4kLm",
+            "bundle_quantity_picker_pQr7sT",
             "buy_buttons_MWJW8a",
             "button_HCkRMq",
             "group_YDc8KE",

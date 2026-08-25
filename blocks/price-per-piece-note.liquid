@@ -1,0 +1,36 @@
+{% liquid
+  assign current_sku = product.selected_or_first_available_variant.sku
+  assign sku_parts = current_sku | split: '-'
+  assign qty_num = 1
+
+  if sku_parts.size == 4 and sku_parts[3] contains 'PK'
+    assign qty_num = sku_parts[3] | remove: 'PK' | plus: 0
+  endif
+%}
+{%- if qty_num > 1 -%}
+  {%- assign per_piece_price = product.selected_or_first_available_variant.price | times: 1.0 | divided_by: qty_num | round: 0 | money -%}
+  <div class="price-per-piece-note price-per-piece-note--{{ block.id }}" {{ block.shopify_attributes }}>
+    {{ per_piece_price }} p/s | incl. btw
+  </div>
+  <style>
+    .price-per-piece-note--{{ block.id }} {
+      margin-top: -22px;
+      font-size: 1.4rem;
+      color: rgb(var(--color-foreground) / 0.7);
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:names.price_per_piece_note",
+  "tag": null,
+  "settings": [],
+  "presets": [
+    {
+      "name": "t:names.price_per_piece_note",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
