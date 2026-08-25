@@ -949,7 +949,7 @@
         "column_gap_mobile": 12,
         "row_gap_mobile": 12,
         "use_color_scheme_in_container": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-inverse",
         "border": "none",
         "border_width": 1,
         "border_opacity": 14,
