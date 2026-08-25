@@ -92,7 +92,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Over Binnenkussenvoordeel</p>",
+            "text": "<p>Over BinnenkussenVoordeel</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
@@ -558,7 +558,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>De historie van Gekopkussens & Binnenkussenvoordeel</h2>",
+                "text": "<h2>De historie van Gekopkussens & BinnenkussenVoordeel</h2>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -1458,7 +1458,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>We zagen potentie in een markt waarin vraag naar kwalitatieve binnenkussens en een helder aanbod samenkwamen. Vanuit die kans ontstond Binnenkussenvoordeel: één plek voor kwalitatieve binnenkussens in verschillende soorten, maten en vullingen.</p>",
+                        "text": "<p>We zagen potentie in een markt waarin vraag naar kwalitatieve binnenkussens en een helder aanbod samenkwamen. Vanuit die kans ontstond BinnenkussenVoordeel: één plek voor kwalitatieve binnenkussens in verschillende soorten, maten en vullingen.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
