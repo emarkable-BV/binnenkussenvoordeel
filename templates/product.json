@@ -200,6 +200,7 @@
               "blocks": {
                 "quantity-selector": {
                   "type": "_quantity-selector",
+                  "disabled": true,
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -225,6 +226,7 @@
             "button_HCkRMq": {
               "type": "button",
               "name": "t:names.button",
+              "disabled": true,
               "settings": {
                 "label": "Shop onze voordeelbundels",
                 "link": "#product-bundles",
