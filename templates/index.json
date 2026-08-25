@@ -2759,7 +2759,7 @@
       "settings": {
         "desktop_image_position": "left",
         "enable_banner_full_height": false,
-        "hide_product_badges_on_mobile": false,
+        "hide_product_badges_on_mobile": true,
         "pcard_show_vendor": false,
         "pcard_show_type": false,
         "use_color_scheme_in_container": false,
