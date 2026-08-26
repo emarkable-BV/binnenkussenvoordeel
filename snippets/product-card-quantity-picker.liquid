@@ -20,17 +20,18 @@
     {%- for entry in entries -%}
       {%- assign entry_parts = entry | split: '|' -%}
       {%- assign qty = entry_parts[0] -%}
-      {%- assign sibling = all_products[entry_parts[1]] -%}
-      {%- if sibling != blank -%}
+      {%- assign sibling_handle = entry_parts[1] -%}
+      {%- if sibling_handle != blank -%}
         {%- if qty == '1' -%}
           {%- assign qty_label = '1 stuk' -%}
         {%- else -%}
           {%- assign qty_label = qty | append: ' stuks' -%}
         {%- endif -%}
-        {%- if sibling.handle == product.handle -%}
-          <span class="product-card-quantity-picker__option product-card-quantity-picker__option--active" data-option data-url="{{ sibling.url }}" aria-current="true">{{ qty_label }}</span>
+        {%- assign sibling_url = routes.root_url | append: 'products/' | append: sibling_handle -%}
+        {%- if sibling_handle == product.handle -%}
+          <span class="product-card-quantity-picker__option product-card-quantity-picker__option--active" data-option data-url="{{ sibling_url }}" aria-current="true">{{ qty_label }}</span>
         {%- else -%}
-          <a href="{{ sibling.url }}" class="product-card-quantity-picker__option" data-option data-url="{{ sibling.url }}" onclick="event.stopPropagation();">{{ qty_label }}</a>
+          <a href="{{ sibling_url }}" class="product-card-quantity-picker__option" data-option data-url="{{ sibling_url }}" onclick="event.stopPropagation();">{{ qty_label }}</a>
         {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
@@ -40,7 +41,7 @@
     .product-card-quantity-picker--{{ product.id }} {
       position: relative;
       z-index: 2;
-      width: 80%;
+      width: 95%;
       margin-block-end: 4px;
       flex-wrap: nowrap;
     }

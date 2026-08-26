@@ -18,6 +18,10 @@ class ProductCardQuantityPicker extends HTMLElement {
     const gap = parseFloat(getComputedStyle(this).gap) || 4;
     const containerWidth = this.clientWidth;
 
+    // Not laid out yet (e.g. still inside a hidden lazy-loaded tab panel).
+    // Bail without touching visibility; the ResizeObserver re-fires once visible.
+    if (containerWidth === 0) return;
+
     this.options.forEach((option) => (option.hidden = false));
     this.moreOption.hidden = false;
     // Worst-case digit count so the reserved width never underestimates the final "+N" pill.
