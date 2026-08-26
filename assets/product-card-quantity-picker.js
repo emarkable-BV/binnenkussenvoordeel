@@ -19,7 +19,9 @@ class ProductCardQuantityPicker extends HTMLElement {
     const containerWidth = this.clientWidth;
 
     this.options.forEach((option) => (option.hidden = false));
-    this.moreOption.hidden = true;
+    this.moreOption.hidden = false;
+    // Worst-case digit count so the reserved width never underestimates the final "+N" pill.
+    this.moreOption.textContent = `+${this.options.length}`;
 
     let usedWidth = 0;
     let visibleCount = 0;
@@ -36,7 +38,10 @@ class ProductCardQuantityPicker extends HTMLElement {
       }
     }
 
-    if (visibleCount === this.options.length) return;
+    if (visibleCount === this.options.length) {
+      this.moreOption.hidden = true;
+      return;
+    }
 
     const moreWidth = this.moreOption.offsetWidth;
 

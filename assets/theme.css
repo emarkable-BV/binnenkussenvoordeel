@@ -3501,7 +3501,7 @@ shopify-visual-preview-block-list .product-card {
 .variant-option__button-label--square {
   border-radius: var(--border-radius, 0);
 }
-.variant-option--card .variant-option__button-label--square {
+.variant-option--card .variant-option__button-label--square:not(.variant-option__swatch--show-more) {
   --offset: var(--swatch-card-offset);
   height: calc(var(--swatch-width, var(--swatch-base-size)) / 2 + var(--offset));
   padding-bottom: var(--offset);
@@ -3514,7 +3514,8 @@ shopify-visual-preview-block-list .product-card {
   height: calc(100% - var(--offset));
 }
 .variant-option--card .variant-option__button-label--square .hidden-swatches__count {
-  padding-bottom: var(--offset);
+  height: 100%;
+  padding-bottom: 0;
 }
 .variant-option--card .variant-option__button-label--square:hover, .variant-option--card .variant-option__button-label--square:has(:checked) {
   --swatch-stroke-color: var(--color-swatch-border);

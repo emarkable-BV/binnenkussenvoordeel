@@ -189,13 +189,15 @@
             },
             "price_per_piece_note_hJ4kLm": {
               "type": "price-per-piece-note",
-              "settings": {}
+              "settings": {},
+              "blocks": {}
             },
             "bundle_quantity_picker_pQr7sT": {
               "type": "bundle-quantity-picker",
               "settings": {
                 "label": ""
-              }
+              },
+              "blocks": {}
             },
             "buy_buttons_MWJW8a": {
               "type": "_buy-buttons",
@@ -210,6 +212,7 @@
               "blocks": {
                 "quantity-selector": {
                   "type": "_quantity-selector",
+                  "disabled": true,
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -235,6 +238,7 @@
             "button_HCkRMq": {
               "type": "button",
               "name": "t:names.button",
+              "disabled": true,
               "settings": {
                 "label": "Shop onze voordeelbundels",
                 "link": "#product-bundles",
@@ -409,6 +413,7 @@
                         "width": 28,
                         "width_mobile": 28,
                         "link": "",
+                        "color": "",
                         "round_shape": false
                       },
                       "blocks": {}
@@ -500,6 +505,7 @@
                         "width": 28,
                         "width_mobile": 28,
                         "link": "",
+                        "color": "",
                         "round_shape": false
                       },
                       "blocks": {}
@@ -732,6 +738,7 @@
             "button_CRj9xn": {
               "type": "button",
               "name": "t:names.button",
+              "disabled": true,
               "settings": {
                 "label": "Kussenhoezen bijbestellen?",
                 "link": "https://www.gekopkussens.nl/",
