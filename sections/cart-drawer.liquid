@@ -128,14 +128,20 @@
             >
               {{- cart.item_count -}}
             </span>
+            {%- capture pillow_count -%}{% render 'cart-pillow-count' %}{%- endcapture -%}
+            {%- assign pillow_count = pillow_count | strip | plus: 0 -%}
             <div
               class="cart-drawer__header relative flex items-center justify-between gap-2"
               id="cart-drawer-header"
             >
-              <span class="cart-drawer__heading cart__heading relative h3">
-                {{ 'content.cart_title' | t }}
-                {% render 'cart-count', class: 'cart-count--absolute cart-count--unstyled', in_drawer: true %}
-              </span>
+              <div class="cart-drawer__heading-group flex flex-col gap-1">
+                <span class="cart-drawer__heading cart__heading relative h3">
+                  {{ 'content.cart_title' | t }}
+                </span>
+                {%- if pillow_count > 0 -%}
+                  <span class="cart-drawer__pillow-count text-body-sm color-subtext">Aantal kussens: {{ pillow_count }}</span>
+                {%- endif -%}
+              </div>
               <button
                 class="cart-drawer__close dialog__close flex shrink-0"
                 on:click="cart-drawer-component/close"

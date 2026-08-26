@@ -21,10 +21,16 @@
     </div>
     {% render 'cart-count', class: 'cart-count--absolute cart-count--unstyled hidden' %}
   {%- else -%}
-    <h1 class="{{ block_settings.type_preset | default: 'h2' }} relative inline-flex">
-      <p class="rte m-0">{{ block_settings.title }}</p>
-      {% render 'cart-count', class: 'cart-count--absolute cart-count--unstyled' %}
-    </h1>
+    {%- capture pillow_count -%}{% render 'cart-pillow-count' %}{%- endcapture -%}
+    {%- assign pillow_count = pillow_count | strip | plus: 0 -%}
+    <div class="cart-page__title-group flex flex-col gap-1">
+      <h1 class="{{ block_settings.type_preset | default: 'h2' }} relative inline-flex">
+        <p class="rte m-0">{{ block_settings.title }}</p>
+      </h1>
+      {%- if pillow_count > 0 -%}
+        <span class="cart-page__pillow-count text-body-sm color-subtext">Aantal kussens: {{ pillow_count }}</span>
+      {%- endif -%}
+    </div>
   {%- endif -%}
 </div>
 {% schema %}
