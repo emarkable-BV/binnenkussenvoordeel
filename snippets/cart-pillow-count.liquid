@@ -1,0 +1,23 @@
+{%- doc -%}
+  Outputs the total number of pillows in the cart, derived from each line
+  item's SKU (e.g. "BKV-FOA-4040-4PK" = 4 pillows per unit).
+
+  @example
+  {% capture pillow_count %}{% render 'cart-pillow-count' %}{% endcapture %}
+  {% assign pillow_count = pillow_count | strip | plus: 0 %}
+{%- enddoc -%}
+{%- liquid
+  assign pillow_count = 0
+  for item in cart.items
+    assign sku_parts = item.sku | split: '-'
+    if sku_parts.first == 'BKV'
+      assign pack_qty = 1
+      if sku_parts.size == 4 and sku_parts[3] contains 'PK'
+        assign pack_qty = sku_parts[3] | remove: 'PK' | plus: 0
+      endif
+      assign line_pillows = pack_qty | times: item.quantity
+      assign pillow_count = pillow_count | plus: line_pillows
+    endif
+  endfor
+-%}
+{{- pillow_count -}}
