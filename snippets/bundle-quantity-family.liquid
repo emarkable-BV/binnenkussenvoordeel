@@ -2,7 +2,13 @@
   Looks up the quantity-variant family (1/2/4/6/10/20 stuks sibling products)
   for a given SKU and outputs the pairs string "qty|handle;qty|handle;...".
 
-  @param {string} sku - The variant SKU to look up (e.g. "BKV-DON-3050-4PK")
+  Resolved dynamically by SKU (via each material+size's own small collection,
+  e.g. "veren-dons-30x50") rather than hardcoded product handles — a product
+  handle changes whenever its title is edited, which used to silently break
+  this lookup; the SKU and the collection it belongs to do not.
+
+  @param {string} sku - The variant SKU to look up (e.g. "BKV-DON-3050-4PK").
+    Expected format: BKV-<MAT>-<DIMS>[-<N>PK], e.g. "BKV-POL-3050-4PK".
 
   @example
   {% capture pairs %}{% render 'bundle-quantity-family', sku: current_sku %}{% endcapture %}
@@ -16,36 +22,53 @@
     assign family = sku_parts[0] | append: '-' | append: sku_parts[1] | append: '-' | append: sku_parts[2]
   endif
 
-  assign pairs = ''
-  case family
-    when 'BKV-POL-3050'
-      assign pairs = '1|binnenkussen-30x50-cm-polyester-vulkussen-240-gram;2|binnenkussen-30x50-cm-polyester-vulkussen-240-gram-2-stuks-1;4|binnenkussen-30x50-cm-polyester-vulkussen-240-gram-4-stuks-1;6|binnenkussen-30x50-cm-polyester-vulkussen-240-gram-6-stuks-1;10|binnenkussen-30x50-cm-polyester-vulkussen-240-gram-10-stuks-1;20|binnenkussen-30x50-cm-polyester-vulkussen-240-gram-20-stuks-1'
-    when 'BKV-POL-4040'
-      assign pairs = '1|binnenkussen-40x40-cm-polyester-vulkussen-300-gram;2|binnenkussen-40x40-cm-polyester-vulkussen-300-gram-2-stuks;4|binnenkussen-40x40-cm-polyester-vulkussen-300-gram-4-stuks;6|binnenkussen-40x40-cm-polyester-vulkussen-300-gram-6-stuks;10|binnenkussen-40x40-cm-polyester-vulkussen-300-gram-10-stuks;20|binnenkussen-40x40-cm-polyester-vulkussen-300-gram-20-stuks'
-    when 'BKV-POL-4545'
-      assign pairs = '1|binnenkussen-45x45-cm-polyester-vulkussen-360-gram;2|binnenkussen-45x45-cm-polyester-vulkussen-360-gram-2-stuks;4|binnenkussen-45x45-cm-polyester-vulkussen-360-gram-4-stuks;6|binnenkussen-45x45-cm-polyester-vulkussen-360-gram-6-stuks;10|binnenkussen-45x45-cm-polyester-vulkussen-360-gram-10-stuks;20|binnenkussen-45x45-cm-polyester-vulkussen-360-gram-20-stuks'
-    when 'BKV-POL-5050'
-      assign pairs = '1|binnenkussen-50x50-cm-polyester-vulkussen-450-gram;2|binnenkussen-50x50-cm-polyester-vulkussen-450-gram-2-stuks;4|binnenkussen-50x50-cm-polyester-vulkussen-450-gram-4-stuks;6|binnenkussen-50x50-cm-polyester-vulkussen-450-gram-6-stuks;10|binnenkussen-50x50-cm-polyester-vulkussen-450-gram-10-stuks;20|binnenkussen-50x50-cm-polyester-vulkussen-450-gram-20-stuks'
-    when 'BKV-POL-4060'
-      assign pairs = '1|binnenkussen-40x60-cm-polyester-vulkussen-350-gram;2|binnenkussen-40x60-cm-polyester-vulkussen-350-gram-2-stuks;4|binnenkussen-40x60-cm-polyester-vulkussen-350-gram-4-stuks;6|binnenkussen-40x60-cm-polyester-vulkussen-350-gram-6-stuks;10|binnenkussen-40x60-cm-polyester-vulkussen-350-gram-10-stuks;20|binnenkussen-40x60-cm-polyester-vulkussen-350-gram-20-stuks'
-    when 'BKV-POL-6060'
-      assign pairs = '1|binnenkussen-60x60-cm-polyester-vulkussen-550-gram;2|binnenkussen-60x60-cm-polyester-vulkussen-550-gram-2-stuks;4|binnenkussen-60x60-cm-polyester-vulkussen-550-gram-4-stuks;6|binnenkussen-60x60-cm-polyester-vulkussen-550-gram-6-stuks;10|binnenkussen-60x60-cm-polyester-vulkussen-550-gram-10-stuks'
-    when 'BKV-DON-3050'
-      assign pairs = '1|binnenkussen-30x50-cm-veren-dons-vulkussen-300-gram;2|binnenkussen-30x50-cm-veren-dons-vulkussen-300-gram-2-stuks;4|binnenkussen-30x50-cm-veren-dons-vulkussen-300-gram-4-stuks;6|binnenkussen-30x50-cm-veren-dons-vulkussen-300-gram-6-stuks;10|binnenkussen-30x50-cm-veren-dons-vulkussen-300-gram-10-stuks'
-    when 'BKV-DON-4040'
-      assign pairs = '1|binnenkussen-40x40-cm-veren-dons-vulkussen-300-gram;2|binnenkussen-40x40-cm-veren-dons-vulkussen-300-gram-2-stuks;4|binnenkussen-40x40-cm-veren-dons-vulkussen-300-gram-4-stuks;6|binnenkussen-40x40-cm-veren-dons-vulkussen-300-gram-6-stuks;10|binnenkussen-40x40-cm-veren-dons-vulkussen-300-gram-10-stuks'
-    when 'BKV-DON-4545'
-      assign pairs = '1|binnenkussen-45x45-cm-veren-dons-vulkussen-500-gram;2|binnenkussen-45x45-cm-veren-dons-vulkussen-500-gram-2-stuks;4|binnenkussen-45x45-cm-veren-dons-vulkussen-500-gram-4-stuks;6|binnenkussen-45x45-cm-veren-dons-vulkussen-500-gram-6-stuks;10|binnenkussen-45x45-cm-veren-dons-vulkussen-500-gram-10-stuks'
-    when 'BKV-DON-5050'
-      assign pairs = '1|binnenkussen-50x50-cm-veren-dons-vulkussen-600-gram;2|binnenkussen-50x50-cm-veren-dons-vulkussen-600-gram-2-stuks;4|binnenkussen-50x50-cm-veren-dons-vulkussen-600-gram-4-stuks;6|binnenkussen-50x50-cm-veren-dons-vulkussen-600-gram-6-stuks;10|binnenkussen-50x50-cm-veren-dons-vulkussen-600-gram-10-stuks'
-    when 'BKV-FOA-3050'
-      assign pairs = '1|binnenkussen-30x50-cm-memory-foam-vulkussen-440-gram;2|binnenkussen-30x50-cm-memory-foam-vulkussen-440-gram-2-stuks;4|binnenkussen-30x50-cm-memory-foam-vulkussen-440-gram-4-stuks;6|binnenkussen-30x50-cm-memory-foam-vulkussen-440-gram-6-stuks;10|binnenkussen-30x50-cm-memory-foam-vulkussen-440-gram-10-stuks'
-    when 'BKV-FOA-4040'
-      assign pairs = '1|binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram;2|binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram-2-stuks;4|binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram-4-stuks;6|binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram-6-stuks;10|binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram-10-stuks'
-    when 'BKV-FOA-4545'
-      assign pairs = '1|binnenkussen-45x45-cm-memory-foam-vulkussen-700-gram;2|binnenkussen-45x45-cm-memory-foam-vulkussen-700-gram-2-stuks;4|binnenkussen-45x45-cm-memory-foam-vulkussen-700-gram-4-stuks;6|binnenkussen-45x45-cm-memory-foam-vulkussen-700-gram-6-stuks;10|binnenkussen-45x45-cm-memory-foam-vulkussen-700-gram-10-stuks'
-    when 'BKV-FOA-5050'
-      assign pairs = '1|binnenkussen-50x50-cm-memory-foam-vulkussen-900-gram;2|binnenkussen-50x50-cm-memory-foam-vulkussen-900-gram-2-stuks;4|binnenkussen-50x50-cm-memory-foam-vulkussen-900-gram-4-stuks;6|binnenkussen-50x50-cm-memory-foam-vulkussen-900-gram-6-stuks;10|binnenkussen-50x50-cm-memory-foam-vulkussen-900-gram-10-stuks'
+  assign family_parts = family | split: '-'
+  assign material_code = family_parts[1]
+  assign dims_code = family_parts[2]
+
+  assign material_slug = ''
+  case material_code
+    when 'POL'
+      assign material_slug = 'polyester'
+    when 'DON'
+      assign material_slug = 'veren-dons'
+    when 'FOA'
+      assign material_slug = 'memory-foam'
   endcase
+
+  assign dims_slug = ''
+  if dims_code.size == 4
+    assign dims_prefix = dims_code | slice: 0, 2
+    assign dims_suffix = dims_code | slice: 2, 2
+    assign dims_slug = dims_prefix | append: 'x' | append: dims_suffix
+  endif
+
+  assign pairs = ''
+  if material_slug != blank and dims_slug != blank
+    assign collection_handle = material_slug | append: '-' | append: dims_slug
+    assign family_collection = collections[collection_handle]
+
+    assign first_pair = true
+    for sibling_product in family_collection.products
+      assign sibling_sku = sibling_product.selected_or_first_available_variant.sku
+      assign sibling_parts = sibling_sku | split: '-'
+      assign sibling_family = sibling_sku
+      assign sibling_qty = 1
+      if sibling_parts.size == 4 and sibling_parts[3] contains 'PK'
+        assign sibling_family = sibling_parts[0] | append: '-' | append: sibling_parts[1] | append: '-' | append: sibling_parts[2]
+        assign sibling_qty = sibling_parts[3] | remove: 'PK' | plus: 0
+      endif
+
+      if sibling_family != family
+        continue
+      endif
+
+      unless first_pair
+        assign pairs = pairs | append: ';'
+      endunless
+      assign pairs = pairs | append: sibling_qty | append: '|' | append: sibling_product.handle
+      assign first_pair = false
+    endfor
+  endif
 -%}
 {{- pairs -}}

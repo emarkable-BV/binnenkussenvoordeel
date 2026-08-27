@@ -2097,7 +2097,7 @@
               "settings": {
                 "heading": "Hulp nodig?",
                 "image": "shopify://shop_images/contact.png",
-                "image_size": 60,
+                "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,
                 "show_phone": false,
@@ -2105,11 +2105,11 @@
                 "show_chat_link": true,
                 "chat_label": "Start chat",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "solid",
+                "color_scheme": "scheme-inverse",
+                "border": "none",
                 "border_width": 1,
                 "border_opacity": 10,
-                "border_radius": 12
+                "border_radius": 8
               },
               "blocks": {}
             }
