@@ -3262,7 +3262,7 @@
           "static": true,
           "settings": {
             "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
-            "image_ratio": "1/1",
+            "image_ratio": "4/3",
             "image_ratio_mobile": "4/3",
             "border_radius": 20
           },
@@ -4774,7 +4774,7 @@
             "font_size": 15,
             "font_size_mobile": 15,
             "line_height": "normal",
-            "text_color": "subtext",
+            "text_color": "text",
             "line_limit": "5-lines",
             "button_style": "white",
             "padding-block-start": 0,
