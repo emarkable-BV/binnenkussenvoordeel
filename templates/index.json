@@ -488,7 +488,7 @@
             "link": "shopify://collections/frontpage",
             "link_label": "Bekijken",
             "image": "shopify://shop_images/polyester_25c54e96-15ae-48e0-a9d0-e5bc75d5a2fc.png",
-            "background_color": "#FFE9D9"
+            "background_color": "#ffe9d9"
           },
           "blocks": {}
         },
@@ -499,7 +499,7 @@
             "link": "shopify://collections/memory-foam",
             "link_label": "Bekijken",
             "image": "shopify://shop_images/memory-foam_ea5d03fb-82ae-4116-9908-29da5491d871.png",
-            "background_color": "#FFE9D9"
+            "background_color": "#ffe9d9"
           },
           "blocks": {}
         },
@@ -510,7 +510,7 @@
             "link": "shopify://collections/veer-dons",
             "link_label": "Bekijken",
             "image": "shopify://shop_images/veren-dons.png",
-            "background_color": "#FFE9D9"
+            "background_color": "#ffe9d9"
           },
           "blocks": {}
         }
@@ -794,7 +794,7 @@
       "name": "t:names.product_tab_carousel",
       "settings": {
         "container": "fixed",
-        "heading": "<p>Populaire binnenkussens</p>",
+        "heading": "<p>Populaire bundels</p>",
         "highlight_style": "none",
         "highlight_font_style": "italic",
         "highlight_shape_color": "",
@@ -3694,7 +3694,7 @@
             "accordion_row_cbqCwE": {
               "type": "_accordion-row",
               "settings": {
-                "text": "Hier een vraag",
+                "text": "Waarom zou ik een bundel binnenkussens kiezen?",
                 "open_row_by_default": false,
                 "link": "",
                 "icon": "none",
@@ -3706,7 +3706,7 @@
                 "text_3hHRnh": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
+                    "text": "<p>Met een bundel ben je in één keer voorzien van meerdere binnenkussens én betaal je doorgaans voordeliger per stuk. Ideaal wanneer je meerdere sierkussens wilt vullen of je interieur regelmatig wilt vernieuwen.</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -3742,7 +3742,7 @@
             "accordion_row_6gVf3A": {
               "type": "_accordion-row",
               "settings": {
-                "text": "Hier een vraag",
+                "text": "Zijn de bundels voordeliger dan losse binnenkussens?",
                 "open_row_by_default": false,
                 "link": "",
                 "icon": "none",
@@ -3754,7 +3754,7 @@
                 "text_q67y33": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
+                    "text": "<p>Ja. De bundels zijn juist samengesteld voor wie meerdere kussens nodig heeft en bieden daardoor meer voordeel dan wanneer je dezelfde hoeveelheid los bestelt.</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -3790,7 +3790,7 @@
             "accordion_row_7yD3tW": {
               "type": "_accordion-row",
               "settings": {
-                "text": "Hier een vraag",
+                "text": "Kan ik ook gewoon één binnenkussen bestellen?",
                 "open_row_by_default": false,
                 "link": "",
                 "icon": "none",
@@ -3802,7 +3802,7 @@
                 "text_qJkNyH": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
+                    "text": "<p>Zeker. Naast onze bundels kun je ook losse binnenkussens bestellen. Heb je meerdere kussens nodig? Dan is een bundel de voordeligste keuze.</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -3838,7 +3838,7 @@
             "accordion_row_qxRhXi": {
               "type": "_accordion-row",
               "settings": {
-                "text": "Hier een vraag",
+                "text": "Welke maat binnenkussen heb ik nodig?",
                 "open_row_by_default": false,
                 "link": "",
                 "icon": "none",
@@ -3850,7 +3850,7 @@
                 "text_gnGBH6": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
+                    "text": "<p>Dit hangt af van de maat van je kussenhoes en de gewenste uitstraling. Voor een mooi gevuld sierkussen wordt vaak gekozen voor een binnenkussen dat iets groter is dan de hoes. Bij een hoes van 45 × 45 cm kan bijvoorbeeld een binnenkussen van 50 × 50 cm zorgen voor een vollere uitstraling.</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -3882,13 +3882,307 @@
               "block_order": [
                 "text_gnGBH6"
               ]
+            },
+            "accordion_row_RwWtxa": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Welke vulling past het beste bij mij?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_dc77ab": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Dat hangt af van wat je belangrijk vindt. Polyester is licht en vormvast, memory foam geeft een stevig en ondersteunend gevoel en veren/dons zorgen voor een zachte, luxe en goed vormbare uitstraling.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_dc77ab"
+              ]
+            },
+            "accordion_row_pqXpU8": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Welke vulling geeft mijn sierkussen de meest luxe uitstraling?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_xdgxpb": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Voor een zachte, volle en luxe uitstraling zijn veren/dons een populaire keuze. Ook memory foam kan zorgen voor een stevig en rijk gevuld sierkussen.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xdgxpb"
+              ]
+            },
+            "accordion_row_tNnema": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik een bundel combineren met verschillende maten?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_wbTkbQ": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Dit is afhankelijk van de samenstelling van de betreffende bundel. Bekijk daarom altijd de specificaties van de bundel om te zien welke maten inbegrepen zijn.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_wbTkbQ"
+              ]
+            },
+            "accordion_row_8cwcrR": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Waarom zou ik meerdere binnenkussens tegelijk kopen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_6W8RKy": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Omdat sierkussens vaak het mooist tot hun recht komen als je ze met elkaar combineert. Met een bundel kun je eenvoudig meerdere kussens tegelijk vullen en ben je bovendien voordeliger uit.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_6W8RKy"
+              ]
+            },
+            "accordion_row_EiW3jJ": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Blijven de binnenkussens mooi gevuld?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_8UXJkc": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>De mate waarin een kussen zijn vorm behoudt, hangt af van de gekozen vulling en het gebruik. Regelmatig opschudden en goed verdelen van de vulling helpt om het kussen mooi in vorm te houden.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_8UXJkc"
+              ]
+            },
+            "accordion_row_yDN8ta": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Ik twijfel over de juiste maat. Wat kan ik doen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_DAz6ft": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Meet eerst de binnenmaat van je kussenhoes op. Twijfel je daarna nog over de juiste maat of vulling? Neem dan contact met ons op. We helpen je graag om de juiste keuze te maken.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_DAz6ft"
+              ]
             }
           },
           "block_order": [
             "accordion_row_cbqCwE",
             "accordion_row_6gVf3A",
             "accordion_row_7yD3tW",
-            "accordion_row_qxRhXi"
+            "accordion_row_qxRhXi",
+            "accordion_row_RwWtxa",
+            "accordion_row_pqXpU8",
+            "accordion_row_tNnema",
+            "accordion_row_8cwcrR",
+            "accordion_row_EiW3jJ",
+            "accordion_row_yDN8ta"
           ]
         }
       },
