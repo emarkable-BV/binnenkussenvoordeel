@@ -415,7 +415,7 @@
         "control_alignment": "end",
         "device": "desktop",
         "padding-block-start": 0,
-        "padding-block-end": 64,
+        "padding-block-end": 0,
         "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 48
       }
@@ -442,11 +442,11 @@
         "enable_sorting": true,
         "enable_grid_density": false,
         "expand_filter_groups": "Materiaal",
-        "column_gap_mobile": 8,
+        "column_gap_mobile": 0,
         "row_gap_mobile": 24,
         "color_scheme": "scheme-2",
         "device": "desktop",
-        "padding-block-start": 0,
+        "padding-block-start": 40,
         "padding-block-end": 64,
         "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 48
