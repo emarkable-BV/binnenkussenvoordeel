@@ -21,12 +21,8 @@
       {%- assign entry_parts = entry | split: '|' -%}
       {%- assign qty = entry_parts[0] -%}
       {%- assign sibling_handle = entry_parts[1] -%}
-      {%- if sibling_handle != blank -%}
-        {%- if qty == '1' -%}
-          {%- assign qty_label = '1 stuk' -%}
-        {%- else -%}
-          {%- assign qty_label = qty | append: ' stuks' -%}
-        {%- endif -%}
+      {%- if sibling_handle != blank and qty != '1' -%}
+        {%- assign qty_label = qty | append: ' stuks' -%}
         {%- assign sibling_url = routes.root_url | append: 'products/' | append: sibling_handle -%}
         {%- if sibling_handle == product.handle -%}
           <span class="product-card-quantity-picker__option product-card-quantity-picker__option--active" data-option data-url="{{ sibling_url }}" aria-current="true">{{ qty_label }}</span>
