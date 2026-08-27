@@ -63,9 +63,10 @@
             "subheading": {
               "type": "_simple-text",
               "name": "t:names.subheading",
+              "disabled": true,
               "static": true,
               "settings": {
-                "text": "",
+                "text": "<p>Profiteer </p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -141,7 +142,7 @@
               "settings": {
                 "label": "Bekijk alle binnenkussens",
                 "link": "shopify://collections/all",
-                "style": "primary",
+                "style": "secondary",
                 "size": "large",
                 "icon": "caret-right",
                 "icon_only": false,
@@ -207,9 +208,10 @@
             "subheading": {
               "type": "_simple-text",
               "name": "t:names.subheading",
+              "disabled": true,
               "static": true,
               "settings": {
-                "text": "",
+                "text": "<p>Profiteer van voordeel</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -222,7 +224,7 @@
                 "line_height": "normal",
                 "text_color": "text",
                 "padding-block-start": 0,
-                "padding-block-end": 20,
+                "padding-block-end": 0,
                 "mobile-padding-scale": 80,
                 "animation_type": "none",
                 "animation_delay": 250
@@ -256,10 +258,9 @@
             },
             "text": {
               "type": "_simple-text",
-              "disabled": true,
               "static": true,
               "settings": {
-                "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+                "text": "<p><strong>Profiteer van voordeel</strong></p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -271,8 +272,8 @@
                 "font_size_mobile": 15,
                 "line_height": "loose",
                 "text_color": "text",
-                "padding-block-start": 12,
-                "padding-block-end": 24,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
                 "mobile-padding-scale": 80,
                 "animation_type": "none",
                 "animation_delay": 250
