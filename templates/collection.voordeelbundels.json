@@ -413,11 +413,11 @@
         "border_radius": 0,
         "control_type": "none",
         "control_alignment": "end",
-        "device": "desktop",
+        "device": "mobile",
         "padding-block-start": 0,
         "padding-block-end": 0,
-        "padding-block-start-mobile": 0,
-        "padding-block-end-mobile": 48
+        "padding-block-start-mobile": 54,
+        "padding-block-end-mobile": 0
       }
     },
     "main": {
@@ -445,10 +445,10 @@
         "column_gap_mobile": 0,
         "row_gap_mobile": 24,
         "color_scheme": "scheme-2",
-        "device": "desktop",
+        "device": "mobile",
         "padding-block-start": 40,
         "padding-block-end": 64,
-        "padding-block-start-mobile": 0,
+        "padding-block-start-mobile": 28,
         "padding-block-end-mobile": 48
       }
     },
