@@ -44,6 +44,12 @@
         assign display_name = part_a
       endif
     endif
+    if display_name == collection_name
+      assign name_prefix = collection_name | slice: 0, parent_title.size
+      if name_prefix == parent_title
+        assign display_name = collection_name | remove_first: parent_title | strip
+      endif
+    endif
   endif
   if display_name == blank
     assign display_name = collection_name

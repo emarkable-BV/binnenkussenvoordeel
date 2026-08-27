@@ -13,6 +13,7 @@
       "type": "breadcrumbs",
       "name": "t:names.breadcrumbs",
       "settings": {
+        "color_scheme": "scheme-inverse",
         "text_align": "left",
         "text_align_mobile": "inherit",
         "device": "desktop",
@@ -187,7 +188,7 @@
                 "show_chat_link": false,
                 "chat_label": "Start chat",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-inverse",
+                "color_scheme": "scheme-5",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 10,
@@ -218,18 +219,18 @@
         "column_gap_mobile": 0,
         "row_gap_mobile": 0,
         "use_color_scheme_in_container": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-inverse",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
         "device": "desktop",
         "padding-block-start": 25,
-        "padding-block-end": 25,
+        "padding-block-end": 60,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
         "padding-block-start-mobile": 0,
-        "padding-block-end-mobile": 0,
+        "padding-block-end-mobile": 40,
         "padding-inline-start-mobile": 0,
         "padding-inline-end-mobile": 0
       }
@@ -405,7 +406,7 @@
         "swipe_column_width": 76,
         "columns_mobile": "2",
         "column_gap_mobile": 8,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
@@ -414,7 +415,7 @@
         "control_alignment": "end",
         "device": "desktop",
         "padding-block-start": 0,
-        "padding-block-end": 50,
+        "padding-block-end": 64,
         "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 48
       }
@@ -444,9 +445,9 @@
         "row_gap_mobile": 24,
         "color_scheme": "scheme-2",
         "device": "desktop",
-        "padding-block-start": 64,
+        "padding-block-start": 0,
         "padding-block-end": 64,
-        "padding-block-start-mobile": 28,
+        "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 48
       }
     },

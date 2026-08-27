@@ -7961,6 +7961,29 @@ more-payment-options-link a:hover {
   width: var(--c-media-width, 4rem);
   border-radius: min(var(--border-radius), 1rem);
 }
+#shopify-section-template--29466676035917__flex_carousel_zbemkx .collection-item__link {
+  background: #fff;
+  color: #3e0c40;
+  border-radius: var(--border-radius, 1rem);
+}
+#shopify-section-template--29466676035917__flex_carousel_zbemkx {
+  position: relative;
+  z-index: 1;
+  margin-top: -2.8rem;
+}
+@media (min-width: 768px) {
+  #shopify-section-template--29466676035917__flex_carousel_zbemkx {
+    margin-top: -3.3rem;
+  }
+}
+#shopify-section-template--29466676035917__flex_carousel_zbemkx [class*="color-scheme-"] {
+  background: linear-gradient(to bottom, transparent 2.8rem, #fdf8f4 2.8rem) !important;
+}
+@media (min-width: 768px) {
+  #shopify-section-template--29466676035917__flex_carousel_zbemkx [class*="color-scheme-"] {
+    background: linear-gradient(to bottom, transparent 3.3rem, #fdf8f4 3.3rem) !important;
+  }
+}
 @media (min-width: 768px) {
   .collection-item {
     --c-media-width: 5rem;
