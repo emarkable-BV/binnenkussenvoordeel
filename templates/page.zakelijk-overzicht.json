@@ -1984,6 +1984,215 @@
         "padding-inline-start-mobile": 16,
         "padding-inline-end-mobile": 16
       }
+    },
+    "custom_section_hbLH6B": {
+      "type": "custom-section",
+      "blocks": {
+        "group_6eEXGe": {
+          "type": "group",
+          "name": "t:names.section_header_vertical",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "column_gap": 0,
+            "row_gap": 0,
+            "enable_sticky_desktop": true,
+            "width": "custom",
+            "custom_width": 30,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": false,
+            "swipe_custom_width_column": false,
+            "swipe_column_width": 76,
+            "columns_mobile": 2,
+            "column_gap_mobile": 0,
+            "row_gap_mobile": 0,
+            "device": "mobile",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 0,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0
+          },
+          "blocks": {
+            "text_a8MAcB": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Veelgestelde vragen</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_H8VKGR": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Een antwoord op de meest gestelde vragen over onze binnenkussens.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 8,
+                "padding-block-end": 24,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 83,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "contact_card_bimzGF": {
+              "type": "contact-card",
+              "name": "t:names.contact_card",
+              "settings": {
+                "heading": "Hulp nodig",
+                "image": "shopify://shop_images/contact.png",
+                "image_size": 60,
+                "card_width": 320,
+                "remove_heading_spacing": true,
+                "show_phone": false,
+                "show_email": false,
+                "show_chat_link": true,
+                "chat_label": "Start chat",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 12
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_a8MAcB",
+            "text_H8VKGR",
+            "contact_card_bimzGF"
+          ]
+        },
+        "accordion_yFcxaD": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "open_behavior": "single",
+            "type_preset": "h4",
+            "style": "standard",
+            "card_color_scheme": "scheme-1",
+            "icon_arrow": "caret",
+            "icon_style": "solid",
+            "width": "custom",
+            "custom_width": 70,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "faq_accordion_rows_k98Knk": {
+              "type": "faq-accordion-rows",
+              "settings": {
+                "resource": "collection",
+                "metafield": "custom.faq",
+                "open_first_row_by_default": true
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "faq_accordion_rows_k98Knk"
+          ]
+        }
+      },
+      "block_order": [
+        "group_6eEXGe",
+        "accordion_yFcxaD"
+      ],
+      "name": "t:names.faqs_preset_texts",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "flex-start",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 60,
+        "row_gap": 0,
+        "column_gap_mobile": 30,
+        "row_gap_mobile": 24,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-1",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 84,
+        "padding-block-end": 84,
+        "padding-inline-start": 50,
+        "padding-inline-end": 50,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 20,
+        "padding-inline-end-mobile": 20
+      }
     }
   },
   "order": [
@@ -1994,6 +2203,7 @@
     "testimonials_CR7YHN",
     "flex_carousel_e3JcpM",
     "flex_carousel_W8tPxh",
-    "custom_section_XBbXzE"
+    "custom_section_XBbXzE",
+    "custom_section_hbLH6B"
   ]
 }
