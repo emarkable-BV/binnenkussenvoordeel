@@ -2636,146 +2636,6 @@
         "padding-inline-end-mobile": 16
       }
     },
-    "products_bundle_KL7Fiw": {
-      "type": "products-bundle",
-      "blocks": {
-        "products_bundle_product_z6AzMi": {
-          "type": "_products-bundle-product",
-          "name": "t:names.product",
-          "settings": {
-            "product": "binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram",
-            "color_scheme": "scheme-1",
-            "offset_top": 52,
-            "offset_left": 40,
-            "offset_top_mobile": 40,
-            "offset_left_mobile": 29
-          },
-          "blocks": {}
-        },
-        "products_bundle_product_PNk4Xg": {
-          "type": "_products-bundle-product",
-          "name": "t:names.product",
-          "settings": {
-            "product": "binnenkussen-40x40-cm-polyester-vulkussen-300-gram",
-            "color_scheme": "",
-            "offset_top": 64,
-            "offset_left": 65,
-            "offset_top_mobile": 62,
-            "offset_left_mobile": 42
-          },
-          "blocks": {}
-        },
-        "products-bundle-header": {
-          "type": "_products-bundle-header",
-          "static": true,
-          "settings": {},
-          "blocks": {
-            "text_C3iPwp": {
-              "type": "text",
-              "name": "t:names.subheading",
-              "settings": {
-                "text": "<p>Combineer samen</p>",
-                "highlight_style": "none",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "h6",
-                "font": "var(--font-body--family)",
-                "font_weight": "",
-                "font_size": 15,
-                "font_size_mobile": 15,
-                "line_height": "normal",
-                "text_color": "text",
-                "text_color_gradient": "",
-                "disable_line_break_mobile": false,
-                "width": "100%",
-                "text_alignment": "center",
-                "width_mobile": "100%",
-                "text_alignment_mobile": "center",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "mobile-padding-scale": 80,
-                "animation_type": "none",
-                "animation_delay": 250
-              },
-              "blocks": {}
-            },
-            "text_J8h3fJ": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>Vaak samen gekocht</p>",
-                "highlight_style": "wavy-underline",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "h2",
-                "font": "var(--font-heading--family)",
-                "font_weight": "",
-                "font_size": 68,
-                "font_size_mobile": 38,
-                "line_height": "loose",
-                "text_color": "text",
-                "text_color_gradient": "",
-                "disable_line_break_mobile": false,
-                "width": "100%",
-                "text_alignment": "center",
-                "width_mobile": "100%",
-                "text_alignment_mobile": "center",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "mobile-padding-scale": 80,
-                "animation_type": "none",
-                "animation_delay": 250
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_C3iPwp",
-            "text_J8h3fJ"
-          ]
-        },
-        "products-bundle-banner": {
-          "type": "_products-bundle-banner",
-          "static": true,
-          "settings": {
-            "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
-            "image_ratio": "1/1",
-            "image_ratio_mobile": "4/3",
-            "border_radius": 20
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "products_bundle_product_z6AzMi",
-        "products_bundle_product_PNk4Xg"
-      ],
-      "name": "t:names.products_bundle",
-      "settings": {
-        "desktop_image_position": "left",
-        "enable_banner_full_height": false,
-        "hide_product_badges_on_mobile": true,
-        "pcard_show_vendor": false,
-        "pcard_show_type": false,
-        "use_color_scheme_in_container": false,
-        "color_scheme": "scheme-1",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "device": "mobile",
-        "padding-block-start": 50,
-        "padding-block-end": 50,
-        "padding-block-start-mobile": 35,
-        "padding-block-end-mobile": 35
-      }
-    },
     "custom_section_AgdaYA": {
       "type": "custom-section",
       "blocks": {
@@ -3101,7 +2961,7 @@
                   "settings": {
                     "text": "Polyester",
                     "open_row_by_default": true,
-                    "sync_image": "shopify://shop_images/polyester_18a61230-4ec7-41d7-90c0-bc5c462eb4c5.jpg",
+                    "sync_image": "shopify://shop_images/polyester_82963c7e-6b80-4b37-ae8f-53b0705d7b47.jpg",
                     "link": "",
                     "icon": "none",
                     "image_upload": "shopify://shop_images/polyester-wit.svg",
@@ -3151,7 +3011,7 @@
                   "settings": {
                     "text": "Memory foam",
                     "open_row_by_default": false,
-                    "sync_image": "shopify://shop_images/4cdb7db8-88fc-4285-ad8d-3d4c34166f19-2026-08-21.png",
+                    "sync_image": "shopify://shop_images/memory-foam_f7c8542c-2100-4e89-8e87-18ccbfcd780a.jpg",
                     "link": "",
                     "icon": "none",
                     "image_upload": "shopify://shop_images/memory-foam-wit.svg",
@@ -3201,7 +3061,7 @@
                   "settings": {
                     "text": "Veren & dons",
                     "open_row_by_default": false,
-                    "sync_image": "shopify://shop_images/3d2b46af-e629-4645-bf62-01de77b5f24a-2026-08-21.png",
+                    "sync_image": "shopify://shop_images/memory-foam_f7c8542c-2100-4e89-8e87-18ccbfcd780a.jpg",
                     "link": "",
                     "icon": "none",
                     "image_upload": "shopify://shop_images/veer-wit.svg",
@@ -3291,6 +3151,146 @@
         "padding-block-end-mobile": 0,
         "padding-inline-start-mobile": 0,
         "padding-inline-end-mobile": 0
+      }
+    },
+    "products_bundle_KL7Fiw": {
+      "type": "products-bundle",
+      "blocks": {
+        "products_bundle_product_z6AzMi": {
+          "type": "_products-bundle-product",
+          "name": "t:names.product",
+          "settings": {
+            "product": "binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram",
+            "color_scheme": "scheme-1",
+            "offset_top": 52,
+            "offset_left": 40,
+            "offset_top_mobile": 40,
+            "offset_left_mobile": 29
+          },
+          "blocks": {}
+        },
+        "products_bundle_product_PNk4Xg": {
+          "type": "_products-bundle-product",
+          "name": "t:names.product",
+          "settings": {
+            "product": "binnenkussen-40x40-cm-polyester-vulkussen-300-gram",
+            "color_scheme": "",
+            "offset_top": 64,
+            "offset_left": 65,
+            "offset_top_mobile": 62,
+            "offset_left_mobile": 42
+          },
+          "blocks": {}
+        },
+        "products-bundle-header": {
+          "type": "_products-bundle-header",
+          "static": true,
+          "settings": {},
+          "blocks": {
+            "text_C3iPwp": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "<p>Combineer samen</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h6",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_J8h3fJ": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Vaak samen gekocht</p>",
+                "highlight_style": "wavy-underline",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-heading--family)",
+                "font_weight": "",
+                "font_size": 68,
+                "font_size_mobile": 38,
+                "line_height": "loose",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "100%",
+                "text_alignment": "center",
+                "width_mobile": "100%",
+                "text_alignment_mobile": "center",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_C3iPwp",
+            "text_J8h3fJ"
+          ]
+        },
+        "products-bundle-banner": {
+          "type": "_products-bundle-banner",
+          "static": true,
+          "settings": {
+            "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
+            "image_ratio": "1/1",
+            "image_ratio_mobile": "4/3",
+            "border_radius": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "products_bundle_product_z6AzMi",
+        "products_bundle_product_PNk4Xg"
+      ],
+      "name": "t:names.products_bundle",
+      "settings": {
+        "desktop_image_position": "left",
+        "enable_banner_full_height": false,
+        "hide_product_badges_on_mobile": true,
+        "pcard_show_vendor": false,
+        "pcard_show_type": false,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-1",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "mobile",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "padding-block-start-mobile": 35,
+        "padding-block-end-mobile": 35
       }
     },
     "custom_section_review_widget": {
