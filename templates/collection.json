@@ -756,7 +756,7 @@
               "type": "contact-card",
               "name": "t:names.contact_card",
               "settings": {
-                "heading": "Hulp nodig",
+                "heading": "Hulp nodig?",
                 "image": "shopify://shop_images/contact.png",
                 "image_size": 60,
                 "card_width": 320,
