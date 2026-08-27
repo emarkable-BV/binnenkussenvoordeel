@@ -2090,11 +2090,34 @@
                 "animation_delay": 250
               },
               "blocks": {}
+            },
+            "contact_card_faq_8qTzNf": {
+              "type": "contact-card",
+              "name": "t:names.contact_card",
+              "settings": {
+                "heading": "Hulp nodig?",
+                "image": "shopify://shop_images/contact.png",
+                "image_size": 60,
+                "card_width": 320,
+                "remove_heading_spacing": true,
+                "show_phone": false,
+                "show_email": false,
+                "show_chat_link": true,
+                "chat_label": "Start chat",
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-1",
+                "border": "solid",
+                "border_width": 1,
+                "border_opacity": 10,
+                "border_radius": 12
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_bFP48c",
-            "text_hJ6BcH"
+            "text_hJ6BcH",
+            "contact_card_faq_8qTzNf"
           ]
         },
         "accordion_cja66c": {

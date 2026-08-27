@@ -46,7 +46,7 @@
     "button_text_transform": "none",
     "button_height": 50,
     "button_corner_radius": 9,
-    "badge_corner_radius": 9,
+    "badge_corner_radius": 5,
     "new_badge_tags": "Bestseller",
     "hot_badge_tags": "Hot",
     "popular_badge_tags": "Populair",

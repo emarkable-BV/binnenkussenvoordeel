@@ -205,6 +205,14 @@
     },
     {
       "type": "checkbox",
+      "id": "hide_filter_collapse_button",
+      "label": "Verberg knop om filters in te klappen (desktop)",
+      "info": "Verbergt de knop waarmee bezoekers de filterbalk op desktop kunnen dichtklappen.",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_filtering == true and section.settings.filter_type == 'vertical' }}"
+    },
+    {
+      "type": "checkbox",
       "id": "enable_sorting",
       "label": "t:settings.enable_sorting",
       "default": true

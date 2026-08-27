@@ -76,29 +76,31 @@
             </span>
           </button>
         </div>
-        <div class="toggle-filter-desktop hidden lg:block no-js-hidden">
-          {% if filter_type == 'drawer' %}
-            <button
-              class="btn btn--outline toggle-filter-btn paragraph"
-              on:click="#filters-drawer/showDialog"
-              aria-haspopup="dialog"
-              aria-controls="filters-drawer-dialog"
-            >
-              {% render 'icon', icon: 'funnel', size: 'large' %}
-              <span class="btn__text">
-                {{ 'content.filters' | t }}
-              </span>
-            </button>
-          {% else %}
-            <button
-              class="btn btn--outline toggle-filter-btn"
-              on:click="results-list/toggleFiltering"
-            >
-              {% render 'icon', icon: 'funnel', size: 'large' %}
-              <span class="btn__text">{{ 'content.filters' | t }}</span>
-            </button>
-          {% endif %}
-        </div>
+        {% unless filter_type != 'drawer' and section_settings.hide_filter_collapse_button %}
+          <div class="toggle-filter-desktop hidden lg:block no-js-hidden">
+            {% if filter_type == 'drawer' %}
+              <button
+                class="btn btn--outline toggle-filter-btn paragraph"
+                on:click="#filters-drawer/showDialog"
+                aria-haspopup="dialog"
+                aria-controls="filters-drawer-dialog"
+              >
+                {% render 'icon', icon: 'funnel', size: 'large' %}
+                <span class="btn__text">
+                  {{ 'content.filters' | t }}
+                </span>
+              </button>
+            {% else %}
+              <button
+                class="btn btn--outline toggle-filter-btn"
+                on:click="results-list/toggleFiltering"
+              >
+                {% render 'icon', icon: 'funnel', size: 'large' %}
+                <span class="btn__text">{{ 'content.filters' | t }}</span>
+              </button>
+            {% endif %}
+          </div>
+        {% endunless %}
       {% endif %}
 
       <div class="products-count-wrapper text-right color-subtext">
