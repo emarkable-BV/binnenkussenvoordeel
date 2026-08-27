@@ -59,7 +59,7 @@
 }
 @media (min-width: 1200px) {
   .cart-page__inner.grid {
-    --cart-page-summary-width: 45.7rem;
+    --cart-page-summary-width: 35.7rem;
     --column-gap: 5rem;
   }
   .cart-page__items .cart-items__wrapper {

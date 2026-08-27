@@ -23,6 +23,11 @@
     type="module"
     fetchpriority="low"
   ></script>
+  <script
+    src="{{ 'cart-bundle-group.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
   {% if settings.show_caculate_shipping_rate %}
     <script
       src="{{ 'cart-shipping.js' | asset_url }}"
@@ -121,15 +126,15 @@
               </div>
             </div>
           {%- else -%}
+            {%- capture pillow_count -%}{% render 'cart-pillow-count' %}{%- endcapture -%}
+            {%- assign pillow_count = pillow_count | strip | plus: 0 -%}
             <span
               class="visually-hidden"
               ref="cartItemCount"
               aria-hidden="true"
             >
-              {{- cart.item_count -}}
+              {{- pillow_count -}}
             </span>
-            {%- capture pillow_count -%}{% render 'cart-pillow-count' %}{%- endcapture -%}
-            {%- assign pillow_count = pillow_count | strip | plus: 0 -%}
             <div
               class="cart-drawer__header relative flex items-center justify-between gap-2"
               id="cart-drawer-header"

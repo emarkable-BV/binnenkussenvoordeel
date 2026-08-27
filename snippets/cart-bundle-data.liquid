@@ -1,0 +1,75 @@
+{% doc %}
+  Outputs a JSON object mapping each unique cart line SKU to every sibling in
+  its bundle family (including the qty:1 loose product itself), using the
+  same sibling-family lookup as `bundle-quantity-family.liquid`. Consumed
+  client-side by `assets/cart-items.js` to compose a family's total quantity
+  into the best bundle/loose mix, in either direction.
+
+  Shape: { "<sku>": [{ "qty": 1, "variantId": 111 }, { "qty": 2, "variantId": 123 }, ...], ... }
+  Only SKUs with a known family are included. Every entry in a family's list
+  (including the sku's own entry) resolves to the same siblings, keyed by
+  each unique SKU currently in the cart for convenience.
+
+  @example
+  {% render 'cart-bundle-data' %}
+{% enddoc %}
+{%- liquid
+  assign seen_skus = ''
+  assign bundle_json = '{'
+  assign first_entry = true
+
+  for item in cart.items
+    assign sku = item.sku
+    assign seen_skus_list = seen_skus | split: '|'
+    if sku == blank or seen_skus_list contains sku
+      continue
+    endif
+    assign seen_skus = seen_skus | append: sku | append: '|'
+
+    capture pairs
+      render 'bundle-quantity-family', sku: sku
+    endcapture
+    assign pairs = pairs | strip
+    if pairs == blank
+      continue
+    endif
+
+    assign entries = pairs | split: ';'
+    assign steps_json = ''
+    assign has_steps = false
+
+    for entry in entries
+      assign entry_parts = entry | split: '|'
+      assign qty = entry_parts[0] | plus: 0
+      assign handle = entry_parts[1]
+      if handle == blank
+        continue
+      endif
+
+      assign sibling_variant = all_products[handle].selected_or_first_available_variant
+      if sibling_variant == blank
+        continue
+      endif
+
+      if has_steps
+        assign steps_json = steps_json | append: ','
+      endif
+      assign steps_json = steps_json | append: '{"qty":' | append: qty | append: ',"variantId":' | append: sibling_variant.id | append: '}'
+      assign has_steps = true
+    endfor
+
+    unless has_steps
+      continue
+    endunless
+
+    unless first_entry
+      assign bundle_json = bundle_json | append: ','
+    endunless
+    assign sku_json = sku | json
+    assign bundle_json = bundle_json | append: sku_json | append: ':[' | append: steps_json | append: ']'
+    assign first_entry = false
+  endfor
+
+  assign bundle_json = bundle_json | append: '}'
+-%}
+{{- bundle_json -}}

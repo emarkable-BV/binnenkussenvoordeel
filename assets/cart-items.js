@@ -24,6 +24,11 @@ import { debounce, fetchConfig, resetLoading } from "@theme/utilities";
 class CartItemsComponent extends Component {
   #debouncedOnChange = debounce(this.#onQuantityChange, 300).bind(this);
   #timeout = 5000;
+  // Shared across every cart-items-component instance (drawer + full page can
+  // both be mounted at once) so a single external cart change never triggers
+  // two overlapping swap requests against the same cart.
+  static #isSwappingBundles = false;
+  #bundleToastTimeout;
 
   connectedCallback() {
     super.connectedCallback();
@@ -98,6 +103,13 @@ class CartItemsComponent extends Component {
         this.#setGiftLinesLoading(false, currentParentKey);
       }
     }
+
+    // updateQuantity() dispatches its CartUpdateEvent on `this`, which every
+    // instance's own #handleCartUpdate deliberately ignores (self-dispatch
+    // guard) to avoid double-processing — so quantity changes made directly
+    // in the cart (the +/- stepper) never reach #syncBundleSwaps unless we
+    // call it here explicitly, using the post-update (possibly stock-clamped) cart.
+    await this.#syncBundleSwaps(await this.#fetchCartJson());
   }
 
   /**
@@ -826,7 +838,312 @@ class CartItemsComponent extends Component {
         this.#setGiftLinesLoading(false);
       }
     }
+
+    await this.#syncBundleSwaps(cartJson);
   };
+
+  /**
+   * Normalizes each product family's *total* quantity (summed across every
+   * line that belongs to it) to the fewest possible lines — e.g. an existing
+   * "10 stuks" line plus a separately-added "4 stuks" and "2 stuks" line
+   * (16 pillows total, 3 lines) gets consolidated into "10 stuks" + "6
+   * stuks" (16 pillows, 2 lines). Runs after every cart change, in either
+   * direction (a stepper increase/decrease on any line, bundle or loose).
+   * Manual per-pillow removal uses {@link #composeFamily} directly instead,
+   * targeting the family total minus one rather than the current total.
+   *
+   * @param {{ items?: { key: string; sku?: string; quantity: number }[] } | undefined} cartJson
+   */
+  async #syncBundleSwaps(cartJson) {
+    if (CartItemsComponent.#isSwappingBundles) return;
+    if (!cartJson || !Array.isArray(cartJson.items)) return;
+
+    const stepsBySku = this.#readBundleStepsData();
+    if (!stepsBySku) return;
+
+    const processedFamilies = new Set();
+    for (const item of cartJson.items) {
+      const sku = item.sku;
+      if (!sku) continue;
+
+      const family = this.#familyOf(sku);
+      if (processedFamilies.has(family)) continue;
+
+      const steps = stepsBySku[sku];
+      if (!Array.isArray(steps) || steps.length === 0) continue;
+
+      let familyPillowQty = 0;
+      for (const otherItem of cartJson.items) {
+        if (otherItem.sku && this.#familyOf(otherItem.sku) === family) {
+          familyPillowQty += otherItem.quantity * this.#packSizeOf(otherItem.sku);
+        }
+      }
+      if (familyPillowQty < 2) continue;
+
+      processedFamilies.add(family);
+      const result = await this.#composeFamily(sku, familyPillowQty, cartJson);
+      if (result) this.#showBundleSwapToast(result.target);
+    }
+  }
+
+  /**
+   * Divides `targetQty` by the largest available bundle size that fits, then
+   * repeats for whatever remains with the next-largest size, cascading down
+   * to loose (qty:1) units for any final leftover — e.g. 12 -> 1x "10 stuks"
+   * + 1x "2 stuks"; 9 -> 1x "6 stuks" + 1x "2 stuks" + 1 loose.
+   *
+   * @param {number} targetQty
+   * @param {{ qty: number; variantId: number }[]} steps
+   * @returns {Map<number, number> | null} variantId -> quantity, or null if unrepresentable.
+   */
+  #minimalComposition(targetQty, steps) {
+    if (targetQty <= 0) return new Map();
+
+    const sortedSteps = [...steps].filter((s) => s.qty > 0).sort((a, b) => b.qty - a.qty);
+    let remaining = targetQty;
+    const target = new Map();
+    for (const step of sortedSteps) {
+      const count = Math.floor(remaining / step.qty);
+      if (count > 0) {
+        target.set(step.variantId, (target.get(step.variantId) || 0) + count);
+        remaining -= count * step.qty;
+      }
+    }
+
+    return remaining > 0 ? null : target;
+  }
+
+  /**
+   * Recomputes the ideal set of bundle/loose lines for a product family to
+   * total exactly `targetQty` units, then applies the minimal diff via
+   * `cart/change.js` + `cart/add.js`. Shared by the auto-combine-upward path
+   * ({@link #syncBundleSwaps}) and the manual per-pillow removal path
+   * ({@link onLinePillowRemove}).
+   *
+   * @param {string} familySku - Any SKU belonging to the family (loose or an "N stuks" pack).
+   * @param {number} targetQty - Desired total unit count for the family.
+   * @param {{ items?: { key: string; sku?: string; quantity: number; variant_id: number }[] }} cartJson
+   * @returns {Promise<{ target: Map<number, number> } | null>} The applied composition, or null if nothing changed / it couldn't be represented.
+   */
+  async #composeFamily(familySku, targetQty, cartJson) {
+    if (CartItemsComponent.#isSwappingBundles) return null;
+
+    const stepsBySku = this.#readBundleStepsData();
+    const steps = stepsBySku?.[familySku];
+    if (!Array.isArray(steps) || steps.length === 0) return null;
+
+    const target = this.#minimalComposition(Math.max(0, targetQty), steps);
+    if (!target) return null;
+
+    const family = this.#familyOf(familySku);
+    const current = new Map();
+    for (const item of cartJson.items) {
+      if (!item.sku || this.#familyOf(item.sku) !== family) continue;
+      current.set(item.variant_id, { key: item.key, quantity: item.quantity });
+    }
+
+    const changes = [];
+    for (const [variantId, info] of current) {
+      const wanted = target.get(variantId) || 0;
+      if (wanted !== info.quantity) changes.push({ id: info.key, quantity: wanted });
+    }
+    const toAdd = [];
+    for (const [variantId, wanted] of target) {
+      if (!current.has(variantId) && wanted > 0) toAdd.push({ id: variantId, quantity: wanted });
+    }
+
+    if (changes.length === 0 && toAdd.length === 0) return null;
+
+    const startedAt = Date.now();
+    const MIN_LOADING_MS = 500;
+
+    CartItemsComponent.#isSwappingBundles = true;
+    this.#setFamilyLoading(family, true);
+    try {
+      for (const change of changes) {
+        await fetch(FoxTheme.routes.cart_change_url, fetchConfig("json", { body: JSON.stringify(change) }));
+      }
+
+      let parsed = null;
+      if (toAdd.length > 0) {
+        const body = JSON.stringify({ items: toAdd, ...this.#getCartSectionsPayload() });
+        const res = await fetch(FoxTheme.routes.cart_add_url, fetchConfig("json", { body }));
+        parsed = await res.json();
+      }
+
+      // The morph below swaps in fresh server HTML, which wipes the loading
+      // class immediately — on a fast connection the whole round trip can
+      // finish in well under one shimmer sweep, so without this the effect
+      // barely has time to become visible before the content just changes.
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < MIN_LOADING_MS) {
+        await new Promise((resolve) => setTimeout(resolve, MIN_LOADING_MS - elapsed));
+      }
+
+      if (parsed) {
+        await this.#applyPerLineCartResponse(parsed);
+      } else {
+        await this.#refreshCartSections();
+      }
+
+      return { target };
+    } catch (error) {
+      console.error("Bundle composition failed:", error);
+      return null;
+    } finally {
+      CartItemsComponent.#isSwappingBundles = false;
+      // The morph above replaces these rows' markup wholesale, so the loading
+      // class is naturally gone already on success; only a thrown error
+      // leaves it needing an explicit removal here.
+      this.#setFamilyLoading(family, false);
+    }
+  }
+
+  /**
+   * Toggles a loading look (dimmed, non-interactive) on every current row
+   * belonging to a product family while its bundle composition is being
+   * recomputed on the server.
+   * @param {string} family
+   * @param {boolean} on
+   */
+  #setFamilyLoading(family, on) {
+    this.querySelectorAll("tr[data-bundle-family]").forEach((row) => {
+      if (this.#familyOf(row.dataset.bundleFamily) === family) {
+        row.classList.toggle("cart-bundle-group__row-loading", on);
+      }
+    });
+  }
+
+  /**
+   * Removes exactly one pillow from a product family's total (across every
+   * line belonging to it, not just the one the pillow icon was shown under),
+   * recomposing the remainder into the fewest lines / best bundle mix.
+   * Called by the pillow icons rendered by `assets/cart-bundle-group.js`.
+   *
+   * @param {string} lineKey - The cart line's `key` (stable per-line id) the clicked pillow belonged to.
+   */
+  async onLinePillowRemove(lineKey) {
+    // Show the loading skeleton immediately, before the /cart.js round trip
+    // below even starts — otherwise that first fetch's old content is still
+    // visible for a moment with no loading state at all.
+    const clickedRow = this.querySelector(`tr[data-key="${CSS.escape(lineKey)}"]`);
+    const familyFromDom = clickedRow?.dataset.bundleFamily;
+    if (familyFromDom) this.#setFamilyLoading(familyFromDom, true);
+
+    // Force the browser to paint the loading state before the fetch below
+    // starts — otherwise, when that request resolves fast enough, the class
+    // change and the resulting content swap can land in the same frame and
+    // the loading state never actually gets shown on screen.
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    try {
+      const cart = await this.#fetchCartJson();
+      const item = cart.items.find((i) => i.key === lineKey);
+      if (!item?.sku) return;
+
+      const family = this.#familyOf(item.sku);
+      let familyPillowQty = 0;
+      for (const otherItem of cart.items) {
+        if (otherItem.sku && this.#familyOf(otherItem.sku) === family) {
+          familyPillowQty += otherItem.quantity * this.#packSizeOf(otherItem.sku);
+        }
+      }
+      if (familyPillowQty <= 0) return;
+
+      await this.#composeFamily(item.sku, familyPillowQty - 1, cart);
+    } finally {
+      // #composeFamily's own success path already clears this (implicitly,
+      // via the morph); this covers early returns above and the error path.
+      if (familyFromDom) this.#setFamilyLoading(familyFromDom, false);
+    }
+  }
+
+  /**
+   * Strips a trailing `-NPK` pack-size segment (mirrors
+   * `bundle-quantity-family.liquid`), so a loose SKU and any of its bundle
+   * siblings resolve to the same family key.
+   * @param {string} sku
+   */
+  #familyOf(sku) {
+    const parts = sku.split("-");
+    if (parts.length === 4 && parts[3].includes("PK")) {
+      return `${parts[0]}-${parts[1]}-${parts[2]}`;
+    }
+    return sku;
+  }
+
+  /**
+   * Parses the pack size from a `-NPK` SKU suffix (mirrors
+   * `cart-pillow-count.liquid`); 1 for a loose SKU.
+   * @param {string} sku
+   */
+  #packSizeOf(sku) {
+    const parts = sku.split("-");
+    if (parts.length === 4 && parts[3].includes("PK")) {
+      return parseInt(parts[3], 10) || 1;
+    }
+    return 1;
+  }
+
+  /**
+   * Reads the qty->variant bundle map rendered by `cart-bundle-data.liquid`.
+   * @returns {Record<string, { qty: number; variantId: number }[]> | null}
+   */
+  #readBundleStepsData() {
+    // Scoped to this instance, not `document`: the drawer and the full cart
+    // page can both be mounted at once, each with its own (independently
+    // morphed) copy of this data — reading from `document` risked grabbing a
+    // stale one from the *other* surface instead of the one that was just
+    // updated.
+    const script = this.querySelector("[data-cart-bundle-steps]");
+    if (!script?.textContent) return null;
+    try {
+      return JSON.parse(script.textContent);
+    } catch (error) {
+      console.error("Failed to parse cart bundle steps data:", error);
+      return null;
+    }
+  }
+
+  /**
+   * Briefly shows a toast confirming which bundle(s) the cart was combined into.
+   * @param {Map<number, number>} target - variantId -> quantity, as applied by #composeFamily.
+   */
+  #showBundleSwapToast(target) {
+    const stepsBySku = this.#readBundleStepsData();
+    const qtyByVariant = new Map();
+    for (const steps of Object.values(stepsBySku || {})) {
+      for (const step of steps) qtyByVariant.set(step.variantId, step.qty);
+    }
+
+    const fragments = [];
+    for (const [variantId, count] of target) {
+      const qty = qtyByVariant.get(variantId);
+      if (!qty || qty <= 1 || count <= 0) continue;
+      fragments.push(count > 1 ? `${count}x ${qty} stuks` : `${qty} stuks`);
+    }
+    if (fragments.length === 0) return;
+
+    const message =
+      fragments.length === 1
+        ? `We hebben je ${fragments[0]} samengevoegd tot 1 voordeelbundel`
+        : `We hebben je items samengevoegd tot voordeelbundels (${fragments.join(", ")})`;
+
+    let toast = document.querySelector(".cart-bundle-toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "cart-bundle-toast alert alert--success";
+      toast.setAttribute("role", "status");
+      document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.classList.add("cart-bundle-toast--visible");
+    clearTimeout(this.#bundleToastTimeout);
+    this.#bundleToastTimeout = setTimeout(() => {
+      toast.classList.remove("cart-bundle-toast--visible");
+    }, 4000);
+  }
 
   /**
    * Dispatches a cart updated event for 3rd party.

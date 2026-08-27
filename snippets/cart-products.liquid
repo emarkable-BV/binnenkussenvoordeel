@@ -17,6 +17,7 @@
     assign dialog_color_scheme = settings.color_schemes | first
   endunless
 %}
+<script type="application/json" data-cart-bundle-steps>{% render 'cart-bundle-data' %}</script>
 <div
   {{ block.shopify_attributes }}
   class="cart-items__wrapper{% if context == 'cart-page' %} sticky-element{% endif %}"
@@ -27,7 +28,7 @@
     id="cart-form"
     method="post"
   >
-    <div class="cart-items">
+    <cart-bundle-group class="cart-items">
       <table class="cart-items__table">
         <caption class="visually-hidden">
           {{ 'content.cart_total' | t }}
@@ -56,6 +57,15 @@
               if gift_wrap_enabled and item.variant_id == gift_wrap_variant_id
                 assign is_gift_wrapping_line = true
               endif
+
+              assign bundle_family = item.sku
+              assign bundle_pack_size = 1
+              assign bundle_family_parts = item.sku | split: '-'
+              if bundle_family_parts.size == 4 and bundle_family_parts[3] contains 'PK'
+                assign bundle_family = bundle_family_parts[0] | append: '-' | append: bundle_family_parts[1] | append: '-' | append: bundle_family_parts[2]
+                assign bundle_pack_size = bundle_family_parts[3] | remove: 'PK' | plus: 0
+              endif
+              assign bundle_pillow_quantity = item.quantity | times: bundle_pack_size
             %}
             {%- capture row_class -%}
               cart-items__table-row
@@ -185,6 +195,11 @@
               data-parent-key="{{ item.parent_relationship.parent.key }}"
               data-key="{{ item.key }}"
               data-line="{{ item.index | plus: 1 }}"
+              {% if bundle_family != blank %}
+                data-bundle-family="{{ bundle_family }}"
+                data-quantity="{{ bundle_pillow_quantity }}"
+                data-pack-size="{{ bundle_pack_size }}"
+              {% endif %}
             >
               <td
                 class="cart-items__media flex items-start"
@@ -393,6 +408,6 @@
           {% endfor %}
         </tbody>
       </table>
-    </div>
+    </cart-bundle-group>
   </form>
 </div>

@@ -21,10 +21,6 @@ class CartCount extends Component {
     this.refs.cartBubbleCount.textContent = value < 100 ? String(value) : "99+";
   }
 
-  get inDrawer() {
-    return this.dataset.context === "drawer";
-  }
-
   connectedCallback() {
     super.connectedCallback();
 
@@ -47,14 +43,13 @@ class CartCount extends Component {
     const isIncremental = event.detail.data?.isIncremental ?? false;
 
     if (isIncremental) {
-      // Incremental update: add delta to current count
-      let currentCount = parseInt(this.refs.cartBubbleCount.textContent ?? "0", 10);
-
-      if (!this.inDrawer) {
-        currentCount += itemCount;
-      }
-
-      this.renderCartBubble(currentCount);
+      // Incremental update: add delta to current count. Applied consistently
+      // for both the header and the drawer's own badge — a real (absolute)
+      // CartUpdateEvent always follows shortly after and corrects this, so
+      // skipping it just for the drawer only left that badge stuck showing
+      // a stale count instead.
+      const currentCount = parseInt(this.refs.cartBubbleCount.textContent ?? "0", 10);
+      this.renderCartBubble(currentCount + itemCount);
     } else {
       // Absolute update: set count directly from server
       this.renderCartBubble(itemCount);

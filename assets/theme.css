@@ -5480,6 +5480,172 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
   align-items: center;
   gap: 0.8rem;
 }
+.cart-bundle-toast {
+  position: fixed;
+  z-index: 200;
+  bottom: 2rem;
+  left: 50%;
+  transform: translate(-50%, 1rem);
+  max-width: calc(100vw - 4rem);
+  box-shadow: 0 0.4rem 1.6rem rgb(0 0 0 / 15%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--animation-duration--medium, 240ms) var(--animation-easing--smooth, ease),
+    transform var(--animation-duration--medium, 240ms) var(--animation-easing--smooth, ease);
+}
+.cart-bundle-toast--visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.cart-bundle-group__divider-cell {
+  display: block;
+  padding-block: 0.4rem 1.6rem;
+}
+.cart-bundle-group__divider {
+  border: none;
+  border-block-start: 0.1rem solid rgb(var(--color-foreground) / 15%);
+  margin: 0.8rem 0 0;
+}
+.cart-bundle-group__pillows {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.8rem;
+}
+.cart-bundle-group__pillow {
+  position: relative;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: rgb(var(--color-foreground) / 6%);
+  cursor: pointer;
+}
+.cart-bundle-group__pillow-icon {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--color-secondary-button-background) / 40%);
+}
+.cart-bundle-group__pillow-remove {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-notification-error));
+  background: rgb(var(--color-background) / 85%);
+  opacity: 0;
+  transition: opacity var(--animation-duration--medium, 240ms) var(--animation-easing--smooth, ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cart-bundle-group__pillow:hover .cart-bundle-group__pillow-remove {
+    opacity: 1;
+  }
+}
+.cart-bundle-group__pillow.btn--loading .cart-bundle-group__pillow-remove {
+  opacity: 1;
+}
+/* Drawer-only cart line layout: no remove button at all, quantity selector +
+   pillows left-aligned in their own row under the product image (rather
+   than the default narrow layout's "media quantity quantity" row starting
+   beside the image). Scoped to `.cart-drawer` so the full cart page keeps
+   its own (container-query-driven) layout, remove button included, untouched. */
+.cart-drawer .cart-items__table-row {
+  grid-template-areas:
+    "media details price"
+    "quantity quantity quantity"
+    "giftwrap giftwrap giftwrap"
+    "error error error";
+}
+.cart-drawer .cart-items__remove {
+  display: none;
+}
+.cart-drawer .cart-items__quantity {
+  grid-area: quantity;
+  justify-self: start;
+}
+.cart-drawer .cart-items__quantity .cart-items__remove-button {
+  display: none;
+}
+.cart-bundle-group__row-loading {
+  pointer-events: none;
+}
+/* Each piece of content (image, title, price, quantity+pillows) gets its
+   own skeleton shape + shimmer, rather than one block covering the row. */
+.cart-bundle-group__row-loading .cart-items__media,
+.cart-bundle-group__row-loading .cart-items__title,
+.cart-bundle-group__row-loading .cart-items__price .cart-items__price-item,
+.cart-bundle-group__row-loading .cart-items__quantity-wrap,
+.cart-bundle-group__row-loading [data-bundle-group-pillows] {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.6rem;
+  color: transparent !important;
+}
+.cart-bundle-group__row-loading .cart-items__media *,
+.cart-bundle-group__row-loading .cart-items__title *,
+.cart-bundle-group__row-loading .cart-items__price .cart-items__price-item *,
+.cart-bundle-group__row-loading .cart-items__quantity-wrap *,
+.cart-bundle-group__row-loading [data-bundle-group-pillows] * {
+  visibility: hidden;
+}
+.cart-bundle-group__row-loading .cart-items__media::before,
+.cart-bundle-group__row-loading .cart-items__title::before,
+.cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::before,
+.cart-bundle-group__row-loading .cart-items__quantity-wrap::before,
+.cart-bundle-group__row-loading [data-bundle-group-pillows]::before,
+.cart-bundle-group__row-loading .cart-items__media::after,
+.cart-bundle-group__row-loading .cart-items__title::after,
+.cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::after,
+.cart-bundle-group__row-loading .cart-items__quantity-wrap::after,
+.cart-bundle-group__row-loading [data-bundle-group-pillows]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.cart-bundle-group__row-loading .cart-items__media::before,
+.cart-bundle-group__row-loading .cart-items__title::before,
+.cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::before,
+.cart-bundle-group__row-loading .cart-items__quantity-wrap::before,
+.cart-bundle-group__row-loading [data-bundle-group-pillows]::before {
+  background: rgb(var(--color-foreground) / 8%);
+}
+.cart-bundle-group__row-loading .cart-items__media::after,
+.cart-bundle-group__row-loading .cart-items__title::after,
+.cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::after,
+.cart-bundle-group__row-loading .cart-items__quantity-wrap::after,
+.cart-bundle-group__row-loading [data-bundle-group-pillows]::after {
+  background: linear-gradient(100deg, transparent 30%, rgb(var(--color-background)) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: cart-bundle-shimmer 1.4s ease-in-out infinite;
+}
+/* Text elements have no intrinsic height until they wrap real content, so
+   give their skeleton bar an explicit line height. */
+.cart-bundle-group__row-loading .cart-items__title,
+.cart-bundle-group__row-loading .cart-items__price .cart-items__price-item {
+  display: inline-block;
+  min-height: 1.6rem;
+  min-width: 8rem;
+}
+@keyframes cart-bundle-shimmer {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -50% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cart-bundle-group__row-loading .cart-items__media::after,
+  .cart-bundle-group__row-loading .cart-items__title::after,
+  .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::after,
+  .cart-bundle-group__row-loading .cart-items__quantity-wrap::after,
+  .cart-bundle-group__row-loading [data-bundle-group-pillows]::after {
+    animation: none;
+    background: none;
+  }
+}
 
 /* Fixed overlay */
 .fixed-overlay {

@@ -5,6 +5,11 @@
   type="module"
   fetchpriority="low"
 ></script>
+<script
+  src="{{ 'cart-bundle-group.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
 {% if settings.show_caculate_shipping_rate %}
   <script
     src="{{ 'cart-shipping.js' | asset_url }}"
@@ -29,12 +34,13 @@
   data-gift-sync-quantity="{{ settings.gift_wrap_sync_quantity }}"
 >
   {%- unless cart.empty? -%}
+    {%- capture pillow_count -%}{% render 'cart-pillow-count' %}{%- endcapture -%}
     <span
       class="visually-hidden"
       ref="cartItemCount"
       aria-hidden="true"
     >
-      {{- cart.item_count -}}
+      {{- pillow_count | strip -}}
     </span>
   {%- endunless -%}
   <div class="section-grid section-grid--{{ section.settings.container }} color-{{ section.settings.color_scheme }}">

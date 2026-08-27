@@ -1,6 +1,11 @@
 {% liquid
+  capture pillow_count
+    render 'cart-pillow-count'
+  endcapture
+  assign pillow_count = pillow_count | strip | plus: 0
+
   assign class = class
-  if cart.item_count > 99
+  if pillow_count > 99
     assign class = class | append: ' cart-count--small-medium'
   endif
   if cart.empty?
@@ -16,15 +21,15 @@
 >
   <span class="visually-hidden">
     {{- 'accessibility.cart_count' | t -}}
-    : {{ cart.item_count }}
+    : {{ pillow_count }}
   </span>
   <span
     class="cart-bubble__text-count"
     ref="cartBubbleCount"
     aria-hidden="true"
   >
-    {% if cart.item_count < 100 %}
-      {{- cart.item_count -}}
+    {% if pillow_count < 100 %}
+      {{- pillow_count -}}
     {% else %}
       99+
     {% endif %}
