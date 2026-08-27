@@ -139,5 +139,131 @@
     "product_information": "Productinformatie",
     "product_total": "Totaalbedrag product",
     "placeholder_image": "Plaatsaanduiding voor afbeelding"
+  },
+  "placeholders": {
+    "collection_title": "Titel van de collectie",
+    "collection_description": "Beschrijving van de collectie hier, met details over de collectie."
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Toevoegen aan winkelwagen",
+      "add_to_cart_short": "Toevoegen",
+      "add_all_to_cart": "Alles toevoegen aan winkelwagen",
+      "add_selected_to_cart": "Geselecteerde toevoegen aan winkelwagen",
+      "sold_out": "Uitverkocht",
+      "unavailable": "Niet beschikbaar",
+      "on_sale": "Verkoop",
+      "save_price_html": "Bespaar <span data-sale-value>{{ amount }}</span>"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Account",
+      "details": "Accountgegevens",
+      "view_addresses": "Adressen bekijken",
+      "return": "Terug naar accountgegevens"
+    },
+    "activate_account": {
+      "title": "Account activeren",
+      "subtext": "Maak een wachtwoord aan om uw account te activeren.",
+      "password": "Wachtwoord",
+      "password_confirm": "Bevestig wachtwoord",
+      "submit": "Account activeren",
+      "cancel": "Uitnodiging afwijzen"
+    },
+    "addresses": {
+      "title": "Adressen",
+      "default": "Standaard",
+      "add_new": "Nieuw adres toevoegen",
+      "edit_address": "Adres bewerken",
+      "first_name": "Voornaam",
+      "last_name": "Achternaam",
+      "company": "Bedrijf",
+      "address1": "Adres 1",
+      "address2": "Adres 2",
+      "city": "Stad",
+      "country": "Land/regio",
+      "province": "Provincie",
+      "zip": "Postcode",
+      "phone": "Telefoon",
+      "set_default": "Instellen als standaardadres",
+      "add": "Adres toevoegen",
+      "update": "Adres bijwerken",
+      "cancel": "Annuleer",
+      "edit": "Bewerken",
+      "delete": "Verwijderen",
+      "delete_confirm": "Weet u zeker dat u dit adres wilt verwijderen?"
+    },
+    "log_out": "Uitloggen",
+    "login_page": {
+      "cancel": "Annuleer",
+      "create_account": "Account aanmaken",
+      "email": "E-mail",
+      "forgot_password": "Wachtwoord vergeten?",
+      "guest_continue": "Doorgaan",
+      "guest_title": "Doorgaan als gast",
+      "password": "Wachtwoord",
+      "title": "Inloggen",
+      "sign_in": "Aanmelden",
+      "submit": "Verzenden",
+      "alternate_provider_separator": "of"
+    },
+    "order": {
+      "title": "Bestel {{ name }}",
+      "date_html": "Geplaatst op {{ date }}",
+      "cancelled_html": "Bestelling geannuleerd op {{ date }}",
+      "cancelled_reason": "Reden: {{ reason }}",
+      "billing_address": "Factuuradres",
+      "payment_status": "Betalingsstatus",
+      "shipping_address": "Verzendadres",
+      "information": "Bestelinformatie",
+      "fulfillment_status": "Leveringsstatus",
+      "discount": "Korting",
+      "shipping": "Verzending",
+      "tax": "Belasting",
+      "product": "Product",
+      "sku": "Artikelnummer",
+      "price": "Prijs",
+      "quantity": "Hoeveelheid",
+      "total": "Totaal",
+      "total_refunded": "Terugbetaald",
+      "fulfilled_at_html": "Vervuld op {{ date }}",
+      "track_shipment": "Volg zending",
+      "subtotal": "Subtotaal",
+      "total_duties": "Taken"
+    },
+    "orders": {
+      "title": "Bestelgeschiedenis",
+      "order_number": "Bestelling",
+      "order_number_link": "Ordernummer {{ number }}",
+      "date": "Datum",
+      "payment_status": "Betalingsstatus",
+      "fulfillment_status": "Vervullingsstatus",
+      "total": "Totaal",
+      "none": "U heeft nog geen bestellingen geplaatst."
+    },
+    "recover_password": {
+      "title": "Stel uw wachtwoord opnieuw in",
+      "subtext": "Wij sturen u een e-mail om uw wachtwoord opnieuw in te stellen",
+      "success": "We hebben je een e-mail gestuurd met een link om je wachtwoord te wijzigen."
+    },
+    "register": {
+      "title": "Account aanmaken",
+      "first_name": "Voornaam",
+      "last_name": "Achternaam",
+      "email": "E-mail",
+      "password": "Wachtwoord",
+      "submit": "Aanmaken"
+    },
+    "reset_password": {
+      "title": "Wachtwoord opnieuw instellen",
+      "subtext": "Voer een nieuw wachtwoord in",
+      "password": "Wachtwoord",
+      "password_confirm": "Bevestig wachtwoord",
+      "submit": "Wachtwoord opnieuw instellen"
+    },
+    "messages": {
+      "error_heading": "Gelieve het volgende aan te passen:"
+    }
   }
 }
