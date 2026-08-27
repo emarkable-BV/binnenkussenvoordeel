@@ -1,0 +1,143 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "blocks": {
+    "email_signup": {
+      "placeholder": "Voer je e-mailadres in",
+      "already_subscribed": "Je bent al geabonneerd!",
+      "success": "Bedankt voor je inschrijving!"
+    },
+    "video_card": "Grafische kaart",
+    "load_video": "Video laden: {{ description }}"
+  },
+  "blogs": {
+    "all_posts": "Alle berichten",
+    "article": {
+      "title": "Titel artikel",
+      "tags": "Tags:",
+      "article_button_label": "Lees meer",
+      "related_posts_title": "Gerelateerde berichten",
+      "comments_heading": {
+        "one": "{{ count }} opmerking",
+        "other": "{{ count }} reacties"
+      },
+      "previous_post": "Vorig bericht",
+      "next_post": "Volgende post",
+      "article_date": "27 mei 2024",
+      "article_author": "Auteur"
+    },
+    "comment_form": {
+      "email": "E-mail",
+      "error": "Reactie plaatsen is mislukt, verhelp het volgende:",
+      "heading": "Laat een reactie achter",
+      "message": "Bericht",
+      "moderated": "Houd er rekening mee dat opmerkingen moeten worden goedgekeurd voordat ze worden gepubliceerd.",
+      "name": "Naam",
+      "post": "Nu indienen",
+      "success_moderated": "Reactie geplaatst, wachtend op goedkeuring",
+      "success": "Reactie geplaatst"
+    }
+  },
+  "content": {
+    "size_chart": "Maattabel",
+    "filters_sorting": "Filteren & sorteren",
+    "account_title": "Account",
+    "home": "Home",
+    "cart": "Winkelwagen",
+    "cart_estimated_total": "Geschat totaalbedrag",
+    "cart_title": "Uw winkelwagen",
+    "cart_subtotal": "Subtotaal",
+    "cart_total": "Winkelmandtotaal",
+    "checkout": "Kijk eens",
+    "collection": "Verzameling",
+    "collections": "Collecties",
+    "x_collection": "{{ name }}-verzameling",
+    "cart_empty_recommendation_description": "Weet u niet waar te beginnen? Probeer deze collecties:",
+    "discount_code": "Kortingscode",
+    "shipping_discount_error": "Verzendkortingen worden bij het afrekenen getoond nadat u een adres heeft toegevoegd",
+    "shipping_calculator": {
+      "error": "Verzendkosten kunnen niet worden berekend",
+      "notFound": "Geen verzendtarieven gevonden",
+      "oneResult": "1 verzendtarief gevonden",
+      "multipleResults": "{{ count }} verzendtarieven gevonden"
+    },
+    "free_shipping_goal": {
+      "remaining_html": "Besteed nog {{ remaining_amount }} meer om in aanmerking te komen voor gratis verzending!",
+      "congratulations_html": "U heeft zich gekwalificeerd voor GRATIS verzending!"
+    },
+    "gift_wrapping": {
+      "whole_order_label": "Voor {{ price }}, gelieve de producten in deze bestelling in te pakken.",
+      "whole_order_label_sync": "Voor {{ price }} per item, gelieve alle producten in deze bestelling in te pakken.",
+      "per_line_label": "Cadeauverpakking",
+      "message_placeholder": "Cadeaubericht (gratis en optioneel)"
+    },
+    "discount_code_error": "Kortingscode kan niet worden toegepast op uw winkelwagen",
+    "discount_code_exists": "Kortingscode reeds toegepast",
+    "discounts": "Kortingen",
+    "duties_and_taxes_included": "Inclusief invoerrechten en belastingen.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Invoerrechten en belastingen inbegrepen. Kortingen en <a href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">verzending</a> worden berekend bij het afrekenen.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Inclusief douanerechten en belastingen. Verzendkosten worden berekend bij het afrekenen.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy": "Inclusief invoerrechten en belastingen. Kortingen en verzendkosten berekend bij het afrekenen.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts": "Inclusief douanerechten en belastingen. Verzendkosten worden berekend bij het afrekenen.",
+    "duties_included": "Taken inbegrepen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Inclusief invoerrechten. Belastingen, kortingen en <a href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">verzending</a> berekend bij het afrekenen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_html": "Invoerrechten inbegrepen. Verzendkosten worden berekend bij het afrekenen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Inclusief invoerrechten. Belastingen, kortingen en verzendkosten worden berekend bij het afrekenen.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy_without_discounts": "Invoerrechten inbegrepen. Verzendkosten worden berekend bij het afrekenen.",
+    "filters": "Filters",
+    "grid_view": {
+      "default_view": "Standaard",
+      "grid_fieldset": "Kolom raster",
+      "view_as": "Bekijken als",
+      "zoom_out": "Uitzoomen"
+    },
+    "inventory_low_stock_show_count": {
+      "one": "Nog slechts {{ count }} artikel op voorraad!",
+      "other": "Slechts {{ count }} artikelen op voorraad!"
+    },
+    "inventory_low_stock": "Lage voorraad",
+    "inventory_in_stock": "Op voorraad en klaar voor verzending",
+    "inventory_out_of_stock": "Niet op voorraad",
+    "item_count": {
+      "one": "{{ count }} item",
+      "other": "{{ count }} items"
+    },
+    "shop_item_count": {
+      "one": "Winkel {{ count }} item",
+      "other": "Winkel {{ count }} artikelen"
+    },
+    "products_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} producten"
+    },
+    "filtered_products_count": {
+      "one": "{{ count }} van {{ total }} producten",
+      "other": "{{ count }} van {{ total }} producten"
+    },
+    "language": "Taal",
+    "localization_region_and_language": "Regio en taal",
+    "no_products_found": "Geen producten gevonden.",
+    "no_results_found": "Geen resultaten gevonden",
+    "pickup_available_at_html": "Ophalen mogelijk bij <b>{{ location }}</b>",
+    "pickup_available_in": "Ophalen beschikbaar, {{ pickup_time }}",
+    "pickup_not_available": "Ophalen is momenteel niet beschikbaar",
+    "powered_by": "Deze winkel zal worden aangedreven door",
+    "price": "Prijs",
+    "price_regular": "Normale prijs",
+    "price_from_html": "Vanaf {{ price }}",
+    "price_sale": "Verkoopprijs",
+    "price_filter_html": "De hoogste prijs is {{ price }}",
+    "price_each": "{{ price }}/st",
+    "product_image": "Productafbeelding",
+    "product_information": "Productinformatie",
+    "product_total": "Totaalbedrag product",
+    "placeholder_image": "Plaatsaanduiding voor afbeelding"
+  }
+}
