@@ -105,7 +105,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Binnenkussens nodig voor uw bedrijf?</p>",
+            "text": "<p>Binnenkussens nodig voor je bedrijf?</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
@@ -137,7 +137,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Selecteer uw branche</p>",
+            "text": "<p>Selecteer je branche</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
