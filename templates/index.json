@@ -285,7 +285,7 @@
               "settings": {
                 "label": "Bekijk bundels",
                 "link": "shopify://collections",
-                "style": "secondary",
+                "style": "primary",
                 "size": "large",
                 "icon": "caret-right",
                 "icon_only": false,
