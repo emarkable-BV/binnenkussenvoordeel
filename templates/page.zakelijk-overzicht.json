@@ -1985,10 +1985,10 @@
         "padding-inline-end-mobile": 16
       }
     },
-    "custom_section_hbLH6B": {
+    "custom_section_nVzcwj": {
       "type": "custom-section",
       "blocks": {
-        "group_6eEXGe": {
+        "group_kYXQPj": {
           "type": "group",
           "name": "t:names.section_header_vertical",
           "settings": {
@@ -2027,7 +2027,7 @@
             "padding-inline-end-mobile": 0
           },
           "blocks": {
-            "text_a8MAcB": {
+            "text_bFP48c": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
@@ -2059,7 +2059,7 @@
               },
               "blocks": {}
             },
-            "text_H8VKGR": {
+            "text_hJ6BcH": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
@@ -2081,8 +2081,8 @@
                 "text_alignment": "left",
                 "width_mobile": "fit-content",
                 "text_alignment_mobile": "left",
-                "padding-block-start": 8,
-                "padding-block-end": 24,
+                "padding-block-start": 24,
+                "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0,
                 "mobile-padding-scale": 83,
@@ -2090,37 +2090,14 @@
                 "animation_delay": 250
               },
               "blocks": {}
-            },
-            "contact_card_bimzGF": {
-              "type": "contact-card",
-              "name": "t:names.contact_card",
-              "settings": {
-                "heading": "Hulp nodig",
-                "image": "shopify://shop_images/contact.png",
-                "image_size": 60,
-                "card_width": 320,
-                "remove_heading_spacing": true,
-                "show_phone": false,
-                "show_email": false,
-                "show_chat_link": true,
-                "chat_label": "Start chat",
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "solid",
-                "border_width": 1,
-                "border_opacity": 10,
-                "border_radius": 12
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "text_a8MAcB",
-            "text_H8VKGR",
-            "contact_card_bimzGF"
+            "text_bFP48c",
+            "text_hJ6BcH"
           ]
         },
-        "accordion_yFcxaD": {
+        "accordion_cja66c": {
           "type": "accordion",
           "name": "t:names.accordion",
           "settings": {
@@ -2146,24 +2123,504 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "faq_accordion_rows_k98Knk": {
-              "type": "faq-accordion-rows",
+            "accordion_row_YFAjrD": {
+              "type": "_accordion-row",
               "settings": {
-                "resource": "collection",
-                "metafield": "custom.faq",
-                "open_first_row_by_default": true
+                "text": "Kan ik als zakelijke klant bij BinnenkussenVoordeel bestellen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
               },
-              "blocks": {}
+              "blocks": {
+                "text_yYhCT6": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. We leveren binnenkussens aan zowel zakelijke als particuliere klanten. Voor zakelijke bestellingen kun je eenvoudig via de webshop bestellen of een offerte aanvragen.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_yYhCT6"
+              ]
+            },
+            "accordion_row_MGpfJp": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Vanaf welk aantal kan ik een zakelijke bestelling plaatsen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_HajVKD": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Er is geen vaste minimale afname. Heb je meerdere binnenkussens nodig, dan kun je zowel losse kussens als bundels bestellen. Voor grotere aantallen kun je een offerte aanvragen.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_HajVKD"
+              ]
+            },
+            "accordion_row_HkhpCw": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik een offerte aanvragen voor mijn zakelijke bestelling?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_hyrzRr": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Geef aan hoeveel binnenkussens je nodig hebt en wat je wensen zijn. Op basis daarvan maken we graag een passende offerte.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_hyrzRr"
+              ]
+            },
+            "accordion_row_ez8E7J": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik grotere aantallen binnenkussens bestellen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_8z4L4T": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Zeker. Ook voor grotere projecten en aantallen kun je bij ons terecht. We kunnen samen kijken naar de meest geschikte oplossing voor jouw bestelling.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_8z4L4T"
+              ]
+            },
+            "accordion_row_wkpNXk": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik verschillende soorten binnenkussens combineren?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_bwMMW4": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Je kunt verschillende maten en vullingen combineren. Dit kan handig zijn wanneer je binnenkussens nodig hebt voor verschillende toepassingen of ruimtes.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_bwMMW4"
+              ]
+            },
+            "accordion_row_aDYwD7": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Zijn bundels ook interessant voor zakelijke bestellingen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_MyVHkR": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Bundels zijn een handige en voordelige keuze wanneer je meerdere dezelfde binnenkussens nodig hebt. Zo kun je in één keer een groter aantal bestellen.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_MyVHkR"
+              ]
+            },
+            "accordion_row_fWUJRa": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Is maatwerk mogelijk voor zakelijke bestellingen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_63qyaH": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Heb je binnenkussens nodig met specifieke afmetingen? Maatwerk is mogelijk. Neem contact met ons op om je wensen te bespreken.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_63qyaH"
+              ]
+            },
+            "accordion_row_ny87yG": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Voor welke zakelijke toepassingen leveren jullie binnenkussens?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_PRnEdF": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Onze binnenkussens zijn geschikt voor uiteenlopende zakelijke toepassingen, zoals hotels, horeca, vakantieverblijven, boten, interieurprojecten en andere professionele ruimtes.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_PRnEdF"
+              ]
+            },
+            "accordion_row_EzpDNH": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Hoe weet ik welke binnenkussens geschikt zijn voor mijn project?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_BhFbzd": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Dat hangt af van de toepassing, gewenste uitstraling, maat en vulling. We denken graag met je mee om de juiste binnenkussens voor jouw project te vinden.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_BhFbzd"
+              ]
+            },
+            "accordion_row_t7VmBH": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik ook maatwerk binnenkussens bestellen als ik geen bedrijf heb?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_mTAQqH": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja, maatwerk is niet alleen voor zakelijke klanten. Heb je een binnenkussen nodig met een specifieke maat? Ook als particulier kun je informeren naar de mogelijkheden. Neem contact met ons op en vertel wat je nodig hebt, dan kijken we graag met je mee.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_mTAQqH"
+              ]
             }
           },
           "block_order": [
-            "faq_accordion_rows_k98Knk"
+            "accordion_row_YFAjrD",
+            "accordion_row_MGpfJp",
+            "accordion_row_HkhpCw",
+            "accordion_row_ez8E7J",
+            "accordion_row_wkpNXk",
+            "accordion_row_aDYwD7",
+            "accordion_row_fWUJRa",
+            "accordion_row_ny87yG",
+            "accordion_row_EzpDNH",
+            "accordion_row_t7VmBH"
           ]
         }
       },
       "block_order": [
-        "group_6eEXGe",
-        "accordion_yFcxaD"
+        "group_kYXQPj",
+        "accordion_cja66c"
       ],
       "name": "t:names.faqs_preset_texts",
       "settings": {
@@ -2178,7 +2635,7 @@
         "column_gap_mobile": 30,
         "row_gap_mobile": 24,
         "use_color_scheme_in_container": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
@@ -2204,6 +2661,6 @@
     "flex_carousel_e3JcpM",
     "flex_carousel_W8tPxh",
     "custom_section_XBbXzE",
-    "custom_section_hbLH6B"
+    "custom_section_nVzcwj"
   ]
 }
