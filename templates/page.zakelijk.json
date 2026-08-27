@@ -1024,7 +1024,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Geen standaardmaten die nét niet passen. Wij verzorgen binnenkussens volledig afgestemd op uw interieur, van formaat en vorm tot vulling en stevigheid.</p>",
+                "text": "<p>Geen standaardmaten die nét niet passen. Wij verzorgen binnenkussens volledig afgestemd op jouw interieur, van formaat en vorm tot vulling en stevigheid.</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -1475,525 +1475,6 @@
         "padding-inline-end-mobile": 16
       }
     },
-    "custom_section_Lxm88h": {
-      "type": "custom-section",
-      "blocks": {
-        "group_hfMpBB": {
-          "type": "group",
-          "name": "t:names.section_header_vertical",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "column_gap": 0,
-            "row_gap": 0,
-            "enable_sticky_desktop": true,
-            "width": "custom",
-            "custom_width": 30,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "enable_swipe_on_mobile": false,
-            "swipe_custom_width_column": false,
-            "swipe_column_width": 76,
-            "columns_mobile": 2,
-            "column_gap_mobile": 0,
-            "row_gap_mobile": 0,
-            "device": "mobile",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0,
-            "padding-block-start-mobile": 0,
-            "padding-block-end-mobile": 0,
-            "padding-inline-start-mobile": 0,
-            "padding-inline-end-mobile": 0
-          },
-          "blocks": {
-            "text_QDnpAj": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<p>Veelgestelde vragen</p>",
-                "highlight_style": "none",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_weight": "",
-                "font_size": 15,
-                "font_size_mobile": 15,
-                "line_height": "normal",
-                "text_color": "text",
-                "text_color_gradient": "",
-                "disable_line_break_mobile": false,
-                "width": "fit-content",
-                "text_alignment": "left",
-                "width_mobile": "fit-content",
-                "text_alignment_mobile": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "mobile-padding-scale": 80,
-                "animation_type": "none",
-                "animation_delay": 250
-              },
-              "blocks": {}
-            },
-            "text_EqBGx4": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>Een antwoord op de meest gestelde vragen over onze binnenkussens.</p>",
-                "highlight_style": "none",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
-                "highlight_text_color": "",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_weight": "",
-                "font_size": 15,
-                "font_size_mobile": 15,
-                "line_height": "normal",
-                "text_color": "text",
-                "text_color_gradient": "",
-                "disable_line_break_mobile": false,
-                "width": "fit-content",
-                "text_alignment": "left",
-                "width_mobile": "fit-content",
-                "text_alignment_mobile": "left",
-                "padding-block-start": 24,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0,
-                "mobile-padding-scale": 83,
-                "animation_type": "none",
-                "animation_delay": 250
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_QDnpAj",
-            "text_EqBGx4"
-          ]
-        },
-        "accordion_VNYG6K": {
-          "type": "accordion",
-          "name": "t:names.accordion",
-          "settings": {
-            "open_behavior": "single",
-            "type_preset": "h4",
-            "style": "standard",
-            "card_color_scheme": "scheme-1",
-            "icon_arrow": "caret",
-            "icon_style": "solid",
-            "width": "custom",
-            "custom_width": 70,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "accordion_row_LaTpnL": {
-              "type": "_accordion-row",
-              "settings": {
-                "text": "Kan ik afwijkende maten laten maken?",
-                "open_row_by_default": false,
-                "link": "",
-                "icon": "none",
-                "icon_size": "custom-size",
-                "width": 32,
-                "width_mobile": 24
-              },
-              "blocks": {
-                "text_HwhTaM": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "subtext",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "100%",
-                    "text_alignment": "left",
-                    "width_mobile": "100%",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_HwhTaM"
-              ]
-            },
-            "accordion_row_3Efpnq": {
-              "type": "_accordion-row",
-              "settings": {
-                "text": "Kunnen jullie grote aantallen leveren?",
-                "open_row_by_default": false,
-                "link": "",
-                "icon": "none",
-                "icon_size": "custom-size",
-                "width": 32,
-                "width_mobile": 24
-              },
-              "blocks": {
-                "text_nq6H9d": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "subtext",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "100%",
-                    "text_alignment": "left",
-                    "width_mobile": "100%",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_nq6H9d"
-              ]
-            },
-            "accordion_row_ygrewB": {
-              "type": "_accordion-row",
-              "settings": {
-                "text": "Welke vullingen zijn mogelijk?",
-                "open_row_by_default": false,
-                "link": "",
-                "icon": "none",
-                "icon_size": "custom-size",
-                "width": 32,
-                "width_mobile": 24
-              },
-              "blocks": {
-                "text_UQ3Uyi": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "subtext",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "100%",
-                    "text_alignment": "left",
-                    "width_mobile": "100%",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_UQ3Uyi"
-              ]
-            },
-            "accordion_row_pbqYkt": {
-              "type": "_accordion-row",
-              "settings": {
-                "text": "Kunnen jullie adviseren over de juiste vulling?",
-                "open_row_by_default": false,
-                "link": "",
-                "icon": "none",
-                "icon_size": "custom-size",
-                "width": 32,
-                "width_mobile": 24
-              },
-              "blocks": {
-                "text_PYq4Jf": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "subtext",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "100%",
-                    "text_alignment": "left",
-                    "width_mobile": "100%",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_PYq4Jf"
-              ]
-            },
-            "accordion_row_LqqQ3q": {
-              "type": "_accordion-row",
-              "settings": {
-                "text": "Wat hebben jullie nodig voor een offerte?",
-                "open_row_by_default": false,
-                "link": "",
-                "icon": "none",
-                "icon_size": "custom-size",
-                "width": 32,
-                "width_mobile": 24
-              },
-              "blocks": {
-                "text_c7UHAA": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "subtext",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "100%",
-                    "text_alignment": "left",
-                    "width_mobile": "100%",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_c7UHAA"
-              ]
-            },
-            "accordion_row_PaAkme": {
-              "type": "_accordion-row",
-              "settings": {
-                "text": "Wat is de verwachte levertijd?",
-                "open_row_by_default": false,
-                "link": "",
-                "icon": "none",
-                "icon_size": "custom-size",
-                "width": 32,
-                "width_mobile": 24
-              },
-              "blocks": {
-                "text_93ncTM": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "subtext",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "100%",
-                    "text_alignment": "left",
-                    "width_mobile": "100%",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_93ncTM"
-              ]
-            },
-            "accordion_row_nbqqCK": {
-              "type": "_accordion-row",
-              "settings": {
-                "text": "Kunnen jullie adviseren over de juiste vulling?",
-                "open_row_by_default": false,
-                "link": "",
-                "icon": "none",
-                "icon_size": "custom-size",
-                "width": 32,
-                "width_mobile": 24
-              },
-              "blocks": {
-                "text_9WxCtz": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Hier een antwoord.</p>",
-                    "highlight_style": "none",
-                    "highlight_font_style": "italic",
-                    "highlight_shape_color": "",
-                    "highlight_text_color": "",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_weight": "",
-                    "font_size": 15,
-                    "font_size_mobile": 15,
-                    "line_height": "normal",
-                    "text_color": "subtext",
-                    "text_color_gradient": "",
-                    "disable_line_break_mobile": false,
-                    "width": "100%",
-                    "text_alignment": "left",
-                    "width_mobile": "100%",
-                    "text_alignment_mobile": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "mobile-padding-scale": 80,
-                    "animation_type": "none",
-                    "animation_delay": 250
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_9WxCtz"
-              ]
-            }
-          },
-          "block_order": [
-            "accordion_row_LaTpnL",
-            "accordion_row_3Efpnq",
-            "accordion_row_ygrewB",
-            "accordion_row_pbqYkt",
-            "accordion_row_LqqQ3q",
-            "accordion_row_PaAkme",
-            "accordion_row_nbqqCK"
-          ]
-        }
-      },
-      "block_order": [
-        "group_hfMpBB",
-        "accordion_VNYG6K"
-      ],
-      "name": "t:names.faqs_preset_texts",
-      "settings": {
-        "container": "page-width",
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "flex-start",
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "column_gap": 60,
-        "row_gap": 0,
-        "column_gap_mobile": 30,
-        "row_gap_mobile": 24,
-        "use_color_scheme_in_container": false,
-        "color_scheme": "scheme-inverse",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "device": "desktop",
-        "padding-block-start": 84,
-        "padding-block-end": 84,
-        "padding-inline-start": 50,
-        "padding-inline-end": 50,
-        "padding-block-start-mobile": 48,
-        "padding-block-end-mobile": 48,
-        "padding-inline-start-mobile": 20,
-        "padding-inline-end-mobile": 20
-      }
-    },
     "custom_section_AzBktY": {
       "type": "custom-section",
       "blocks": {
@@ -2380,6 +1861,672 @@
         "padding-inline-start-mobile": 0,
         "padding-inline-end-mobile": 0
       }
+    },
+    "custom_section_dgyiyX": {
+      "type": "custom-section",
+      "blocks": {
+        "group_36yb9t": {
+          "type": "group",
+          "name": "t:names.section_header_vertical",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "column_gap": 0,
+            "row_gap": 0,
+            "enable_sticky_desktop": true,
+            "width": "custom",
+            "custom_width": 30,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "enable_swipe_on_mobile": false,
+            "swipe_custom_width_column": false,
+            "swipe_column_width": 76,
+            "columns_mobile": 2,
+            "column_gap_mobile": 0,
+            "row_gap_mobile": 0,
+            "device": "mobile",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "padding-block-start-mobile": 0,
+            "padding-block-end-mobile": 0,
+            "padding-inline-start-mobile": 0,
+            "padding-inline-end-mobile": 0
+          },
+          "blocks": {
+            "text_6BncAV": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<p>Veelgestelde vragen</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 80,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            },
+            "text_eehyC4": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Een antwoord op de meest gestelde vragen over onze binnenkussens.</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "italic",
+                "highlight_shape_color": "",
+                "highlight_text_color": "",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "text",
+                "text_color_gradient": "",
+                "disable_line_break_mobile": false,
+                "width": "fit-content",
+                "text_alignment": "left",
+                "width_mobile": "fit-content",
+                "text_alignment_mobile": "left",
+                "padding-block-start": 24,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "mobile-padding-scale": 83,
+                "animation_type": "none",
+                "animation_delay": 250
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_6BncAV",
+            "text_eehyC4"
+          ]
+        },
+        "accordion_wKEGiR": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "open_behavior": "single",
+            "type_preset": "h4",
+            "style": "standard",
+            "card_color_scheme": "scheme-1",
+            "icon_arrow": "caret",
+            "icon_style": "solid",
+            "width": "custom",
+            "custom_width": 70,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_Nm4BdP": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik als zakelijke klant bij BinnenkussenVoordeel bestellen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_BTmzWq": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. We leveren binnenkussens aan zowel zakelijke als particuliere klanten. Voor zakelijke bestellingen kun je eenvoudig via de webshop bestellen of een offerte aanvragen.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_BTmzWq"
+              ]
+            },
+            "accordion_row_hFRkND": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Vanaf welk aantal kan ik een zakelijke bestelling plaatsen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_7i7aFr": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Er is geen vaste minimale afname. Heb je meerdere binnenkussens nodig, dan kun je zowel losse kussens als bundels bestellen. Voor grotere aantallen kun je een offerte aanvragen.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_7i7aFr"
+              ]
+            },
+            "accordion_row_MraTh9": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik een offerte aanvragen voor mijn zakelijke bestelling?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_dJh3GK": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Geef aan hoeveel binnenkussens je nodig hebt en wat je wensen zijn. Op basis daarvan maken we graag een passende offerte.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_dJh3GK"
+              ]
+            },
+            "accordion_row_8Wi9gW": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik grotere aantallen binnenkussens bestellen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_7TcmpD": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Zeker. Ook voor grotere projecten en aantallen kun je bij ons terecht. We kunnen samen kijken naar de meest geschikte oplossing voor jouw bestelling.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_7TcmpD"
+              ]
+            },
+            "accordion_row_cAQkA7": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik verschillende soorten binnenkussens combineren?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_6TFpCw": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Je kunt verschillende maten en vullingen combineren. Dit kan handig zijn wanneer je binnenkussens nodig hebt voor verschillende toepassingen of ruimtes.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_6TFpCw"
+              ]
+            },
+            "accordion_row_KDNJgh": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Zijn bundels ook interessant voor zakelijke bestellingen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_AkEW4H": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Bundels zijn een handige en voordelige keuze wanneer je meerdere dezelfde binnenkussens nodig hebt. Zo kun je in één keer een groter aantal bestellen.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_AkEW4H"
+              ]
+            },
+            "accordion_row_RmkgqG": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Is maatwerk mogelijk voor zakelijke bestellingen?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_BkhBc8": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja. Heb je binnenkussens nodig met specifieke afmetingen? Maatwerk is mogelijk. Neem contact met ons op om je wensen te bespreken.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_BkhBc8"
+              ]
+            },
+            "accordion_row_A3b4Bq": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Voor welke zakelijke toepassingen leveren jullie binnenkussens?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_9xRRAt": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Onze binnenkussens zijn geschikt voor uiteenlopende zakelijke toepassingen, zoals hotels, horeca, vakantieverblijven, boten, interieurprojecten en andere professionele ruimtes.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_9xRRAt"
+              ]
+            },
+            "accordion_row_MjjPwT": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Hoe weet ik welke binnenkussens geschikt zijn voor mijn project?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_PiHaa7": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Dat hangt af van de toepassing, gewenste uitstraling, maat en vulling. We denken graag met je mee om de juiste binnenkussens voor jouw project te vinden.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_PiHaa7"
+              ]
+            },
+            "accordion_row_tiNpQY": {
+              "type": "_accordion-row",
+              "settings": {
+                "text": "Kan ik ook maatwerk binnenkussens bestellen als ik geen bedrijf heb?",
+                "open_row_by_default": false,
+                "link": "",
+                "icon": "none",
+                "icon_size": "custom-size",
+                "width": 32,
+                "width_mobile": 24
+              },
+              "blocks": {
+                "text_dqBAUw": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Ja, maatwerk is niet alleen voor zakelijke klanten. Heb je een binnenkussen nodig met een specifieke maat? Ook als particulier kun je informeren naar de mogelijkheden. Neem contact met ons op en vertel wat je nodig hebt, dan kijken we graag met je mee.</p>",
+                    "highlight_style": "none",
+                    "highlight_font_style": "italic",
+                    "highlight_shape_color": "",
+                    "highlight_text_color": "",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_weight": "",
+                    "font_size": 15,
+                    "font_size_mobile": 15,
+                    "line_height": "normal",
+                    "text_color": "subtext",
+                    "text_color_gradient": "",
+                    "disable_line_break_mobile": false,
+                    "width": "100%",
+                    "text_alignment": "left",
+                    "width_mobile": "100%",
+                    "text_alignment_mobile": "left",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "mobile-padding-scale": 80,
+                    "animation_type": "none",
+                    "animation_delay": 250
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_dqBAUw"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_Nm4BdP",
+            "accordion_row_hFRkND",
+            "accordion_row_MraTh9",
+            "accordion_row_8Wi9gW",
+            "accordion_row_cAQkA7",
+            "accordion_row_KDNJgh",
+            "accordion_row_RmkgqG",
+            "accordion_row_A3b4Bq",
+            "accordion_row_MjjPwT",
+            "accordion_row_tiNpQY"
+          ]
+        }
+      },
+      "block_order": [
+        "group_36yb9t",
+        "accordion_wKEGiR"
+      ],
+      "name": "t:names.faqs_preset_texts",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "flex-start",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 60,
+        "row_gap": 0,
+        "column_gap_mobile": 30,
+        "row_gap_mobile": 24,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-5",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 84,
+        "padding-block-end": 84,
+        "padding-inline-start": 50,
+        "padding-inline-end": 50,
+        "padding-block-start-mobile": 48,
+        "padding-block-end-mobile": 48,
+        "padding-inline-start-mobile": 20,
+        "padding-inline-end-mobile": 20
+      }
     }
   },
   "order": [
@@ -2392,7 +2539,7 @@
     "custom_section_xezadK",
     "testimonials_RHcRJ3",
     "custom_section_DC4tiY",
-    "custom_section_Lxm88h",
-    "custom_section_AzBktY"
+    "custom_section_AzBktY",
+    "custom_section_dgyiyX"
   ]
 }

@@ -312,7 +312,7 @@
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
-        "border_radius": 20,
+        "border_radius": 0,
         "device": "desktop",
         "padding-block-start": 60,
         "padding-block-start-mobile": 40
