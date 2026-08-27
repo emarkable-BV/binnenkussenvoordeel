@@ -175,7 +175,7 @@
             "image_border_width": 1,
             "image_border_opacity": 100,
             "image_border_radius": 0,
-            "card_link": "",
+            "card_link": "shopify://collections/voordeelbundels",
             "edge_gap": "md",
             "content_direction": "column",
             "vertical_on_mobile": true,
