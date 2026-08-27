@@ -21,9 +21,9 @@
       "name": "Naam",
       "email": "E-mail",
       "phone": "Telefoon",
-      "your_message": "Uw Bericht",
+      "your_message": "Je bericht",
       "send_message": "Verstuur bericht",
-      "post_success": "Bedankt dat u contact met ons hebt opgenomen. We nemen zo snel mogelijk contact met u op.",
+      "post_success": "Bedankt dat je contact met ons hebt opgenomen. We nemen zo snel mogelijk contact met je op.",
       "error_heading": "Gelieve het volgende aan te passen:"
     }
   },
