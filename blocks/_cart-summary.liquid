@@ -17,7 +17,9 @@
     <div class="cart-summary__free-shipping-goal">
       {% render 'free-shipping-goal', section: section %}
     </div>
+    <hr class="cart-summary__divider">
   {% endif %}
+  {% render 'cart-summary', section: section, context: 'cart-page' %}
   {% if settings.show_add_discount_code or settings.show_cart_note or settings.show_caculate_shipping_rate or gift_wrap_variant != blank %}
     <accordion-component
       class="accordion cart-summary__addons flex flex-col"
@@ -101,7 +103,6 @@
       {% endif %}
     </accordion-component>
   {% endif %}
-  {% render 'cart-summary', section: section, context: 'cart-page' %}
 </div>
 
 {% schema %}

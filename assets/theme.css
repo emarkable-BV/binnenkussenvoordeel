@@ -1302,7 +1302,7 @@ table:not([class]) th {
 }
 
 .quantity-selector[data-context=cart-items] {
-  --quantity-selector-max-width: 9rem;
+  --quantity-selector-max-width: 11rem;
   --quantity-selector-height: 3.8rem;
   --quantity-selector-padding-inline: 1.2rem;
 }
@@ -3383,6 +3383,115 @@ shopify-visual-preview-block-list .product-card {
 .cart-items__vol-pricing-toggle {
   width: 2.4rem;
   height: 2.4rem;
+}
+
+.cart-items__discounts .discount {
+  color: rgb(var(--color-new-badge-text));
+  background-color: rgb(var(--color-new-badge-background));
+  border-radius: 0.2rem;
+}
+
+.cart-items__price-item-suffix {
+  margin-inline-start: -0.8rem;
+}
+
+.free-shipping-goal__congratulations,
+.free-shipping-goal__remaining-text {
+  color: rgb(var(--color-foreground));
+}
+.free-shipping-goal__highlight {
+  color: rgb(var(--color-progress-bar));
+  font-weight: 700;
+}
+
+.payment-icons__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.8rem;
+  height: 2.4rem;
+  border: 0.1rem solid rgb(0 0 0 / 7%);
+  border-radius: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground) / 70%);
+}
+
+/* Mobile/base grid: add the volume-nudge row to cart-modules.css's own
+   3-column area template. The desktop @container override further below
+   redefines this again for its own 4-column layout. */
+.cart-items .cart-items__table-row {
+  grid-template-areas: "media details price" "media quantity quantity" "giftwrap giftwrap giftwrap" "error error error" "volume-nudge volume-nudge volume-nudge";
+}
+.cart-items__volume-nudge {
+  grid-area: volume-nudge;
+}
+.cart-items__volume-nudge-bar {
+  margin-top: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.4rem;
+  background: rgb(var(--color-progress-bar) / 12%);
+  color: rgb(var(--color-progress-bar));
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Keep the remove icon next to the quantity selector on desktop too —
+   cart-modules.css's own desktop breakpoint otherwise hides that inline
+   button and shows a separate far-right "remove" column instead. Doubled
+   selector (`.cart-items .foo`) to out-specificity that stylesheet, which
+   loads later in the page than this one. */
+@container cart-items (min-width: 720px) {
+  .cart-items .cart-items__remove {
+    display: none;
+  }
+  .cart-items .cart-items__quantity .cart-items__remove-button {
+    display: flex;
+  }
+  /* Now that the "remove" column is hidden, drop it from the grid entirely
+     (down to 4 columns) rather than leaving its old "auto" track sitting
+     there unused — that leftover track was still claiming space, which is
+     why widening "details" alone wasn't visibly pushing anything over. */
+  .cart-items .cart-items__table-row {
+    grid-template-areas: "media details quantity price" "media details quantity price" "giftwrap giftwrap giftwrap giftwrap" "error error error error" "volume-nudge volume-nudge volume-nudge volume-nudge";
+    grid-template-columns: 13rem 2.2fr 1fr 1fr;
+  }
+  /* .cart-items__price-item gets justify-content: flex-end from
+     cart-modules.css, but .cart-items__price-total (the one actually
+     shown here on desktop) never did, so it stayed left-aligned. */
+  .cart-items .cart-items__price .cart-items__price-total {
+    justify-content: flex-end;
+  }
+  /* Push the quantity selector + remove icon group further right within
+     their column, with a bit more breathing room between the two. */
+  .cart-items .cart-items__quantity-wrap {
+    margin-inline-start: auto;
+    gap: 1.6rem;
+  }
+}
+
+.cart-items__price-total .price {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.cart-items__price-total .compare-at-price {
+  font-weight: 400;
+}
+
+.cart-summary__container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: var(--input-border-radius, 0.8rem);
+}
+.cart-summary__tax-note small {
+  font-size: 12px;
+  line-height: 1.2;
+}
+.cart-summary__divider {
+  border: none;
+  border-block-start: 0.1rem solid rgb(var(--color-foreground) / 15%);
+  margin: 0;
 }
 
 @media (min-width: 768px) {

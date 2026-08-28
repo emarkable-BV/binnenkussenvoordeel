@@ -80,7 +80,7 @@
     },
     "free_shipping_goal": {
       "remaining_html": "Besteed nog {{ remaining_amount }} meer om in aanmerking te komen voor gratis verzending!",
-      "congratulations_html": "Je hebt jezelf gekwalificeerd voor GRATIS verzending!"
+      "congratulations_html": "Je hebt jezelf gekwalificeerd voor <span class=\"free-shipping-goal__highlight\">GRATIS</span> verzending!"
     },
     "gift_wrapping": {
       "whole_order_label": "Voor {{ price }}, gelieve de producten in deze bestelling in te pakken.",

@@ -38,11 +38,11 @@
   --summary-font-weight: var(--font-heading--weight);
   --summary-font-size: var(--font-size--h6);
   --summary-line-height: var(--font-h6--line-height);
-  padding-inline: 2rem;
+  padding-inline: 0;
 }
 
 .cart-summary__addon .accordion__inner {
-  padding: 0 2rem 2rem;
+  padding: 0;
 }
 
 .cart-summary__addons {

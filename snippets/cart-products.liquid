@@ -56,6 +56,23 @@
               if gift_wrap_enabled and item.variant_id == gift_wrap_variant_id
                 assign is_gift_wrapping_line = true
               endif
+
+              assign volume_nudge_savings = 0
+              unless is_gift_wrapping_line
+                if item.variant.quantity_price_breaks.size > 0
+                  assign next_needed_quantity = item.quantity | plus: 1
+                  assign sorted_price_breaks = item.variant.quantity_price_breaks | sort: 'minimum_quantity'
+                  for price_break in sorted_price_breaks
+                    if price_break.minimum_quantity > item.quantity
+                      if price_break.minimum_quantity == next_needed_quantity
+                        assign savings_per_unit = item.original_price | minus: price_break.price
+                        assign volume_nudge_savings = savings_per_unit | times: price_break.minimum_quantity
+                      endif
+                      break
+                    endif
+                  endfor
+                endif
+              endunless
             %}
             {%- capture row_class -%}
               cart-items__table-row
@@ -79,14 +96,6 @@
             {% capture cart_price_item %}
               <div class="cart-items__price-item flex flex-wrap gap-x-2">
                 {% if item.original_price != item.final_price %}
-                  <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                  <span class="price text-trim-both">
-                    {% if settings.show_currency_code %}
-                      {{ item.final_price | money_with_currency }}
-                    {% else %}
-                      {{ item.final_price | money }}
-                    {% endif %}
-                  </span>
                   <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
                   <s class="compare-at-price text-trim-both">
                     {% if item.variant.compare_at_price > item.original_price %}
@@ -103,7 +112,26 @@
                       {% endif %}
                     {% endif %}
                   </s>
+                  <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
+                  <span class="price text-trim-both">
+                    {% if settings.show_currency_code %}
+                      {{ item.final_price | money_with_currency }}
+                    {% else %}
+                      {{ item.final_price | money }}
+                    {% endif %}
+                  </span>
                 {% else %}
+                  {% if item.variant.compare_at_price > item.original_price %}
+                    <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
+                    <s class="compare-at-price text-trim-both">
+                      {% if settings.show_currency_code %}
+                        {{ item.variant.compare_at_price | money_with_currency }}
+                      {% else %}
+                        {{ item.variant.compare_at_price | money }}
+                      {% endif %}
+                    </s>
+                  {% endif %}
+
                   {% if item.variant.compare_at_price > item.original_price %}
                     <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
                   {% else %}
@@ -117,18 +145,8 @@
                       {{ item.original_price | money }}
                     {% endif %}
                   </span>
-
-                  {% if item.variant.compare_at_price > item.original_price %}
-                    <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                    <s class="compare-at-price text-trim-both">
-                      {% if settings.show_currency_code %}
-                        {{ item.variant.compare_at_price | money_with_currency }}
-                      {% else %}
-                        {{ item.variant.compare_at_price | money }}
-                      {% endif %}
-                    </s>
-                  {% endif %}
                 {% endif %}
+                <span class="cart-items__price-item-suffix color-subtext text-body-sm">/per stuk</span>
                 {% if item.variant.unit_price %}
                   <div class="cart-items__price-unit color-subtext text-body-sm">
                     {% render 'unit-price',
@@ -140,16 +158,21 @@
               </div>
             {% endcapture %}
             {% capture cart_price_total %}
-              <div class="cart-items__price-total flex flex-wrap gap-x-2">
+              <div class="cart-items__price-total flex flex-col items-end gap-1">
                 {%- liquid
                   if settings.show_currency_code
                     assign price = item.final_line_price | money_with_currency
+                    assign original_price = item.original_line_price | money_with_currency
                     assign unit_price = item.unit_price | money_with_currency
                   else
                     assign price = item.final_line_price | money
+                    assign original_price = item.original_line_price | money
                     assign unit_price = item.unit_price | money
                   endif
                 -%}
+                {%- if item.original_line_price != item.final_line_price -%}
+                  <s class="compare-at-price text-trim-both">{{ original_price }}</s>
+                {%- endif -%}
                 <span class="price text-trim-both">{{ price }}</span>
                 {%- if item.unit_price_measurement -%}
                   <div class="cart-items__price-unit color-subtext text-body-sm">
@@ -174,7 +197,8 @@
                   {% endif %}
                   style="--loading-size: 1.8rem;"
                 >
-                  <span class="btn__text text-body-sm">{{ 'actions.remove' | t }}</span>
+                  {% render 'icon', icon: 'trash', size: 'small', class: 'shrink-0' %}
+                  <span class="visually-hidden">{{ 'actions.remove' | t }}</span>
                   {% render 'loading-spinner', class: 'hidden' %}
                 </a>
               {%- endunless -%}
@@ -219,6 +243,9 @@
                 headers="productInformation"
               >
                 <div class="cart-items__product-info flex gap-1 flex-col">
+                  {%- unless is_gift_wrapping_line -%}
+                    {{ cart_item_discounts }}
+                  {%- endunless -%}
                   <a
                     href="{{ item.url }}"
                     class="cart-items__title product-card__title reversed-link text-trim-start"
@@ -268,7 +295,6 @@
                   {%- endif -%}
                 </div>
                 {%- unless is_gift_wrapping_line -%}
-                  {{ cart_item_discounts }}
                   {{ cart_price_item }}
                 {%- endunless -%}
               </td>
@@ -347,8 +373,8 @@
                           </div>
                         </template>
                       {%- endif -%}
+                      {{ cart_remove_button }}
                     </div>
-                    {{ cart_remove_button }}
                   {%- endif -%}
                 </div>
               </td>
@@ -375,6 +401,18 @@
                   </span>
                 </div>
               </td>
+              {%- if volume_nudge_savings > 0 -%}
+                <td class="cart-items__volume-nudge" headers="quantity">
+                  <div class="cart-items__volume-nudge-bar">
+                    {%- if settings.show_currency_code -%}
+                      {%- assign volume_nudge_savings_money = volume_nudge_savings | money_with_currency -%}
+                    {%- else -%}
+                      {%- assign volume_nudge_savings_money = volume_nudge_savings | money -%}
+                    {%- endif -%}
+                    Nog 1 voor {{ volume_nudge_savings_money }} korting
+                  </div>
+                </td>
+              {%- endif -%}
 
               <td
                 class="cart-items__price"
