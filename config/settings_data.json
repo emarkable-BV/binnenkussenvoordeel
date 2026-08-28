@@ -93,6 +93,13 @@
     "contact_chat_link": "/pages/contact",
     "cart_item_image_ratio": "3/4",
     "content_for_index": [],
+    "blocks": {
+      "558381514691908246": {
+        "type": "shopify://apps/hulk-discounts/blocks/app-embed/25745434-52e7-4378-88f1-890df18a0110",
+        "disabled": false,
+        "settings": {}
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
