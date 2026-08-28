@@ -94,8 +94,8 @@
     "cart_item_image_ratio": "3/4",
     "content_for_index": [],
     "blocks": {
-      "558381514691908246": {
-        "type": "shopify://apps/hulk-discounts/blocks/app-embed/25745434-52e7-4378-88f1-890df18a0110",
+      "5918445685253060206": {
+        "type": "shopify://apps/bundler/blocks/bundler-script-append/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
         "disabled": false,
         "settings": {}
       }
@@ -163,7 +163,7 @@
           "sale_price": "#ea6c00",
           "primary_button_background": "#2f966c",
           "primary_button_text": "#ffffff",
-          "secondary_button_background": "#3E0C40",
+          "secondary_button_background": "#3e0c40",
           "secondary_button_text": "#ffffff",
           "secondary_button_border": "#ab85bc",
           "input_background": "#ffe9d9",
