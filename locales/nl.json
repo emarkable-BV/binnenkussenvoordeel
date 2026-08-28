@@ -79,7 +79,7 @@
       "multipleResults": "{{ count }} verzendtarieven gevonden"
     },
     "free_shipping_goal": {
-      "remaining_html": "Besteed nog {{ remaining_amount }} meer om in aanmerking te komen voor gratis verzending!",
+      "remaining_html": "Nog {{ remaining_amount }} tot gratis verzending",
       "congratulations_html": "Je hebt jezelf gekwalificeerd voor GRATIS verzending!"
     },
     "gift_wrapping": {

@@ -1,14 +1,18 @@
 /**
- * For every cart line that represents 2+ pillows (a bundle product, or a
- * loose line with quantity 2+), appends individually removable pillow icons
- * right after that line's own quantity selector — the main row itself is
- * left otherwise untouched (title, image, price all stay). Whichever real
- * lines a product family ends up split across (`cart-items.js` keeps that
- * split to the fewest lines possible) each get their own pillow icons here.
+ * For every cart line belonging to a product family (a bundle product, or
+ * a standalone product — same styling either way, even at quantity 1),
+ * replaces that line's own native quantity selector with a compact +/-
+ * stepper showing that line's own pillow count — each pack size keeps its
+ * own independent counter; different pack sizes of the same product are
+ * never added together into one number. The main row itself is left
+ * otherwise untouched (title, image, price all stay).
  *
- * Removing a pillow calls `cart-items-component#onLinePillowRemove(lineKey)`,
- * which recomposes the *whole family's* total down by one pillow into the
- * fewest lines / best bundle mix.
+ * Clicking +/- still calls
+ * `cart-items-component#onFamilyPillowAdjust(sku, delta)`, which recomposes
+ * the *whole family's* total (summed across every line belonging to it) by
+ * that delta into the fewest lines / best bundle mix — the auto-combine
+ * behaviour keeps working in the background, it just isn't reflected as one
+ * merged number in the UI.
  *
  * Must live outside `<table>` in the DOM (a custom element as a direct
  * table-parsing-context child gets foster-parented out by the HTML parser),
@@ -28,8 +32,9 @@ class CartBundleGroup extends HTMLElement {
       attributes: true,
       // "class" is included because morphSection patches row attributes back
       // to match the server-rendered HTML on every cart change, silently
-      // stripping classes we add client-side (e.g. the family-divider line)
-      // — this is what tells us to re-apply them, not just quantity changes.
+      // stripping classes we add client-side (e.g. the family-divider line,
+      // the hidden-native-selector class) — this is what tells us to
+      // re-apply them, not just quantity changes.
       attributeFilter: ["data-quantity", "class"],
     });
   }
@@ -55,17 +60,22 @@ class CartBundleGroup extends HTMLElement {
     this.#renderFamilyDividers();
 
     const qualifyingKeys = new Set(
-      rows.filter((row) => (Number(row.dataset.quantity) || 0) >= 2).map((row) => row.dataset.key)
+      rows.filter((row) => (Number(row.dataset.quantity) || 0) >= 1).map((row) => row.dataset.key)
     );
 
-    // Drop stale pillow containers for lines that no longer qualify (or are gone).
-    this.querySelectorAll("[data-bundle-group-pillows]").forEach((el) => {
-      if (!qualifyingKeys.has(el.dataset.bundleGroupPillows)) el.remove();
+    // Drop stale steppers and restore the native selector for lines that no
+    // longer qualify (or are gone).
+    this.querySelectorAll("[data-bundle-group-stepper]").forEach((el) => {
+      if (!qualifyingKeys.has(el.dataset.bundleGroupStepper)) el.remove();
+    });
+    this.querySelectorAll(".cart-bundle-group__native-qty-hidden").forEach((el) => {
+      const row = el.closest("tr[data-key]");
+      if (!row || !qualifyingKeys.has(row.dataset.key)) el.classList.remove("cart-bundle-group__native-qty-hidden");
     });
 
     for (const row of rows) {
       const pillowQty = Number(row.dataset.quantity) || 0;
-      if (pillowQty >= 2) this.#renderPillows(row, pillowQty);
+      if (pillowQty >= 1) this.#renderRowStepper(row, pillowQty);
     }
   }
 
@@ -104,12 +114,15 @@ class CartBundleGroup extends HTMLElement {
   }
 
   /**
-   * Inserts a standalone divider row above the first row of each distinct
-   * product (SKU family, or the SKU itself for a product with no bundle
-   * siblings) once it differs from the previous row's — e.g. between a group
-   * of "50x50" lines and the next group of "30x50" lines. A dedicated row
-   * (rather than a border class on the existing row) sidesteps that row's
-   * own CSS Grid layout and morphSection patching its attributes back.
+   * Inserts a standalone divider row above every row once its predecessor
+   * is known — a plain solid line between two distinct products (SKU
+   * family, or the SKU itself for a product with no bundle siblings), e.g.
+   * between a group of "50x50" lines and the next group of "30x50" lines;
+   * a lighter dashed line between two lines of the *same* family, e.g.
+   * between a "10 stuks" line and that family's own "2 stuks" line. A
+   * dedicated row (rather than a border class on the existing row)
+   * sidesteps that row's own CSS Grid layout and morphSection patching its
+   * attributes back.
    */
   #renderFamilyDividers() {
     const allRows = [...this.querySelectorAll("tr[data-key]")].filter((row) => !row.dataset.bundleGroupDivider);
@@ -117,15 +130,25 @@ class CartBundleGroup extends HTMLElement {
     let previousFamily = null;
     for (const row of allRows) {
       const family = row.dataset.bundleFamily || row.dataset.key;
-      const needsDivider = previousFamily !== null && family !== previousFamily;
+      const needsDivider = previousFamily !== null;
+      const isSameFamily = needsDivider && family === previousFamily;
       const existingDivider = row.previousElementSibling?.dataset?.bundleGroupDivider ? row.previousElementSibling : null;
 
-      if (needsDivider && !existingDivider) {
-        const divider = document.createElement("tr");
-        divider.dataset.bundleGroupDivider = "true";
-        divider.innerHTML = '<td class="cart-bundle-group__divider-cell"><hr class="cart-bundle-group__divider"></td>';
-        row.before(divider);
-      } else if (!needsDivider && existingDivider) {
+      if (needsDivider) {
+        if (!existingDivider) {
+          const divider = document.createElement("tr");
+          divider.dataset.bundleGroupDivider = "true";
+          const dividerClass = isSameFamily
+            ? "cart-bundle-group__divider cart-bundle-group__divider--same-family"
+            : "cart-bundle-group__divider";
+          divider.innerHTML = `<td class="cart-bundle-group__divider-cell"><hr class="${dividerClass}"></td>`;
+          row.before(divider);
+        } else {
+          existingDivider
+            .querySelector(".cart-bundle-group__divider")
+            ?.classList.toggle("cart-bundle-group__divider--same-family", isSameFamily);
+        }
+      } else if (existingDivider) {
         existingDivider.remove();
       }
 
@@ -135,76 +158,107 @@ class CartBundleGroup extends HTMLElement {
 
   /**
    * @param {HTMLTableRowElement} row - The real, still-visible product line.
-   * @param {number} pillowQty
+   * @param {number} pillowQty - This row's own pillow count (its box quantity times its pack size).
    */
-  #renderPillows(row, pillowQty) {
+  #renderRowStepper(row, pillowQty) {
     const lineKey = row.dataset.key;
     const quantityWrap = row.querySelector(".cart-items__quantity-wrap");
-    const quantitySelector = quantityWrap?.querySelector("quantity-selector-component");
-    if (!quantityWrap || !quantitySelector) return;
+    const nativeSelector = quantityWrap?.querySelector("quantity-selector-component");
+    if (!quantityWrap || !nativeSelector) return;
 
-    let pillows = quantityWrap.querySelector(`[data-bundle-group-pillows="${CSS.escape(lineKey)}"]`);
-    const existingPillowCount = pillows?.querySelectorAll(".cart-bundle-group__pillow").length ?? -1;
-
-    if (!pillows) {
-      pillows = document.createElement("div");
-      pillows.dataset.bundleGroupPillows = lineKey;
-      pillows.className = "cart-bundle-group__pillows";
-      pillows.setAttribute("role", "list");
-      quantitySelector.after(pillows);
-    } else if (pillows.previousElementSibling !== quantitySelector) {
-      // Keep it directly beside the quantity selector even if morphing reordered things.
-      quantitySelector.after(pillows);
+    // Guard with .contains() before .add(): per the DOM spec, classList.add()
+    // still queues an attribute mutation even when the class is already
+    // present, which — since this runs on every render pass and "class" is
+    // in our own MutationObserver's attributeFilter — created an infinite
+    // render loop (this observer fires -> re-adds the class -> new mutation
+    // queued -> observer fires again -> ...), freezing the page.
+    if (!nativeSelector.classList.contains("cart-bundle-group__native-qty-hidden")) {
+      nativeSelector.classList.add("cart-bundle-group__native-qty-hidden");
     }
 
-    if (existingPillowCount === pillowQty) return;
-
-    pillows.innerHTML = "";
-    for (let i = 0; i < pillowQty; i++) {
-      pillows.appendChild(this.#buildPillow(lineKey));
+    let stepper = quantityWrap.querySelector(`[data-bundle-group-stepper="${CSS.escape(lineKey)}"]`);
+    if (!stepper) {
+      stepper = this.#buildStepper(nativeSelector, lineKey);
+      nativeSelector.after(stepper);
+    } else if (stepper.previousElementSibling !== nativeSelector) {
+      // Keep it directly beside the native selector even if morphing reordered things.
+      nativeSelector.after(stepper);
     }
+
+    const valueEl = stepper.querySelector("[data-bundle-group-stepper-value]");
+    if (valueEl && valueEl.textContent !== String(pillowQty)) valueEl.textContent = String(pillowQty);
   }
 
   /**
+   * @param {Element} nativeSelector - The native selector this stepper replaces; its
+   *   icons are cloned (whole `.icon` span, not just the inner `<svg>`, since the
+   *   span carries the sizing/color classes the icon needs to actually be visible)
+   *   so the stepper matches the theme's icon set with no hardcoding.
    * @param {string} lineKey
    */
-  #buildPillow(lineKey) {
-    const pillow = document.createElement("button");
-    pillow.type = "button";
-    pillow.className = "cart-bundle-group__pillow button-unstyled relative";
-    pillow.setAttribute("role", "listitem");
-    pillow.setAttribute("aria-label", "Verwijder 1 kussen");
-    pillow.style.setProperty("--loading-size", "1.4rem");
-    pillow.innerHTML = `
-      <span class="cart-bundle-group__pillow-icon" aria-hidden="true"></span>
-      <span class="cart-bundle-group__pillow-remove" aria-hidden="true">
-        <svg viewBox="0 0 20 20" width="10" height="10">
-          <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        </svg>
-      </span>
-    `;
-    pillow.addEventListener("click", (event) => this.#onPillowClick(event, lineKey));
-    return pillow;
+  #buildStepper(nativeSelector, lineKey) {
+    const minusIcon = nativeSelector.querySelector(".quantity-minus .icon")?.cloneNode(true);
+    const plusIcon = nativeSelector.querySelector(".quantity-plus .icon")?.cloneNode(true);
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "cart-bundle-group__stepper-wrap inline-flex items-center";
+    wrapper.dataset.bundleGroupStepper = lineKey;
+
+    const label = document.createElement("span");
+    label.className = "cart-bundle-group__stepper-label";
+    label.textContent = "Aantal kussens:";
+
+    const stepper = document.createElement("div");
+    stepper.className = "cart-bundle-group__stepper quantity-selector relative inline-flex min-w-0";
+    stepper.dataset.context = "cart-items";
+
+    const minusButton = document.createElement("button");
+    minusButton.type = "button";
+    minusButton.className =
+      "quantity-minus quantity-button button-unstyled absolute flex items-center justify-center text-center cursor-pointer";
+    minusButton.setAttribute("aria-label", "Verwijder 1 kussen");
+    if (minusIcon) minusButton.appendChild(minusIcon);
+    minusButton.addEventListener("click", (event) => this.#onStepperClick(event, lineKey, -1));
+
+    const value = document.createElement("span");
+    value.className = "quantity-input w-full text-center min-w-0";
+    value.setAttribute("aria-live", "polite");
+    value.dataset.bundleGroupStepperValue = "";
+
+    const plusButton = document.createElement("button");
+    plusButton.type = "button";
+    plusButton.className =
+      "quantity-plus quantity-button button-unstyled absolute flex items-center justify-center text-center cursor-pointer";
+    plusButton.setAttribute("aria-label", "Voeg 1 kussen toe");
+    if (plusIcon) plusButton.appendChild(plusIcon);
+    plusButton.addEventListener("click", (event) => this.#onStepperClick(event, lineKey, 1));
+
+    stepper.append(minusButton, value, plusButton);
+    wrapper.append(label, stepper);
+    return wrapper;
   }
 
   /**
    * @param {MouseEvent} event
    * @param {string} lineKey
+   * @param {number} delta
    */
-  #onPillowClick(event, lineKey) {
+  #onStepperClick(event, lineKey, delta) {
     event.preventDefault();
-    const button = /** @type {HTMLButtonElement} */ (event.currentTarget);
-    if (button.classList.contains("btn--loading")) return;
-    button.classList.add("btn--loading");
+    const stepper = /** @type {HTMLElement} */ (event.currentTarget).closest("[data-bundle-group-stepper]");
+    if (!stepper || stepper.classList.contains("cart-bundle-group__stepper-loading")) return;
+    stepper.classList.add("cart-bundle-group__stepper-loading");
 
     const cartItemsComponent = this.closest("cart-items-component");
-    if (typeof cartItemsComponent?.onLinePillowRemove !== "function") {
-      button.classList.remove("btn--loading");
+    const sku = this.querySelector(`tr[data-key="${CSS.escape(lineKey)}"]`)?.dataset.sku;
+
+    if (typeof cartItemsComponent?.onFamilyPillowAdjust !== "function" || !sku) {
+      stepper.classList.remove("cart-bundle-group__stepper-loading");
       return;
     }
 
-    cartItemsComponent.onLinePillowRemove(lineKey).finally(() => {
-      button.classList.remove("btn--loading");
+    cartItemsComponent.onFamilyPillowAdjust(sku, delta).finally(() => {
+      stepper.classList.remove("cart-bundle-group__stepper-loading");
     });
   }
 }

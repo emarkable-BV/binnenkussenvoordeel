@@ -5494,6 +5494,20 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
   align-items: center;
   gap: 0.8rem;
 }
+.cart-items__bundle-badge {
+  align-self: flex-start;
+  padding: 0.2rem 0.6rem;
+  background: rgb(var(--color-new-badge-background));
+  color: rgb(var(--color-new-badge-text));
+}
+.cart-summary__container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: var(--input-border-radius, 0.8rem);
+}
+.cart-summary__tax-note small {
+  font-size: 12px;
+}
 .cart-bundle-toast {
   position: fixed;
   z-index: 200;
@@ -5520,44 +5534,137 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
   border-block-start: 0.1rem solid rgb(var(--color-foreground) / 15%);
   margin: 0.8rem 0 0;
 }
-.cart-bundle-group__pillows {
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 0.8rem;
+.cart-bundle-group__divider--same-family {
+  border-block-start-style: dashed;
+  border-block-start-color: rgb(var(--color-foreground) / 10%);
 }
-.cart-bundle-group__pillow {
-  position: relative;
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 0.6rem;
-  overflow: hidden;
-  background: rgb(var(--color-foreground) / 6%);
-  cursor: pointer;
-}
-.cart-bundle-group__pillow-icon {
-  position: absolute;
-  inset: 0;
-  background: rgb(var(--color-secondary-button-background) / 40%);
-}
-.cart-bundle-group__pillow-remove {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgb(var(--color-notification-error));
-  background: rgb(var(--color-background) / 85%);
-  opacity: 0;
-  transition: opacity var(--animation-duration--medium, 240ms) var(--animation-easing--smooth, ease);
-}
-@media (hover: hover) and (pointer: fine) {
-  .cart-bundle-group__pillow:hover .cart-bundle-group__pillow-remove {
-    opacity: 1;
+@container cart-items (max-width: 719.98px) {
+  .cart-bundle-group__divider-cell {
+    padding-block-start: 0;
   }
 }
-.cart-bundle-group__pillow.btn--loading .cart-bundle-group__pillow-remove {
-  opacity: 1;
+.cart-bundle-group__native-qty-hidden {
+  display: none !important;
+}
+.cart-bundle-group__stepper-label {
+  display: inline-flex;
+  align-items: center;
+  height: var(--quantity-selector-height, 3.8rem);
+  padding-inline: 1.2rem;
+  font-size: 1.3rem;
+  color: #666;
+  white-space: nowrap;
+  border: 0.1rem solid rgb(var(--color-foreground) / 10%);
+  border-inline-end: none;
+  border-start-start-radius: 4px;
+  border-end-start-radius: 4px;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  background-color: #fff;
+}
+.cart-bundle-group__stepper {
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  height: var(--quantity-selector-height, 3.8rem);
+  padding-inline: 0.4rem;
+  border: 0.1rem solid rgb(var(--color-foreground) / 10%);
+  border-radius: 4px;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  background-color: #fff;
+}
+.cart-bundle-group__stepper .quantity-input {
+  position: static;
+  flex: 1;
+  height: auto;
+  min-width: 2rem;
+  border: none;
+  background: transparent;
+  pointer-events: none;
+  font-size: 1.3rem;
+}
+.cart-bundle-group__stepper .quantity-button {
+  position: static;
+  height: auto;
+  padding: 0.6rem;
+}
+/* `cart-bundle-group` is an unregistered-by-CSS custom element, so it
+   defaults to `display: inline` — which breaks the `container-type:
+   inline-size` set on it via `.cart-items` in cart-modules.css, since size
+   containment isn't meaningful on an inline box. Without this, none of the
+   `@container cart-items (...)` breakpoints (this file's or
+   cart-modules.css's own desktop one) actually apply. */
+cart-bundle-group {
+  display: block;
+}
+/* The above fix means cart-modules.css's own `@container cart-items
+   (min-width: 720px)` desktop rule (5 columns side by side: media, details,
+   quantity, price, remove) can now actually match for the first time —
+   before, it silently never applied on any width, so the cart page always
+   rendered with the narrower stacked layout below, on desktop too. That
+   stacked look is what the store is used to, so it's restored here rather
+   than letting the "intended" 5-column layout suddenly take over. */
+@container cart-items (min-width: 720px) {
+  .cart-items .cart-items__table-row {
+    grid-template-areas:
+      "media details price"
+      "media quantity quantity"
+      "giftwrap giftwrap giftwrap"
+      "error error error";
+    grid-template-columns: 10rem 2fr 1fr;
+  }
+  .cart-items .cart-items__remove {
+    display: none;
+  }
+  .cart-items .cart-items__quantity .cart-items__remove-button {
+    display: flex;
+  }
+  .cart-items .cart-items__price .cart-items__price-item {
+    display: flex;
+  }
+  .cart-items .cart-items__details .cart-items__price-item,
+  .cart-items .cart-items__price .cart-items__price-total {
+    display: none;
+  }
+  .cart-items .cart-items__quantity {
+    margin-block-start: 1.2rem;
+  }
+  .cart-items .cart-items__remove-icon {
+    display: none;
+  }
+  .cart-items .cart-items__remove-text {
+    display: inline;
+  }
+}
+/* Icon-only remove link by default (narrow width) — the desktop rule above
+   swaps this back to text. aria-label on the link itself already carries
+   the accessible name either way. */
+.cart-items__remove-text {
+  display: none;
+}
+@container cart-items (max-width: 719.98px) {
+  /* Pull the stepper (and its label) closer to the product title on rows
+     that have one — mobile only, so desktop's quantity block stays exactly
+     where it always was. */
+  .cart-items__table-row:has(.cart-bundle-group__stepper-wrap) .cart-items__quantity {
+    margin-block-start: 0.4rem;
+  }
+  .cart-items .cart-items__quantity {
+    width: 100%;
+  }
+}
+/* Pin the mobile-inline remove icon to the far right of the quantity row,
+   regardless of flex-wrap — margin-inline-start: auto pushes a flex item to
+   the end even when justify-content: space-between alone doesn't (e.g. if
+   the row wraps). Scoped to the quantity cell's own button so the separate,
+   already-right-aligned desktop remove column is untouched. */
+.cart-items__quantity .cart-items__remove-button {
+  margin-inline-start: auto;
+}
+.cart-bundle-group__stepper-loading {
+  pointer-events: none;
+  opacity: 0.5;
 }
 /* Drawer-only cart line layout: no remove button at all, quantity selector +
    pillows left-aligned in their own row under the product image (rather
@@ -5578,19 +5685,40 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
   grid-area: quantity;
   justify-self: start;
 }
+/* Full cart page on mobile: same idea as the drawer above — the quantity
+   block (now the "Aantal kussens" stepper) moves to its own full-width row,
+   flush left under the product image, instead of starting beside it.
+   Scoped to the same container width the desktop 5-column layout kicks in
+   at, so the desktop layout stays untouched.
+   Selector is doubled up (`.cart-items .cart-items__table-row`, not just
+   `.cart-items__table-row`) to out-specificity cart-modules.css's own
+   grid-template-areas rule — that stylesheet is injected later in the page
+   than this one, so at equal specificity it would otherwise win regardless
+   of this container query. */
+@container cart-items (max-width: 719.98px) {
+  .cart-items .cart-items__table-row {
+    grid-template-areas:
+      "media details price"
+      "quantity quantity quantity"
+      "giftwrap giftwrap giftwrap"
+      "error error error";
+  }
+  .cart-items .cart-items__quantity {
+    justify-self: start;
+  }
+}
 .cart-drawer .cart-items__quantity .cart-items__remove-button {
   display: none;
 }
 .cart-bundle-group__row-loading {
   pointer-events: none;
 }
-/* Each piece of content (image, title, price, quantity+pillows) gets its
+/* Each piece of content (image, title, price, quantity stepper) gets its
    own skeleton shape + shimmer, rather than one block covering the row. */
 .cart-bundle-group__row-loading .cart-items__media,
 .cart-bundle-group__row-loading .cart-items__title,
 .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item,
-.cart-bundle-group__row-loading .cart-items__quantity-wrap,
-.cart-bundle-group__row-loading [data-bundle-group-pillows] {
+.cart-bundle-group__row-loading .cart-items__quantity-wrap {
   position: relative;
   overflow: hidden;
   border-radius: 0.6rem;
@@ -5599,20 +5727,17 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
 .cart-bundle-group__row-loading .cart-items__media *,
 .cart-bundle-group__row-loading .cart-items__title *,
 .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item *,
-.cart-bundle-group__row-loading .cart-items__quantity-wrap *,
-.cart-bundle-group__row-loading [data-bundle-group-pillows] * {
+.cart-bundle-group__row-loading .cart-items__quantity-wrap * {
   visibility: hidden;
 }
 .cart-bundle-group__row-loading .cart-items__media::before,
 .cart-bundle-group__row-loading .cart-items__title::before,
 .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::before,
 .cart-bundle-group__row-loading .cart-items__quantity-wrap::before,
-.cart-bundle-group__row-loading [data-bundle-group-pillows]::before,
 .cart-bundle-group__row-loading .cart-items__media::after,
 .cart-bundle-group__row-loading .cart-items__title::after,
 .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::after,
-.cart-bundle-group__row-loading .cart-items__quantity-wrap::after,
-.cart-bundle-group__row-loading [data-bundle-group-pillows]::after {
+.cart-bundle-group__row-loading .cart-items__quantity-wrap::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -5621,15 +5746,13 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
 .cart-bundle-group__row-loading .cart-items__media::before,
 .cart-bundle-group__row-loading .cart-items__title::before,
 .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::before,
-.cart-bundle-group__row-loading .cart-items__quantity-wrap::before,
-.cart-bundle-group__row-loading [data-bundle-group-pillows]::before {
+.cart-bundle-group__row-loading .cart-items__quantity-wrap::before {
   background: rgb(var(--color-foreground) / 8%);
 }
 .cart-bundle-group__row-loading .cart-items__media::after,
 .cart-bundle-group__row-loading .cart-items__title::after,
 .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::after,
-.cart-bundle-group__row-loading .cart-items__quantity-wrap::after,
-.cart-bundle-group__row-loading [data-bundle-group-pillows]::after {
+.cart-bundle-group__row-loading .cart-items__quantity-wrap::after {
   background: linear-gradient(100deg, transparent 30%, rgb(var(--color-background)) 50%, transparent 70%);
   background-size: 200% 100%;
   animation: cart-bundle-shimmer 1.4s ease-in-out infinite;
@@ -5654,8 +5777,7 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
   .cart-bundle-group__row-loading .cart-items__media::after,
   .cart-bundle-group__row-loading .cart-items__title::after,
   .cart-bundle-group__row-loading .cart-items__price .cart-items__price-item::after,
-  .cart-bundle-group__row-loading .cart-items__quantity-wrap::after,
-  .cart-bundle-group__row-loading [data-bundle-group-pillows]::after {
+  .cart-bundle-group__row-loading .cart-items__quantity-wrap::after {
     animation: none;
     background: none;
   }

@@ -172,6 +172,12 @@
               </div>
             {% endcapture %}
             {%- assign can_remove = item.instructions.can_remove | default: true, allow_false: true -%}
+            {%- comment -%}
+              One link, both an icon (shown at the narrow/mobile container
+              width) and text (shown at the desktop width) — toggled via CSS
+              rather than two separate captures, so it keeps working
+              regardless of which container-query breakpoint is active.
+            {%- endcomment -%}
             {% capture cart_remove_button %}
               {%- unless is_gift_wrapping_line -%}
                 <a
@@ -184,7 +190,10 @@
                   {% endif %}
                   style="--loading-size: 1.8rem;"
                 >
-                  <span class="btn__text text-body-sm">{{ 'actions.remove' | t }}</span>
+                  <span class="cart-items__remove-icon">
+                    {% render 'icon', icon: 'trash', size: 'small', class: 'shrink-0' %}
+                  </span>
+                  <span class="btn__text cart-items__remove-text text-body-sm">{{ 'actions.remove' | t }}</span>
                   {% render 'loading-spinner', class: 'hidden' %}
                 </a>
               {%- endunless -%}
@@ -197,6 +206,7 @@
               data-line="{{ item.index | plus: 1 }}"
               {% if bundle_family != blank %}
                 data-bundle-family="{{ bundle_family }}"
+                data-sku="{{ item.sku }}"
                 data-quantity="{{ bundle_pillow_quantity }}"
                 data-pack-size="{{ bundle_pack_size }}"
               {% endif %}
@@ -234,6 +244,9 @@
                 headers="productInformation"
               >
                 <div class="cart-items__product-info flex gap-1 flex-col">
+                  {%- if bundle_pack_size > 1 -%}
+                    <span class="badge cart-items__bundle-badge">Voordeelbundel</span>
+                  {%- endif -%}
                   <a
                     href="{{ item.url }}"
                     class="cart-items__title product-card__title reversed-link text-trim-start"

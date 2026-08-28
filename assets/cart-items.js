@@ -917,8 +917,8 @@ class CartItemsComponent extends Component {
    * Recomputes the ideal set of bundle/loose lines for a product family to
    * total exactly `targetQty` units, then applies the minimal diff via
    * `cart/change.js` + `cart/add.js`. Shared by the auto-combine-upward path
-   * ({@link #syncBundleSwaps}) and the manual per-pillow removal path
-   * ({@link onLinePillowRemove}).
+   * ({@link #syncBundleSwaps}) and the manual +/- stepper path
+   * ({@link onFamilyPillowAdjust}).
    *
    * @param {string} familySku - Any SKU belonging to the family (loose or an "N stuks" pack).
    * @param {number} targetQty - Desired total unit count for the family.
@@ -1015,20 +1015,22 @@ class CartItemsComponent extends Component {
   }
 
   /**
-   * Removes exactly one pillow from a product family's total (across every
-   * line belonging to it, not just the one the pillow icon was shown under),
-   * recomposing the remainder into the fewest lines / best bundle mix.
-   * Called by the pillow icons rendered by `assets/cart-bundle-group.js`.
+   * Adjusts a product family's total pillow count by `delta` (from the
+   * per-line +/- stepper rendered by `assets/cart-bundle-group.js` in place
+   * of that line's own quantity selector), recomposing the new total into
+   * the fewest lines / best bundle mix. Each pack size shows its own pillow
+   * count independently, but any pack size's stepper can trigger this — the
+   * recomposition itself still runs against the family's combined total.
    *
-   * @param {string} lineKey - The cart line's `key` (stable per-line id) the clicked pillow belonged to.
+   * @param {string} sku - Any real SKU belonging to the family.
+   * @param {number} delta - Signed pillow count change, e.g. 1 or -1.
    */
-  async onLinePillowRemove(lineKey) {
+  async onFamilyPillowAdjust(sku, delta) {
+    const family = this.#familyOf(sku);
     // Show the loading skeleton immediately, before the /cart.js round trip
     // below even starts — otherwise that first fetch's old content is still
     // visible for a moment with no loading state at all.
-    const clickedRow = this.querySelector(`tr[data-key="${CSS.escape(lineKey)}"]`);
-    const familyFromDom = clickedRow?.dataset.bundleFamily;
-    if (familyFromDom) this.#setFamilyLoading(familyFromDom, true);
+    this.#setFamilyLoading(family, true);
 
     // Force the browser to paint the loading state before the fetch below
     // starts — otherwise, when that request resolves fast enough, the class
@@ -1038,23 +1040,21 @@ class CartItemsComponent extends Component {
 
     try {
       const cart = await this.#fetchCartJson();
-      const item = cart.items.find((i) => i.key === lineKey);
-      if (!item?.sku) return;
-
-      const family = this.#familyOf(item.sku);
       let familyPillowQty = 0;
-      for (const otherItem of cart.items) {
-        if (otherItem.sku && this.#familyOf(otherItem.sku) === family) {
-          familyPillowQty += otherItem.quantity * this.#packSizeOf(otherItem.sku);
+      for (const item of cart.items) {
+        if (item.sku && this.#familyOf(item.sku) === family) {
+          familyPillowQty += item.quantity * this.#packSizeOf(item.sku);
         }
       }
-      if (familyPillowQty <= 0) return;
 
-      await this.#composeFamily(item.sku, familyPillowQty - 1, cart);
+      const targetQty = familyPillowQty + delta;
+      if (targetQty < 0) return;
+
+      await this.#composeFamily(sku, targetQty, cart);
     } finally {
       // #composeFamily's own success path already clears this (implicitly,
       // via the morph); this covers early returns above and the error path.
-      if (familyFromDom) this.#setFamilyLoading(familyFromDom, false);
+      this.#setFamilyLoading(family, false);
     }
   }
 
