@@ -93,6 +93,13 @@
     "contact_chat_link": "/pages/contact",
     "cart_item_image_ratio": "3/4",
     "content_for_index": [],
+    "blocks": {
+      "5918445685253060206": {
+        "type": "shopify://apps/bundler/blocks/bundler-script-append/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
+        "disabled": true,
+        "settings": {}
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -156,7 +163,7 @@
           "sale_price": "#ea6c00",
           "primary_button_background": "#2f966c",
           "primary_button_text": "#ffffff",
-          "secondary_button_background": "#3E0C40",
+          "secondary_button_background": "#3e0c40",
           "secondary_button_text": "#ffffff",
           "secondary_button_border": "#ab85bc",
           "input_background": "#ffe9d9",
