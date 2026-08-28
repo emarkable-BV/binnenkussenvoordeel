@@ -133,12 +133,24 @@
 -%}
 
 <media-gallery
-  class="block {{ class }}"
+  class="block {{ class }} relative"
   style="--media-gap: {{ block_settings.grid_gap | divided_by: 10.0 }}rem; --media-radius: {{ block_settings.media_radius | divided_by: 10.0 }}rem;--media-carousel-thumbs-w-desktop: {{ thumb_wrapper_w_desktop }}px; --media-carousel-thumbs-w-mobile: {{ thumb_wrapper_w_mobile }}px;"
   {% if block_settings.hide_variants %}
     data-hide-variants="true"
   {% endif %}
 >
+  {%- if block_settings.show_product_badges and selected_product != blank -%}
+    <product-badge class="product-card__badges block" data-product-id="{{ selected_product.id }}">
+      {% render 'product-badges',
+        product: selected_product,
+        use_variant: true,
+        show_custom_badges: block_settings.show_custom_badges,
+        show_soldout_badge: block_settings.show_sold_out_badge,
+        show_sale_badge: block_settings.show_sale_badge,
+        sale_badge_type: block_settings.sale_badge_type
+      %}
+    </product-badge>
+  {%- endif -%}
   <carousel-slider class="{{ carousel_class }}" ref="carousel">
     <script type="application/json" ref="config">
       {
@@ -380,6 +392,50 @@
       ],
       "default": "grid",
       "info": "t:info.media_style"
+    },
+    {
+      "type": "header",
+      "content": "Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_badges",
+      "label": "Toon productbadges (linksboven)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_custom_badges",
+      "label": "t:settings.show_custom_badges",
+      "default": true,
+      "visible_if": "{{ block.settings.show_product_badges == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sold_out_badge",
+      "label": "t:settings.show_sold_out_badge",
+      "default": true,
+      "visible_if": "{{ block.settings.show_product_badges == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "t:settings.show_sale_badge",
+      "default": true,
+      "visible_if": "{{ block.settings.show_product_badges == true }}"
+    },
+    {
+      "type": "select",
+      "id": "sale_badge_type",
+      "label": "t:settings.sale_badge_type",
+      "options": [
+        { "value": "text", "label": "t:options.text" },
+        { "value": "percentage", "label": "t:options.percentage" },
+        { "value": "fixed_amount", "label": "t:options.fixed_amount" },
+        { "value": "price_tag", "label": "t:options.price_tag" }
+      ],
+      "default": "price_tag",
+      "visible_if": "{{ block.settings.show_product_badges == true and block.settings.show_sale_badge == true }}"
     },
     {
       "type": "header",

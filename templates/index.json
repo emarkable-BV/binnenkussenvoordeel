@@ -20,7 +20,7 @@
             "gap": 20,
             "gap_mobile": 20,
             "image": "shopify://shop_images/Binnenkussens-2_02231240-0b98-4b21-9096-a44099f59d1d.jpg",
-            "image_mobile": "shopify://shop_images/Binnenkussens-2_9339510f-8377-46f1-91e4-80adbf2d1b7b.jpg",
+            "image_mobile": "shopify://shop_images/Binnenkussens-2_02231240-0b98-4b21-9096-a44099f59d1d.jpg",
             "toggle_overlay": true,
             "sync_accordion_image": false,
             "overlay_color": "rgba(0,0,0,0)",
@@ -175,7 +175,7 @@
             "image_border_width": 1,
             "image_border_opacity": 100,
             "image_border_radius": 0,
-            "card_link": "",
+            "card_link": "shopify://collections/voordeelbundels",
             "edge_gap": "md",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -754,7 +754,7 @@
           "settings": {
             "collection": "30x50-cm",
             "title": "30 x 50 cm",
-            "banner_image": "shopify://shop_images/kussen-donker.png",
+            "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
             "banner_title": ""
           }
         },
@@ -763,7 +763,7 @@
           "settings": {
             "collection": "40x40-cm",
             "title": "40 x 40 cm",
-            "banner_image": "shopify://shop_images/kussen-donker.png",
+            "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
             "banner_title": ""
           }
         },
@@ -772,7 +772,7 @@
           "settings": {
             "collection": "45x45-cm",
             "title": "45x45 cm",
-            "banner_image": "shopify://shop_images/kussen-donker.png",
+            "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
             "banner_title": ""
           }
         },
@@ -781,7 +781,7 @@
           "settings": {
             "collection": "50x50-cm",
             "title": "50x50 cm",
-            "banner_image": "shopify://shop_images/kussen-donker.png",
+            "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
             "banner_title": ""
           }
         }
@@ -3262,7 +3262,7 @@
           "static": true,
           "settings": {
             "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
-            "image_ratio": "1/1",
+            "image_ratio": "4/3",
             "image_ratio_mobile": "4/3",
             "border_radius": 20
           },
@@ -4183,7 +4183,7 @@
               "settings": {
                 "heading": "Hulp nodig?",
                 "image": "shopify://shop_images/contact.png",
-                "image_size": 60,
+                "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,
                 "show_phone": false,
@@ -4191,11 +4191,11 @@
                 "show_chat_link": true,
                 "chat_label": "Start chat",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "solid",
+                "color_scheme": "scheme-inverse",
+                "border": "none",
                 "border_width": 1,
                 "border_opacity": 10,
-                "border_radius": 12
+                "border_radius": 8
               },
               "blocks": {}
             }
@@ -4774,7 +4774,7 @@
             "font_size": 15,
             "font_size_mobile": 15,
             "line_height": "normal",
-            "text_color": "subtext",
+            "text_color": "text",
             "line_limit": "5-lines",
             "button_style": "white",
             "padding-block-start": 0,

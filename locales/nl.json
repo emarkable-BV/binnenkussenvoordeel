@@ -69,9 +69,9 @@
     "collection": "Verzameling",
     "collections": "Collecties",
     "x_collection": "{{ name }}-verzameling",
-    "cart_empty_recommendation_description": "Weet u niet waar te beginnen? Probeer deze collecties:",
+    "cart_empty_recommendation_description": "Weet je niet waar te beginnen? Probeer deze collecties:",
     "discount_code": "Kortingscode",
-    "shipping_discount_error": "Verzendkortingen worden bij het afrekenen getoond nadat u een adres heeft toegevoegd",
+    "shipping_discount_error": "Verzendkortingen worden bij het afrekenen getoond nadat je een adres hebt toegevoegd",
     "shipping_calculator": {
       "error": "Verzendkosten kunnen niet worden berekend",
       "notFound": "Geen verzendtarieven gevonden",
@@ -80,7 +80,7 @@
     },
     "free_shipping_goal": {
       "remaining_html": "Besteed nog {{ remaining_amount }} meer om in aanmerking te komen voor gratis verzending!",
-      "congratulations_html": "U heeft zich gekwalificeerd voor GRATIS verzending!"
+      "congratulations_html": "Je hebt jezelf gekwalificeerd voor GRATIS verzending!"
     },
     "gift_wrapping": {
       "whole_order_label": "Voor {{ price }}, gelieve de producten in deze bestelling in te pakken.",
@@ -88,7 +88,7 @@
       "per_line_label": "Cadeauverpakking",
       "message_placeholder": "Cadeaubericht (gratis en optioneel)"
     },
-    "discount_code_error": "Kortingscode kan niet worden toegepast op uw winkelwagen",
+    "discount_code_error": "Kortingscode kan niet worden toegepast op jouw winkelwagen",
     "discount_code_exists": "Kortingscode reeds toegepast",
     "discounts": "Kortingen",
     "duties_and_taxes_included": "Inclusief invoerrechten en belastingen.",
@@ -176,7 +176,7 @@
     "search_results_resource_queries": "Suggesties",
     "seller_note": "Speciale instructies",
     "shipping_policy": "Verzendkosten berekend bij het afrekenen.",
-    "store_owner_link_html": "Bent u de winkeleigenaar? <a class=\"link link--underline\" href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">Log hier in</a>",
+    "store_owner_link_html": "Bent je de winkeleigenaar? <a class=\"link link--underline\" href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">Log hier in</a>",
     "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Btw, kortingen en <a href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">verzending</a> worden berekend bij het afrekenen.",
     "taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_html": "Belastingen en <a href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">verzending</a> berekend bij het afrekenen.",
     "taxes_at_checkout_shipping_at_checkout_without_policy": "Belastingen, kortingen en verzendkosten worden berekend bij het afrekenen.",
@@ -191,7 +191,7 @@
     "total_items": "artikelen",
     "variant": "Variante",
     "variant_total": "Variant totaal",
-    "remove_all_items_confirmation": "Weet u zeker dat u alle {{ quantity }} artikelen uit uw winkelwagentje wilt verwijderen?",
+    "remove_all_items_confirmation": "Weet je zeker dat je alle {{ quantity }} artikelen uit je winkelwagentje wilt verwijderen?",
     "wrong_password": "Verkeerd wachtwoord",
     "recipient_form_send_to": "Verzenden naar",
     "recipient_form_email_label": "E-mailadres van de ontvanger",
@@ -204,14 +204,14 @@
     "recipient_form_fields_visible": "Velden in ontvangersformulier nu zichtbaar",
     "recipient_form_fields_hidden": "Velden in ontvangersformulier zijn nu verborgen",
     "recipient_form_error": "Er is een fout opgetreden bij het verzenden van het formulier",
-    "your_bundle": "Uw bundel",
-    "limit_message": "U kunt maximaal {{ maximum }} producten toevoegen aan de bundel.",
+    "your_bundle": "Jouw bundel",
+    "limit_message": "Je kunt maximaal {{ maximum }} producten toevoegen aan de bundel.",
     "duplicate_message": "Dit product zit al in de bundel.",
     "current_item": "Huidig item",
     "view_all": "Alles weergeven",
     "pcard_in_stock": "Direct beschikbaar",
     "pcard_out_of_stock": "Niet beschikbaar",
-    "accordion_row_link_label": "View more",
+    "accordion_row_link_label": "Bekijk meer",
     "timer": {
       "days": "dagen",
       "hours": "uren",
@@ -476,7 +476,7 @@
     "issued": {
       "how_to_use_gift_card": "Gebruik de cadeauboncode online of de QR-code in de winkel",
       "title": "Hier is het saldo van je cadeaubon ter waarde van {{ value }} voor {{ shop }}!",
-      "subtext": "Uw cadeaubon",
+      "subtext": "Jouw cadeaubon",
       "shop_link": "Bezoek webshop",
       "add_to_apple_wallet": "Toevoegen aan Apple Wallet",
       "qr_image_alt": "QR-code — scannen om cadeaukaart te verzilveren",

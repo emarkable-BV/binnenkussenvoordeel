@@ -2903,6 +2903,20 @@ button:disabled,
   padding: var(--product-card-badges-padding, 1rem);
   z-index: 1;
 }
+media-gallery {
+  --product-card-badges-padding: 2rem;
+}
+@media (max-width: 400px) {
+  media-gallery .badge--price-tag {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
+    padding: 7px 8px 5px;
+  }
+  media-gallery .badge--price-tag__now {
+    font-size: 2.3rem;
+  }
+}
 .product-card__badges--sale {
   inset-inline-start: auto;
   inset-inline-end: 0;

@@ -17,6 +17,11 @@
           "static": true,
           "settings": {
             "media_style": "carousel",
+            "show_product_badges": true,
+            "show_custom_badges": true,
+            "show_sold_out_badge": true,
+            "show_sale_badge": true,
+            "sale_badge_type": "price_tag",
             "grid_layout": "grid-with-thumbnail",
             "grid_gap": 10,
             "carousel_thumbnail": "inside",
@@ -298,7 +303,7 @@
                   "name": "t:names.group",
                   "settings": {
                     "content_direction": "row",
-                    "vertical_on_mobile": true,
+                    "vertical_on_mobile": false,
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "center",
                     "horizontal_alignment_flex_direction_column": "center",
@@ -1936,7 +1941,7 @@
         "enable_swipe_on_mobile": true,
         "swipe_custom_width_column": false,
         "swipe_column_width": 76,
-        "columns_mobile": "2",
+        "columns_mobile": "1",
         "column_gap_mobile": 8,
         "row_gap_mobile": 8,
         "color_scheme": "scheme-2",
@@ -2068,7 +2073,7 @@
               "settings": {
                 "heading": "Hulp nodig?",
                 "image": "shopify://shop_images/contact.png",
-                "image_size": 60,
+                "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,
                 "show_phone": false,
@@ -2076,11 +2081,11 @@
                 "show_chat_link": true,
                 "chat_label": "Start chat",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "solid",
+                "color_scheme": "scheme-inverse",
+                "border": "none",
                 "border_width": 1,
                 "border_opacity": 10,
-                "border_radius": 12
+                "border_radius": 8
               },
               "blocks": {}
             }

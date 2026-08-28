@@ -69,12 +69,12 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>{{ closest.collection.title }}</p>",
+                "text": "<h1>{{ closest.collection.title }}</h1>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
                 "highlight_text_color": "",
-                "type_preset": "h2",
+                "type_preset": "h1",
                 "font": "var(--font-body--family)",
                 "font_weight": "",
                 "font_size": 15,
@@ -413,11 +413,11 @@
         "border_radius": 0,
         "control_type": "none",
         "control_alignment": "end",
-        "device": "desktop",
+        "device": "mobile",
         "padding-block-start": 0,
-        "padding-block-end": 64,
-        "padding-block-start-mobile": 0,
-        "padding-block-end-mobile": 48
+        "padding-block-end": 0,
+        "padding-block-start-mobile": 40,
+        "padding-block-end-mobile": 0
       }
     },
     "main": {
@@ -438,16 +438,17 @@
         "row_gap": 30,
         "enable_filtering": true,
         "filter_type": "vertical",
+        "hide_filter_collapse_button": true,
         "enable_sorting": true,
         "enable_grid_density": false,
         "expand_filter_groups": "Materiaal",
         "column_gap_mobile": 8,
         "row_gap_mobile": 24,
         "color_scheme": "scheme-2",
-        "device": "desktop",
-        "padding-block-start": 0,
+        "device": "mobile",
+        "padding-block-start": 40,
         "padding-block-end": 64,
-        "padding-block-start-mobile": 0,
+        "padding-block-start-mobile": 40,
         "padding-block-end-mobile": 48
       }
     },
@@ -631,7 +632,7 @@
         "column_gap_mobile": 12,
         "row_gap_mobile": 12,
         "use_color_scheme_in_container": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-inverse",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
@@ -759,7 +760,7 @@
               "settings": {
                 "heading": "Hulp nodig?",
                 "image": "shopify://shop_images/contact.png",
-                "image_size": 60,
+                "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,
                 "show_phone": false,
@@ -767,11 +768,11 @@
                 "show_chat_link": true,
                 "chat_label": "Start chat",
                 "inherit_color_scheme": false,
-                "color_scheme": "scheme-1",
-                "border": "solid",
+                "color_scheme": "scheme-inverse",
+                "border": "none",
                 "border_width": 1,
                 "border_opacity": 10,
-                "border_radius": 12
+                "border_radius": 8
               },
               "blocks": {}
             }
@@ -840,7 +841,7 @@
         "column_gap_mobile": 30,
         "row_gap_mobile": 24,
         "use_color_scheme_in_container": false,
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-1",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
