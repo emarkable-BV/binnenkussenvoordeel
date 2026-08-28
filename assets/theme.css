@@ -5507,6 +5507,12 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
 }
 .cart-summary__tax-note small {
   font-size: 12px;
+  line-height: 1.2;
+}
+.cart-summary__divider {
+  border: none;
+  border-block-start: 0.1rem solid rgb(var(--color-foreground) / 15%);
+  margin: 0;
 }
 .cart-bundle-toast {
   position: fixed;
