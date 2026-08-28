@@ -62,10 +62,10 @@
     "home": "Home",
     "cart": "Winkelwagen",
     "cart_estimated_total": "Geschat totaalbedrag",
-    "cart_title": "Uw winkelwagen",
+    "cart_title": "Je winkelwagen",
     "cart_subtotal": "Subtotaal",
     "cart_total": "Winkelmandtotaal",
-    "checkout": "Kijk eens",
+    "checkout": "Doorgaan naar veilig betalen",
     "collection": "Verzameling",
     "collections": "Collecties",
     "x_collection": "{{ name }}-verzameling",
@@ -79,7 +79,7 @@
       "multipleResults": "{{ count }} verzendtarieven gevonden"
     },
     "free_shipping_goal": {
-      "remaining_html": "Besteed nog {{ remaining_amount }} meer om in aanmerking te komen voor gratis verzending!",
+      "remaining_html": "Besteed nog {{ remaining_amount }} voor gratis verzending!",
       "congratulations_html": "Je hebt jezelf gekwalificeerd voor <span class=\"free-shipping-goal__highlight\">GRATIS</span> verzending!"
     },
     "gift_wrapping": {
@@ -93,9 +93,9 @@
     "discounts": "Kortingen",
     "duties_and_taxes_included": "Inclusief invoerrechten en belastingen.",
     "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Invoerrechten en belastingen inbegrepen. Kortingen en <a href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">verzending</a> worden berekend bij het afrekenen.",
-    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Inclusief douanerechten en belastingen. Verzendkosten worden berekend bij het afrekenen.",
+    "duties_and_taxes_included_shipping_at_checkout_with_policy_without_discounts_html": "Incl. belastingen | Verzendkosten worden berekend bij het afrekenen.",
     "duties_and_taxes_included_shipping_at_checkout_without_policy": "Inclusief invoerrechten en belastingen. Kortingen en verzendkosten berekend bij het afrekenen.",
-    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts": "Inclusief douanerechten en belastingen. Verzendkosten worden berekend bij het afrekenen.",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy_without_discounts": "Incl. belastingen | Verzendkosten worden berekend bij het afrekenen.",
     "duties_included": "Taken inbegrepen.",
     "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Inclusief invoerrechten. Belastingen, kortingen en <a href=\"&lt;span%20class='notranslate'&gt;{{%20link%20}}&lt;/span&gt;\">verzending</a> berekend bij het afrekenen.",
     "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_without_discounts_html": "Invoerrechten inbegrepen. Verzendkosten worden berekend bij het afrekenen.",
