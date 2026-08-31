@@ -92,14 +92,50 @@
     "contact_email": "info@binnenkussenvoordeel.nl",
     "contact_chat_link": "/pages/contact",
     "cart_item_image_ratio": "3/4",
-    "content_for_index": [],
-    "blocks": {
-      "5918445685253060206": {
-        "type": "shopify://apps/bundler/blocks/bundler-script-append/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
-        "disabled": true,
-        "settings": {}
+    "sections": {
+      "main-password-header": {
+        "type": "main-password-header",
+        "blocks": {
+          "password-logo": {
+            "type": "_logo",
+            "static": true,
+            "settings": {
+              "type_preset": "h4",
+              "font": "var(--font-body--family)",
+              "font_weight": "",
+              "font_size": 15,
+              "font_size_mobile": 15,
+              "logo_width": 235,
+              "logo_width_mobile": 100,
+              "padding-block-start": 0,
+              "padding-block-end": 0,
+              "padding-inline-start": 0,
+              "padding-inline-end": 0,
+              "mobile-padding-scale": 80
+            },
+            "blocks": {}
+          }
+        },
+        "settings": {
+          "container": "fixed",
+          "color_scheme": "",
+          "border": "none",
+          "border_width": 1,
+          "border_opacity": 100,
+          "border_radius": 0,
+          "device": "desktop",
+          "padding-block-start": 50,
+          "padding-block-end": 50,
+          "padding-inline-start": 0,
+          "padding-inline-end": 0,
+          "padding-block-start-mobile": 48,
+          "padding-block-end-mobile": 48,
+          "padding-inline-start-mobile": 0,
+          "padding-inline-end-mobile": 0
+        }
       }
     },
+    "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
         "settings": {
