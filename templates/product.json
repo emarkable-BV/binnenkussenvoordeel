@@ -1876,11 +1876,11 @@
         "border_radius": 0,
         "device": "mobile",
         "padding-block-start": 50,
-        "padding-block-end": 50,
+        "padding-block-end": 0,
         "padding-inline-start": 15,
         "padding-inline-end": 15,
         "padding-block-start-mobile": 32,
-        "padding-block-end-mobile": 32,
+        "padding-block-end-mobile": 0,
         "padding-inline-start-mobile": 16,
         "padding-inline-end-mobile": 16
       }
