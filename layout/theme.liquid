@@ -54,6 +54,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script src="https://integrations.etrusted.com/applications/widget.js/v2" defer async></script>
 
     {{ content_for_header }}
+    {% render 'lucrative-datalayer' %}
   </head>
   <body
     {% unless settings.animations_enabled %}
