@@ -9,13 +9,13 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/logo-fullcolour.svg",
+    "logo": "shopify://shop_images/logo-fullcolour_5108fb1f-c85b-4920-9915-e1452f9b0085.svg",
     "logo_width": 225,
-    "logo_mobile": "shopify://shop_images/logo-fullcolour.svg",
+    "logo_mobile": "shopify://shop_images/logo-fullcolour_5108fb1f-c85b-4920-9915-e1452f9b0085.svg",
     "logo_width_mobile": 145,
-    "logo_menu_drawer": "shopify://shop_images/favicon.svg",
+    "logo_menu_drawer": "shopify://shop_images/Favicon_f814a9ee-629e-48d8-bd6e-86f06df5d751.svg",
     "logo_width_menu_drawer": 70,
-    "favicon": "shopify://shop_images/favicon.svg",
+    "favicon": "shopify://shop_images/Favicon_f814a9ee-629e-48d8-bd6e-86f06df5d751.svg",
     "page_width": 1440,
     "page_transitions_enabled": true,
     "animations_enabled": true,
