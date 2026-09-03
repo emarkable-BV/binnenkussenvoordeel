@@ -488,7 +488,7 @@
             "heading": "Polyester",
             "link": "shopify://collections/frontpage",
             "link_label": "Bekijken",
-            "image": "shopify://shop_images/polyester_25c54e96-15ae-48e0-a9d0-e5bc75d5a2fc.png",
+            "image": "shopify://shop_images/polyester_png.png",
             "background_color": "#ffe9d9"
           },
           "blocks": {}
@@ -499,7 +499,7 @@
             "heading": "Memory foam",
             "link": "shopify://collections/memory-foam",
             "link_label": "Bekijken",
-            "image": "shopify://shop_images/memory-foam_ea5d03fb-82ae-4116-9908-29da5491d871.png",
+            "image": "shopify://shop_images/foam.png",
             "background_color": "#ffe9d9"
           },
           "blocks": {}
@@ -510,7 +510,7 @@
             "heading": "Veer & dons",
             "link": "shopify://collections/veer-dons",
             "link_label": "Bekijken",
-            "image": "shopify://shop_images/veren-dons.png",
+            "image": "shopify://shop_images/veren_png.png",
             "background_color": "#ffe9d9"
           },
           "blocks": {}
