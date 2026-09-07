@@ -195,7 +195,7 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/b27b3e7c-8c81-4fbd-9841-05d9f9778928-2026-08-21.png",
+                "image": "shopify://shop_images/magazijn.png",
                 "image_mobile": "shopify://shop_images/b27b3e7c-8c81-4fbd-9841-05d9f9778928-2026-08-21.png",
                 "link": "",
                 "image_ratio": "16/9",
@@ -558,7 +558,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>De historie van Gek op kussens! & BinnenkussenVoordeel</h2>",
+                "text": "<h2>De historie van <br/>Gek op kussens! & BinnenkussenVoordeel</h2>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
