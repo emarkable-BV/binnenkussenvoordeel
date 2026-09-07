@@ -1329,7 +1329,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/detail.png",
+                    "image": "shopify://shop_images/voorraad.png",
                     "link": "",
                     "image_ratio": "1/1",
                     "image_ratio_mobile": "1/1",
