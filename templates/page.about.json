@@ -196,7 +196,7 @@
               "name": "t:names.image",
               "settings": {
                 "image": "shopify://shop_images/magazijn.png",
-                "image_mobile": "shopify://shop_images/b27b3e7c-8c81-4fbd-9841-05d9f9778928-2026-08-21.png",
+                "image_mobile": "shopify://shop_images/magazijn.png",
                 "link": "",
                 "image_ratio": "16/9",
                 "image_ratio_mobile": "4/3",
@@ -221,8 +221,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/c3a89d1b-c84f-4928-b38b-e848814b1095-2026-08-21.png",
-                "image_mobile": "shopify://shop_images/c3a89d1b-c84f-4928-b38b-e848814b1095-2026-08-21.png",
+                "image": "shopify://shop_images/machine.png",
+                "image_mobile": "shopify://shop_images/machine.png",
                 "link": "",
                 "image_ratio": "16/9",
                 "image_ratio_mobile": "16/9",
@@ -671,7 +671,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/pand-banner.jpg",
+                    "image": "shopify://shop_images/pand.png",
                     "link": "",
                     "image_ratio": "adapt",
                     "image_ratio_mobile": "adapt",
@@ -1116,7 +1116,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/img-7166.jpg",
+                    "image": "shopify://shop_images/pakketten.png",
                     "link": "",
                     "image_ratio": "adapt",
                     "image_ratio_mobile": "adapt",
@@ -1329,7 +1329,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/stapel_kussens_7502a2a6-172c-4ee4-87f1-93d6248a5345.png",
+                    "image": "shopify://shop_images/detail.png",
                     "link": "",
                     "image_ratio": "1/1",
                     "image_ratio_mobile": "1/1",
