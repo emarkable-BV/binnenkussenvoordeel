@@ -121,7 +121,7 @@
                 "field_type": "phone",
                 "heading": "Telefoonnummer",
                 "placeholder": "",
-                "required": true,
+                "required": false,
                 "full_width": false,
                 "checkbox_checked_value": "Yes",
                 "checkbox_uncheck_value": "No",

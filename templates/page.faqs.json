@@ -13,6 +13,7 @@
       "type": "breadcrumbs",
       "name": "t:names.breadcrumbs",
       "settings": {
+        "color_scheme": "",
         "text_align": "left",
         "text_align_mobile": "inherit",
         "device": "desktop",
@@ -1286,7 +1287,7 @@
                     "text_qBhVND": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Omdat PostNL zowel zend- als retourkosten in rekening brengt bij de webshop, ook als een pakket niet wordt opgehaald.</p>",
+                        "text": "<p>Omdat PostNL zowel verzend- als retourkosten in rekening brengt bij de webshop, ook als een pakket niet wordt opgehaald.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
