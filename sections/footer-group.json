@@ -93,7 +93,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Waar comfort en maatwerk samenkomen</p>",
+                    "text": "<p>Specialist in binnenkussens</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -195,7 +195,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Nijverheidsstraat 3, <br/>6905 DL Zevenaar</p>",
+                "text": "<p>Nijverheidsstraat 3<br/>6905 DL Zevenaar</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -227,7 +227,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Info@binnenkussenvoordeel.nl</p>",
+                "text": "<p>info@binnenkussen<br/>voordeel.nl</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
