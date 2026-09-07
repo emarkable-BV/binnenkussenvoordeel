@@ -124,7 +124,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Kwaliteit die je kunt voelen</p>",
+            "text": "<p>Goed gevuld. Goed voordelig.</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
