@@ -3447,7 +3447,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Bekijk de mogelijkheden",
-                "link": "#",
+                "link": "shopify://pages/zakelijk-overzicht",
                 "style": "primary",
                 "size": "medium",
                 "icon": "caret-right",
