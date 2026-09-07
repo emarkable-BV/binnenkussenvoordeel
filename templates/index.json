@@ -4150,7 +4150,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Een antwoord op de meest gestelde vragen over onze binnenkussens.</p>",
+                "text": "<p>Een antwoord op de meest gestelde vragen<br/>over onze binnenkussens.</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
