@@ -13,6 +13,7 @@
       "type": "breadcrumbs",
       "name": "t:names.breadcrumbs",
       "settings": {
+        "color_scheme": "",
         "text_align": "left",
         "text_align_mobile": "inherit",
         "device": "desktop",
