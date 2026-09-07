@@ -1556,7 +1556,7 @@
                     "text_xGgAJX": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>iDEAL (Nederlandse klanten), Bancontact (Belgische klanten), creditcard (Visa, Mastercard, American Express), PayPal, en Klarna (achteraf betalen). Alle betalingen verlopen via een beveiligde verbinding.</p>",
+                        "text": "<p>iDEAL | Wero (Nederlandse klanten), Bancontact (Belgische klanten), Klarna (achteraf betalen), Apple Pay en creditcard (Visa, Mastercard, American Express). Alle betalingen verlopen via een beveiligde verbinding.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
