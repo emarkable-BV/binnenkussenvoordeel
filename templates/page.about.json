@@ -558,7 +558,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>De historie van Gekopkussens & BinnenkussenVoordeel</h2>",
+                "text": "<h2>De historie van Gek op kussens! & BinnenkussenVoordeel</h2>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -800,7 +800,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Wat begon met een liefde voor kleur, textuur en gezelligheid, groeide uit tot een vrolijk merk vol karakter: Gek op Kussens! Wij zijn een klein, gepassioneerd team met één grote missie — mensen blij maken met kussens die sfeer brengen, binnen én buiten.</p>",
+                        "text": "<p>Wat begon met een liefde voor kleur, textuur en gezelligheid, groeide uit tot een vrolijk merk vol karakter: Gek op Kussens! <br/><br/>Wij zijn een klein, gepassioneerd team met één grote missie — mensen blij maken met kussens die sfeer brengen, binnen én buiten.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -832,7 +832,7 @@
                       "type": "button",
                       "name": "t:names.button",
                       "settings": {
-                        "label": "Bekijk Gek op kussens",
+                        "label": "Bekijk Gek op kussens!",
                         "link": "https://www.gekopkussens.nl/",
                         "style": "primary",
                         "size": "medium",
@@ -1245,7 +1245,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>We vinden het belangrijk dat shoppen bij ons leuk en makkelijk is. Daarom zorgen we voor snelle verzending, duidelijke info en een klantenservice die met je meedenkt. Want als jij blij bent, zijn wij dat ook. </p><p>In 2020 werd ons magazijn te klein en sinds 2021 zijn wij operationeel op onze nieuwe locatie in Zevenaar; 800m2 vol met kussens in diverse kleuren, materialen en prints.</p>",
+                        "text": "<p>We vinden het belangrijk dat shoppen bij ons leuk en makkelijk is. Daarom zorgen we voor snelle verzending, duidelijke info en een klantenservice die met je meedenkt. Want als jij blij bent, zijn wij dat ook. </p><p>Eind 2020 werd ons magazijn te klein en sinds januari 2021 zijn wij operationeel op onze nieuwe locatie in Zevenaar; 800m2 vol met kussens in diverse kleuren, materialen en prints.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1329,7 +1329,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/slider-3-mobile.jpg",
+                    "image": "shopify://shop_images/stapel_kussens_7502a2a6-172c-4ee4-87f1-93d6248a5345.png",
                     "link": "",
                     "image_ratio": "1/1",
                     "image_ratio_mobile": "1/1",
