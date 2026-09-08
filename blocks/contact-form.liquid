@@ -57,6 +57,7 @@
           type="text"
           id="ContactForm-name-{{ section.id }}"
           name="contact[{{ 'blocks.contact_form.name' | t }}]"
+          required
           value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
         >
       </div>
