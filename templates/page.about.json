@@ -800,7 +800,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Wat begon met een liefde voor kleur, textuur en gezelligheid, groeide uit tot een vrolijk merk vol karakter: Gek op Kussens! <br/><br/>Wij zijn een klein, gepassioneerd team met één grote missie — mensen blij maken met kussens die sfeer brengen, binnen én buiten.</p>",
+                        "text": "<p>Wat begon met een liefde voor kleur, textuur en gezelligheid, groeide uit tot een vrolijk merk vol karakter: <a href=\"https://www.gekopkussens.nl/\" target=\"_blank\" title=\"https://www.gekopkussens.nl/\">Gek op Kussens! </a><br/><br/>Wij zijn een klein, gepassioneerd team met één grote missie — mensen blij maken met kussens die sfeer brengen, binnen én buiten.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
