@@ -2772,7 +2772,7 @@
               "name": "t:names.contact_card",
               "settings": {
                 "heading": "Hulp nodig?",
-                "image": "shopify://shop_images/contact.png",
+                "image": "shopify://shop_images/klantenservice.png",
                 "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,
