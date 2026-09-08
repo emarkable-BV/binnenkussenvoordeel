@@ -136,7 +136,7 @@
           "type": "_footer-column",
           "name": "t:names.column",
           "settings": {
-            "width": 18,
+            "width": 13,
             "heading": "Collecties",
             "heading_size": "h5",
             "open_default": false,
@@ -160,7 +160,7 @@
           "type": "_footer-column",
           "name": "t:names.column",
           "settings": {
-            "width": 18,
+            "width": 15,
             "heading": "Klantenservice",
             "heading_size": "h5",
             "open_default": false,
@@ -184,7 +184,7 @@
           "type": "_footer-column",
           "name": "t:names.column",
           "settings": {
-            "width": 18,
+            "width": 22,
             "heading": "Hulp nodig?",
             "heading_size": "h5",
             "open_default": false,
@@ -227,7 +227,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>info@binnenkussen<br/>voordeel.nl</p>",
+                "text": "<p>info@binnenkussenvoordeel.nl</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
