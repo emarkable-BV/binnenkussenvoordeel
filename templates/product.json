@@ -875,7 +875,7 @@
                 "icon_width_mobile": 22,
                 "heading": "Persoonlijke klantenservice",
                 "heading_preset": "h6",
-                "text": "<p>Binnen 48 uur reactie</p>",
+                "text": "<p>Binnen 24 uur reactie</p>",
                 "text_color": "subtext",
                 "link": "",
                 "show_link_icon": true,
