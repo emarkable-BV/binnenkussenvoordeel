@@ -117,6 +117,7 @@
             "custom_field_L6Yt43": {
               "type": "_custom-field",
               "name": "Custom field",
+              "disabled": true,
               "settings": {
                 "field_type": "phone",
                 "heading": "Telefoonnummer",
