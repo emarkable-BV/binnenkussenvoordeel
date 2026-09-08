@@ -179,11 +179,11 @@
               "name": "t:names.contact_card",
               "settings": {
                 "heading": "",
-                "image": "shopify://shop_images/contact.png",
+                "image": "shopify://shop_images/klantenservice.png",
                 "image_size": 128,
                 "card_width": 320,
                 "remove_heading_spacing": false,
-                "show_phone": true,
+                "show_phone": false,
                 "show_email": true,
                 "show_chat_link": false,
                 "chat_label": "Start chat",
