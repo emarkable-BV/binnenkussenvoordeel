@@ -259,7 +259,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p><a href=\"tel:085-0608226\">06-59141570</a></p>",
+                "text": "<p><a href=\"https://api.whatsapp.com/send/?phone=31659141570&text&type=phone_number&app_absent=0\" target=\"_blank\">+31 (0)659141570</a></p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
