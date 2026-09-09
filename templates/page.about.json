@@ -2779,7 +2779,7 @@
                 "show_phone": false,
                 "show_email": false,
                 "show_chat_link": true,
-                "chat_label": "Start chat",
+                "chat_label": "Stel jouw vraag",
                 "inherit_color_scheme": false,
                 "color_scheme": "scheme-inverse",
                 "border": "none",
