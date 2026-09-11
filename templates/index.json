@@ -749,6 +749,24 @@
     "product_tabs_9Mxapz": {
       "type": "product-tabs",
       "blocks": {
+        "collection_eUKCxR": {
+          "type": "collection",
+          "settings": {
+            "collection": "memory-foam",
+            "title": "populair",
+            "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
+            "banner_title": ""
+          }
+        },
+        "collection_4e9MPL": {
+          "type": "collection",
+          "settings": {
+            "collection": "45x45-cm",
+            "title": "45x45 cm",
+            "banner_image": "shopify://shop_images/45x45cm-overzicht.jpg",
+            "banner_title": ""
+          }
+        },
         "collection_BaN8P9": {
           "type": "collection",
           "settings": {
@@ -767,15 +785,6 @@
             "banner_title": ""
           }
         },
-        "collection_4e9MPL": {
-          "type": "collection",
-          "settings": {
-            "collection": "45x45-cm",
-            "title": "45x45 cm",
-            "banner_image": "shopify://shop_images/45x45cm-overzicht.jpg",
-            "banner_title": ""
-          }
-        },
         "collection_HhQDtR": {
           "type": "collection",
           "settings": {
@@ -787,9 +796,10 @@
         }
       },
       "block_order": [
+        "collection_eUKCxR",
+        "collection_4e9MPL",
         "collection_BaN8P9",
         "collection_pkpz4P",
-        "collection_4e9MPL",
         "collection_HhQDtR"
       ],
       "name": "t:names.product_tab_carousel",
@@ -3177,8 +3187,8 @@
             "color_scheme": "",
             "offset_top": 64,
             "offset_left": 65,
-            "offset_top_mobile": 62,
-            "offset_left_mobile": 42
+            "offset_top_mobile": 53,
+            "offset_left_mobile": 77
           },
           "blocks": {}
         },
