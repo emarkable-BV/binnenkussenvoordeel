@@ -84,9 +84,12 @@
                 <ul class="discounts cart-items__discounts list-unstyled flex flex-wrap items-center gap-2">
                   {%- for discount in item.line_level_discount_allocations -%}
                     <li class="discount inline-flex flex-nowrap items-center gap-1 relative">
-                      {% render 'icon', icon: 'tag', size: 'extra-small', class: 'shrink-0' %}
                       <span class="discount__code text-limit-1-line">
-                        {{- discount.discount_application.title | escape -}}
+                        {%- if discount.discount_application.title contains 'per stuk' -%}
+                          Bundelvoordeel
+                        {%- else -%}
+                          {{- discount.discount_application.title | escape -}}
+                        {%- endif -%}
                       </span>
                     </li>
                   {%- endfor -%}
