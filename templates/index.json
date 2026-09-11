@@ -753,7 +753,7 @@
           "type": "collection",
           "settings": {
             "collection": "voordeelbundels",
-            "title": "populair",
+            "title": "Meest verkocht",
             "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
             "banner_title": ""
           }
