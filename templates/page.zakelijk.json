@@ -109,7 +109,7 @@
             "horizontal_alignment_flex_direction_column": "flex-start",
             "position": "middle-left",
             "width": "custom",
-            "custom_width": 48,
+            "custom_width": 100,
             "horizontal_alignment_flex_direction_column_mobile": "flex-start",
             "position_mobile": "middle",
             "inherit_color_scheme": true,
