@@ -241,7 +241,7 @@
               "type": "button",
               "settings": {
                 "label": "Vraag direct een offerte aan",
-                "link": "shopify://collections/all",
+                "link": "#shopify-section-template--29510992462157__custom_section_emPUqw",
                 "style": "primary",
                 "size": "large",
                 "icon": "caret-down",
