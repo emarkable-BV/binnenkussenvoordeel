@@ -7,6 +7,7 @@
   icon_style: block.settings.icon_style,
   icon_only: block.settings.icon_only,
   mobile_full_width: block.settings.mobile_full_width,
+  open_in_new_tab: block.settings.open_in_new_tab,
   block: block
 %}
 {% schema %}
@@ -23,6 +24,13 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open link in nieuw tabblad",
+      "default": false,
+      "visible_if": "{{ block.settings.link != blank }}"
     },
     {
       "type": "select",

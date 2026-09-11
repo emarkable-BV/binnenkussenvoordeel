@@ -834,6 +834,7 @@
                       "settings": {
                         "label": "Bekijk Gek op kussens!",
                         "link": "https://www.gekopkussens.nl/",
+                        "open_in_new_tab": true,
                         "style": "primary",
                         "size": "medium",
                         "icon": "caret-right",

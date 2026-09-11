@@ -747,6 +747,7 @@
               "settings": {
                 "label": "Kussenhoezen bijbestellen?",
                 "link": "https://www.gekopkussens.nl/",
+                "open_in_new_tab": true,
                 "style": "plain",
                 "size": "medium",
                 "icon": "caret-right",
