@@ -832,7 +832,7 @@
                       "type": "button",
                       "name": "t:names.button",
                       "settings": {
-                        "label": "Bekijk Gek op kussens!",
+                        "label": "<a href=\"https://www.gekopkussens.nl\" target=\"_blank\">Bekijk Gek op kussens!</a>",
                         "link": "https://www.gekopkussens.nl/",
                         "style": "primary",
                         "size": "medium",
