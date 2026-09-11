@@ -85,10 +85,10 @@
                   {%- for discount in item.line_level_discount_allocations -%}
                     <li class="discount inline-flex flex-nowrap items-center gap-1 relative">
                       <span class="discount__code text-limit-1-line">
-                        {%- if discount.discount_application.title contains 'per stuk' -%}
-                          Bundelvoordeel
-                        {%- else -%}
+                        {%- if discount.discount_application.title == 'Welkomscadeau' -%}
                           {{- discount.discount_application.title | escape -}}
+                        {%- else -%}
+                          Bundelvoordeel
                         {%- endif -%}
                       </span>
                     </li>
