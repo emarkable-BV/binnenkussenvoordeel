@@ -15,6 +15,7 @@
   @param {string} [content_after] - HTML string that insert before close tag button
   @param {block} [block] - Shopify block
   @param {string} [extra_class] - Extra CSS class(es) to append to the button
+  @param {boolean} [open_in_new_tab] - Open the link in a new browser tab
 {% enddoc %}
 {%- unless label == blank and icon == 'none' -%}
   {%- liquid
@@ -71,6 +72,10 @@
           aria-disabled="true"
         {% else %}
           href="{{ link }}"
+          {% if open_in_new_tab %}
+            target="_blank"
+            rel="noopener"
+          {% endif %}
         {% endif %}
       {% endif %}
       {% if attributes %}

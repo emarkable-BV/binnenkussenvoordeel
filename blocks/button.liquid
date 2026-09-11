@@ -9,7 +9,8 @@
   mobile_full_width: block.settings.mobile_full_width,
   animation_type: block.settings.animation_type,
   animation_delay: block.settings.animation_delay,
-  extra_class: block.settings.custom_class
+  extra_class: block.settings.custom_class,
+  open_in_new_tab: block.settings.open_in_new_tab
 %}
 {% schema %}
 {
@@ -26,6 +27,13 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open link in nieuw tabblad",
+      "default": false,
+      "visible_if": "{{ block.settings.link != blank }}"
     },
     {
       "type": "select",
