@@ -561,7 +561,7 @@
                     "text_q8HLtQ": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Dat hangt van de vulling af:</p><ul><li><strong>Polyester:</strong> niet wassen, bleken of strijken, wel drogen op lage temperatuur.</li><li><strong>Dons/veren:</strong> niet wassen, bleken of strijken.</li><li><strong>Memory foam:</strong> niet wassen, regelmatig luchten volstaat.</li></ul><p>Schud je binnenkussen af en toe op, dat houdt de vulling luchtig en verlengt de levensduur.</p>",
+                        "text": "<p>Dat hangt van de vulling af:</p><ul><li><strong>Polyester:</strong> niet wassen, bleken of strijken, wel drogen op lage temperatuur.</li><li><strong>Dons/veren:</strong> niet wassen, bleken of strijken.</li><li><strong>Memory foam:</strong> niet wassen, regelmatig luchten volstaat.</li></ul><p>Schud je binnenkussen af en toe op, gebruik onze textielsspray, dat houdt de vulling luchtig en verlengt de levensduur.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1239,7 +1239,7 @@
                     "text_yXzKhC": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Ja, ondanks gratis verzending bij de eerste zending worden bij niet-ophalen alsnog de verzendkosten van de heenzending én de retourkosten van PostNL in rekening gebracht, deze worden verrekend met het terug te betalen bedrag. Opnieuw laten versturen kan, de kosten daarvoor zijn dan voor de klant.</p>",
+                        "text": "<p>Ja, ondanks gratis verzending bij de eerste zending worden bij niet-ophalen alsnog de verzendkosten van de heenzending van PostNL in rekening gebracht, deze worden verrekend met het terug te betalen bedrag. Opnieuw laten versturen kan, de kosten daarvoor zijn dan voor de klant.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1335,7 +1335,7 @@
                     "text_TPh9JP": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België en Duitsland: levering binnen 1-3 werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
+                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België: levering binnen 24 uur op werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1367,54 +1367,6 @@
                   "block_order": [
                     "text_TPh9JP"
                   ]
-                },
-                "accordion_row_BX43NR": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "text": "Wanneer wordt mijn bestelling bezorgd?",
-                    "open_row_by_default": false,
-                    "link": "",
-                    "icon": "none",
-                    "icon_size": "extra-large",
-                    "width": 24,
-                    "width_mobile": 24
-                  },
-                  "blocks": {
-                    "text_QcDMrC": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België en Duitsland: levering binnen 1-3 werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
-                        "highlight_style": "none",
-                        "highlight_font_style": "italic",
-                        "highlight_shape_color": "",
-                        "highlight_text_color": "",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_weight": "",
-                        "font_size": 15,
-                        "font_size_mobile": 15,
-                        "line_height": "normal",
-                        "text_color": "subtext",
-                        "text_color_gradient": "",
-                        "disable_line_break_mobile": false,
-                        "width": "fit-content",
-                        "text_alignment": "left",
-                        "width_mobile": "fit-content",
-                        "text_alignment_mobile": "left",
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0,
-                        "mobile-padding-scale": 80,
-                        "animation_type": "none",
-                        "animation_delay": 250
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_QcDMrC"
-                  ]
                 }
               },
               "block_order": [
@@ -1423,8 +1375,7 @@
                 "accordion_row_PRBh8E",
                 "accordion_row_NxYdNE",
                 "accordion_row_MMTDpJ",
-                "accordion_row_XCqh4K",
-                "accordion_row_BX43NR"
+                "accordion_row_XCqh4K"
               ]
             }
           },
@@ -2052,7 +2003,7 @@
                 "accordion_row_4GfRdn": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Wanneer kan ik een offerte aanvragen?",
+                    "text": "Waar en wanneer kan ik een offerte aanvragen?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
@@ -2064,7 +2015,7 @@
                     "text_AnJPy3": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Bij een grote oplage kussenhoezen of binnenkussens is een offerte op te vragen bij de klantenservice.</p>",
+                        "text": "<p>Bij een grote oplage binnenkussens is een offerte op te vragen via onze zakelijke pagina.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
