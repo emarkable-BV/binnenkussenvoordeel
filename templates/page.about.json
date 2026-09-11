@@ -3027,6 +3027,7 @@
         "group_hfMpBB",
         "accordion_VNYG6K"
       ],
+      "disabled": true,
       "name": "t:names.faqs_preset_texts",
       "settings": {
         "container": "page-width",
