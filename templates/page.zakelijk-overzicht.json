@@ -331,7 +331,7 @@
               "static": true,
               "settings": {
                 "label": "Offerte aanvragen",
-                "link": "shopify://pages/zakelijk",
+                "link": "shopify://pages/hotels",
                 "style": "primary",
                 "size": "medium",
                 "icon": "caret-right",
@@ -475,7 +475,7 @@
               "static": true,
               "settings": {
                 "label": "Offerte aanvragen",
-                "link": "shopify://pages/zakelijk",
+                "link": "shopify://pages/boten",
                 "style": "primary",
                 "size": "medium",
                 "icon": "caret-right",
@@ -619,7 +619,7 @@
               "static": true,
               "settings": {
                 "label": "Offerte aanvragen",
-                "link": "shopify://pages/zakelijk",
+                "link": "shopify://pages/horeca",
                 "style": "primary",
                 "size": "medium",
                 "icon": "caret-right",
