@@ -3423,6 +3423,13 @@ shopify-visual-preview-block-list .product-card {
 .cart-items .cart-items__table-row {
   grid-template-areas: "media details price" "media quantity quantity" "giftwrap giftwrap giftwrap" "error error error" "volume-nudge volume-nudge volume-nudge";
 }
+.cart-items__table-row--gift {
+  border: 0.15rem dashed rgb(var(--color-foreground) / 30%);
+  border-radius: 0.8rem;
+  padding: 1.2rem;
+  padding-inline-end: 2rem;
+}
+
 .cart-items__volume-nudge {
   grid-area: volume-nudge;
 }
@@ -3449,6 +3456,9 @@ shopify-visual-preview-block-list .product-card {
   .cart-items .cart-items__quantity .cart-items__remove-button {
     display: flex;
   }
+  .cart-items .cart-items__remove-button--gift .cart-items__remove-button-text {
+    display: inline;
+  }
   /* Now that the "remove" column is hidden, drop it from the grid entirely
      (down to 4 columns) rather than leaving its old "auto" track sitting
      there unused — that leftover track was still claiming space, which is
@@ -3469,6 +3479,10 @@ shopify-visual-preview-block-list .product-card {
     margin-inline-start: auto;
     gap: 1.6rem;
   }
+}
+
+.cart-items__remove-button-text {
+  display: none;
 }
 
 .cart-items__price-total .price {

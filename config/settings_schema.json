@@ -1744,6 +1744,23 @@
         "info": "t:info.gift_wrap_sync_quantity",
         "default": true,
         "visible_if": "{{ settings.gift_wrap_product != blank }}"
+      },
+      {
+        "type": "header",
+        "content": "Gratis cadeau"
+      },
+      {
+        "type": "product",
+        "id": "cart_gift_product",
+        "label": "Cadeauproduct",
+        "info": "Voor dit product wordt geen aantal-selector getoond in de winkelwagen en de drawer, en de verwijderknop krijgt het label \"Verwijderen\"."
+      },
+      {
+        "type": "text",
+        "id": "cart_gift_minimum_amount",
+        "label": "Minimale orderwaarde voor cadeau",
+        "info": "Bedrag in hele euro's, bijvoorbeeld 35. Moet gelijk zijn aan de drempel van je Shopify-korting die dit product gratis maakt, anders wordt het product toegevoegd maar niet gratis.",
+        "visible_if": "{{ settings.cart_gift_product != blank }}"
       }
     ]
   },

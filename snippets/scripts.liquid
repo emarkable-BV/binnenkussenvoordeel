@@ -87,6 +87,9 @@
 {% if settings.gift_wrap_product != blank %}
   <script src="{{ 'gift-wrapping.js' | asset_url }}" type="module" fetchpriority="low"></script>
 {% endif %}
+{% if settings.cart_gift_product != blank %}
+  <script src="{{ 'cart-gift.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
 {% if settings.show_add_discount_code %}
   <script src="{{ 'cart-discount.js' | asset_url }}" type="module" fetchpriority="low"></script>
 {% endif %}

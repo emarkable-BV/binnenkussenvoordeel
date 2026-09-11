@@ -86,6 +86,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </main>
     {% sections 'footer-group' %}
     {% sections 'overlay-group' %}
+    {%- if settings.cart_gift_product != blank and settings.cart_gift_minimum_amount != blank -%}
+      <cart-gift-component
+        data-gift-variant-id="{{ settings.cart_gift_product.selected_or_first_available_variant.id }}"
+        data-minimum-amount-cents="{{ settings.cart_gift_minimum_amount | times: 100 }}"
+      ></cart-gift-component>
+    {%- endif -%}
     {%- if settings.enable_back_to_top_button -%}
       {% render 'back-to-top-button' %}
     {%- endif -%}

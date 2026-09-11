@@ -118,6 +118,13 @@ ul:empty {
 
 .cart-items__price {
   grid-area: price;
+  min-width: 0;
+}
+
+.cart-items__discounts,
+.cart-items__discounts .discount,
+.cart-items__discounts .discount__code {
+  min-width: 0;
 }
 
 .cart-items__price .cart-items__price-total {

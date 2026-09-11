@@ -72,6 +72,8 @@
     "cart_thumbnail_ratio": "1/1",
     "cart_thumbnail_border_radius": 9,
     "free_shipping_goal_amount": "100",
+    "cart_gift_product": "textielverfrisser-300-ml",
+    "cart_gift_minimum_amount": "35",
     "cart_empty_recommendation_style": "standard",
     "cart_empty_recommendation_collection_thumbnail_border_radius": 9,
     "cart_empty_recommendation_color_scheme": "scheme-1",
