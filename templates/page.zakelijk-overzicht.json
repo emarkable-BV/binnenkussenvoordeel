@@ -245,7 +245,7 @@
             "border_opacity": 100,
             "border_radius": 0,
             "card_label": "Hotels",
-            "card_label_text_color": "#ffffff",
+            "card_label_text_color": "#FFFFFF",
             "card_label_in_content": false,
             "enable_preload_image": false
           },
