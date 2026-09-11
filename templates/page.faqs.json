@@ -561,7 +561,7 @@
                     "text_q8HLtQ": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Dat hangt van de vulling af:</p><ul><li><strong>Polyester:</strong> niet wassen, bleken of strijken, wel drogen op lage temperatuur.</li><li><strong>Dons/veren:</strong> niet wassen, bleken of strijken.</li><li><strong>Memory foam:</strong> niet wassen, regelmatig luchten volstaat.</li></ul><p>Schud je binnenkussen af en toe op, gebruik bijvoorbeeld onze textielsspray, dat houdt de vulling luchtig en verlengt de levensduur.</p>",
+                        "text": "<p>Dat hangt van de vulling af:</p><ul><li><strong>Polyester:</strong> niet wassen, bleken of strijken, wel drogen op lage temperatuur.</li><li><strong>Dons/veren:</strong> niet wassen, bleken of strijken.</li><li><strong>Memory foam:</strong> niet wassen, regelmatig luchten volstaat.</li></ul><p>Schud je binnenkussen af en toe op, gebruik onze textielsspray, dat houdt de vulling luchtig en verlengt de levensduur.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -2003,7 +2003,7 @@
                 "accordion_row_4GfRdn": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Wanneer kan ik een offerte aanvragen?",
+                    "text": "Waar en wanneer kan ik een offerte aanvragen?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
@@ -2015,7 +2015,7 @@
                     "text_AnJPy3": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Bij een grote oplage kussenhoezen of binnenkussens is een offerte op te vragen bij de klantenservice.</p>",
+                        "text": "<p>Bij een grote oplage binnenkussens is een offerte op te vragen via onze zakelijke pagina.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
