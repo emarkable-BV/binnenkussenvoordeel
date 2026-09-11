@@ -59,7 +59,7 @@
     "pcard_show_swatches": false,
     "pcard_swatch_shape": "square",
     "pcard_show_quick_add": true,
-    "pcard_quick_add_color_scheme": "scheme-inverse",
+    "pcard_quick_add_color_scheme": "scheme-2",
     "pcard_show_quick_view": false,
     "pcard_show_quick_view_mobile": false,
     "collection_card_aspect_ratio": "1/1",
