@@ -1,7 +1,25 @@
+{%- doc -%}
+  @param {number} [limit] - max number of payment icons to show; remaining
+    count shown as a "+N" tile. Omit to show all (unchanged default).
+{%- enddoc -%}
+{%- liquid
+  assign payment_types = shop.enabled_payment_types
+  assign shown_types = payment_types
+  assign hidden_count = 0
+  if limit and payment_types.size > limit
+    assign shown_types = payment_types | slice: 0, limit
+    assign hidden_count = payment_types.size | minus: limit
+  endif
+-%}
 <ul class="list-unstyled flex items-center gap-2" aria-label="{{ 'content.payment_methods' | t }}">
-  {%- for type in shop.enabled_payment_types -%}
+  {%- for type in shown_types -%}
     <li>
       {{ type | payment_type_svg_tag }}
     </li>
   {%- endfor -%}
+  {%- if hidden_count > 0 -%}
+    <li>
+      <span class="payment-icons__more">+{{ hidden_count }}</span>
+    </li>
+  {%- endif -%}
 </ul>

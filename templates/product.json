@@ -875,7 +875,7 @@
                 "icon_width_mobile": 22,
                 "heading": "Persoonlijke klantenservice",
                 "heading_preset": "h6",
-                "text": "<p>Binnen 48 uur reactie</p>",
+                "text": "<p>Binnen 24 uur reactie</p>",
                 "text_color": "subtext",
                 "link": "",
                 "show_link_icon": true,
@@ -1876,11 +1876,11 @@
         "border_radius": 0,
         "device": "mobile",
         "padding-block-start": 50,
-        "padding-block-end": 50,
+        "padding-block-end": 0,
         "padding-inline-start": 15,
         "padding-inline-end": 15,
         "padding-block-start-mobile": 32,
-        "padding-block-end-mobile": 32,
+        "padding-block-end-mobile": 0,
         "padding-inline-start-mobile": 16,
         "padding-inline-end-mobile": 16
       }
@@ -2072,7 +2072,7 @@
               "name": "t:names.contact_card",
               "settings": {
                 "heading": "Hulp nodig?",
-                "image": "shopify://shop_images/contact.png",
+                "image": "shopify://shop_images/klantenservice.png",
                 "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,

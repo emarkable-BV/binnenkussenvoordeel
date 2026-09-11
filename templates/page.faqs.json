@@ -13,6 +13,7 @@
       "type": "breadcrumbs",
       "name": "t:names.breadcrumbs",
       "settings": {
+        "color_scheme": "",
         "text_align": "left",
         "text_align_mobile": "inherit",
         "device": "desktop",
@@ -131,7 +132,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Bij BinnenkussenVoordeel draait alles om één ding: het perfecte binnenkussen. Of je nu twijfelt tussen polyester, dons of memory foam, wilt weten welke maat het beste past, of een vraag hebt over je bestelling, hieronder vind je de antwoorden. Staat je vraag er niet tussen? Neem gerust contact met ons op, we denken graag met je mee.</p>",
+                    "text": "<p>Bij BinnenkussenVoordeel draait alles om één ding: het perfecte binnenkussen. Of je nu twijfelt tussen polyester, dons of memory foam, wilt weten welke maat het beste past of een vraag hebt over je bestelling, hieronder vind je de antwoorden. Staat je vraag er niet tussen? Neem gerust contact met ons op, we denken graag met je mee.</p>",
                     "highlight_style": "none",
                     "highlight_font_style": "italic",
                     "highlight_shape_color": "",
@@ -195,11 +196,11 @@
               "name": "t:names.contact_card",
               "settings": {
                 "heading": "",
-                "image": "shopify://shop_images/contact.png",
+                "image": "shopify://shop_images/klantenservice.png",
                 "image_size": 100,
                 "card_width": 420,
                 "remove_heading_spacing": false,
-                "show_phone": true,
+                "show_phone": false,
                 "show_email": true,
                 "show_chat_link": false,
                 "chat_label": "Start chat",
@@ -1286,7 +1287,7 @@
                     "text_qBhVND": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Omdat PostNL zowel zend- als retourkosten in rekening brengt bij de webshop, ook als een pakket niet wordt opgehaald.</p>",
+                        "text": "<p>Omdat PostNL zowel verzend- als retourkosten in rekening brengt bij de webshop, ook als een pakket niet wordt opgehaald.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1555,7 +1556,7 @@
                     "text_xGgAJX": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>iDEAL (Nederlandse klanten), Bancontact (Belgische klanten), creditcard (Visa, Mastercard, American Express), PayPal, en Klarna (achteraf betalen). Alle betalingen verlopen via een beveiligde verbinding.</p>",
+                        "text": "<p>iDEAL | Wero (Nederlandse klanten), Bancontact (Belgische klanten), Klarna (achteraf betalen), Apple Pay en creditcard (Visa, Mastercard, American Express). Alle betalingen verlopen via een beveiligde verbinding.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1639,7 +1640,7 @@
                 "accordion_row_ehWnMc": {
                   "type": "_accordion-row",
                   "settings": {
-                    "text": "Ik heb een kortingscode/cadeaubon, hoe kan ik die gebruiken?",
+                    "text": "Ik heb een kortingscode/couponcode, hoe kan ik die gebruiken?",
                     "open_row_by_default": false,
                     "link": "",
                     "icon": "none",
@@ -1967,7 +1968,7 @@
                     "text_pkcV6i": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Met iDEAL, Afterpay, Bancontact of PayPal, eenvoudig te kiezen bij de bestelling.</p>",
+                        "text": "<p>iDEAL | Wero, Bancontact, Klarna, Apple Pay en creditcard (Visa, Mastercard, American Express). </p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",

@@ -19,8 +19,8 @@
             "show_content_below": false,
             "gap": 20,
             "gap_mobile": 20,
-            "image": "shopify://shop_images/Binnenkussens-2_02231240-0b98-4b21-9096-a44099f59d1d.jpg",
-            "image_mobile": "shopify://shop_images/Binnenkussens-2_02231240-0b98-4b21-9096-a44099f59d1d.jpg",
+            "image": "shopify://shop_images/binnenkussens-hero_f2984087-cef8-480c-ac13-2c56b8f51dc8.png",
+            "image_mobile": "shopify://shop_images/binnenkussens-hero_f2984087-cef8-480c-ac13-2c56b8f51dc8.png",
             "toggle_overlay": true,
             "sync_accordion_image": false,
             "overlay_color": "rgba(0,0,0,0)",
@@ -488,7 +488,7 @@
             "heading": "Polyester",
             "link": "shopify://collections/frontpage",
             "link_label": "Bekijken",
-            "image": "shopify://shop_images/polyester_25c54e96-15ae-48e0-a9d0-e5bc75d5a2fc.png",
+            "image": "shopify://shop_images/polyester_png.png",
             "background_color": "#ffe9d9"
           },
           "blocks": {}
@@ -499,7 +499,7 @@
             "heading": "Memory foam",
             "link": "shopify://collections/memory-foam",
             "link_label": "Bekijken",
-            "image": "shopify://shop_images/memory-foam_ea5d03fb-82ae-4116-9908-29da5491d871.png",
+            "image": "shopify://shop_images/foam.png",
             "background_color": "#ffe9d9"
           },
           "blocks": {}
@@ -510,7 +510,7 @@
             "heading": "Veer & dons",
             "link": "shopify://collections/veer-dons",
             "link_label": "Bekijken",
-            "image": "shopify://shop_images/veren-dons.png",
+            "image": "shopify://shop_images/veren_png.png",
             "background_color": "#ffe9d9"
           },
           "blocks": {}
@@ -632,7 +632,7 @@
                 "icon_width_mobile": 22,
                 "heading": "Persoonlijke klantenservice",
                 "heading_preset": "h6",
-                "text": "<p>Binnen 48 uur reactie</p>",
+                "text": "<p>Binnen 24 uur reactie</p>",
                 "text_color": "subtext",
                 "link": "",
                 "show_link_icon": true,
@@ -749,20 +749,11 @@
     "product_tabs_9Mxapz": {
       "type": "product-tabs",
       "blocks": {
-        "collection_BaN8P9": {
+        "collection_eUKCxR": {
           "type": "collection",
           "settings": {
-            "collection": "30x50-cm",
-            "title": "30 x 50 cm",
-            "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
-            "banner_title": ""
-          }
-        },
-        "collection_pkpz4P": {
-          "type": "collection",
-          "settings": {
-            "collection": "40x40-cm",
-            "title": "40 x 40 cm",
+            "collection": "memory-foam",
+            "title": "populair",
             "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
             "banner_title": ""
           }
@@ -772,7 +763,25 @@
           "settings": {
             "collection": "45x45-cm",
             "title": "45x45 cm",
-            "banner_image": "shopify://shop_images/5bd4700a-fe3c-40a8-a126-640314f57991-2026-08-27.jpg",
+            "banner_image": "shopify://shop_images/45x45cm-overzicht.jpg",
+            "banner_title": ""
+          }
+        },
+        "collection_BaN8P9": {
+          "type": "collection",
+          "settings": {
+            "collection": "30x50-cm",
+            "title": "30 x 50 cm",
+            "banner_image": "shopify://shop_images/30x50-overzicht.jpg",
+            "banner_title": ""
+          }
+        },
+        "collection_pkpz4P": {
+          "type": "collection",
+          "settings": {
+            "collection": "40x40-cm",
+            "title": "40 x 40 cm",
+            "banner_image": "shopify://shop_images/40x40-overzicht.jpg",
             "banner_title": ""
           }
         },
@@ -787,9 +796,10 @@
         }
       },
       "block_order": [
+        "collection_eUKCxR",
+        "collection_4e9MPL",
         "collection_BaN8P9",
         "collection_pkpz4P",
-        "collection_4e9MPL",
         "collection_HhQDtR"
       ],
       "name": "t:names.product_tab_carousel",
@@ -2646,7 +2656,7 @@
             "show_content_below": false,
             "gap": 20,
             "gap_mobile": 20,
-            "image": "shopify://shop_images/polyester_cd148ee3-e205-4a71-922b-45122c182bd9.png",
+            "image": "shopify://shop_images/polyester_82963c7e-6b80-4b37-ae8f-53b0705d7b47.jpg",
             "toggle_overlay": false,
             "sync_accordion_image": true,
             "overlay_color": "#00000026",
@@ -3061,7 +3071,7 @@
                   "settings": {
                     "text": "Veren & dons",
                     "open_row_by_default": false,
-                    "sync_image": "shopify://shop_images/memory-foam_f7c8542c-2100-4e89-8e87-18ccbfcd780a.jpg",
+                    "sync_image": "shopify://shop_images/veer-dons.jpg",
                     "link": "",
                     "icon": "none",
                     "image_upload": "shopify://shop_images/veer-wit.svg",
@@ -3160,7 +3170,7 @@
           "type": "_products-bundle-product",
           "name": "t:names.product",
           "settings": {
-            "product": "binnenkussen-40x40-cm-memory-foam-vulkussen-500-gram",
+            "product": "binnenkussen-45x45-cm-polyester-vulkussen-360-gram-4-stuks",
             "color_scheme": "scheme-1",
             "offset_top": 52,
             "offset_left": 40,
@@ -3173,12 +3183,12 @@
           "type": "_products-bundle-product",
           "name": "t:names.product",
           "settings": {
-            "product": "binnenkussen-40x40-cm-polyester-vulkussen-300-gram",
+            "product": "binnenkussen-30x50-cm-polyester-vulkussen-240-gram-2-stuks-1",
             "color_scheme": "",
             "offset_top": 64,
             "offset_left": 65,
-            "offset_top_mobile": 62,
-            "offset_left_mobile": 42
+            "offset_top_mobile": 53,
+            "offset_left_mobile": 77
           },
           "blocks": {}
         },
@@ -3261,7 +3271,7 @@
           "type": "_products-bundle-banner",
           "static": true,
           "settings": {
-            "image": "shopify://shop_images/japandi-sierkussen-set-3-stuks-beige-taupe-bruin-i.webp",
+            "image": "shopify://shop_images/ChatGPT_Image_7_sep_2026_13_37_20.png",
             "image_ratio": "4/3",
             "image_ratio_mobile": "4/3",
             "border_radius": 20
@@ -3447,7 +3457,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Bekijk de mogelijkheden",
-                "link": "#",
+                "link": "shopify://pages/zakelijk-overzicht",
                 "style": "primary",
                 "size": "medium",
                 "icon": "caret-right",
@@ -3510,7 +3520,8 @@
                 "show_content_below": false,
                 "gap": 20,
                 "gap_mobile": 20,
-                "image": "shopify://shop_images/hotels.jpg",
+                "image": "shopify://shop_images/beekhuizen_2.png",
+                "image_mobile": "shopify://shop_images/beekhuizen_2.png",
                 "toggle_overlay": true,
                 "sync_accordion_image": false,
                 "overlay_color": "#00000026",
@@ -3654,7 +3665,7 @@
                 "show_content_below": false,
                 "gap": 20,
                 "gap_mobile": 20,
-                "image": "shopify://shop_images/a416fe57-be7c-4f29-92e9-3cdfd34fbd4e-2026-08-24.png",
+                "image": "shopify://shop_images/boot.png",
                 "toggle_overlay": true,
                 "sync_accordion_image": false,
                 "overlay_color": "#00000040",
@@ -3798,7 +3809,7 @@
                 "show_content_below": false,
                 "gap": 20,
                 "gap_mobile": 20,
-                "image": "shopify://shop_images/horeca.jpg",
+                "image": "shopify://shop_images/bonaire.png",
                 "toggle_overlay": true,
                 "sync_accordion_image": false,
                 "overlay_color": "#00000026",
@@ -4149,7 +4160,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Een antwoord op de meest gestelde vragen over onze binnenkussens.</p>",
+                "text": "<p>Een antwoord op de meest gestelde vragen<br/>over onze binnenkussens.</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -4182,7 +4193,7 @@
               "name": "t:names.contact_card",
               "settings": {
                 "heading": "Hulp nodig?",
-                "image": "shopify://shop_images/contact.png",
+                "image": "shopify://shop_images/klantenservice.png",
                 "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,

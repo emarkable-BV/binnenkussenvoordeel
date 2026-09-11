@@ -15,6 +15,14 @@
   {% endif %}
 >
   <head>
+ <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WFBMV58H');</script>
+<!-- End Google Tag Manager -->
+
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
@@ -46,6 +54,7 @@
     <script src="https://integrations.etrusted.com/applications/widget.js/v2" defer async></script>
 
     {{ content_for_header }}
+    {% render 'lucrative-datalayer' %}
   </head>
   <body
     {% unless settings.animations_enabled %}
@@ -53,6 +62,10 @@
     {% endunless %}
     class="{{ template.name }} {% if settings.animations_enabled %}animations-enabled {% endif %}{% if settings.page_transitions_enabled %}page-transitions-enabled {% endif %}{% unless cart.empty? %}cart-has-items{% endunless %}"
   >
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WFBMV58H"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% if settings.page_transitions_enabled %}
@@ -76,5 +89,8 @@
     {%- if settings.enable_back_to_top_button -%}
       {% render 'back-to-top-button' %}
     {%- endif -%}
+
+    <script type="text/javascript" src="https://smartarget.online/loader.js?u=eaf80332644860c8bdedd137b837c947af1c4071"></script>
+    
   </body>
 </html>

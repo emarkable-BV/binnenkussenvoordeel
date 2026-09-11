@@ -124,7 +124,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Kwaliteit die je kunt voelen</p>",
+            "text": "<p>Goed gevuld. Goed voordelig.</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
@@ -195,8 +195,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/b27b3e7c-8c81-4fbd-9841-05d9f9778928-2026-08-21.png",
-                "image_mobile": "shopify://shop_images/b27b3e7c-8c81-4fbd-9841-05d9f9778928-2026-08-21.png",
+                "image": "shopify://shop_images/magazijn.png",
+                "image_mobile": "shopify://shop_images/magazijn.png",
                 "link": "",
                 "image_ratio": "16/9",
                 "image_ratio_mobile": "4/3",
@@ -221,8 +221,8 @@
               "type": "image",
               "name": "t:names.image",
               "settings": {
-                "image": "shopify://shop_images/c3a89d1b-c84f-4928-b38b-e848814b1095-2026-08-21.png",
-                "image_mobile": "shopify://shop_images/c3a89d1b-c84f-4928-b38b-e848814b1095-2026-08-21.png",
+                "image": "shopify://shop_images/machine.png",
+                "image_mobile": "shopify://shop_images/machine.png",
                 "link": "",
                 "image_ratio": "16/9",
                 "image_ratio_mobile": "16/9",
@@ -366,7 +366,7 @@
                 "icon_width_mobile": 22,
                 "heading": "Persoonlijke klantenservice",
                 "heading_preset": "h6",
-                "text": "<p>Binnen 48 uur reactie</p>",
+                "text": "<p>Binnen 24 uur reactie</p>",
                 "text_color": "subtext",
                 "link": "",
                 "show_link_icon": true,
@@ -558,7 +558,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>De historie van Gekopkussens & BinnenkussenVoordeel</h2>",
+                "text": "<h2>De historie van <br/>Gek op kussens! & BinnenkussenVoordeel</h2>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -671,7 +671,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/pand-banner.jpg",
+                    "image": "shopify://shop_images/pand.png",
                     "link": "",
                     "image_ratio": "adapt",
                     "image_ratio_mobile": "adapt",
@@ -735,7 +735,7 @@
                       "type": "text",
                       "name": "t:names.subheading",
                       "settings": {
-                        "text": "<p>2010</p>",
+                        "text": "<p>2018</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -800,7 +800,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Wat begon met een liefde voor kleur, textuur en gezelligheid, groeide uit tot een vrolijk merk vol karakter: Gek op Kussens! Wij zijn een klein, gepassioneerd team met één grote missie — mensen blij maken met kussens die sfeer brengen, binnen én buiten.</p>",
+                        "text": "<p>Wat begon met een liefde voor kleur, textuur en gezelligheid, groeide uit tot een vrolijk merk vol karakter: <a href=\"https://www.gekopkussens.nl/\" target=\"_blank\" title=\"https://www.gekopkussens.nl/\"><strong>Gek op kussens! </strong></a><br/><br/>Wij zijn een klein, gepassioneerd team met één grote missie — mensen blij maken met kussens die sfeer brengen, binnen én buiten.</p><p>Of je nu een compleet nieuw interieur wil, of gewoon een frisse touch zoekt met een paar opvallende kussenhoezen: wij geloven dat een goed gekozen kussen nét dat verschil kan maken.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -832,7 +832,7 @@
                       "type": "button",
                       "name": "t:names.button",
                       "settings": {
-                        "label": "Bekijk Gek op kussens",
+                        "label": "Bekijk Gek op kussens!",
                         "link": "https://www.gekopkussens.nl/",
                         "style": "primary",
                         "size": "medium",
@@ -967,7 +967,7 @@
                       "type": "text",
                       "name": "t:names.subheading",
                       "settings": {
-                        "text": "<p>2014</p>",
+                        "text": "<p>2021</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1032,7 +1032,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Of je nu een compleet nieuw interieur wil, of gewoon een frisse touch zoekt met een paar opvallende kussenhoezen: wij geloven dat een goed gekozen kussen nét dat verschil kan maken. Onze collectie is met zorg samengesteld, met oog voor detail, trends én comfort. Denk aan handgemaakte details, natuurlijke materialen, boho vibes, zomerse dessins of juist rustige basics. Voor elk wat wils, en altijd met een speelse twist.</p>",
+                        "text": "<p>We vinden het belangrijk dat shoppen bij ons leuk en makkelijk is. Daarom zorgen we voor snelle verzending, duidelijke info en een klantenservice die met je meedenkt. Want als jij blij bent, zijn wij dat ook. </p><p>Eind 2020 werd ons magazijn te klein en sinds<strong> januari 2021</strong> zijn wij operationeel op onze nieuwe locatie in Zevenaar; 800m2 vol met kussens in diverse kleuren, materialen en prints.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1116,7 +1116,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/img-7166.jpg",
+                    "image": "shopify://shop_images/pakketten.png",
                     "link": "",
                     "image_ratio": "adapt",
                     "image_ratio_mobile": "adapt",
@@ -1180,7 +1180,7 @@
                       "type": "text",
                       "name": "t:names.subheading",
                       "settings": {
-                        "text": "<p>2020</p>",
+                        "text": "<p>2022</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1245,7 +1245,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>We vinden het belangrijk dat shoppen bij ons leuk en makkelijk is. Daarom zorgen we voor snelle verzending, duidelijke info en een klantenservice die met je meedenkt. Want als jij blij bent, zijn wij dat ook. </p><p>In 2020 werd ons magazijn te klein en sinds 2021 zijn wij operationeel op onze nieuwe locatie in Zevenaar; 800m2 vol met kussens in diverse kleuren, materialen en prints.</p>",
+                        "text": "<p>Tijd voor iets nieuws, een nieuw kussenmerk <strong>NOVÉE</strong>. Het staat voor vernieuwing, we kiezen bewust voor een hoger segment. Prachtige stoffen, rijke structuren, bijzondere designs en een luxe uitstraling vormen de basis van iedere collectie.</p><p>De naam NOVÉE is geïnspireerd op het Latijnse woord voor <strong>nieuw</strong>. Want soms heb je geen compleet nieuw interieur nodig om het gevoel van vernieuwing te creëren.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1329,7 +1329,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
-                    "image": "shopify://shop_images/slider-3-mobile.jpg",
+                    "image": "shopify://shop_images/voorraad.png",
                     "link": "",
                     "image_ratio": "1/1",
                     "image_ratio_mobile": "1/1",
@@ -1458,7 +1458,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>We zagen potentie in een markt waarin vraag naar kwalitatieve binnenkussens en een helder aanbod samenkwamen. Vanuit die kans ontstond BinnenkussenVoordeel: één plek voor kwalitatieve binnenkussens in verschillende soorten, maten en vullingen.</p>",
+                        "text": "<p>We zagen potentie in een markt waarin de vraag naar binnenkussens groeit, maar het aanbod vaak onoverzichtelijk is. Verschillende maten, vullingen en kwaliteiten maken het lastig om precies het juiste binnenkussen te kiezen.</p><p>Vanuit die kans ontstond <strong>BinnenkussenVoordeel</strong>: één gespecialiseerde plek waar kwaliteit, keuze en een goede prijs samenkomen. </p><p>Met een zorgvuldig samengesteld assortiment binnenkussens maken we het kiezen zo eenvoudig mogelijk.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -2621,6 +2621,38 @@
     "custom_section_DC4tiY": {
       "type": "custom-section",
       "blocks": {
+        "text_VEJmbR": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Klanten  schreven over ons:</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        },
         "etrusted_widget_MYFQnH": {
           "type": "etrusted-widget",
           "settings": {
@@ -2630,6 +2662,7 @@
         }
       },
       "block_order": [
+        "text_VEJmbR",
         "etrusted_widget_MYFQnH"
       ],
       "name": "eTrusted widget",
@@ -2772,14 +2805,14 @@
               "name": "t:names.contact_card",
               "settings": {
                 "heading": "Hulp nodig?",
-                "image": "shopify://shop_images/contact.png",
+                "image": "shopify://shop_images/klantenservice.png",
                 "image_size": 80,
                 "card_width": 320,
                 "remove_heading_spacing": true,
                 "show_phone": false,
                 "show_email": false,
                 "show_chat_link": true,
-                "chat_label": "Start chat",
+                "chat_label": "Stel jouw vraag",
                 "inherit_color_scheme": false,
                 "color_scheme": "scheme-inverse",
                 "border": "none",
@@ -3027,6 +3060,7 @@
         "group_hfMpBB",
         "accordion_VNYG6K"
       ],
+      "disabled": true,
       "name": "t:names.faqs_preset_texts",
       "settings": {
         "container": "page-width",

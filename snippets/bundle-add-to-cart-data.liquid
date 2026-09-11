@@ -1,0 +1,47 @@
+{%- doc -%}
+  Outputs JSON describing whether the given product/variant is a bundle
+  pack (SKU ending in `-NPK`) and, if so, the variant id of that family's
+  loose (1-stuk) sibling product — so the add-to-cart form can add N loose
+  units of the base product instead of 1 unit of the bundle pack.
+
+  Reuses the same family/collection lookup as `bundle-quantity-family`
+  (material + dimensions -> collection handle) rather than duplicating it.
+
+  @param {object} product - the product to check
+  @param {object} [variant] - defaults to product.selected_or_first_available_variant
+
+  @example
+  {% render 'bundle-add-to-cart-data', product: product %}
+{%- enddoc -%}
+{%- liquid
+  assign variant = variant | default: product.selected_or_first_available_variant
+  assign sku = variant.sku
+
+  assign pack_size = 1
+  assign sku_parts = sku | split: '-'
+  if sku_parts.size == 4 and sku_parts[3] contains 'PK'
+    assign pack_size = sku_parts[3] | remove: 'PK' | plus: 0
+  endif
+
+  assign base_variant_id = 0
+  if pack_size > 1
+    capture pairs
+      render 'bundle-quantity-family', sku: sku
+    endcapture
+    assign pairs = pairs | strip
+    assign pair_list = pairs | split: ';'
+    for pair in pair_list
+      assign pair_parts = pair | split: '|'
+      if pair_parts[0] == '1'
+        assign base_handle = pair_parts[1]
+        assign base_variant_id = all_products[base_handle].selected_or_first_available_variant.id
+        break
+      endif
+    endfor
+  endif
+-%}
+{%- if base_variant_id > 0 -%}
+  {"packSize": {{ pack_size }}, "baseVariantId": {{ base_variant_id }}}
+{%- else -%}
+  {}
+{%- endif -%}
