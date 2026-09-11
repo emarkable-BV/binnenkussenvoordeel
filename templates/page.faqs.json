@@ -1335,7 +1335,7 @@
                     "text_TPh9JP": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België en Duitsland: levering binnen 1-3 werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
+                        "text": "<p>Voor 16:00 uur besteld en betaald = dezelfde dag verzonden. Na verzending volgt een track & trace-code per e-mail. België: levering binnen 24 uur op werkdagen. In drukke periodes of bij feestdagen kan de levertijd iets langer zijn.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
