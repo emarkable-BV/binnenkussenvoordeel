@@ -1475,12 +1475,81 @@
         "padding-inline-end-mobile": 16
       }
     },
+    "custom_section_emPUqw": {
+      "type": "custom-section",
+      "blocks": {
+        "text_JJqh6G": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Offerte aanvragen</p>",
+            "highlight_style": "none",
+            "highlight_font_style": "italic",
+            "highlight_shape_color": "",
+            "highlight_text_color": "",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_weight": "",
+            "font_size": 15,
+            "font_size_mobile": 15,
+            "line_height": "normal",
+            "text_color": "text",
+            "text_color_gradient": "",
+            "disable_line_break_mobile": false,
+            "width": "fit-content",
+            "text_alignment": "left",
+            "width_mobile": "fit-content",
+            "text_alignment_mobile": "left",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "mobile-padding-scale": 80,
+            "animation_type": "none",
+            "animation_delay": 250
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_JJqh6G"
+      ],
+      "name": "t:names.rich_text",
+      "settings": {
+        "container": "page-width",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "column_gap": 30,
+        "row_gap": 24,
+        "column_gap_mobile": 12,
+        "row_gap_mobile": 12,
+        "use_color_scheme_in_container": false,
+        "color_scheme": "scheme-2",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "device": "desktop",
+        "padding-block-start": 40,
+        "padding-block-end": 0,
+        "padding-inline-start": 50,
+        "padding-inline-end": 50,
+        "padding-block-start-mobile": 32,
+        "padding-block-end-mobile": 32,
+        "padding-inline-start-mobile": 20,
+        "padding-inline-end-mobile": 20
+      }
+    },
     "custom_section_AzBktY": {
       "type": "custom-section",
       "blocks": {
         "text_96WNDH": {
           "type": "text",
           "name": "t:names.heading",
+          "disabled": true,
           "settings": {
             "text": "<p>Vraag een vrijblijvende offerte aan</p>",
             "highlight_style": "none",
@@ -2562,6 +2631,7 @@
     "custom_section_xezadK",
     "testimonials_RHcRJ3",
     "custom_section_DC4tiY",
+    "custom_section_emPUqw",
     "custom_section_AzBktY",
     "custom_section_dgyiyX"
   ]
