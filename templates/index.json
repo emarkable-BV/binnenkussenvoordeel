@@ -19,7 +19,7 @@
             "show_content_below": false,
             "gap": 20,
             "gap_mobile": 20,
-            "image": "shopify://shop_images/binnenkussens-hero_f2984087-cef8-480c-ac13-2c56b8f51dc8.png",
+            "image": "shopify://shop_images/ChatGPT_Image_15_sep_2026_11_23_10.png",
             "image_mobile": "shopify://shop_images/binnenkussens-hero_f2984087-cef8-480c-ac13-2c56b8f51dc8.png",
             "toggle_overlay": true,
             "sync_accordion_image": false,
@@ -91,7 +91,7 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p>Binnenkussens</p>",
+                "text": "<p>Woondeal: GRATIS<br/>textielspray t.w.v. €7,95<br/>cadeau vanaf €35</p>",
                 "highlight_style": "standard",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -99,7 +99,7 @@
                 "type_preset": "custom",
                 "font": "var(--font-heading--family)",
                 "font_weight": "",
-                "font_size": 34,
+                "font_size": 27,
                 "font_size_mobile": 27,
                 "line_height": "tight",
                 "text_color": "text",
@@ -142,6 +142,7 @@
               "settings": {
                 "label": "Bekijk alle binnenkussens",
                 "link": "shopify://collections/all",
+                "open_in_new_tab": false,
                 "style": "secondary",
                 "size": "large",
                 "icon": "caret-right",
@@ -286,6 +287,7 @@
               "settings": {
                 "label": "Bekijk bundels",
                 "link": "shopify://collections",
+                "open_in_new_tab": false,
                 "style": "primary",
                 "size": "large",
                 "icon": "caret-right",
@@ -429,6 +431,7 @@
               "settings": {
                 "label": "Shop Now",
                 "link": "",
+                "open_in_new_tab": false,
                 "style": "secondary",
                 "size": "large",
                 "icon": "caret-right",
@@ -1198,6 +1201,7 @@
                   "settings": {
                     "label": "Shop Now",
                     "link": "",
+                    "open_in_new_tab": false,
                     "style": "plain",
                     "size": "medium",
                     "icon": "caret-right",
@@ -1425,6 +1429,7 @@
                   "settings": {
                     "label": "Shop Now",
                     "link": "",
+                    "open_in_new_tab": false,
                     "style": "plain",
                     "size": "medium",
                     "icon": "caret-right",
@@ -1652,6 +1657,7 @@
                   "settings": {
                     "label": "Shop Now",
                     "link": "",
+                    "open_in_new_tab": false,
                     "style": "plain",
                     "size": "medium",
                     "icon": "caret-right",
@@ -1858,6 +1864,7 @@
               "settings": {
                 "label": "Explore Now",
                 "link": "",
+                "open_in_new_tab": false,
                 "style": "primary",
                 "size": "large",
                 "icon": "caret-right",
@@ -2118,6 +2125,7 @@
                       "settings": {
                         "label": "Learn More",
                         "link": "",
+                        "open_in_new_tab": false,
                         "style": "plain",
                         "size": "medium",
                         "icon": "caret-right",
@@ -2348,6 +2356,7 @@
                       "settings": {
                         "label": "Learn More",
                         "link": "",
+                        "open_in_new_tab": false,
                         "style": "plain",
                         "size": "medium",
                         "icon": "caret-right",
@@ -2578,6 +2587,7 @@
                       "settings": {
                         "label": "Learn More",
                         "link": "",
+                        "open_in_new_tab": false,
                         "style": "plain",
                         "size": "medium",
                         "icon": "caret-right",
@@ -2777,6 +2787,7 @@
               "settings": {
                 "label": "",
                 "link": "",
+                "open_in_new_tab": false,
                 "style": "secondary",
                 "size": "medium",
                 "icon": "caret-right",
@@ -3524,6 +3535,7 @@
               "settings": {
                 "label": "Bekijk de mogelijkheden",
                 "link": "shopify://pages/zakelijk-overzicht",
+                "open_in_new_tab": false,
                 "style": "primary",
                 "size": "medium",
                 "icon": "caret-right",
@@ -3709,6 +3721,7 @@
                   "settings": {
                     "label": "",
                     "link": "#",
+                    "open_in_new_tab": false,
                     "style": "secondary",
                     "size": "extra-small",
                     "icon": "caret-right",
@@ -3853,6 +3866,7 @@
                   "settings": {
                     "label": "",
                     "link": "#",
+                    "open_in_new_tab": false,
                     "style": "secondary",
                     "size": "extra-small",
                     "icon": "caret-right",
@@ -3997,6 +4011,7 @@
                   "settings": {
                     "label": "",
                     "link": "#",
+                    "open_in_new_tab": false,
                     "style": "secondary",
                     "size": "extra-small",
                     "icon": "caret-right",
