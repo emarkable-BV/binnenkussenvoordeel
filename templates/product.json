@@ -247,6 +247,7 @@
               "settings": {
                 "label": "Shop onze voordeelbundels",
                 "link": "#product-bundles",
+                "open_in_new_tab": false,
                 "style": "outline",
                 "size": "large",
                 "icon": "none",
@@ -660,55 +661,6 @@
                     "text_6KJERV"
                   ]
                 },
-                "accordion_row_YYawgT": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "text": "Wasvoorschriften",
-                    "open_row_by_default": false,
-                    "link": "",
-                    "icon": "none",
-                    "icon_size": "extra-large",
-                    "width": 24,
-                    "width_mobile": 24
-                  },
-                  "blocks": {
-                    "text_7UhNdx": {
-                      "type": "text",
-                      "name": "t:names.text",
-                      "settings": {
-                        "text": "{{ closest.product.metafields.custom.onderhoud | metafield_tag }}",
-                        "highlight_style": "none",
-                        "highlight_font_style": "italic",
-                        "highlight_shape_color": "",
-                        "highlight_text_color": "",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_weight": "",
-                        "font_size": 15,
-                        "font_size_mobile": 15,
-                        "line_height": "normal",
-                        "text_color": "text",
-                        "text_color_gradient": "",
-                        "disable_line_break_mobile": false,
-                        "width": "fit-content",
-                        "text_alignment": "left",
-                        "width_mobile": "fit-content",
-                        "text_alignment_mobile": "left",
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0,
-                        "mobile-padding-scale": 80,
-                        "animation_type": "none",
-                        "animation_delay": 250
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_7UhNdx"
-                  ]
-                },
                 "accordion_row_eMehRb": {
                   "type": "_accordion-row",
                   "settings": {
@@ -736,7 +688,6 @@
               },
               "block_order": [
                 "accordion_row_XENRWn",
-                "accordion_row_YYawgT",
                 "accordion_row_eMehRb"
               ]
             },
@@ -1198,6 +1149,7 @@
               "settings": {
                 "label": "",
                 "link": "",
+                "open_in_new_tab": false,
                 "style": "secondary",
                 "size": "medium",
                 "icon": "caret-right",
@@ -2389,6 +2341,7 @@
                   "settings": {
                     "label": "BinnenkussenVoordeel",
                     "link": "https://www.instagram.com/binnenkussenvoordeel/",
+                    "open_in_new_tab": false,
                     "style": "outline",
                     "size": "medium",
                     "icon": "instagram",
@@ -2407,6 +2360,7 @@
                   "settings": {
                     "label": "GekopKussens",
                     "link": "https://www.instagram.com/gekopkussens/",
+                    "open_in_new_tab": false,
                     "style": "outline",
                     "size": "medium",
                     "icon": "instagram",
