@@ -109,7 +109,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h1>Discover something new</h1>",
+            "text": "<h2>Discover something new</h2>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",

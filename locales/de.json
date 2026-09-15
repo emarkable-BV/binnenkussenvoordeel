@@ -148,6 +148,7 @@
     }
   },
   "content": {
+    "tagged": "getaggt mit {{ tags }}",
     "size_chart": "Größentabelle",
     "filters_sorting": "Filtern und sortieren",
     "account_title": "Konto",

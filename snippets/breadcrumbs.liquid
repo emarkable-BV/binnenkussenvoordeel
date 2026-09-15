@@ -8,7 +8,100 @@
 
   assign justify = text_align | replace: 'left', 'start' | replace: 'right', 'end'
   assign justify_mobile = text_align_mobile | replace: 'left', 'start' | replace: 'right', 'end'
+
+  # ---------------------------------------------------------------------------
+  # BreadcrumbList source data.
+  #
+  # This mirrors the branch logic of the visible trail below, entry for entry, so the
+  # markup and the structured data can never disagree. Each crumb is stored as
+  # "name<bc_kv>url", crumbs joined by bc_sep; the final crumb carries no url because
+  # schema.org expects the current page to have no "item".
+  #
+  # Cart, search, 404 and the customer templates fall through with bc_render false:
+  # they are not indexable landing pages and get no node.
+  #
+  # This snippet has two callers, sections/breadcrumbs.liquid and blocks/_breadcrumbs.liquid.
+  # No template currently uses both. If one ever does, it will emit two BreadcrumbList
+  # nodes and the second caller must be removed from that template.
+  # ---------------------------------------------------------------------------
+  assign bc_render = false
+  assign bc_sep = '|~|'
+  assign bc_kv = '~|~'
+  assign bc_list = 'content.home' | t | append: bc_kv | append: routes.root_url
+
+  if template contains 'page'
+    assign bc_render = true
+    assign bc_list = bc_list | append: bc_sep | append: page.title | append: bc_kv
+  elsif template contains 'product'
+    assign bc_render = true
+    assign bc_primary = product.metafields.breadcrumbs.primary_collection
+    if bc_primary != blank
+      assign bc_collection = bc_primary.value
+    else
+      assign bc_collection = product.collections | first
+    endif
+    if bc_collection != blank
+      assign bc_list = bc_list | append: bc_sep | append: bc_collection.title | append: bc_kv | append: bc_collection.url
+    else
+      assign bc_all_label = 'content.collection' | t
+      assign bc_list = bc_list | append: bc_sep | append: bc_all_label | append: bc_kv | append: routes.all_products_collection_url
+    endif
+    assign bc_list = bc_list | append: bc_sep | append: product.title | append: bc_kv
+  elsif template contains 'collection' and collection.handle
+    assign bc_render = true
+    unless collection.handle == 'all'
+      assign bc_all_label = 'content.collection' | t
+      assign bc_list = bc_list | append: bc_sep | append: bc_all_label | append: bc_kv | append: routes.all_products_collection_url
+    endunless
+    if current_tags
+      assign bc_collection_url = routes.collections_url | append: '/' | append: collection.handle
+      assign bc_tags = current_tags | join: ' + '
+      assign bc_list = bc_list | append: bc_sep | append: collection.title | append: bc_kv | append: bc_collection_url
+      assign bc_list = bc_list | append: bc_sep | append: bc_tags | append: bc_kv
+    else
+      assign bc_list = bc_list | append: bc_sep | append: collection.title | append: bc_kv
+    endif
+  elsif template == 'list-collections'
+    assign bc_render = true
+    assign bc_collections_label = 'content.collections' | t
+    assign bc_list = bc_list | append: bc_sep | append: bc_collections_label | append: bc_kv
+  elsif template == 'blog'
+    assign bc_render = true
+    if current_tags
+      assign bc_tags = current_tags | join: ' + '
+      assign bc_list = bc_list | append: bc_sep | append: blog.title | append: bc_kv | append: blog.url
+      assign bc_list = bc_list | append: bc_sep | append: bc_tags | append: bc_kv
+    else
+      assign bc_list = bc_list | append: bc_sep | append: blog.title | append: bc_kv
+    endif
+  elsif template == 'article'
+    assign bc_render = true
+    assign bc_list = bc_list | append: bc_sep | append: blog.title | append: bc_kv | append: blog.url
+    assign bc_list = bc_list | append: bc_sep | append: article.title | append: bc_kv
+  endif
 -%}
+{%- if bc_render -%}
+  {%- assign bc_items = bc_list | split: bc_sep -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {%- for bc_item in bc_items -%}
+          {%- assign bc_parts = bc_item | split: bc_kv -%}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "name": {{ bc_parts[0] | strip | json }}
+            {%- if bc_parts[1] != blank -%}
+              , "item": {{ bc_parts[1] | strip | prepend: shop.url | json }}
+            {%- endif -%}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
 <nav
   class="breadcrumbs flex items-center justify-{{ justify_mobile }} md:justify-{{ justify }} gap-x-3 text-body-sm"
   role="navigation"

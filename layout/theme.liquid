@@ -15,6 +15,19 @@
   {% endif %}
 >
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    {%- comment -%}
+      Preconnect to the third-party origins that load on every page, so DNS and TLS
+      are already warm by the time the tags below request them.
+    {%- endcomment -%}
+    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://integrations.etrusted.com" crossorigin>
+    <link rel="preconnect" href="https://smartarget.online" crossorigin>
+    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
+
  <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -24,11 +37,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
     {%- if settings.favicon != blank -%}
-      <link
-        rel="icon"
-        type="image/{% if settings.favicon contains '.svg' %}svg+xml{% else %}png{% endif %}"
-        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
-      >
+      {%- if settings.favicon contains '.svg' -%}
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+        >
+        {%- comment -%}
+          Apple and Android home-screen icons need a raster source. The image CDN cannot
+          rasterise an SVG, so those links are only emitted for a PNG/JPG favicon.
+        {%- endcomment -%}
+      {%- else -%}
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+        >
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="{{ settings.favicon | image_url: width: 192, height: 192 }}"
+        >
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="{{ settings.favicon | image_url: width: 180, height: 180 }}"
+        >
+      {%- endif -%}
     {%- endif -%}
 
     {% # Inlined CSS Variables %}
@@ -90,7 +127,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       {% render 'back-to-top-button' %}
     {%- endif -%}
 
-    <script type="text/javascript" src="https://smartarget.online/loader.js?u=eaf80332644860c8bdedd137b837c947af1c4071"></script>
+    <script type="text/javascript" src="https://smartarget.online/loader.js?u=eaf80332644860c8bdedd137b837c947af1c4071" defer></script>
     
   </body>
 </html>

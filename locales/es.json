@@ -148,6 +148,7 @@
     }
   },
   "content": {
+    "tagged": "etiquetado con {{ tags }}",
     "size_chart": "Guía de tallas",
     "filters_sorting": "Filtrar y ordenar",
     "account_title": "Cuenta",

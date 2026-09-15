@@ -1,19 +1,14 @@
-<meta charset="utf-8">
+{%- comment -%}
+  charset and viewport are emitted at the very top of <head> in layout/theme.liquid so that
+  they land inside the first 1024 bytes. Do not re-add them here.
+{%- endcomment -%}
 <meta
   http-equiv="X-UA-Compatible"
   content="IE=edge"
 >
 <meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-<meta
   name="view-transition"
   content="same-origin"
->
-<meta
-  name="theme-color"
-  content=""
 >
 
 {%- liquid
@@ -29,6 +24,16 @@
   elsif request.page_type == 'password'
     assign og_url = request.origin
   endif
+
+  # Open Graph wants a language_TERRITORY pair. Shopify gives either "nl" or "pt-BR",
+  # so normalise the separator and append the active country when one is missing.
+  assign og_locale = request.locale.iso_code | replace: '-', '_'
+  unless og_locale contains '_'
+    assign og_country = localization.country.iso_code | default: shop.address.country_code
+    if og_country != blank
+      assign og_locale = og_locale | append: '_' | append: og_country
+    endif
+  endunless
 %}
 
 <meta
@@ -51,11 +56,25 @@
   property="og:description"
   content="{{ og_description | escape }}"
 >
+{%- if og_locale != blank -%}
+  <meta
+    property="og:locale"
+    content="{{ og_locale }}"
+  >
+{%- endif -%}
+{%- for language in localization.available_languages -%}
+  {%- unless language.iso_code == request.locale.iso_code -%}
+    <meta
+      property="og:locale:alternate"
+      content="{{ language.iso_code | replace: '-', '_' }}"
+    >
+  {%- endunless -%}
+{%- endfor -%}
 
 {%- if page_image -%}
   <meta
     property="og:image"
-    content="http:{{ page_image | image_url }}"
+    content="https:{{ page_image | image_url }}"
   >
   <meta
     property="og:image:secure_url"
@@ -68,6 +87,10 @@
   <meta
     property="og:image:height"
     content="{{ page_image.height }}"
+  >
+  <meta
+    property="og:image:alt"
+    content="{{ page_image.alt | default: og_title | escape }}"
   >
 {%- endif -%}
 
@@ -82,10 +105,39 @@
   >
 {%- endif -%}
 
-{%- if settings.social_twitter_link != blank -%}
+{%- if request.page_type == 'article' -%}
+  <meta
+    property="article:published_time"
+    content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}"
+  >
+  <meta
+    property="article:modified_time"
+    content="{{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}"
+  >
+  {%- if article.author != blank -%}
+    <meta
+      property="article:author"
+      content="{{ article.author | escape }}"
+    >
+  {%- endif -%}
+  {%- if blog.title != blank -%}
+    <meta
+      property="article:section"
+      content="{{ blog.title | escape }}"
+    >
+  {%- endif -%}
+  {%- for tag in article.tags -%}
+    <meta
+      property="article:tag"
+      content="{{ tag | escape }}"
+    >
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if settings.x_url != blank -%}
   <meta
     name="twitter:site"
-    content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}"
+    content="{{ settings.x_url | split: '/' | last | prepend: '@' }}"
   >
 {%- endif -%}
 <meta
@@ -101,10 +153,11 @@
   content="{{ og_description | escape }}"
 >
 
+{%- assign current_tags_joined = current_tags | join: ', ' -%}
 <title>
   {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+  {%- if current_tags %} &ndash; {{ 'content.tagged' | t: tags: current_tags_joined }}{% endif -%}
+  {%- if current_page != 1 %} &ndash; {{ 'actions.pagination.page' | t: number: current_page }}{% endif -%}
   {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
 </title>
 
