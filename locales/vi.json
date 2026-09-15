@@ -148,6 +148,7 @@
     }
   },
   "content": {
+    "tagged": "gắn thẻ {{ tags }}",
     "size_chart": "Hướng dẫn chọn kích thước",
     "filters_sorting": "Lọc và sắp xếp",
     "account_title": "Tài khoản",

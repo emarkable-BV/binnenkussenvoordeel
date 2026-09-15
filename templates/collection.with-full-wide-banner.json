@@ -50,14 +50,36 @@
                 "padding-block-end": 0,
                 "mobile-padding-scale": 80,
                 "animation_type": "fade-up",
-                "animation_delay": 50
+                "animation_delay": 50,
+                "html_tag": "h1"
+              },
+              "blocks": {}
+            },
+            "collection_description_seo01": {
+              "type": "_collection-description",
+              "name": "t:names.collection_description",
+              "settings": {
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_weight": "",
+                "font_size": 15,
+                "font_size_mobile": 15,
+                "line_height": "normal",
+                "text_color": "subtext",
+                "disable_line_break_mobile": false,
+                "padding-block-start": 16,
+                "padding-block-end": 0,
+                "mobile-padding-scale": 75,
+                "animation_type": "fade-up",
+                "animation_delay": 100
               },
               "blocks": {}
             }
           },
           "block_order": [
             "breadcrumbs_PeHzGk",
-            "collection_title_UyCfUi"
+            "collection_title_UyCfUi",
+            "collection_description_seo01"
           ]
         }
       },

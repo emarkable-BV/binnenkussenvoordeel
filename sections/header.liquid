@@ -141,41 +141,53 @@
     }
   }
 {% endstylesheet %}
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Organization",
-    "name": {{ shop.name | json }},
-    {% if settings.logo %}
-      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
-    {% endif %}
-    "sameAs": [
-      {{ settings.x_url | json }},
-      {{ settings.facebook_url | json }},
-      {{ settings.pinterest_url | json }},
-      {{ settings.instagram_url | json }},
-      {{ settings.tiktok_url | json }},
-      {{ settings.tumblr_url | json }},
-      {{ settings.snapchat_url | json }},
-      {{ settings.youtube_url | json }},
-      {{ settings.vimeo_url | json }}
-    ],
-    "url": {{ request.origin | append: page.url | json }}
-  }
-</script>
+{%- comment -%}
+  Site-level entities. Both are gated to the homepage so the store emits one Organization
+  and one WebSite node in total, rather than one of each per URL. Other templates reference
+  the Organization by its @id; an @id that resolves on another page is the normal JSON-LD
+  pattern and does not need the node repeated here.
+{%- endcomment -%}
 {%- if request.page_type == 'index' -%}
-  {% assign potential_action_target = request.origin | append: routes.search_url | append: '?q={search_term_string}' %}
+  {%- comment -%}
+    Build sameAs from the non-blank social settings only. Listing them unconditionally
+    emits "" for every unset setting, which is not a valid URL value. split drops the
+    empty segments, so an all-blank config produces an empty list and the key is omitted.
+  {%- endcomment -%}
+  {%- assign social_settings = settings.x_url | append: ',' | append: settings.facebook_url | append: ',' | append: settings.pinterest_url | append: ',' | append: settings.instagram_url | append: ',' | append: settings.tiktok_url | append: ',' | append: settings.tumblr_url | append: ',' | append: settings.snapchat_url | append: ',' | append: settings.youtube_url | append: ',' | append: settings.vimeo_url -%}
+  {%- assign social_urls = social_settings | split: ',' -%}
   <script type="application/ld+json">
     {
-      "@context": "http://schema.org",
-      "@type": "WebSite",
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": {{ shop.url | append: '#organization' | json }},
       "name": {{ shop.name | json }},
+      {% if settings.logo %}
+        "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+      {% endif %}
+      {%- if social_urls.size > 0 %}
+        "sameAs": [
+          {%- for social_url in social_urls -%}
+            {{ social_url | strip | json }}{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ],
+      {%- endif %}
+      "url": {{ shop.url | json }}
+    }
+  </script>
+  {% assign potential_action_target = shop.url | append: routes.search_url | append: '?q={search_term_string}' %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": {{ shop.url | append: '#website' | json }},
+      "name": {{ shop.name | json }},
+      "publisher": { "@id": {{ shop.url | append: '#organization' | json }} },
       "potentialAction": {
         "@type": "SearchAction",
         "target": {{ potential_action_target | json }},
         "query-input": "required name=search_term_string"
       },
-      "url": {{ request.origin | append: page.url | json }}
+      "url": {{ shop.url | json }}
     }
   </script>
 {%- endif -%}
