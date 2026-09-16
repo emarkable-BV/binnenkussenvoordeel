@@ -29,7 +29,12 @@
   %}
 {%- endcapture -%}
 {%- capture grid_banner_heading -%}
-  {% render 'text', text: section.settings.grid_banner_title, preset: 'h4' %}
+  {% render 'text',
+    text: section.settings.grid_banner_title,
+    preset: 'h4',
+    text_color: 'gradient',
+    text_color_gradient: section.settings.grid_banner_title_color
+  %}
 {%- endcapture -%}
 {%- capture grid_banner_text -%}
   {% render 'text', text: section.settings.grid_banner_text, preset: 'rte' %}
@@ -320,6 +325,13 @@
       "type": "text",
       "id": "grid_banner_title",
       "label": "Titel",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "color",
+      "id": "grid_banner_title_color",
+      "label": "Kleur titel",
+      "default": "#3e0c40",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {
