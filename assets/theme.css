@@ -3970,6 +3970,8 @@ shopify-visual-preview-block-list .product-card {
   inset-block-end: var(--edge-padding-block, 2rem);
   inset-inline-end: var(--edge-padding-inline, 2rem);
   pointer-events: auto;
+  --color-primary-button-background: 62 12 64;
+  --color-primary-button-text: 255 255 255;
 }
 .collection-grid-banner__arrow .btn--icon-only {
   --button-corner-radius: 0.6rem;
