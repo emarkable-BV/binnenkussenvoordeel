@@ -51,12 +51,16 @@
   {%- endif -%}
 {%- endcapture -%}
 {%- capture grid_banner_button -%}
-  {%- if section.settings.grid_banner_button_label != blank -%}
-    {% render 'button',
-      label: section.settings.grid_banner_button_label,
-      link: section.settings.grid_banner_button_link,
-      style: section.settings.grid_banner_button_style
-    %}
+  {%- if section.settings.grid_banner_button_link != blank -%}
+    <div class="collection-grid-banner__arrow">
+      {% render 'button',
+        link: section.settings.grid_banner_button_link,
+        icon: 'arrow-right',
+        icon_only: true,
+        style: 'primary',
+        size: 'medium'
+      %}
+    </div>
   {%- endif -%}
 {%- endcapture -%}
 {%- capture grid_banner_html -%}
@@ -325,29 +329,10 @@
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {
-      "type": "text",
-      "id": "grid_banner_button_label",
-      "label": "t:settings.label",
-      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
-    },
-    {
       "type": "url",
       "id": "grid_banner_button_link",
-      "label": "t:settings.link",
-      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
-    },
-    {
-      "type": "select",
-      "id": "grid_banner_button_style",
-      "label": "t:settings.style",
-      "options": [
-        { "value": "primary", "label": "t:options.primary" },
-        { "value": "secondary", "label": "t:options.secondary" },
-        { "value": "white", "label": "t:options.white" },
-        { "value": "outline", "label": "t:options.outline" },
-        { "value": "plain", "label": "t:options.plain" }
-      ],
-      "default": "secondary",
+      "label": "Link (pijltje rechtsonder)",
+      "info": "Vierkant knopje met pijltje rechtsonder in de banner, alleen zichtbaar als hier een link is ingevuld",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {
