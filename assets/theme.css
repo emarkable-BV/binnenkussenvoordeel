@@ -3961,6 +3961,10 @@ shopify-visual-preview-block-list .product-card {
   }
 }
 
+.collection-grid-banner .image-card__subheading {
+  margin-block-end: 0.4rem;
+}
+
 .image-card--content-outside .image-card__content {
   padding-block-start: 0;
 }
