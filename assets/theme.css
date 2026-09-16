@@ -10355,17 +10355,16 @@ shopify-account::part(signed-out-avatar) {
 
 .hero-banner__content--shape::before {
   content: "";
-  display: none;
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 0;
+  width: var(--shape-width-mobile, 100%);
+  background-color: var(--shape-color, #ab85bc);
 }
 @media (min-width: 768px) {
   .hero-banner__content--shape::before {
-    display: block;
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: 0;
-    z-index: 0;
     width: var(--shape-width, 50%);
-    background-color: var(--shape-color, #ab85bc);
     clip-path: polygon(0 0, 100% 0, calc(100% - 6rem) 100%, 0 100%);
   }
 }
