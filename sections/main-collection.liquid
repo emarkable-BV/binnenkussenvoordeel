@@ -21,7 +21,12 @@
   endif
 -%}
 {%- capture grid_banner_subheading -%}
-  {% render 'text', text: section.settings.grid_banner_subtitle, preset: 'text-subheading' %}
+  {% render 'text',
+    text: section.settings.grid_banner_subtitle,
+    preset: 'text-subheading',
+    text_color: 'gradient',
+    text_color_gradient: section.settings.grid_banner_subtitle_color
+  %}
 {%- endcapture -%}
 {%- capture grid_banner_heading -%}
   {% render 'text', text: section.settings.grid_banner_title, preset: 'h3' %}
@@ -298,6 +303,13 @@
       "type": "text",
       "id": "grid_banner_subtitle",
       "label": "Subtitel",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "color",
+      "id": "grid_banner_subtitle_color",
+      "label": "Kleur subtitel",
+      "default": "#4C1D95",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {
