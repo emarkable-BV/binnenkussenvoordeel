@@ -90,11 +90,11 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p><em>GRATIS</em><strong>  </strong>textielspray<br/>t.w.v. €7,95 cadeau<br/> vanaf €35</p>",
+                "text": "<p><em><strong>Gratis</strong></em><strong>  </strong>textielspray<br/>t.w.v. €7,95 cadeau<br/> vanaf €35</p>",
                 "highlight_style": "standard",
                 "highlight_font_style": "normal",
                 "highlight_shape_color": "#320e3b",
-                "highlight_text_color": "#3E0C40",
+                "highlight_text_color": "#3e0c40",
                 "type_preset": "custom",
                 "font": "var(--font-heading--family)",
                 "font_weight": "",
