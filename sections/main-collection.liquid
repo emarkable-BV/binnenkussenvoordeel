@@ -19,6 +19,11 @@
     assign grid_banner_card_classes = 'collection-grid-banner'
     assign grid_banner_li_class = 'col-span-' | append: grid_banner_width
   endif
+  assign grid_banner_shape_style = ''
+  if section.settings.grid_banner_show_shape
+    assign grid_banner_li_class = grid_banner_li_class | append: ' collection-grid-banner--shape'
+    assign grid_banner_shape_style = '--shape-color: ' | append: section.settings.grid_banner_shape_color | append: ';'
+  endif
 -%}
 {%- capture grid_banner_subheading -%}
   {% render 'text',
@@ -127,14 +132,14 @@
             {% # theme-check-enable %}
           </li>
           {% if enable_grid_banner and grid_banner_html != blank and forloop.index == grid_banner_position %}
-            <li class="product-grid__item product-grid__item--banner {{ grid_banner_li_class }}" ref="cards[]">
+            <li class="product-grid__item product-grid__item--banner {{ grid_banner_li_class }}" style="{{ grid_banner_shape_style }}" ref="cards[]">
               {{ grid_banner_html }}
             </li>
             {% assign grid_banner_inserted = true %}
           {% endif %}
         {% endfor %}
         {% if enable_grid_banner and grid_banner_html != blank and grid_banner_inserted == false %}
-          <li class="product-grid__item product-grid__item--banner {{ grid_banner_li_class }}" ref="cards[]">
+          <li class="product-grid__item product-grid__item--banner {{ grid_banner_li_class }}" style="{{ grid_banner_shape_style }}" ref="cards[]">
             {{ grid_banner_html }}
           </li>
         {% endif %}
@@ -370,6 +375,21 @@
       ],
       "default": "3",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "grid_banner_show_shape",
+      "label": "Schuin kleurvlak achter tekst tonen",
+      "info": "Vlak met een schuine onderrand achter de subtitel, titel en tekst",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "color",
+      "id": "grid_banner_shape_color",
+      "label": "Kleur kleurvlak",
+      "default": "#ab85bc",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_show_shape == true }}"
     },
     {
       "type": "checkbox",

@@ -3980,6 +3980,23 @@ shopify-visual-preview-block-list .product-card {
   --button-corner-radius: 0.6rem;
 }
 
+.collection-grid-banner--shape .image-card__texts {
+  position: relative;
+  z-index: 1;
+  margin-inline: calc(var(--edge-padding-inline, 2.4rem) * -1);
+  margin-block-start: calc(var(--edge-padding-block, 2.4rem) * -1);
+  padding-inline: var(--edge-padding-inline, 2.4rem);
+  padding-block: var(--edge-padding-block, 2.4rem) 3.2rem;
+}
+.collection-grid-banner--shape .image-card__texts::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--shape-color, #ab85bc);
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+}
+
 .image-card--content-outside .image-card__content {
   padding-block-start: 0;
 }
