@@ -265,6 +265,7 @@
               "name": "t:names.collection_title",
               "settings": {
                 "type_preset": "h1",
+                "html_tag": "h1",
                 "font": "var(--font-body--family)",
                 "font_weight": "",
                 "font_size": 15,
@@ -275,8 +276,7 @@
                 "padding-block-end": 0,
                 "mobile-padding-scale": 80,
                 "animation_type": "fade-up",
-                "animation_delay": 50,
-                "html_tag": "h1"
+                "animation_delay": 50
               },
               "blocks": {}
             }
@@ -437,6 +437,19 @@
         "pagination": "number",
         "column_gap": 30,
         "row_gap": 30,
+        "enable_grid_banner": true,
+        "grid_banner_image": "shopify://shop_images/banner_binnenkussenvoordeel.jpg",
+        "grid_banner_image_ratio": "21/9",
+        "grid_banner_subtitle": "Woondeal",
+        "grid_banner_subtitle_color": "#3e0c40",
+        "grid_banner_title": "",
+        "grid_banner_text": "<p>Binnenkussen fris laten ruiken? Met deze heerlijke textielverfrisser</p>",
+        "grid_banner_button_link": "shopify://products/textielverfrisser-300-ml",
+        "grid_banner_position": 6,
+        "grid_banner_width": "1",
+        "grid_banner_overlay": false,
+        "grid_banner_overlay_color": "#00000033",
+        "grid_banner_color_scheme": "scheme-inverse",
         "enable_filtering": true,
         "filter_type": "vertical",
         "hide_filter_collapse_button": true,
@@ -789,6 +802,7 @@
           "name": "t:names.accordion",
           "settings": {
             "open_behavior": "single",
+            "enable_faq_schema": false,
             "type_preset": "h4",
             "style": "standard",
             "card_color_scheme": "scheme-1",
