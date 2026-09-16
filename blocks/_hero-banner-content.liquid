@@ -17,11 +17,33 @@
   if block.settings.enable_transparent
     assign classes_content = classes_content | append: ' !bg-none'
   endif
+
+  assign classes_wrap = 'hero-banner__content flex-1 edge-gap relative row-span-full col-span-full content-overlay-style'
+  assign shape_style = ''
+  if block.settings.show_shape
+    assign classes_wrap = classes_wrap | append: ' hero-banner__content--shape'
+
+    assign shape_width = '100%'
+    if block.settings.width == 'custom' and block.settings.custom_width != blank
+      assign shape_width = block.settings.custom_width | append: '%'
+    elsif block.settings.width == 'fit-content'
+      assign shape_width = 'fit-content'
+    endif
+
+    assign shape_width_mobile = '100%'
+    if block.settings.width_mobile == 'custom' and block.settings.custom_width_mobile != blank
+      assign shape_width_mobile = block.settings.custom_width_mobile | append: '%'
+    elsif block.settings.width_mobile == 'fit-content'
+      assign shape_width_mobile = 'fit-content'
+    endif
+
+    assign shape_style = '--shape-color: ' | append: block.settings.shape_color | append: '; --shape-width: ' | append: shape_width | append: '; --shape-width-mobile: ' | append: shape_width_mobile | append: ';'
+  endif
 %}
 
 <div
-  class="hero-banner__content flex-1 edge-gap relative row-span-full col-span-full content-overlay-style"
-  style="{% render 'content-overlay-style', position: position, position_mobile: position_mobile %}"
+  class="{{ classes_wrap }}"
+  style="{% render 'content-overlay-style', position: position, position_mobile: position_mobile %}{{ shape_style }}"
 >
   <{{ tag }}
     class="{{ classes_content | strip_newlines }}"
@@ -155,6 +177,24 @@
       "unit": "%",
       "default": 100,
       "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "Schuin kleurvlak"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shape",
+      "label": "Schuin kleurvlak achter tekst tonen",
+      "info": "Vult de breedte van dit contentblok met een kleur en een schuine rand, zichtbaar vanaf tablet/desktop",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "shape_color",
+      "label": "Kleur kleurvlak",
+      "default": "#ab85bc",
+      "visible_if": "{{ block.settings.show_shape == true }}"
     },
     {
       "type": "header",

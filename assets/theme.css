@@ -10353,6 +10353,27 @@ shopify-account::part(signed-out-avatar) {
   }
 }
 
+.hero-banner__content--shape::before {
+  content: "";
+  display: none;
+}
+@media (min-width: 768px) {
+  .hero-banner__content--shape::before {
+    display: block;
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 0;
+    width: var(--shape-width, 50%);
+    background-color: var(--shape-color, #ab85bc);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 6rem) 100%, 0 100%);
+  }
+}
+.hero-banner__content--shape .hero-banner__inner {
+  position: relative;
+  z-index: 1;
+}
+
 .hero-banner .hero-banner--content-inside {
   --edge-padding-inline: 0;
   --edge-padding-inline-mobile: 0;
