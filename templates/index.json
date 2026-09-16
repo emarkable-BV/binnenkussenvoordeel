@@ -63,10 +63,9 @@
             "subheading": {
               "type": "_simple-text",
               "name": "t:names.subheading",
-              "disabled": true,
               "static": true,
               "settings": {
-                "text": "<p>Profiteer </p>",
+                "text": "<p>Woondeal</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -91,10 +90,10 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p>Woondeal: GRATIS<br/>textielspray t.w.v. €7,95<br/>cadeau vanaf €35</p>",
-                "highlight_style": "standard",
-                "highlight_font_style": "italic",
-                "highlight_shape_color": "",
+                "text": "<p><em>GRATIS</em><strong>  </strong>textielspray<br/>t.w.v. €7,95 cadeau<br/> vanaf €35</p>",
+                "highlight_style": "none",
+                "highlight_font_style": "normal",
+                "highlight_shape_color": "#320E3B",
                 "highlight_text_color": "",
                 "type_preset": "custom",
                 "font": "var(--font-heading--family)",
@@ -116,7 +115,7 @@
               "disabled": true,
               "static": true,
               "settings": {
-                "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+                "text": "<p> vanaf €35</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
