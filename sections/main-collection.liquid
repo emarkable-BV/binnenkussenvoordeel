@@ -10,7 +10,7 @@
   if grid_banner_width == '3'
     assign grid_banner_full_width = true
   endif
-  assign grid_banner_alt = section.settings.grid_banner_title | default: shop.name
+  assign grid_banner_alt = section.settings.grid_banner_title | strip_html | default: shop.name
   assign grid_banner_image_class = ''
   assign grid_banner_card_classes = 'collection-grid-banner h-full'
   assign grid_banner_li_class = 'col-span-' | append: grid_banner_width | append: ' self-stretch'
@@ -336,7 +336,7 @@
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "grid_banner_title",
       "label": "Titel",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
