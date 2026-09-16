@@ -91,10 +91,10 @@
               "static": true,
               "settings": {
                 "text": "<p><em>GRATIS</em><strong>  </strong>textielspray<br/>t.w.v. €7,95 cadeau<br/> vanaf €35</p>",
-                "highlight_style": "none",
+                "highlight_style": "standard",
                 "highlight_font_style": "normal",
-                "highlight_shape_color": "#320E3B",
-                "highlight_text_color": "",
+                "highlight_shape_color": "#320e3b",
+                "highlight_text_color": "#3E0C40",
                 "type_preset": "custom",
                 "font": "var(--font-heading--family)",
                 "font_weight": "",
@@ -2955,6 +2955,7 @@
               "name": "t:names.accordion",
               "settings": {
                 "open_behavior": "single",
+                "enable_faq_schema": false,
                 "type_preset": "h4",
                 "style": "card",
                 "card_color_scheme": "scheme-5",
@@ -4302,6 +4303,7 @@
           "name": "t:names.accordion",
           "settings": {
             "open_behavior": "single",
+            "enable_faq_schema": false,
             "type_preset": "h4",
             "style": "standard",
             "card_color_scheme": "scheme-1",
