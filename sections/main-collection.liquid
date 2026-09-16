@@ -5,14 +5,26 @@
   assign filter_type = section.settings.filter_type | default: 'vertical'
   assign enable_grid_banner = section.settings.enable_grid_banner
   assign grid_banner_position = section.settings.grid_banner_position
-  assign grid_banner_width = section.settings.grid_banner_width | default: 3
+  assign grid_banner_width = section.settings.grid_banner_width | default: '3'
+  assign grid_banner_full_width = false
+  if grid_banner_width == '3'
+    assign grid_banner_full_width = true
+  endif
   assign grid_banner_alt = section.settings.grid_banner_title | default: shop.name
+  assign grid_banner_image_class = ''
+  assign grid_banner_card_classes = 'h-full'
+  assign grid_banner_li_class = 'col-span-' | append: grid_banner_width | append: ' self-stretch'
+  if grid_banner_full_width
+    assign grid_banner_image_class = 'media-max-h-240'
+    assign grid_banner_card_classes = ''
+    assign grid_banner_li_class = 'col-span-' | append: grid_banner_width
+  endif
 -%}
 {%- capture grid_banner_subheading -%}
   {% render 'text', text: section.settings.grid_banner_subtitle, preset: 'text-subheading' %}
 {%- endcapture -%}
 {%- capture grid_banner_heading -%}
-  {% render 'text', text: section.settings.grid_banner_title, preset: 'h2' %}
+  {% render 'text', text: section.settings.grid_banner_title, preset: 'h3' %}
 {%- endcapture -%}
 {%- capture grid_banner_text -%}
   {% render 'text', text: section.settings.grid_banner_text, preset: 'rte' %}
@@ -24,12 +36,22 @@
     image_mobile: section.settings.grid_banner_image_mobile,
     image_ratio: section.settings.grid_banner_image_ratio,
     sizes: '100vw',
-    default_alt: grid_banner_alt
+    default_alt: grid_banner_alt,
+    class: grid_banner_image_class
   %}
 {%- endcapture -%}
 {%- capture grid_banner_overlay_html -%}
   {%- if section.settings.grid_banner_overlay -%}
     {% render 'overlay', overlay_color: section.settings.grid_banner_overlay_color %}
+  {%- endif -%}
+{%- endcapture -%}
+{%- capture grid_banner_button -%}
+  {%- if section.settings.grid_banner_button_label != blank -%}
+    {% render 'button',
+      label: section.settings.grid_banner_button_label,
+      link: section.settings.grid_banner_button_link,
+      style: section.settings.grid_banner_button_style
+    %}
   {%- endif -%}
 {%- endcapture -%}
 {%- capture grid_banner_html -%}
@@ -42,9 +64,12 @@
       subheading: grid_banner_subheading,
       heading: grid_banner_heading,
       text: grid_banner_text,
-      h_alignment: 'center',
-      v_alignment: 'center',
-      edge_gap: 'lg'
+      button: grid_banner_button,
+      h_alignment: 'flex-start',
+      v_alignment: 'space-between',
+      edge_gap: 'sm',
+      border_radius: settings.pcard_media_radius,
+      classes: grid_banner_card_classes
     %}
   {%- endif -%}
 {%- endcapture -%}
@@ -88,14 +113,14 @@
             {% # theme-check-enable %}
           </li>
           {% if enable_grid_banner and grid_banner_html != blank and forloop.index == grid_banner_position %}
-            <li class="product-grid__item product-grid__item--banner col-span-{{ grid_banner_width }}" ref="cards[]">
+            <li class="product-grid__item product-grid__item--banner {{ grid_banner_li_class }}" ref="cards[]">
               {{ grid_banner_html }}
             </li>
             {% assign grid_banner_inserted = true %}
           {% endif %}
         {% endfor %}
         {% if enable_grid_banner and grid_banner_html != blank and grid_banner_inserted == false %}
-          <li class="product-grid__item product-grid__item--banner col-span-{{ grid_banner_width }}" ref="cards[]">
+          <li class="product-grid__item product-grid__item--banner {{ grid_banner_li_class }}" ref="cards[]">
             {{ grid_banner_html }}
           </li>
         {% endif %}
@@ -285,6 +310,32 @@
       "type": "richtext",
       "id": "grid_banner_text",
       "label": "Tekst",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "text",
+      "id": "grid_banner_button_label",
+      "label": "t:settings.label",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "url",
+      "id": "grid_banner_button_link",
+      "label": "t:settings.link",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_button_style",
+      "label": "t:settings.style",
+      "options": [
+        { "value": "primary", "label": "t:options.primary" },
+        { "value": "secondary", "label": "t:options.secondary" },
+        { "value": "white", "label": "t:options.white" },
+        { "value": "outline", "label": "t:options.outline" },
+        { "value": "plain", "label": "t:options.plain" }
+      ],
+      "default": "secondary",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {

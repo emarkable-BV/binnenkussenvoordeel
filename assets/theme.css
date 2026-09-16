@@ -5033,6 +5033,10 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
   height: 100%;
 }
 
+.media-max-h-240 {
+  max-height: 240px;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
