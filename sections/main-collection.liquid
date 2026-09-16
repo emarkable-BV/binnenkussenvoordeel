@@ -3,7 +3,50 @@
   assign columns = 3
   assign columns_mobile = 2
   assign filter_type = section.settings.filter_type | default: 'vertical'
+  assign enable_grid_banner = section.settings.enable_grid_banner
+  assign grid_banner_position = section.settings.grid_banner_position
+  assign grid_banner_alt = section.settings.grid_banner_title | default: shop.name
 -%}
+{%- capture grid_banner_subheading -%}
+  {% render 'text', text: section.settings.grid_banner_subtitle, preset: 'text-subheading' %}
+{%- endcapture -%}
+{%- capture grid_banner_heading -%}
+  {% render 'text', text: section.settings.grid_banner_title, preset: 'h2' %}
+{%- endcapture -%}
+{%- capture grid_banner_text -%}
+  {% render 'text', text: section.settings.grid_banner_text, preset: 'rte' %}
+{%- endcapture -%}
+{%- capture grid_banner_image_html -%}
+  {% render 'responsive-image',
+    mode: 'liquid',
+    image: section.settings.grid_banner_image,
+    image_mobile: section.settings.grid_banner_image_mobile,
+    image_ratio: section.settings.grid_banner_image_ratio,
+    sizes: '100vw',
+    default_alt: grid_banner_alt
+  %}
+{%- endcapture -%}
+{%- capture grid_banner_overlay_html -%}
+  {%- if section.settings.grid_banner_overlay -%}
+    {% render 'overlay', overlay_color: section.settings.grid_banner_overlay_color %}
+  {%- endif -%}
+{%- endcapture -%}
+{%- capture grid_banner_html -%}
+  {%- if enable_grid_banner -%}
+    {% render 'image-card',
+      mode: 'static',
+      image: grid_banner_image_html,
+      overlay: grid_banner_overlay_html,
+      color_scheme: section.settings.grid_banner_color_scheme,
+      subheading: grid_banner_subheading,
+      heading: grid_banner_heading,
+      text: grid_banner_text,
+      h_alignment: 'center',
+      v_alignment: 'center',
+      edge_gap: 'lg'
+    %}
+  {%- endif -%}
+{%- endcapture -%}
 {%- capture media_sizes -%}
   {%- capture container_size -%}min(100vw, {{ settings.page_width | plus: 32 }}px){%- endcapture -%}
   {% if enable_filtering %}(min-width: 1200px) calc(({{ container_size }} - 345px - 32px) / {{ columns }}), (min-width: 1024px) calc(({{ container_size }} - 295px - 32px) / {{ columns }}), {% endif %}(min-width: 768px) calc(({{ container_size }} - 32px) / {{ columns }}), calc((100vw - 32px) / {{ columns_mobile }})
@@ -30,6 +73,7 @@
     %}
     {% paginate collection.products by section.settings.products_per_page %}
       {% capture children %}
+        {% assign grid_banner_inserted = false %}
         {% for product in collection.products %}
           <li
             id="{{ section.id }}-{{ product.id }}"
@@ -42,7 +86,18 @@
             {% content_for 'block', type: '_product-card', id: 'product-card', product: product, media_sizes: media_sizes %}
             {% # theme-check-enable %}
           </li>
+          {% if enable_grid_banner and grid_banner_html != blank and forloop.index == grid_banner_position %}
+            <li class="product-grid__item product-grid__item--banner col-span-full" ref="cards[]">
+              {{ grid_banner_html }}
+            </li>
+            {% assign grid_banner_inserted = true %}
+          {% endif %}
         {% endfor %}
+        {% if enable_grid_banner and grid_banner_html != blank and grid_banner_inserted == false %}
+          <li class="product-grid__item product-grid__item--banner col-span-full" ref="cards[]">
+            {{ grid_banner_html }}
+          </li>
+        {% endif %}
       {% endcapture %}
 
       <div id="ResultsList" class="main-collection-grid">
@@ -173,6 +228,96 @@
       "step": 1,
       "unit": "px",
       "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Banner in grid"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_grid_banner",
+      "label": "Banner tonen tussen de producten",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "grid_banner_image",
+      "label": "Achtergrondafbeelding",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "grid_banner_image_mobile",
+      "label": "Achtergrondafbeelding (mobiel)",
+      "info": "Optioneel, gebruikt anders de desktopafbeelding",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "adapt", "label": "t:options.auto" },
+        { "value": "1/1", "label": "t:options.square" },
+        { "value": "4/5", "label": "t:options.portrait" },
+        { "value": "3/4", "label": "t:options.portrait_3_4" },
+        { "value": "16/9", "label": "t:options.landscape" },
+        { "value": "4/3", "label": "t:options.landscape_4_3" },
+        { "value": "21/9", "label": "t:options.landscape_21_9" }
+      ],
+      "default": "21/9",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "text",
+      "id": "grid_banner_subtitle",
+      "label": "Subtitel",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "text",
+      "id": "grid_banner_title",
+      "label": "Titel",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "richtext",
+      "id": "grid_banner_text",
+      "label": "Tekst",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "range",
+      "id": "grid_banner_position",
+      "label": "Positie in het grid",
+      "info": "Na hoeveel producten de banner wordt getoond (op deze pagina)",
+      "min": 1,
+      "max": 48,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "grid_banner_overlay",
+      "label": "t:settings.media_overlay",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "color",
+      "id": "grid_banner_overlay_color",
+      "label": "t:settings.overlay_color",
+      "alpha": true,
+      "default": "#00000033",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_overlay == true }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "grid_banner_color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {
       "type": "header",
