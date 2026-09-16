@@ -1,4 +1,9 @@
 {% assign block_settings = block.settings %}
+{%- comment -%}
+  Captured before the row loop below, which shadows `block` with each accordion row.
+{%- endcomment -%}
+{%- assign faq_enabled = block.settings.enable_faq_schema -%}
+{%- assign faq_rows = block.blocks -%}
 {% capture styles %}
   --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
   --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -30,6 +35,54 @@
   {%- endfor -%}
 </accordion-component>
 
+{%- comment -%}
+  Optional FAQPage markup, off by default.
+
+  Google stopped showing FAQ rich results for the vast majority of sites in August 2023,
+  so this is for entity understanding and AI answer surfaces, not for a SERP feature.
+
+  A page may contain at most one FAQPage node, and several templates here carry more than
+  one accordion, which is why this cannot be automatic. Enable it on exactly one accordion
+  per template.
+
+  The question is the row's summary text; the answer is the concatenated text of the row's
+  child blocks. Rows with an empty question or an empty answer are skipped.
+{%- endcomment -%}
+{%- if faq_enabled -%}
+  {%- capture faq_raw -%}
+    {%- for faq_row in faq_rows -%}
+      {%- assign faq_question = faq_row.settings.text | strip_html | strip -%}
+      {%- if faq_question == blank -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- capture faq_answer_raw -%}
+        {%- for faq_child in faq_row.blocks -%}
+          {{ faq_child.settings.text }}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign faq_answer = faq_answer_raw | strip_html | strip -%}
+      {%- if faq_answer == blank -%}
+        {%- continue -%}
+      {%- endif -%}
+      {"@type": "Question", "name": {{ faq_question | json }}, "acceptedAnswer": {"@type": "Answer", "text": {{ faq_answer | json }}}}|~FAQ~|
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- assign faq_items = faq_raw | split: '|~FAQ~|' -%}
+  {%- if faq_items.size > 0 -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {%- for faq_item in faq_items -%}
+            {{ faq_item | strip }}{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  {%- endif -%}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "t:names.accordion",
@@ -44,6 +97,13 @@
         { "value": "multiple", "label": "t:options.multiple" },
         { "value": "single", "label": "t:options.single" }
       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_faq_schema",
+      "label": "Add FAQ structured data",
+      "default": false,
+      "info": "Describes these rows as questions and answers for search engines. Only one accordion per page may have this enabled."
     },
     {
       "type": "header",

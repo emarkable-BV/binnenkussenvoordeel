@@ -3961,6 +3961,22 @@ shopify-visual-preview-block-list .product-card {
   }
 }
 
+.collection-grid-banner .image-card__subheading {
+  margin-block-end: 0.4rem;
+}
+
+.collection-grid-banner__arrow {
+  position: absolute;
+  inset-block-end: var(--edge-padding-block, 2rem);
+  inset-inline-end: var(--edge-padding-inline, 2rem);
+  pointer-events: auto;
+  --color-primary-button-background: 62 12 64;
+  --color-primary-button-text: 255 255 255;
+}
+.collection-grid-banner__arrow .btn--icon-only {
+  --button-corner-radius: 0.6rem;
+}
+
 .image-card--content-outside .image-card__content {
   padding-block-start: 0;
 }
@@ -5031,6 +5047,10 @@ body:has(.sticky-add-to-cart__wrapper[data-sticky=true]) .back-to-top {
 
 .h-full {
   height: 100%;
+}
+
+.media-max-h-240 {
+  max-height: 240px;
 }
 
 .overflow-hidden {

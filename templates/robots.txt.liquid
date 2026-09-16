@@ -1,0 +1,31 @@
+{%- comment -%}
+  Built on robots.default_groups so Shopify's own rules and the sitemap line survive.
+  The extra rules are attached to the "*" group only, so named crawlers keep their
+  default treatment.
+
+  What the extra rules cover:
+    filter.*  faceted filter parameters emitted by the collection filter form
+    sort_by   collection and search sort order
+    ?q=       internal search result URLs
+
+  Shopify already canonicalises filtered collection URLs back to the clean collection,
+  so this is crawl budget control, not duplicate content control.
+{%- endcomment -%}
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
+
+  {%- for rule in group.rules %}
+    {{ rule }}
+  {%- endfor -%}
+
+  {%- if group.user_agent.value == '*' %}
+    {{ 'Disallow: /*filter.*' }}
+    {{ 'Disallow: /*sort_by*' }}
+    {{ 'Disallow: /*?q=*' }}
+    {{ 'Disallow: /*&q=*' }}
+  {%- endif -%}
+
+  {%- if group.sitemap != blank %}
+    {{ group.sitemap }}
+  {%- endif -%}
+{% endfor %}

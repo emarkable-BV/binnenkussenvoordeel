@@ -159,6 +159,7 @@
     }
   },
   "content": {
+    "tagged": "tagged {{ tags }}",
     "size_chart": "Size Guide",
     "filters_sorting": "Filter & sort",
     "account_title": "Account",

@@ -1,11 +1,42 @@
 {{ 'template-article.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  The article title, image and body are rendered by separate blocks, so microdata itemprops
+  cannot be attached to them from here. Describe the post in JSON-LD instead. The publisher
+  reference points at the Organization node emitted on the homepage by sections/header.liquid.
+{%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": {{ shop.url | append: article.url | append: '#article' | json }},
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ shop.url | append: article.url | json }}
+    },
+    "headline": {{ article.title | strip_html | truncate: 110 | json }},
+    {%- if article.excerpt_or_content != blank %}
+      "description": {{ article.excerpt_or_content | strip_html | truncate: 300 | json }},
+    {%- endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "dateModified": {{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    {%- if article.image %}
+      "image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }},
+    {%- endif %}
+    {%- if article.author != blank %}
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+      },
+    {%- endif %}
+    "publisher": { "@id": {{ shop.url | append: '#organization' | json }} }
+  }
+</script>
+
 <article
   id="section-{{ section.id }}"
   class="article spacing-style color-{{ section.settings.color_scheme }} block"
   style="{% render 'spacing-style', settings: section.settings %}"
-  itemscope
-  itemtype="http://schema.org/BlogPosting"
 >
   <div
     class="section__container article__main section-grid section-grid--fixed"
