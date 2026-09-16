@@ -5,6 +5,7 @@
   assign filter_type = section.settings.filter_type | default: 'vertical'
   assign enable_grid_banner = section.settings.enable_grid_banner
   assign grid_banner_position = section.settings.grid_banner_position
+  assign grid_banner_width = section.settings.grid_banner_width | default: 3
   assign grid_banner_alt = section.settings.grid_banner_title | default: shop.name
 -%}
 {%- capture grid_banner_subheading -%}
@@ -87,14 +88,14 @@
             {% # theme-check-enable %}
           </li>
           {% if enable_grid_banner and grid_banner_html != blank and forloop.index == grid_banner_position %}
-            <li class="product-grid__item product-grid__item--banner col-span-full" ref="cards[]">
+            <li class="product-grid__item product-grid__item--banner col-span-{{ grid_banner_width }}" ref="cards[]">
               {{ grid_banner_html }}
             </li>
             {% assign grid_banner_inserted = true %}
           {% endif %}
         {% endfor %}
         {% if enable_grid_banner and grid_banner_html != blank and grid_banner_inserted == false %}
-          <li class="product-grid__item product-grid__item--banner col-span-full" ref="cards[]">
+          <li class="product-grid__item product-grid__item--banner col-span-{{ grid_banner_width }}" ref="cards[]">
             {{ grid_banner_html }}
           </li>
         {% endif %}
@@ -295,6 +296,19 @@
       "max": 48,
       "step": 1,
       "default": 4,
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_width",
+      "label": "Breedte van de banner",
+      "info": "Hoeveel productblokjes breed de banner is",
+      "options": [
+        { "value": "1", "label": "1 productblok" },
+        { "value": "2", "label": "2 productblokken" },
+        { "value": "3", "label": "3 productblokken" }
+      ],
+      "default": "3",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
     },
     {
