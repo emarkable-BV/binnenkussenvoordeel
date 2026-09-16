@@ -36,9 +36,18 @@
 {%- capture grid_banner_heading -%}
   {% render 'text',
     text: section.settings.grid_banner_title,
-    preset: 'h4',
+    preset: section.settings.grid_banner_title_preset,
+    font_family: section.settings.grid_banner_title_font,
+    font_weight: section.settings.grid_banner_title_font_weight,
+    font_size: section.settings.grid_banner_title_font_size,
+    font_size_mobile: section.settings.grid_banner_title_font_size_mobile,
+    line_height: section.settings.grid_banner_title_line_height,
     text_color: 'gradient',
-    text_color_gradient: section.settings.grid_banner_title_color
+    text_color_gradient: section.settings.grid_banner_title_color,
+    highlight_style: section.settings.grid_banner_title_highlight_style,
+    highlight_font_style: section.settings.grid_banner_title_highlight_font_style,
+    highlight_shape_color: section.settings.grid_banner_title_highlight_shape_color,
+    highlight_text_color: section.settings.grid_banner_title_highlight_text_color
   %}
 {%- endcapture -%}
 {%- capture grid_banner_text -%}
@@ -338,6 +347,123 @@
       "label": "Kleur titel",
       "default": "#3e0c40",
       "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_title_preset",
+      "label": "t:settings.preset",
+      "options": [
+        { "value": "rte", "label": "t:options.default" },
+        { "value": "paragraph", "label": "t:options.paragraph" },
+        { "value": "text-subheading", "label": "t:options.subheading" },
+        { "value": "h1", "label": "t:options.h1" },
+        { "value": "h2", "label": "t:options.h2" },
+        { "value": "h3", "label": "t:options.h3" },
+        { "value": "h4", "label": "t:options.h4" },
+        { "value": "h5", "label": "t:options.h5" },
+        { "value": "h6", "label": "t:options.h6" },
+        { "value": "custom", "label": "t:options.custom" }
+      ],
+      "default": "h4",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_title_font",
+      "label": "t:settings.font",
+      "options": [
+        { "value": "var(--font-body--family)", "label": "t:options.body" },
+        { "value": "var(--font-heading--family)", "label": "t:options.heading" }
+      ],
+      "default": "var(--font-heading--family)",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_title_font_weight",
+      "label": "t:settings.font_weight",
+      "default": "",
+      "options": [
+        { "value": "", "label": "t:options.inherit" },
+        { "value": "300", "label": "t:options.light" },
+        { "value": "400", "label": "t:options.regular" },
+        { "value": "500", "label": "t:options.medium" },
+        { "value": "600", "label": "t:options.semi_bold" },
+        { "value": "700", "label": "t:options.bold" },
+        { "value": "800", "label": "t:options.extra_bold" },
+        { "value": "900", "label": "t:options.black" }
+      ],
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "grid_banner_title_font_size",
+      "label": "t:settings.font_size",
+      "default": 28,
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_preset == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "grid_banner_title_font_size_mobile",
+      "label": "t:settings.font_size_mobile",
+      "default": 22,
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_title_line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        { "value": "tight", "label": "t:options.tight" },
+        { "value": "normal", "label": "t:options.normal" },
+        { "value": "loose", "label": "t:options.loose" }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_title_highlight_style",
+      "label": "t:settings.highlight_style",
+      "options": [
+        { "value": "none", "label": "t:options.none" },
+        { "value": "standard", "label": "t:options.standard" },
+        { "value": "wavy-underline", "label": "t:options.wavy_underline" },
+        { "value": "solid-background", "label": "t:options.solid_background" }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.enable_grid_banner == true }}"
+    },
+    {
+      "type": "select",
+      "id": "grid_banner_title_highlight_font_style",
+      "label": "t:settings.highlight_font_style",
+      "options": [
+        { "value": "italic", "label": "t:options.italic" },
+        { "value": "normal", "label": "t:options.normal" }
+      ],
+      "default": "italic",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_highlight_style != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "grid_banner_title_highlight_shape_color",
+      "label": "t:settings.highlight_shape_color",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_highlight_style != 'none' and section.settings.grid_banner_title_highlight_style != 'standard' }}"
+    },
+    {
+      "type": "color",
+      "id": "grid_banner_title_highlight_text_color",
+      "label": "t:settings.highlight_text_color",
+      "visible_if": "{{ section.settings.enable_grid_banner == true and section.settings.grid_banner_title_highlight_style != 'none' }}"
     },
     {
       "type": "richtext",
