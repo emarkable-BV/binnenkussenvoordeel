@@ -111,7 +111,7 @@
             "width": "custom",
             "custom_width": 50,
             "show_shape": true,
-            "shape_color": "#3E0C40",
+            "shape_color": "#3e0c40",
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "horizontal_alignment_flex_direction_column_mobile": "flex-start",
@@ -134,7 +134,7 @@
             "text_cwGnmk": {
               "type": "text",
               "settings": {
-                "text": "<p><strong>Wij zijn er ook voor jou zakelijke project</strong></p>",
+                "text": "<p>Wij zijn er ook voor jou zakelijke project</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -247,8 +247,8 @@
         "color_scheme": "scheme-inverse",
         "border_radius": 20,
         "device": "desktop",
-        "padding-block-start": 20,
-        "padding-block-end": 20,
+        "padding-block-start": 0,
+        "padding-block-end": 0,
         "padding-block-start-mobile": 0,
         "padding-block-end-mobile": 0
       }
