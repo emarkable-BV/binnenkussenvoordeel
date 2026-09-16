@@ -3964,6 +3964,9 @@ shopify-visual-preview-block-list .product-card {
 .collection-grid-banner .image-card__subheading {
   margin-block-end: 0.4rem;
 }
+.collection-grid-banner .image-card__subheading .text-subheading {
+  font-size: calc(var(--font-subheading--size) * 0.7);
+}
 
 .collection-grid-banner__arrow {
   position: absolute;
