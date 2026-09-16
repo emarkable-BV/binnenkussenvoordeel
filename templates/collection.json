@@ -442,7 +442,7 @@
         "grid_banner_image_ratio": "21/9",
         "grid_banner_subtitle": "WOONDEALS",
         "grid_banner_subtitle_color": "#eaddeb",
-        "grid_banner_title": "Gratis textielspray t.w.v. €7,95 cadeau vanaf €35",
+        "grid_banner_title": "<p>Gratis textielspray t.w.v. €7,95 cadeau vanaf €35</p>",
         "grid_banner_title_color": "#FFFFFF",
         "grid_banner_title_preset": "h4",
         "grid_banner_title_font": "var(--font-heading--family)",
