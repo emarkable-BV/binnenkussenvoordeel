@@ -1376,7 +1376,7 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p>Wij maken het op maat</p>",
+                "text": "<p>Wij leveren op maat</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
@@ -1400,7 +1400,7 @@
               "type": "_simple-text",
               "static": true,
               "settings": {
-                "text": "<p>De binnenkussens worden volgens de afgesproken specificaties geproduceerd en geleverd.</p>",
+                "text": "<p>De binnenkussens worden volgens de afgesproken specificaties geleverd.</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
