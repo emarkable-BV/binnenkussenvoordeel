@@ -986,7 +986,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Reviews van BinnenkussenVoordeel en Gek op Kussens, want achter beide shops zit hetzelfde team.</p>",
+            "text": "<p>Reviews van BinnenkussenVoordeel en Gek op kussens, want achter beide shops zit hetzelfde team.</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
@@ -1196,6 +1196,7 @@
           "name": "t:names.accordion",
           "settings": {
             "open_behavior": "single",
+            "enable_faq_schema": false,
             "type_preset": "h4",
             "style": "standard",
             "card_color_scheme": "scheme-1",
