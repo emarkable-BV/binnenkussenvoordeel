@@ -3353,7 +3353,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Reviews van BinnenkussenVoordeel en Gek op Kussens, want achter beide shops zit hetzelfde team.</p>",
+            "text": "<p>Reviews van BinnenkussenVoordeel en Gek op kussens, want achter beide shops zit hetzelfde team.</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
