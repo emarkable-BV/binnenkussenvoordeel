@@ -1088,7 +1088,7 @@
               "name": "t:names.heading",
               "static": true,
               "settings": {
-                "text": "<p>U deelt uw wensen</p>",
+                "text": "<p>Je deelt jouw wensen</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
