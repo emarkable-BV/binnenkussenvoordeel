@@ -1736,7 +1736,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Bekijk de mogelijkheden",
-                "link": "#",
+                "link": "https://binnenkussenvoordeel.nl/pages/zakelijk-overzicht",
                 "open_in_new_tab": false,
                 "style": "primary",
                 "size": "medium",
