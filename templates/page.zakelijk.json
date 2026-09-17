@@ -96,7 +96,7 @@
             "parallax_direction": "zoom",
             "parallax_intensity": 0.3,
             "type": "image",
-            "image": "shopify://shop_images/boot.png",
+            "image": "{{ closest.page.metafields.custom.herobanner.value }}",
             "toggle_overlay": false,
             "overlay_color": "#00000033"
           },
