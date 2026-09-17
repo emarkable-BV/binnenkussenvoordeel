@@ -1400,7 +1400,7 @@
               "type": "_simple-text",
               "static": true,
               "settings": {
-                "text": "<p>De binnenkussens worden volgens de afgesproken specificaties geleverd.</p>",
+                "text": "<p>De binnenkussens worden volgens de afgesproken condities geleverd.</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
