@@ -2100,7 +2100,7 @@
                 "image_border_width": 1,
                 "image_border_opacity": 100,
                 "image_border_radius": 0,
-                "card_link": "shopify://pages/horeca",
+                "card_link": "shopify://pages/zakelijk-overzicht",
                 "edge_gap": "md",
                 "content_direction": "row",
                 "vertical_on_mobile": true,
@@ -2662,7 +2662,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Reviews van BinnenkussenVoordeel en Gek op Kussens, want achter beide shops zit hetzelfde team.</p>",
+            "text": "<p>Reviews van BinnenkussenVoordeel en Gek op kussens, want achter beide shops zit hetzelfde team.</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
