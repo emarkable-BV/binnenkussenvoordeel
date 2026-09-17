@@ -488,7 +488,7 @@
           "type": "feature-card",
           "settings": {
             "heading": "Polyester",
-            "link": "shopify://collections/frontpage",
+            "link": "shopify://collections/polyester",
             "link_label": "Bekijken",
             "image": "shopify://shop_images/polyester_png.png",
             "background_color": "#ffe9d9"
