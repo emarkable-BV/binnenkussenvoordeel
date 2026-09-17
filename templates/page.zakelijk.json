@@ -93,10 +93,10 @@
           "static": true,
           "settings": {
             "enable_parallax": true,
-            "parallax_direction": "vertical",
-            "parallax_intensity": 0.7,
+            "parallax_direction": "zoom",
+            "parallax_intensity": 0.3,
             "type": "image",
-            "image": "{{ page.metafields.custom.herobanner.value }}",
+            "image": "shopify://shop_images/boot.png",
             "toggle_overlay": false,
             "overlay_color": "#00000033"
           },
