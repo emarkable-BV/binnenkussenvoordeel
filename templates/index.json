@@ -3899,7 +3899,7 @@
                 "image_border_width": 1,
                 "image_border_opacity": 100,
                 "image_border_radius": 0,
-                "card_link": "",
+                "card_link": "https://binnenkussenvoordeel.nl/pages/horeca",
                 "edge_gap": "md",
                 "content_direction": "row",
                 "vertical_on_mobile": true,
@@ -4010,7 +4010,7 @@
                   "static": true,
                   "settings": {
                     "label": "",
-                    "link": "#",
+                    "link": "https://binnenkussenvoordeel.nl/pages/horeca",
                     "open_in_new_tab": false,
                     "style": "secondary",
                     "size": "extra-small",
