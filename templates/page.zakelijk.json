@@ -1488,7 +1488,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p><br/>Geen standaardverpakkingen met aantallen die nét niet uitkomen. Bij ons bestel je binnenkussens in de standaardmaten die je nodig hebt én precies in de juiste aantallen. Kies de gewenste maat, vulling en stevigheid, volledig afgestemd op jouw interieur of project.</p>",
+                "text": "<p><br/>Geen standaardverpakkingen met aantallen die nét niet uitkomen. Bij ons bestel je binnenkussens in de standaardmaten die je nodig hebt én precies in de juiste aantallen. <br/>Kies de gewenste maat, vulling en stevigheid, volledig afgestemd op jouw interieur of project.</p>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
