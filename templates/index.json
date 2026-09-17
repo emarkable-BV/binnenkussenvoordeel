@@ -285,7 +285,7 @@
               "static": true,
               "settings": {
                 "label": "Bekijk bundels",
-                "link": "shopify://collections",
+                "link": "https://binnenkussenvoordeel.nl/collections/voordeelbundels",
                 "open_in_new_tab": false,
                 "style": "primary",
                 "size": "large",
