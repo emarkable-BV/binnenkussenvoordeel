@@ -96,7 +96,6 @@
             "parallax_direction": "zoom",
             "parallax_intensity": 0.3,
             "type": "image",
-            "image": "{{ closest.page.metafields.custom.herobanner.value }}",
             "toggle_overlay": false,
             "overlay_color": "#00000033"
           },
@@ -245,7 +244,7 @@
         "content_position": "inside",
         "height_mobile": "auto",
         "color_scheme": "scheme-inverse",
-        "border_radius": 20,
+        "border_radius": 6,
         "device": "desktop",
         "padding-block-start": 0,
         "padding-block-end": 0,
