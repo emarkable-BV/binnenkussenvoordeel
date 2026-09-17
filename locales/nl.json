@@ -486,5 +486,10 @@
       "copy_code_success": "Code succesvol gekopieerd",
       "expired": "Verlopen"
     }
+  },
+  "shopify": {
+    "links": {
+      "powered_by_shopify": "Powered by emarkable"
+    }
   }
 }
