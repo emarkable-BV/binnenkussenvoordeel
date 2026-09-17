@@ -485,7 +485,7 @@
           "type": "feature-card",
           "settings": {
             "heading": "Polyester",
-            "link": "shopify://collections/frontpage",
+            "link": "shopify://collections/polyester",
             "image": "shopify://shop_images/Polyester.png",
             "background_color": "#fdf8f4"
           }
