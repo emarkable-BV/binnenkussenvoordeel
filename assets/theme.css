@@ -11613,3 +11613,6 @@ body:not(:has(.header[is=sticky-header])) .section--scrolling-layers {
   font-size: 1.4rem;
   margin-top: -0.2rem;
 }
+dialog.cookiefirst-root {
+  contain: none !important;
+}
