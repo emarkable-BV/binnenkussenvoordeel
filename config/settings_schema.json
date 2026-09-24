@@ -1996,14 +1996,14 @@
         "id": "etrusted_header_widget_id",
         "label": "Widget-ID header",
         "info": "Compacte widget in de header, bijv. wdg-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-        "default": "wdg-555d2440-e023-4418-866a-3a627bc929e4"
+        "default": "wdg-c40d357c-48c7-4fbf-a7fb-7bc25edd2ba9"
       },
       {
         "type": "text",
         "id": "etrusted_widget_id",
         "label": "Standaard widget-ID",
         "info": "Gebruikt door elk 'eTrusted widget'-block waarin geen eigen widget-ID is ingevuld.",
-        "default": "wdg-31be60db-ea13-4cf2-a0d1-455f7d07a31d"
+        "default": "wdg-1b66dab5-4971-4fd5-9ea1-d9e5b32e2a1e"
       },
       {
         "type": "header",
