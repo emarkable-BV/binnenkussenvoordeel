@@ -90,6 +90,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {%- comment -%} eTrusted review widget bootstrap {%- endcomment -%}
     <script src="https://integrations.etrusted.com/applications/widget.js/v2" defer async></script>
 
+    {%- if settings.trustbadge_enabled and settings.trusted_shops_id != blank -%}
+      <script src="https://widgets.trustedshops.com/js/{{ settings.trusted_shops_id }}.js" charset="UTF-8" async></script>
+    {%- endif -%}
+
     {{ content_for_header }}
     {% render 'lucrative-datalayer' %}
   </head>

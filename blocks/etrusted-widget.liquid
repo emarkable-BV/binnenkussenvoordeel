@@ -1,12 +1,17 @@
 {%- doc -%}
   Renders an eTrusted review widget by its widget ID. The eTrusted
   bootstrap script (integrations.etrusted.com/applications/widget.js)
-  is loaded once site-wide from layout/theme.liquid.
+  is loaded once site-wide from layout/theme.liquid. Falls back to the
+  default widget ID in theme settings (Trusted Shops) when left blank.
 {%- enddoc -%}
 
+{%- liquid
+  assign widget_id = block.settings.widget_id | default: settings.etrusted_widget_id
+-%}
+
 <div class="etrusted-widget-block" {{ block.shopify_attributes }}>
-  {%- if block.settings.widget_id != blank -%}
-    <etrusted-widget data-etrusted-widget-id="{{ block.settings.widget_id }}"></etrusted-widget>
+  {%- if widget_id != blank -%}
+    <etrusted-widget data-etrusted-widget-id="{{ widget_id }}"></etrusted-widget>
   {%- endif -%}
 </div>
 
@@ -32,7 +37,7 @@
       "type": "text",
       "id": "widget_id",
       "label": "Widget-ID",
-      "info": "De 'data-etrusted-widget-id' waarde uit eTrusted, bijv. wdg-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      "info": "De 'data-etrusted-widget-id' waarde uit eTrusted, bijv. wdg-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. Leeg laten om de standaard widget-ID uit de theme-instellingen (Trusted Shops) te gebruiken."
     }
   ],
   "presets": [

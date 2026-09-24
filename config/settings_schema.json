@@ -1973,5 +1973,49 @@
         "label": "t:settings.contact_chat_link"
       }
     ]
+  },
+  {
+    "name": "Trusted Shops",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Account: Trusted Shops ID XB803D33DDD6A9CF7E0662F90468D6ECC, channel chl-90200fe2-9a9c-45fc-9929-06fd26199e34. Widget-ID's maak je aan in het eTrusted Control Center (app.etrusted.com > Widgets) voor dit channel."
+      },
+      {
+        "type": "text",
+        "id": "trusted_shops_id",
+        "label": "Trusted Shops ID",
+        "default": "XB803D33DDD6A9CF7E0662F90468D6ECC"
+      },
+      {
+        "type": "header",
+        "content": "Review-widgets"
+      },
+      {
+        "type": "text",
+        "id": "etrusted_header_widget_id",
+        "label": "Widget-ID header",
+        "info": "Compacte widget in de header, bijv. wdg-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "default": "wdg-555d2440-e023-4418-866a-3a627bc929e4"
+      },
+      {
+        "type": "text",
+        "id": "etrusted_widget_id",
+        "label": "Standaard widget-ID",
+        "info": "Gebruikt door elk 'eTrusted widget'-block waarin geen eigen widget-ID is ingevuld.",
+        "default": "wdg-31be60db-ea13-4cf2-a0d1-455f7d07a31d"
+      },
+      {
+        "type": "header",
+        "content": "Trustbadge"
+      },
+      {
+        "type": "checkbox",
+        "id": "trustbadge_enabled",
+        "label": "Toon Trustbadge",
+        "info": "Het zwevende keurmerk van Trusted Shops, geladen op basis van het Trusted Shops ID.",
+        "default": false
+      }
+    ]
   }
 ]

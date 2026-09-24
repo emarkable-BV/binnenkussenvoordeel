@@ -68,9 +68,11 @@
 
     <div class="header__icons header__icons--right flex justify-end">
       <div class="header__buttons flex items-center justify-center">
-        <header-review-widget class="header__review-widget" hidden>
-          <etrusted-widget data-etrusted-widget-id="wdg-555d2440-e023-4418-866a-3a627bc929e4"></etrusted-widget>
-        </header-review-widget>
+        {%- if settings.etrusted_header_widget_id != blank -%}
+          <header-review-widget class="header__review-widget" hidden>
+            <etrusted-widget data-etrusted-widget-id="{{ settings.etrusted_header_widget_id }}"></etrusted-widget>
+          </header-review-widget>
+        {%- endif -%}
         <button
           on:click="#search-drawer/showDialog"
           class="search-drawer-button flex items-center justify-center button-unstyled cursor-pointer"
