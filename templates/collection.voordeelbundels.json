@@ -69,7 +69,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>{{ closest.collection.title }}</p>",
+                "text": "<h1>{{ closest.collection.title }}</h1>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",

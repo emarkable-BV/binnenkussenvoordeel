@@ -138,7 +138,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Selecteer je branche</p>",
+            "text": "<h1>Selecteer je branche</h1>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",

@@ -173,7 +173,7 @@
             "text_9cXzhV": {
               "type": "text",
               "settings": {
-                "text": "<p>{{ page.title }}</p>",
+                "text": "<h1>{{ page.title }}</h1>",
                 "highlight_style": "none",
                 "highlight_font_style": "italic",
                 "highlight_shape_color": "",
