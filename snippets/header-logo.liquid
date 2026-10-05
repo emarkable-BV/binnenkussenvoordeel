@@ -1,8 +1,5 @@
 {%- liquid
   assign wrapper_tag = 'div'
-  if request.page_type == 'index'
-    assign wrapper_tag = 'h1'
-  endif
 
   assign logo = settings.logo
   assign logo_mobile = settings.logo_mobile

@@ -72,7 +72,7 @@
           "name": "t:names.product_title",
           "settings": {
             "type_preset": "h3",
-            "html_tag": "h1",
+            "html_tag": "p",
             "font": "var(--font-heading--family)",
             "font_weight": "",
             "font_size": 15,
