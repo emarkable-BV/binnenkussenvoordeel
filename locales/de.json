@@ -175,6 +175,10 @@
       "remaining_html": "Geben Sie noch {{ remaining_amount }} aus, um kostenlosen Versand zu erhalten!",
       "congratulations_html": "Sie haben sich für KOSTENLOSEN Versand qualifiziert!"
     },
+    "free_gift_threshold": {
+      "add_button": "Füge dein kostenloses Willkommensgeschenk hinzu",
+      "added_message": "Dein kostenloses Willkommensgeschenk wurde deinem Warenkorb hinzugefügt!"
+    },
     "gift_wrapping": {
       "whole_order_label": "Für {{ price }} verpacken Sie bitte die Produkte in dieser Bestellung.",
       "whole_order_label_sync": "Für {{ price }} pro Artikel verpacken Sie bitte alle Produkte in dieser Bestellung.",

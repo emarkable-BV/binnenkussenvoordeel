@@ -175,6 +175,10 @@
       "remaining_html": "Spendi ancora {{ remaining_amount }} per ottenere la spedizione gratuita!",
       "congratulations_html": "Hai ottenuto la spedizione GRATUITA!"
     },
+    "free_gift_threshold": {
+      "add_button": "Aggiungi il tuo omaggio di benvenuto gratuito",
+      "added_message": "Il tuo omaggio di benvenuto gratuito è stato aggiunto al carrello!"
+    },
     "gift_wrapping": {
       "whole_order_label": "Per {{ price }}, si prega di confezionare i prodotti in questo ordine.",
       "whole_order_label_sync": "A {{ price }} per articolo, si prega di confezionare tutti i prodotti in questo ordine.",

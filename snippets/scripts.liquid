@@ -93,6 +93,9 @@
 {% if settings.show_free_shipping_goal %}
   <script src="{{ 'free-shipping-goal.js' | asset_url }}" type="module" fetchpriority="low"></script>
 {% endif %}
+{% if settings.free_gift_threshold_product != blank and settings.free_gift_threshold_amount != blank %}
+  <script src="{{ 'free-gift-threshold.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
 {% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
   <script src="{{ 'localization.js' | asset_url }}" type="module" fetchpriority="low"></script>
 {% endif %}

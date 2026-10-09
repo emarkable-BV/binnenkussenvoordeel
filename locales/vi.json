@@ -175,6 +175,10 @@
       "remaining_html": "Mua thêm {{ remaining_amount }} để được miễn phí vận chuyển!",
       "congratulations_html": "Bạn đã đủ điều kiện để được MIỄN PHÍ vận chuyển!"
     },
+    "free_gift_threshold": {
+      "add_button": "Thêm quà tặng chào mừng miễn phí của bạn",
+      "added_message": "Quà tặng chào mừng miễn phí của bạn đã được thêm vào giỏ hàng!"
+    },
     "gift_wrapping": {
       "whole_order_label": "Với {{ price }}, vui lòng gói quà các sản phẩm trong đơn này.",
       "whole_order_label_sync": "Với {{ price }} mỗi sản phẩm, vui lòng gói quà tất cả sản phẩm trong đơn này.",
