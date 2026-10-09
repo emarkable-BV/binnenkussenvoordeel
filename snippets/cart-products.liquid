@@ -11,6 +11,16 @@
     endif
   endif
 
+  assign free_gift_variant_id = null
+  assign free_gift_enabled = false
+  if settings.free_gift_threshold_product != blank
+    assign free_gift_product = all_products[settings.free_gift_threshold_product]
+    if free_gift_product != blank
+      assign free_gift_variant_id = free_gift_product.selected_or_first_available_variant.id
+      assign free_gift_enabled = true
+    endif
+  endif
+
   unless settings.dialog_color_scheme_inherit
     assign dialog_color_scheme = settings.dialog_color_scheme
   else
@@ -55,6 +65,11 @@
               assign is_gift_wrapping_line = false
               if gift_wrap_enabled and item.variant_id == gift_wrap_variant_id
                 assign is_gift_wrapping_line = true
+              endif
+
+              assign is_free_gift_line = false
+              if free_gift_enabled and item.variant_id == free_gift_variant_id
+                assign is_free_gift_line = true
               endif
 
               assign volume_nudge_savings = 0
@@ -317,6 +332,11 @@
                       {%- endif -%}
                       <span class="color-subtext" aria-label="{{ 'content.quantity' | t }} {{ item.quantity }}">x{{ item.quantity }}</span>
                       {% render 'loading-spinner', size: 'small', class: 'cart-items__gift-line-sync-spinner relative' %}
+                    </div>
+                  {%- elsif is_free_gift_line -%}
+                    <div class="cart-items__free-gift-qty inline-flex items-center gap-2">
+                      <span class="color-subtext" aria-label="{{ 'content.quantity' | t }} {{ item.quantity }}">x{{ item.quantity }}</span>
+                      {{ cart_remove_button }}
                     </div>
                   {%- else -%}
                     <div class="cart-items__quantity-wrap inline-flex items-center gap-2">
