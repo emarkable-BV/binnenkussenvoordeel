@@ -19,6 +19,11 @@
     </div>
     <hr class="cart-summary__divider">
   {% endif %}
+  {% if settings.free_gift_threshold_product != blank and settings.free_gift_threshold_amount != blank %}
+    <div class="cart-summary__free-gift-threshold">
+      {% render 'free-gift-threshold' %}
+    </div>
+  {% endif %}
   {% render 'cart-summary', section: section, context: 'cart-page' %}
   {% if settings.show_add_discount_code or settings.show_cart_note or settings.show_caculate_shipping_rate or gift_wrap_variant != blank %}
     <accordion-component

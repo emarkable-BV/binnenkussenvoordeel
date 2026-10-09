@@ -1,0 +1,59 @@
+{% liquid
+  assign minimum_amounts = settings.free_gift_threshold_amount | remove: ' '
+  assign show_free_gift = false
+  assign is_single_currency = false
+
+  if minimum_amounts contains ':'
+    assign minimum_amounts = minimum_amounts | split: ','
+    for amount in minimum_amounts
+      assign amount_parts = amount | split: ':'
+      assign currency_code = amount_parts | first | upcase
+      if currency_code == cart.currency.iso_code
+        assign minimum_amount = amount_parts | last
+        assign show_free_gift = true
+        break
+      endif
+    endfor
+  else
+    assign minimum_amount = minimum_amounts
+    assign show_free_gift = true
+    assign is_single_currency = true
+  endif
+
+  assign gift_product = all_products[settings.free_gift_threshold_product]
+  assign gift_variant = gift_product.selected_or_first_available_variant
+
+  assign gift_in_cart = false
+  for item in cart.items
+    if item.variant_id == gift_variant.id
+      assign gift_in_cart = true
+      break
+    endif
+  endfor
+%}
+
+{% if show_free_gift and gift_variant != blank %}
+  <free-gift-threshold
+    class="free-gift-threshold hidden"
+    data-skip-subtree-update="true"
+    data-minimum-amount="{{ minimum_amount }}"
+    data-is-single-currency="{{ is_single_currency }}"
+    data-shop-currency="{{ shop.currency }}"
+    data-current-currency="{{ cart.currency.iso_code }}"
+    data-cart-total="{{ cart.total_price }}"
+    data-gift-variant-id="{{ gift_variant.id }}"
+    data-gift-in-cart="{{ gift_in_cart }}"
+  >
+    <div class="free-gift-threshold__prompt">
+      <button
+        type="button"
+        class="btn btn--secondary btn--small w-full free-gift-threshold__add-button"
+        ref="addButton"
+        on:click="free-gift-threshold/addGiftFromPrompt"
+      >
+        <span class="btn__text">{{ 'content.free_gift_threshold.add_button' | t }}</span>
+        {%- render 'loading-spinner' -%}
+      </button>
+    </div>
+  </free-gift-threshold>
+{% endif %}

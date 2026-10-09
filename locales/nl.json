@@ -83,6 +83,10 @@
       "remaining_html": "Besteed nog {{ remaining_amount }} voor gratis verzending!",
       "congratulations_html": "Je hebt jezelf gekwalificeerd voor <span class=\"free-shipping-goal__highlight\">GRATIS</span> verzending!"
     },
+    "free_gift_threshold": {
+      "add_button": "Voeg je gratis welkomscadeau toe",
+      "added_message": "Je gratis welkomscadeau is toegevoegd aan je winkelwagen!"
+    },
     "gift_wrapping": {
       "whole_order_label": "Voor {{ price }}, gelieve de producten in deze bestelling in te pakken.",
       "whole_order_label_sync": "Voor {{ price }} per item, gelieve alle producten in deze bestelling in te pakken.",

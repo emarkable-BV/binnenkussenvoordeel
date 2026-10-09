@@ -1744,6 +1744,23 @@
         "info": "t:info.gift_wrap_sync_quantity",
         "default": true,
         "visible_if": "{{ settings.gift_wrap_product != blank }}"
+      },
+      {
+        "type": "header",
+        "content": "t:content.free_gift_threshold"
+      },
+      {
+        "type": "product",
+        "id": "free_gift_threshold_product",
+        "label": "t:settings.free_gift_threshold_product",
+        "info": "t:info.free_gift_threshold_product"
+      },
+      {
+        "type": "text",
+        "id": "free_gift_threshold_amount",
+        "label": "t:settings.free_gift_threshold_amount",
+        "info": "t:info.free_gift_threshold_amount",
+        "visible_if": "{{ settings.free_gift_threshold_product != blank }}"
       }
     ]
   },

@@ -155,6 +155,11 @@
                   {% render 'free-shipping-goal', section: section %}
                 </div>
               {% endif %}
+              {% if settings.free_gift_threshold_product != blank and settings.free_gift_threshold_amount != blank %}
+                <div class="cart-drawer__free-gift-threshold">
+                  {% render 'free-gift-threshold' %}
+                </div>
+              {% endif %}
               <div class="cart-drawer__items v-scrollable">
                 {% render 'cart-products', context: 'drawer', section: section %}
               </div>

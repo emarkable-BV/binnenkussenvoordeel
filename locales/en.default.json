@@ -186,6 +186,10 @@
       "remaining_html": "Spend {{ remaining_amount }} more to reach free shipping!",
       "congratulations_html": "You have qualified for FREE delivery!"
     },
+    "free_gift_threshold": {
+      "add_button": "Add your free welcome gift",
+      "added_message": "Your free welcome gift has been added to your cart!"
+    },
     "gift_wrapping": {
       "whole_order_label": "For {{ price }}, please wrap the products in this order.",
       "whole_order_label_sync": "At {{ price }} per item, please wrap all products in this order.",
