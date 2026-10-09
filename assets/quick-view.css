@@ -20,6 +20,10 @@
   width: 100%;
 }
 
+.free-gift-threshold__pdp-note {
+  pointer-events: none;
+}
+
 .media-gallery__carousel-container {
   border-radius: var(--media-radius, 0);
 }
