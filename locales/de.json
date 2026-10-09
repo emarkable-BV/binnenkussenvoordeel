@@ -186,7 +186,8 @@
     },
     "free_gift_threshold": {
       "add_button": "Füge dein kostenloses Willkommensgeschenk hinzu",
-      "added_message": "Dein kostenloses Willkommensgeschenk wurde deinem Warenkorb hinzugefügt!"
+      "added_message": "Dein kostenloses Willkommensgeschenk wurde deinem Warenkorb hinzugefügt!",
+      "not_sold_separately": "Dieses Produkt wird nicht einzeln verkauft - nur als kostenloses Geschenk erhältlich."
     },
     "gift_wrapping": {
       "whole_order_label": "Für {{ price }} verpacken Sie bitte die Produkte in dieser Bestellung.",

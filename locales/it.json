@@ -186,7 +186,8 @@
     },
     "free_gift_threshold": {
       "add_button": "Aggiungi il tuo omaggio di benvenuto gratuito",
-      "added_message": "Il tuo omaggio di benvenuto gratuito è stato aggiunto al carrello!"
+      "added_message": "Il tuo omaggio di benvenuto gratuito è stato aggiunto al carrello!",
+      "not_sold_separately": "Questo prodotto non è in vendita separatamente, è disponibile solo come omaggio gratuito."
     },
     "gift_wrapping": {
       "whole_order_label": "Per {{ price }}, si prega di confezionare i prodotti in questo ordine.",

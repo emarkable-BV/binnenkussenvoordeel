@@ -186,7 +186,8 @@
     },
     "free_gift_threshold": {
       "add_button": "Thêm quà tặng chào mừng miễn phí của bạn",
-      "added_message": "Quà tặng chào mừng miễn phí của bạn đã được thêm vào giỏ hàng!"
+      "added_message": "Quà tặng chào mừng miễn phí của bạn đã được thêm vào giỏ hàng!",
+      "not_sold_separately": "Sản phẩm này không được bán riêng - chỉ có sẵn dưới dạng quà tặng miễn phí."
     },
     "gift_wrapping": {
       "whole_order_label": "Với {{ price }}, vui lòng gói quà các sản phẩm trong đơn này.",

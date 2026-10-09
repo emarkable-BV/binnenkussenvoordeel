@@ -186,7 +186,8 @@
     },
     "free_gift_threshold": {
       "add_button": "Ajoutez votre cadeau de bienvenue gratuit",
-      "added_message": "Votre cadeau de bienvenue gratuit a été ajouté à votre panier !"
+      "added_message": "Votre cadeau de bienvenue gratuit a été ajouté à votre panier !",
+      "not_sold_separately": "Ce produit n'est pas vendu séparément, il est uniquement disponible en tant que cadeau gratuit."
     },
     "gift_wrapping": {
       "whole_order_label": "Pour {{ price }}, veuillez emballer les produits de cette commande.",

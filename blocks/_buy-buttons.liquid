@@ -5,6 +5,11 @@
     assign product = collections.all.products.first
   endif
 
+  assign is_free_gift_product = false
+  if settings.free_gift_threshold_product != blank and product.handle == settings.free_gift_threshold_product
+    assign is_free_gift_product = true
+  endif
+
   assign variant = closest.product.selected_or_first_available_variant
   assign inventory_quantity = variant.inventory_quantity
   assign inventory_policy = variant.inventory_policy
@@ -78,25 +83,35 @@
           class="product-form-buttons spacing-style"
           style="{% render 'spacing-style', settings: block_settings %}"
         >
-          {% content_for 'block', type: '_quantity-selector', id: 'quantity-selector' %}
-          {% content_for 'block',
-            type: '_add-to-card-button',
-            id: 'add-to-cart',
-            can_add_to_cart: can_add_to_cart,
-            add_to_cart_text: add_to_cart_text
-          %}
-          {% content_for 'block',
-            type: '_accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
-          {%- unless block_settings.gift_card_form and product.gift_card? -%}
-            <span
-              class="product-form-text__error alert alert--error text-body-sm hidden"
-              ref="addToCartTextError"
-            ></span>
-          {%- endunless -%}
+          {%- if is_free_gift_product -%}
+            <button
+              type="button"
+              class="btn btn--outline w-full free-gift-threshold__pdp-note"
+              disabled
+            >
+              <span class="btn__text">{{ 'content.free_gift_threshold.not_sold_separately' | t }}</span>
+            </button>
+          {%- else -%}
+            {% content_for 'block', type: '_quantity-selector', id: 'quantity-selector' %}
+            {% content_for 'block',
+              type: '_add-to-card-button',
+              id: 'add-to-cart',
+              can_add_to_cart: can_add_to_cart,
+              add_to_cart_text: add_to_cart_text
+            %}
+            {% content_for 'block',
+              type: '_accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+            {%- unless block_settings.gift_card_form and product.gift_card? -%}
+              <span
+                class="product-form-text__error alert alert--error text-body-sm hidden"
+                ref="addToCartTextError"
+              ></span>
+            {%- endunless -%}
+          {%- endif -%}
         </div>
       {%- endform -%}
     </product-form-component>

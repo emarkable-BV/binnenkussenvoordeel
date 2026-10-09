@@ -66,7 +66,13 @@
   </div>
 </div>
 
-{% if section.settings.enable_sticky_add_to_cart %}
+{% liquid
+  assign is_free_gift_product = false
+  if settings.free_gift_threshold_product != blank and product.handle == settings.free_gift_threshold_product
+    assign is_free_gift_product = true
+  endif
+%}
+{% if section.settings.enable_sticky_add_to_cart and is_free_gift_product == false %}
   {%- liquid
     assign current_variant = product.selected_or_first_available_variant
 

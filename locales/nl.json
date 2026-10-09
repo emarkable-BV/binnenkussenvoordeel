@@ -85,7 +85,8 @@
     },
     "free_gift_threshold": {
       "add_button": "Voeg je gratis welkomscadeau toe",
-      "added_message": "Je gratis welkomscadeau is toegevoegd aan je winkelwagen!"
+      "added_message": "Je gratis welkomscadeau is toegevoegd aan je winkelwagen!",
+      "not_sold_separately": "Dit product is niet los te koop, alleen verkrijgbaar als gratis cadeau."
     },
     "gift_wrapping": {
       "whole_order_label": "Voor {{ price }}, gelieve de producten in deze bestelling in te pakken.",

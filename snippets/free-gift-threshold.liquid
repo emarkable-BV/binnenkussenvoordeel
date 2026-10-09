@@ -24,9 +24,11 @@
   assign gift_variant = gift_product.selected_or_first_available_variant
 
   assign gift_in_cart = false
+  assign gift_quantity = 0
   for item in cart.items
     if item.variant_id == gift_variant.id
       assign gift_in_cart = true
+      assign gift_quantity = item.quantity
       break
     endif
   endfor
@@ -43,6 +45,7 @@
     data-cart-total="{{ cart.total_price }}"
     data-gift-variant-id="{{ gift_variant.id }}"
     data-gift-in-cart="{{ gift_in_cart }}"
+    data-gift-quantity="{{ gift_quantity }}"
   >
     <div class="free-gift-threshold__prompt">
       <button

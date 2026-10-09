@@ -30,6 +30,7 @@ export class FreeGiftThreshold extends Component {
     this.#setupCurrencyConversion();
     this.#evaluate({
       giftInCart: this.dataset.giftInCart === "true",
+      giftQuantity: parseInt(this.dataset.giftQuantity, 10) || 0,
       cartTotal: parseInt(this.dataset.cartTotal, 10) || 0,
     });
   }
@@ -80,15 +81,16 @@ export class FreeGiftThreshold extends Component {
 
     const cartTotal = parseInt(newElement.dataset.cartTotal, 10) || 0;
     const giftInCart = newElement.dataset.giftInCart === "true";
+    const giftQuantity = parseInt(newElement.dataset.giftQuantity, 10) || 0;
 
     this.dataset.cartTotal = String(cartTotal);
-    this.#evaluate({ giftInCart, cartTotal });
+    this.#evaluate({ giftInCart, giftQuantity, cartTotal });
   };
 
   /**
-   * @param {{ giftInCart: boolean, cartTotal: number }} state
+   * @param {{ giftInCart: boolean, giftQuantity: number, cartTotal: number }} state
    */
-  async #evaluate({ giftInCart, cartTotal }) {
+  async #evaluate({ giftInCart, giftQuantity, cartTotal }) {
     const qualifies = this.#convertedAmountInCents > 0 && cartTotal >= this.#convertedAmountInCents;
 
     if (!qualifies) {
@@ -101,6 +103,11 @@ export class FreeGiftThreshold extends Component {
 
     if (giftInCart) {
       this.#hidePrompt();
+      // Only ever one free gift per cart, regardless of how a second one
+      // might have slipped in (quick add, admin edit, a race between tabs).
+      if (giftQuantity > 1) {
+        await this.#clampGiftQuantity();
+      }
       return;
     }
 
@@ -173,6 +180,33 @@ export class FreeGiftThreshold extends Component {
       await this.#applyCartResponse(parsed);
     } catch (error) {
       console.error("FreeGiftThreshold: failed to remove gift", error);
+    } finally {
+      this.#busy = false;
+    }
+  }
+
+  async #clampGiftQuantity() {
+    if (this.#busy) return;
+    this.#busy = true;
+
+    try {
+      const cart = await this.#fetchCartJson();
+      const giftVariantId = this.#giftVariantId;
+      const giftItem = cart.items?.find((item) => Number(item.variant_id) === giftVariantId);
+      if (!giftItem || giftItem.quantity <= 1) return;
+
+      const body = JSON.stringify({
+        id: giftItem.key,
+        quantity: 1,
+        ...this.#getCartSectionsPayload(),
+      });
+
+      const response = await fetch(FoxTheme.routes.cart_change_url, fetchConfig("json", { body }));
+      const parsed = await response.json();
+
+      await this.#applyCartResponse(parsed);
+    } catch (error) {
+      console.error("FreeGiftThreshold: failed to clamp gift quantity", error);
     } finally {
       this.#busy = false;
     }

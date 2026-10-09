@@ -29,6 +29,10 @@
     assign can_add_to_cart = false
   endif
 
+  if settings.free_gift_threshold_product != blank and product.handle == settings.free_gift_threshold_product
+    assign can_add_to_cart = false
+  endif
+
   assign quick_add_button = 'choose'
   if product.variants_count == 1 or product.options.size == 1 and product.selected_variant
     assign quick_add_button = 'add'

@@ -186,7 +186,8 @@
     },
     "free_gift_threshold": {
       "add_button": "Añade tu regalo de bienvenida gratis",
-      "added_message": "¡Tu regalo de bienvenida gratis se ha añadido a tu carrito!"
+      "added_message": "¡Tu regalo de bienvenida gratis se ha añadido a tu carrito!",
+      "not_sold_separately": "Este producto no se vende por separado, solo está disponible como regalo gratuito."
     },
     "gift_wrapping": {
       "whole_order_label": "Por {{ price }}, por favor envuelve los productos de este pedido.",

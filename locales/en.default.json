@@ -188,7 +188,8 @@
     },
     "free_gift_threshold": {
       "add_button": "Add your free welcome gift",
-      "added_message": "Your free welcome gift has been added to your cart!"
+      "added_message": "Your free welcome gift has been added to your cart!",
+      "not_sold_separately": "This product isn't sold separately - it's only available as a free gift."
     },
     "gift_wrapping": {
       "whole_order_label": "For {{ price }}, please wrap the products in this order.",
