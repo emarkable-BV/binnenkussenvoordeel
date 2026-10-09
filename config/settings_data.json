@@ -83,6 +83,8 @@
     "cart_empty_recommendation_columns": 3,
     "gift_wrap_product": "",
     "enable_gift_wrap_per_product": false,
+    "free_gift_threshold_product": "textielverfrisser-300-ml",
+    "free_gift_threshold_amount": "EUR:35",
     "dialog_color_scheme_inherit": true,
     "dialog_radius": 9,
     "facebook_url": "https://www.facebook.com/profile.php?id=61592652935076",
