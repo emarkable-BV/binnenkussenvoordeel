@@ -332,6 +332,7 @@
               "type": "accordion",
               "name": "t:names.accordion",
               "settings": {
+                "enable_faq_schema": true,
                 "open_behavior": "multiple",
                 "type_preset": "h5",
                 "style": "standard",

@@ -150,11 +150,18 @@
 {%- if request.page_type == 'index' -%}
   {%- comment -%}
     Build sameAs from the non-blank social settings only. Listing them unconditionally
-    emits "" for every unset setting, which is not a valid URL value. split drops the
-    empty segments, so an all-blank config produces an empty list and the key is omitted.
+    emits "" for every unset setting, which is not a valid URL value. split only drops
+    trailing empty segments, not leading or interior ones, so blanks are skipped in the
+    loop below. An all-blank config leaves same_as empty and the key is omitted.
   {%- endcomment -%}
   {%- assign social_settings = settings.x_url | append: ',' | append: settings.facebook_url | append: ',' | append: settings.pinterest_url | append: ',' | append: settings.instagram_url | append: ',' | append: settings.tiktok_url | append: ',' | append: settings.tumblr_url | append: ',' | append: settings.snapchat_url | append: ',' | append: settings.youtube_url | append: ',' | append: settings.vimeo_url -%}
   {%- assign social_urls = social_settings | split: ',' -%}
+  {%- capture same_as -%}
+    {%- for social_url in social_urls -%}
+      {%- assign social_url_clean = social_url | strip -%}
+      {%- if social_url_clean != blank -%}{{ social_url_clean | json }},{%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -164,12 +171,8 @@
       {% if settings.logo %}
         "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
       {% endif %}
-      {%- if social_urls.size > 0 %}
-        "sameAs": [
-          {%- for social_url in social_urls -%}
-            {{ social_url | strip | json }}{% unless forloop.last %},{% endunless %}
-          {%- endfor -%}
-        ],
+      {%- if same_as != blank %}
+        "sameAs": [{{ same_as | remove_last: ',' }}],
       {%- endif %}
       "url": {{ shop.url | json }}
     }

@@ -7,7 +7,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h1>Page not found</h1>",
+            "text": "<h1>Pagina niet gevonden</h1>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
@@ -36,7 +36,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>The link may be incorrect, or the page has been removed.</p>",
+            "text": "<p>De link klopt misschien niet, of de pagina is verwijderd.</p>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
@@ -65,7 +65,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Continue shopping",
+            "label": "Verder winkelen",
             "style": "primary",
             "size": "medium",
             "icon": "caret-right",
@@ -109,7 +109,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h2>Discover something new</h2>",
+            "text": "<h2>Ontdek ons assortiment</h2>",
             "highlight_style": "none",
             "highlight_font_style": "italic",
             "highlight_shape_color": "",
