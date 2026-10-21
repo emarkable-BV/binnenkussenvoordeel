@@ -332,8 +332,8 @@
               "type": "accordion",
               "name": "t:names.accordion",
               "settings": {
-                "enable_faq_schema": true,
                 "open_behavior": "multiple",
+                "enable_faq_schema": true,
                 "type_preset": "h5",
                 "style": "standard",
                 "card_color_scheme": "",
@@ -697,6 +697,7 @@
               "name": "t:names.accordion",
               "settings": {
                 "open_behavior": "multiple",
+                "enable_faq_schema": false,
                 "type_preset": "h5",
                 "style": "standard",
                 "card_color_scheme": "",
@@ -733,7 +734,7 @@
                     "text_e3Pznx": {
                       "type": "text",
                       "settings": {
-                        "text": "<ol><li>Meld je retour binnen 14 dagen na ontvangst aan via e-mail bij onze klantenservice (je ontvangt hier geen reactie op).</li><li>Stuur het product onbeschadigd en in originele staat/verpakking terug.</li><li>Retouradres: BinnenkussenVoordeel, Nijverheidstraat 3, 6905 DL Zevenaar.</li><li>Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Na ontvangst en controle betalen we het aankoopbedrag binnen 14 dagen terug via de originele betaalmethode.</li></ol><p>Let op: binnenkussens vallen onder non-food en kunnen om hygiënische redenen alleen retour als ze ongebruikt en in originele staat zijn.</p>",
+                        "text": "<ol><li>Meld je retour binnen 14 dagen na ontvangst aan via e-mail bij onze klantenservice (je ontvangt hier geen reactie op).</li><li>Stuur het product in originele staat/verpakking terug.</li><li>Retouradres: BinnenkussenVoordeel, Nijverheidstraat 3, 6905 DL Zevenaar.</li><li>Retourkosten zijn voor eigen rekening, tenzij het product defect of verkeerd geleverd is.</li><li>Na ontvangst en controle betalen we het aankoopbedrag binnen 14 dagen terug via de originele betaalmethode.</li></ol><p>Let op: binnenkussens vallen onder non-food en kunnen om hygiënische redenen alleen retour als ze ongebruikt en in originele staat zijn.</p>",
                         "highlight_style": "none",
                         "highlight_font_style": "italic",
                         "highlight_shape_color": "",
@@ -1060,6 +1061,7 @@
               "name": "t:names.accordion",
               "settings": {
                 "open_behavior": "multiple",
+                "enable_faq_schema": false,
                 "type_preset": "h5",
                 "style": "standard",
                 "card_color_scheme": "",
@@ -1472,6 +1474,7 @@
               "name": "t:names.accordion",
               "settings": {
                 "open_behavior": "multiple",
+                "enable_faq_schema": false,
                 "type_preset": "h5",
                 "style": "standard",
                 "card_color_scheme": "",
@@ -1836,6 +1839,7 @@
               "name": "t:names.accordion",
               "settings": {
                 "open_behavior": "multiple",
+                "enable_faq_schema": false,
                 "type_preset": "h5",
                 "style": "standard",
                 "card_color_scheme": "",
