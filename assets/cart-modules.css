@@ -48,6 +48,10 @@
   pointer-events: none;
 }
 
+.free-gift-threshold__prompt {
+  margin: 16px;
+}
+
 .cart-summary div:empty,
 ul:empty {
   display: none;

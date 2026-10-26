@@ -155,14 +155,14 @@
                   {% render 'free-shipping-goal', section: section %}
                 </div>
               {% endif %}
+              <div class="cart-drawer__items v-scrollable">
+                {% render 'cart-products', context: 'drawer', section: section %}
+              </div>
               {% if settings.free_gift_threshold_product != blank and settings.free_gift_threshold_amount != blank %}
                 <div class="cart-drawer__free-gift-threshold">
                   {% render 'free-gift-threshold' %}
                 </div>
               {% endif %}
-              <div class="cart-drawer__items v-scrollable">
-                {% render 'cart-products', context: 'drawer', section: section %}
-              </div>
               {%- capture wrapper_class -%}
                 {%- if section.settings.cart_recommendations_inherit_color_scheme -%}
                   inherit-color-scheme
