@@ -68,6 +68,7 @@
   content, collected in the row loop above. Rows with an empty question or an empty answer
   are skipped.
 {%- endcomment -%}
+<!-- faqdebug enabled={{ faq_enabled }} setting={{ block_settings.enable_faq_schema }} raw={{ faq_raw.size }} id={{ block_settings | json | size }} -->
 {%- if faq_enabled -%}
   {%- assign faq_items = faq_raw | split: '|~FAQ~|' -%}
   {%- if faq_items.size > 0 -%}
