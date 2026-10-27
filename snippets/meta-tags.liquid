@@ -153,12 +153,18 @@
   content="{{ og_description | escape }}"
 >
 
-{%- assign current_tags_joined = current_tags | join: ', ' -%}
+{%- liquid
+  assign current_tags_joined = current_tags | join: ', '
+  # Compare without case and spaces, so an admin title ending in "Binnenkussen Voordeel"
+  # counts as already containing the shop name "BinnenkussenVoordeel".
+  assign title_key = page_title | downcase | remove: ' '
+  assign shop_key = shop.name | downcase | remove: ' '
+-%}
 <title>
   {{ page_title }}
   {%- if current_tags %} &ndash; {{ 'content.tagged' | t: tags: current_tags_joined }}{% endif -%}
   {%- if current_page != 1 %} &ndash; {{ 'actions.pagination.page' | t: number: current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- unless title_key contains shop_key %} &ndash; {{ shop.name }}{% endunless -%}
 </title>
 
 <link

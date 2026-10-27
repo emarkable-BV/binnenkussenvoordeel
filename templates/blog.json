@@ -20,7 +20,6 @@
           "type": "_blog-post-title",
           "static": true,
           "settings": {
-            "heading": "Lastest Articles",
             "heading_preset": "h1",
             "font": "var(--font-body--family)",
             "font_size": 15,
