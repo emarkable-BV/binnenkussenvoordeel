@@ -3,7 +3,7 @@
   Captured before the row loop below, which shadows `block` with each accordion row.
 {%- endcomment -%}
 {%- assign faq_enabled = block.settings.enable_faq_schema -%}
-{%- assign faq_rows = block.blocks -%}
+{%- assign faq_raw = '' -%}
 {% capture styles %}
   --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
   --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -29,9 +29,28 @@
   {% endcapture %}
 
   {%- for block in block.blocks -%}
+    {%- capture row_html -%}{% render block %}{%- endcapture -%}
     <div class="accordion__row {{ item_classes }}">
-      {% render block %}
+      {{ row_html }}
     </div>
+    {%- if faq_enabled and row_html contains 'class="accordion__content">' -%}
+      {%- liquid
+        # The answer is read from the rendered row, because the row's child blocks are not
+        # reachable from here. Everything after the content wrapper, minus the optional link.
+        assign faq_question = block.settings.text | strip_html | split: ' ' | join: ' '
+        assign faq_answer = row_html | split: 'class="accordion__content">' | last | split: 'class="accordion-row__link' | first | strip_html | split: ' ' | join: ' '
+        if faq_question != blank and faq_answer != blank
+          capture faq_item
+            echo '{"@type": "Question", "name": '
+            echo faq_question | json
+            echo ', "acceptedAnswer": {"@type": "Answer", "text": '
+            echo faq_answer | json
+            echo '}}|~FAQ~|'
+          endcapture
+          assign faq_raw = faq_raw | append: faq_item
+        endif
+      -%}
+    {%- endif -%}
   {%- endfor -%}
 </accordion-component>
 
@@ -45,28 +64,11 @@
   one accordion, which is why this cannot be automatic. Enable it on exactly one accordion
   per template.
 
-  The question is the row's summary text; the answer is the concatenated text of the row's
-  child blocks. Rows with an empty question or an empty answer are skipped.
+  The question is the row's summary text; the answer is the visible text of the row's
+  content, collected in the row loop above. Rows with an empty question or an empty answer
+  are skipped.
 {%- endcomment -%}
 {%- if faq_enabled -%}
-  {%- capture faq_raw -%}
-    {%- for faq_row in faq_rows -%}
-      {%- assign faq_question = faq_row.settings.text | strip_html | strip -%}
-      {%- if faq_question == blank -%}
-        {%- continue -%}
-      {%- endif -%}
-      {%- capture faq_answer_raw -%}
-        {%- for faq_child in faq_row.blocks -%}
-          {{ faq_child.settings.text }}
-        {%- endfor -%}
-      {%- endcapture -%}
-      {%- assign faq_answer = faq_answer_raw | strip_html | strip -%}
-      {%- if faq_answer == blank -%}
-        {%- continue -%}
-      {%- endif -%}
-      {"@type": "Question", "name": {{ faq_question | json }}, "acceptedAnswer": {"@type": "Answer", "text": {{ faq_answer | json }}}}|~FAQ~|
-    {%- endfor -%}
-  {%- endcapture -%}
   {%- assign faq_items = faq_raw | split: '|~FAQ~|' -%}
   {%- if faq_items.size > 0 -%}
     <script type="application/ld+json">
