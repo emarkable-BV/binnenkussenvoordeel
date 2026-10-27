@@ -33,12 +33,12 @@
     <div class="accordion__row {{ item_classes }}">
       {{ row_html }}
     </div>
-    <!-- faqrow e={{ faq_enabled }} html={{ row_html.size }} has={% if row_html contains 'class="accordion__content">' %}y{% else %}n{% endif %} q={{ block.settings.text | strip_html | size }} type={{ block.type }} -->
-    {%- if faq_enabled and row_html contains 'class="accordion__content">' -%}
+    {%- if faq_enabled and row_html contains 'class="accordion__content">' and row_html contains 'accordion__summary-text">' -%}
       {%- liquid
-        # The answer is read from the rendered row, because the row's child blocks are not
-        # reachable from here. Everything after the content wrapper, minus the optional link.
-        assign faq_question = block.settings.text | strip_html | split: ' ' | join: ' '
+        # Both parts are read from the rendered row: in this loop `block` is a @theme wrapper
+        # whose settings and child blocks come back empty. The question is the summary text,
+        # the answer everything after the content wrapper, minus the optional link.
+        assign faq_question = row_html | split: 'accordion__summary-text">' | last | split: '</span>' | first | strip_html | split: ' ' | join: ' '
         assign faq_answer = row_html | split: 'class="accordion__content">' | last | split: 'class="accordion-row__link' | first | strip_html | split: ' ' | join: ' '
         if faq_question != blank and faq_answer != blank
           capture faq_item
@@ -69,7 +69,6 @@
   content, collected in the row loop above. Rows with an empty question or an empty answer
   are skipped.
 {%- endcomment -%}
-<!-- faqdebug enabled={{ faq_enabled }} setting={{ block_settings.enable_faq_schema }} raw={{ faq_raw.size }} id={{ block_settings | json | size }} -->
 {%- if faq_enabled -%}
   {%- assign faq_items = faq_raw | split: '|~FAQ~|' -%}
   {%- if faq_items.size > 0 -%}
