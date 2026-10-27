@@ -33,6 +33,7 @@
     <div class="accordion__row {{ item_classes }}">
       {{ row_html }}
     </div>
+    {%- if faq_enabled -%}<!-- faqrow html={{ row_html.size }} has={% if row_html contains 'class="accordion__content">' %}y{% else %}n{% endif %} q={{ block.settings.text | strip_html | size }} type={{ block.type }} -->{%- endif -%}
     {%- if faq_enabled and row_html contains 'class="accordion__content">' -%}
       {%- liquid
         # The answer is read from the rendered row, because the row's child blocks are not
