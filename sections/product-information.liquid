@@ -25,8 +25,12 @@
   --gap: {{ section.settings.gap | divided_by: 10.0 }}rem;
 {% endcapture %}
 
+{%- comment -%}
+  structured_data fills "category" from the product's taxonomy category and emits an empty
+  string when none is set. Drop that empty value instead of shipping "category": "".
+{%- endcomment -%}
 <script type="application/ld+json">
-  {{ closest.product | structured_data }}
+  {{ closest.product | structured_data | replace: '"category":"",', '' }}
 </script>
 
 <div
